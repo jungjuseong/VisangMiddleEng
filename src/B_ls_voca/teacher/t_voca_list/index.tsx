@@ -20,6 +20,7 @@ interface IVocaList {
 	actions: IActionsCtx;
 }
 
+@observer
 class VocaList extends React.Component<IVocaList> {
 	@observable private _n_checked = 0;
 	@observable private _all_checked = false;
@@ -126,8 +127,8 @@ class VocaList extends React.Component<IVocaList> {
 	private _setNavi() {
 		const { actions } = this.props;
 
-		actions.setNaviView(true); //
-		actions.setNavi(false, true); //
+		actions.setNaviView(true);
+		actions.setNavi(false, true);
 		actions.setNaviFnc(
 			null,
 			() => {

@@ -17,6 +17,8 @@ interface IVocaItemProps {
 }
 
 function VocaItem(props: IVocaItemProps) {
+	const { word, onChecked, onStudy } = props;
+
 	let _btn: BtnAudio | null = null;
 
 	const _refAudio = (btn: BtnAudio) => {
@@ -30,12 +32,12 @@ function VocaItem(props: IVocaItemProps) {
 
 	const _onChecked = () => {
         App.pub_playBtnTab();
-		props.word.app_checked = !props.word.app_checked;
-        props.onChecked();
+		word.app_checked = !word.app_checked;
+        onChecked();
     }
     
 	const _onStudy = () => {
-        props.onStudy(props.word);
+    	onStudy(word);
 	}
 
 	return (
