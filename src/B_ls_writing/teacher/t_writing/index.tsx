@@ -16,6 +16,7 @@ import ScriptContainer from '../../script_container';
 import { TimerState } from '../../../share/Timer';
 
 import QuizBox from './_quiz_box';
+import ConfirmQuiz from './_confirm_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -653,7 +654,20 @@ class Writing extends React.Component<IWriting> {
                                     </div>
                                 );
                             })}
-                        </div>
+                    </div>
+                    <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
+                            {introductions.map((introduction, idx) => {
+                                return (
+                                    <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
+                                        <ConfirmQuiz 
+                                            view={view && idx === this._curQidx}
+                                            data={introduction} 
+                                            onClosed={this._letstalkClosed}
+                                        />                          
+                                    </div>
+                                );
+                            })}
+                    </div>
                 </div>
             </div>
         );

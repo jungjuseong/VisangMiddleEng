@@ -19,12 +19,12 @@ interface IQuizBox {
 	data: common.IIntroduction;
 }
 /*
-2020 11 09 작업
+2020 11 10 작업
 _lets_talk.tsx 참고
 이동윤
 */
 @observer
-class QuizBox extends React.Component<IQuizBox> {
+class ConfirmQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _zoom = false;
@@ -128,20 +128,39 @@ class QuizBox extends React.Component<IQuizBox> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
-					<div className="popbox">
+					<div className="question">		
+						<div className="sentence_box">
+							<div>
+								<div className="question_box" onClick={this._onClick}>
+									{this._jsx_sentence}
+								</div>
+							</div>
+						</div>	
 						<div className="image_box">
-							<img  src={App.data_url + data.img} draggable={false}/>
-						</div>						
+							{/* {Array[3].map(() => {
+								return (
+									<div className="bundle">
+										<img className="image" src={App.data_url + data.img} draggable={false}/>
+										<span className="number_box"/>
+									</div>
+								);
+							})} */}
+							<div className="bundle">
+								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<span className="number_box"/>
+							</div>
+							<div className="bundle">
+								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<span className="number_box"/>
+							</div>
+							<div className="bundle">
+								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<span className="number_box"/>
+							</div>
+						</div>	
 						<div className="speechbubble_box" >
 							<div>
 								<div className={'balloon' + (this._hint ? ' view-hint' : '')}>
-									<div className="sentence_box">
-										<div>
-											<div className="question_box" onClick={this._onClick}>
-												{this._jsx_sentence}
-											</div>
-										</div>
-									</div>
 									<SwiperComponent {...this._soption} ref={this._refSwiper}>
 										<div>
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -158,4 +177,4 @@ class QuizBox extends React.Component<IQuizBox> {
 	}
 }
 
-export default QuizBox;
+export default ConfirmQuiz;
