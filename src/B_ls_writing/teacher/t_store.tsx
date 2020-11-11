@@ -315,26 +315,6 @@ class TeacherContext extends TeacherContextBase {
 		const q_arr = [70, 60, 80];		
 
 		const scripts = this._data.scripts;
-		const speakerA = this._data.speakerA.name;
-		const speakerB = this._data.speakerB.name;
-		const speakerC = this._data.speakerC.name;
-
-		if(!this._data.speakerD) {
-			this._data.speakerD = {
-				name: '',
-				image_s: '',
-				image_l: '',
-			};
-		}
-		if(!this._data.speakerE) {
-			this._data.speakerE = {
-				name: '',
-				image_s: '',
-				image_l: '',
-			};
-		}
-		const speakerD = this._data.speakerD.name;
-		const speakerE = this._data.speakerE.name;
 
 		for(let i = 0; i < this._data.quizs.length; i++) {
 			const q = this._data.quizs[i];
@@ -350,25 +330,6 @@ class TeacherContext extends TeacherContextBase {
 
 		const previewMsg: IPreviewClassMsg[] = [];
 	
-		for(let i = 0; i < scripts.length; i++) {
-			const script = scripts[i];
-			if(script.sc_COD && !App.isDvlp && script.sc_COD[0] !== undefined) {
-				previewMsg.push({
-					evalCode: '2',
-					vsFromData: 'script',
-					vsFromSeq: Number(script.sc_COD[0].codSeq)
-				});
-			} 
-			
-			if(script.dms_speaker === speakerA) script.roll = 'A';
-			else if (script.dms_speaker === speakerB) script.roll = 'B';
-			else if (script.dms_speaker === speakerC) script.roll = 'C';
-			else if (script.dms_speaker === speakerD) script.roll = 'D';
-			else script.roll = 'E';
-
-			this._qnaReturns[i] = {num: 0, users: []};
-		}
-
 		console.log('previewMsg~~~', previewMsg.length, previewMsg);
 		let previewResult;
 		let len = 0;

@@ -15,7 +15,6 @@ import { IMsg,IData,IRollMsg,IFocusMsg } from '../../common';
 import ScriptContainer from '../../script_container';
 import { TimerState } from '../../../share/Timer';
 
-import LetsTalk from './_lets_talk';
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './_confirm_quiz';
 import ComprePopup from './_compre_popup';
@@ -50,9 +49,6 @@ interface IWriting {
 
 @observer
 class Writing extends React.Component<IWriting> {
-    private m_player = new MPlayer(new MConfig(true));
-    private m_player_inittime = 0; // 비디오 시작시간 
-	private m_swiper: SwiperComponent|null = null;
 	private m_data: IData;
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
@@ -87,32 +83,12 @@ class Writing extends React.Component<IWriting> {
 	public constructor(props: IWriting) {
         super(props);
         this.m_data = props.actions.getData();
-        this.m_player_inittime = this.m_data.video_start;
 
         const quizs = this.m_data.quizs;
         for(let i = 0; i < quizs.length; i++) {
             this._qselected[i] = -1;
         }
 
-        this.m_player.addOnPlayEnd(() => {
-            this._lastFocusIdx = -1;
-            this._focusIdx = -1;
-            this.m_player.setMutedTemp(false);
-            this._sendDialogueEnd();
-            if (this._title === 'DIALOGUE') {
-                if (this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
-                else if(this._title === 'DIALOGUE' && this._shadowing) this._isShadowPlay = false;
-            }
-        });
-        this.m_player.addOnState((newState, oldState) => {
-            let msgtype: 'playing'|'paused';
-            if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
-            else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
-            const msg: IMsg = {
-                msgtype,
-            };
-            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        });
     }
     
 	public componentDidMount() {
@@ -194,14 +170,8 @@ class Writing extends React.Component<IWriting> {
             if(state.dialogueProg !== SENDPROG.SENDED) return;
             if(this._roll !== '' || roll === '') return;
 
-            if(this.m_player.currentTime !== this.m_player_inittime
-                || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
-            App.pub_playToPad();
-
             this._lastFocusIdx = 0;
             this._focusIdx = -1;
-            this.m_player.setMuted(false);
-            this.m_player.setMutedTemp(false);
 
             let msg: IRollMsg = {msgtype: 'roll_send', roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -216,14 +186,8 @@ class Writing extends React.Component<IWriting> {
             else if(state.dialogueProg !== SENDPROG.SENDED) return;
             else if(this._shadowing) return;
 
-            if(this.m_player.currentTime !== this.m_player_inittime
-                || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
-            App.pub_playToPad();
-
             this._lastFocusIdx = 0;
             this._focusIdx = -1;
-            this.m_player.setMuted(false);
-            this.m_player.setMutedTemp(false);
 
             let msg: IMsg = {msgtype: 'shadowing_send'};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -301,9 +265,7 @@ class Writing extends React.Component<IWriting> {
         this._focusIdx = -1;
 
         actions.setNavi(true, true);
-        this.m_player.setMutedTemp(false);
-        if(this.m_player.currentTime !== this.m_player_inittime || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
-                    
+
         actions.init();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 	}
@@ -317,8 +279,6 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop(); 
         App.pub_playBtnTab();
-        
-        if (this.m_player.bPlay) this.m_player.pause();
         
         this._clearAll();
         this._tab = 'INTRODUCTION';
@@ -334,7 +294,6 @@ class Writing extends React.Component<IWriting> {
     //     if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 		
     //     App.pub_playBtnTab();
-    //     if(this.m_player.bPlay) this.m_player.pause();
     //     this._clearAll();
     //     this._title = 'DIALOGUE';
     //     this._tab_save = this._tab;
@@ -550,7 +509,6 @@ class Writing extends React.Component<IWriting> {
                     }
                 } else {
                     if(this._roll === 'A' || this._roll === 'B' || this._shadowing) return;
-                    if(this.m_player.bPlay) this.m_player.pause();
                     this._clearAll();
                     this._title = 'COMPREHENSION';
                     this._tab = 'SCRIPT';
@@ -633,14 +591,6 @@ class Writing extends React.Component<IWriting> {
             this._isShadowPlay = false;
             this._shadowing = false;
             App.pub_stop();
-            if(this.m_player.bPlay) this.m_player.pause();
-            this.m_player.setMuted(false);
-            this.m_player.setMutedTemp(false);
-            _.delay(() => {
-                if(view) return;
-                this.m_player.seek(this.m_player_inittime * 1000);
-                this._view = false;
-            }, 300);
         }
     }
 
@@ -719,19 +669,6 @@ class Writing extends React.Component<IWriting> {
                             })}
                     </div>
                 </div>
-                <ComprePopup 
-                    type={this.c_popup}
-                    view={this.c_popup === 'Q&A' || this.c_popup === 'ROLE PLAY' || this.c_popup === 'SHADOWING'} 
-                    imgA={this.m_data.speakerA.image_l}
-                    imgB={this.m_data.speakerB.image_l}
-                    onSend={this._onPopupSend}
-                    onClosed={this._onPopupClosed}
-                />
-                <LetsTalk 
-                    view={this._letstalk} 
-                    data={this.m_data.letstalk} 
-                    onClosed={this._letstalkClosed}
-                />
             </div>
         );
     }

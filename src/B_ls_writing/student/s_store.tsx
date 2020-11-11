@@ -191,26 +191,6 @@ class StudentContext extends StudentContextBase {
 		// console.log(data);
 		this._data = data as common.IData;
 
-		const scripts = this._data.scripts;
-		const speakerA = this._data.speakerA.name;
-		const speakerB = this._data.speakerB.name;
-		const speakerC = this._data.speakerC.name;
-		if(!this._data.speakerD) {
-			this._data.speakerD = {
-				name: '',
-				image_s: '',
-				image_l: '',
-			};
-		}
-		if(!this._data.speakerE) {
-			this._data.speakerE = {
-				name: '',
-				image_s: '',
-				image_l: '',
-			};
-		}
-		const speakerD = this._data.speakerD.name;
-		const speakerE = this._data.speakerE.name;
 		for(let i = 0; i < this._data.quizs.length; i++) {
 			const q = this._data.quizs[i];
 
@@ -225,13 +205,6 @@ class StudentContext extends StudentContextBase {
 				}</>
 			);
 		}
-		scripts.forEach((script) => {
-			if(script.dms_speaker === speakerA) script.roll = 'A';
-			else if (script.dms_speaker === speakerB) script.roll = 'B';
-			else if (script.dms_speaker === speakerC) script.roll = 'C';
-			else if (script.dms_speaker === speakerD) script.roll = 'D';
-			else script.roll = 'E';
-		});
 	}
 }
 

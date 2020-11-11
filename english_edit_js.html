@@ -32,6 +32,7 @@ obj_e.TYPE_RANGE_SE = "range_se";
 obj_e.TYPE_SELECT = "select";
 obj_e.TYPE_MULTI_LANG = "multi_lang";
 obj_e.TYPE_FOLDER = 'folder';
+
 var ls_voca = {
 	_type:obj_e.TYPE_OBJECT,
 	page1: {
@@ -508,6 +509,94 @@ var ls_writing ={
 			ex_answer: {_type:obj_e.TYPE_TEXT, _excel:"F"},
 			movie: {_type:obj_e.TYPE_MOVIE, _excel:"G", _default: ''},
 			img2: {_type:obj_e.TYPE_IMAGE, _excel:"H", _default: ''}
+		}
+	},
+	confirm_nomal:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"확인_기본",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"I"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"K",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"L"},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"M",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"O"},
+			item1:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"P"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"Q"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"R"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"S",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"T",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"U",_default:''}
+			},
+			item2:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"V"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"W"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"Y",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"Z",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"AA",_default:''}
+			},
+			item3:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"AB"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"AC"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"AE",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"AF",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"AG",_default:''}
+			},
+			item4:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"AH"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"AI"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"AJ"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"AK",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"AL",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"AM",_default:''}
+			},
+			item5:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"AN"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"AO"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"AP"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"AQ",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"AR",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"AS",_default:''}
+			},
+			item6:{
+				_type: obj_e.TYPE_OBJECT,
+				answer:{_type:obj_e.TYPE_INT, _excel:"AT"},
+				answer_kor:{_type:obj_e.TYPE_TEXT, _excel:"AU"},
+				answer_eng:{_type:obj_e.TYPE_TEXT, _excel:"AV"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"AW",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"AX",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"AY",_default:''}
+			},
+			ex_answer:{
+				_type: obj_e.TYPE_OBJECT,
+				text:{_type:obj_e.TYPE_TEXT, _excel:"AZ"},
+				image:{_type:obj_e.TYPE_IMAGE, _excel:"BA",_default:''}
+			},
+			feedback:{_type:obj_e.TYPE_TEXT, _excel:"BB"},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"BC"}
 		}
 	}
 }
