@@ -16,7 +16,7 @@ const SwiperComponent = require('react-id-swiper').default;
 interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
-	data: common.IIntroduction;
+	data: common.IConfirmNomal;
 }
 /*
 2020 11 10 작업
@@ -44,7 +44,9 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	};
 
 	private _jsx_sentence: JSX.Element;
-	private _jsx_hint: JSX.Element;
+	private _jsx_hint1: number;
+	private _jsx_hint2: number;
+	private _jsx_hint3: number;
 	private _character: string;
 
 	private _btnAudio?: BtnAudio;
@@ -52,8 +54,10 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	public constructor(props: IQuizBox) {
 		super(props);
 		
-		this._jsx_sentence = _getJSX(props.data.questions); // 문제
-		this._jsx_hint = _getJSX(props.data.ex_answer); // 답
+		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
+		this._jsx_hint1 = props.data.item1.answer; // 답
+		this._jsx_hint2 = props.data.item2.answer; // 답
+		this._jsx_hint3 = props.data.item3.answer; // 답
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
@@ -146,15 +150,15 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 								);
 							})} */}
 							<div className="bundle">
-								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<img className="image" src={App.data_url + data.item1.img} draggable={false}/>
 								<span className="number_box"/>
 							</div>
 							<div className="bundle">
-								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<img className="image" src={App.data_url + data.item2.img} draggable={false}/>
 								<span className="number_box"/>
 							</div>
 							<div className="bundle">
-								<img className="image" src={App.data_url + data.img} draggable={false}/>
+								<img className="image" src={App.data_url + data.item3.img} draggable={false}/>
 								<span className="number_box"/>
 							</div>
 						</div>	
@@ -164,7 +168,8 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 									<SwiperComponent {...this._soption} ref={this._refSwiper}>
 										<div>
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
-											<div className={'hint' + (this._hint ? '' : ' hide')}>{this._jsx_hint}</div>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}</div>
 										</div>
 									</SwiperComponent>
 								</div>

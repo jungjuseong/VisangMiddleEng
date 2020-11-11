@@ -91,7 +91,7 @@ export interface IConfirmNomal {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
-	readonly directive: string;
+	readonly directive: IDirecrive;
 	readonly item1: IItem;
 	readonly item2: IItem;
 	readonly item3: IItem;

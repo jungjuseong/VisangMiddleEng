@@ -599,6 +599,7 @@ class Writing extends React.Component<IWriting> {
         const { questionProg,qnaProg,numOfStudent,retCnt } = state;
 
         const introductions = this.m_data.introduction;
+        const confirm_nomals = this.m_data.confirm_nomal;
         const isQComplete = questionProg >= SENDPROG.COMPLETE;
 
         const isOnStudy = (this._title === 'COMPREHENSION' && (questionProg === SENDPROG.SENDING || questionProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING)) 
@@ -637,11 +638,13 @@ class Writing extends React.Component<IWriting> {
                     </div>            
                 </div>	
                 <div className="writing_content_box">
+                    {/* index */}
                     <div className="btn_page_box">
                         {introductions.map((introduction, idx) => {
                             return <NItemW key={idx} tab={this._tab} on={idx === this._curQidx} idx={idx} onClick={this._onPage}/>;
                         })}
                     </div>
+                    
                     <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'INTRODUCTION' ? '' : 'none'}}>
                             {introductions.map((introduction, idx) => {
                                 return (
@@ -656,17 +659,13 @@ class Writing extends React.Component<IWriting> {
                             })}
                     </div>
                     <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
-                            {introductions.map((introduction, idx) => {
-                                return (
-                                    <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
-                                        <ConfirmQuiz 
-                                            view={view && idx === this._curQidx}
-                                            data={introduction} 
-                                            onClosed={this._letstalkClosed}
-                                        />                          
-                                    </div>
-                                );
-                            })}
+                            <div key={1} >
+                                <ConfirmQuiz 
+                                    view={view && 1 === this._curQidx}
+                                    data={confirm_nomals[0]} 
+                                    onClosed={this._letstalkClosed}
+                                />                          
+                            </div>              
                     </div>
                 </div>
             </div>
