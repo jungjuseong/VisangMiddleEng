@@ -24,7 +24,7 @@ _lets_talk.tsx 참고
 이동윤
 */
 @observer
-class QuizBox extends React.Component<IQuizBox> {
+class IntroQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _zoom = false;
@@ -158,4 +158,4 @@ class QuizBox extends React.Component<IQuizBox> {
 	}
 }
 
-export default QuizBox;
+export default IntroQuiz;

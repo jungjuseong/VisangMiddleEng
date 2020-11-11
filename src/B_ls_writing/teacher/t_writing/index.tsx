@@ -16,7 +16,7 @@ import ScriptContainer from '../../script_container';
 import { TimerState } from '../../../share/Timer';
 
 import LetsTalk from './_lets_talk';
-import QuizBox from './_quiz_box';
+import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './_confirm_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
@@ -696,7 +696,7 @@ class Writing extends React.Component<IWriting> {
                             {introductions.map((introduction, idx) => {
                                 return (
                                     <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
-                                        <QuizBox 
+                                        <IntroQuiz 
                                             view={view && idx === this._curQidx}
                                             data={introduction} 
                                             onClosed={this._letstalkClosed}

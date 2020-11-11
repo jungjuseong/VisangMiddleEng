@@ -10,6 +10,8 @@
 		padding-top:10px;
 		margin:0 auto;
 		position:relative;
+		width: 1150px;
+		height: 600px;
 		
 		.closed_hint{
 			display:none;
@@ -48,9 +50,7 @@
 				&>div{
 					position: relative;
 					display: inline-block;
-					top: 80px;
 					transform: translateY(-50%);
-					left: 0px;
 
 					.btn_audio{
 						@include btn_on(
