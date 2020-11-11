@@ -87,6 +87,30 @@ export interface IIntroduction {
 	readonly ex_answer: string;
 }
 
+export interface IConfirmNomal {
+	readonly seq: number;
+	readonly main_sound: string;
+	readonly kor_eng: boolean;
+	readonly directive: string;
+	readonly item1: IItem;
+	readonly item2: IItem;
+	readonly item3: IItem;
+	readonly item4: IItem;
+	readonly item5: IItem;
+	readonly item6: IItem;
+}
+
+export interface IDirecrive {
+	readonly kor: string;
+	readonly eng: string;
+	readonly audio: string;
+}
+
+export interface IItem {
+	readonly answer: number;
+	readonly img: string;
+}
+
 export interface IQuiz extends IInClassStudyProps {
 	question: string;
 	answer: number;
@@ -98,34 +122,10 @@ export interface IQuiz extends IInClassStudyProps {
 	app_question: JSX.Element;
 	app_preview: number;
 }
-export interface ILetstalk {
-	sentence: string;			
-	audio: string;
-	img1: string;
-	img2: string;
-	sample: string;
-	hint: string;
-}
 
 export interface IData {
 	quizs: IQuiz[];
 	scripts: IScript[];
-	letstalk: ILetstalk;
 	introduction: IIntroduction[];
+	confirm_nomal: IConfirmNomal[];
 }
-
-interface IRGBA {
-	r: number;
-	g: number;
-	b: number;
-	a: number;
-}
-
-function _RGBA(r: number, g: number, b: number, a: number) {
-	return {r, g, b, a};
-}
-function _rgbaToString(rgba: IRGBA) {
-	const {r, g, b, a} = rgba;
-	return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-

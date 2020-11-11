@@ -15,7 +15,6 @@ import { IMsg,IData,IRollMsg,IFocusMsg } from '../../common';
 import ScriptContainer from '../../script_container';
 import { TimerState } from '../../../share/Timer';
 
-import LetsTalk from './_lets_talk';
 import QuizBox from './_quiz_box';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
