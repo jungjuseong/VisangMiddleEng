@@ -27,41 +27,79 @@
         "movie": "",
         "img2": ""
     }],
-    "video": "y3_l1_u1_011_main.mp4",
-    "video_start": 0,
-    "speakerA": {
-        "name": "Sam",
-        "image_s": "sam_small.png",
-        "image_l": "sam.png"
-    },
-    "speakerB": {
-        "name": "Anna",
-        "image_s": "anna_small.png",
-        "image_l": "anna.png"
-    },
-    "speakerC": {
-        "name": "Maria",
-        "image_s": "maria_small.png",
-        "image_l": "maria.png"
-    },
-    "speakerD": {
-        "name": "Ms. Jones",
-        "image_s": "ms. jones_small.png",
-        "image_l": "ms. jones.png"
-    },
-    "speakerE": {
-        "name": "Sam&Anna",
-        "image_s": "sam&anna_small.png",
-        "image_l": "sam&anna.png"
-    },
-    "letstalk": {
-        "sentence": "How do you say \"hi\" in different languages?",
-        "audio": "y3l1u1_011_letstalk_01.mp3",
-        "img1": "y3l1u1_011_letstalk_01.jpg",
-        "img2": "",
-        "sample": "We say \"{Hola}\" in {Spanish}.",
-        "hint": "We say \"Hola\" in Spanish."
-    },
+    "confirm_nomal": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "pz",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "main_sound": "main.mp3",
+        "feedback": "",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화의 내용과 어울리는 그림에 알맞은 번호를 쓰세요.",
+            "eng": "Listen and number the pictures according to the dialogs.",
+            "movie": "",
+            "audio": "direction_001.mp3",
+            "img": "",
+            "icon": ""
+        },
+        "item1": {
+            "answer": 1,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "004.png"
+        },
+        "item2": {
+            "answer": 3,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "005.png"
+        },
+        "item3": {
+            "answer": 2,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "006.png"
+        },
+        "item4": {
+            "answer": 0,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": ""
+        },
+        "item5": {
+            "answer": 0,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": ""
+        },
+        "item6": {
+            "answer": 0,
+            "answer_kor": "",
+            "answer_eng": "",
+            "movie": "",
+            "audio": "",
+            "img": ""
+        },
+        "ex_answer": {
+            "text": "",
+            "image": ""
+        }
+    }],
     "quizs": [{
         "seq": 1,
         "SC_DIV1": "C0302",
