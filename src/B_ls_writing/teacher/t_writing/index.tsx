@@ -659,13 +659,13 @@ class Writing extends React.Component<IWriting> {
                             })}
                     </div>
                     <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
-                            <div key={1} >
-                                <ConfirmQuiz 
-                                    view={view && 1 === this._curQidx}
-                                    data={confirm_nomals[0]} 
-                                    onClosed={this._letstalkClosed}
-                                />                          
-                            </div>              
+                        <div key={1} >
+                            <ConfirmQuiz 
+                                view={view && 1 === this._curQidx}
+                                data={confirm_nomals[0]} 
+                                onClosed={this._letstalkClosed}
+                            />                          
+                        </div>              
                     </div>
                 </div>
             </div>

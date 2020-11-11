@@ -132,47 +132,30 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
-					<div className="question">		
-						<div className="sentence_box">
-							<div>
-								<div className="question_box" onClick={this._onClick}>
-									{this._jsx_sentence}
-								</div>
-							</div>
-						</div>	
-						<div className="image_box">
-							{/* {Array[3].map(() => {
-								return (
-									<div className="bundle">
-										<img className="image" src={App.data_url + data.img} draggable={false}/>
-										<span className="number_box"/>
+					<div className="quiz_box">
+						<div className="white_board">
+							<div className="sentence_box">
+								<div>
+									<div className="question_box" onClick={this._onClick}>
+										{this._jsx_sentence}
 									</div>
-								);
-							})} */}
-							<div className="bundle">
-								<img className="image" src={App.data_url + data.item1.img} draggable={false}/>
-								<span className="number_box"/>
-							</div>
-							<div className="bundle">
-								<img className="image" src={App.data_url + data.item2.img} draggable={false}/>
-								<span className="number_box"/>
-							</div>
-							<div className="bundle">
-								<img className="image" src={App.data_url + data.item3.img} draggable={false}/>
-								<span className="number_box"/>
-							</div>
-						</div>	
-						<div className="speechbubble_box" >
-							<div>
-								<div className={'balloon' + (this._hint ? ' view-hint' : '')}>
-									<SwiperComponent {...this._soption} ref={this._refSwiper}>
-										<div>
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
-											<div className={'hint' + (this._hint ? '' : ' hide')}>
-												{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}</div>
-										</div>
-									</SwiperComponent>
 								</div>
+							</div>	
+							<div className="image_box">
+								<img src={App.data_url + data.item1.img} draggable={false}/>
+								<img src={App.data_url + data.item2.img} draggable={false}/>
+								<img src={App.data_url + data.item3.img} draggable={false}/>
+							</div>	
+						</div>
+						<div className="speechbubble_box" >
+							<div className={(this._hint ? ' view-hint' : '')}>
+								<SwiperComponent {...this._soption} ref={this._refSwiper}>
+									<div>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}</div>
+									</div>
+								</SwiperComponent>
 							</div>
 						</div>
 					</div>
