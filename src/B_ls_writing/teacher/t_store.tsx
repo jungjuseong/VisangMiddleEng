@@ -36,6 +36,9 @@ interface IQuizResult {
 interface IStateCtx extends IStateBase {
 	hasPreview: boolean;
 	questionProg: SENDPROG;
+	confirmProg: SENDPROG;
+	additionalProg: SENDPROG;
+	dictationProg: SENDPROG;
 	scriptProg: SENDPROG;
 	qnaProg: SENDPROG;
 	dialogueProg: SENDPROG;
@@ -77,6 +80,9 @@ class TeacherContext extends TeacherContextBase {
 		super();
 		this.state.hasPreview = false;
 		this.state.questionProg = SENDPROG.READY;
+		this.state.confirmProg = SENDPROG.READY;
+		this.state.additionalProg = SENDPROG.READY;
+		this.state.dictationProg = SENDPROG.READY;
 		this.state.scriptProg = SENDPROG.READY;
 		this.state.qnaProg = SENDPROG.READY;
 		this.state.dialogueProg = SENDPROG.READY;

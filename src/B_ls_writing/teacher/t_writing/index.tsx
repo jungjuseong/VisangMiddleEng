@@ -2,12 +2,14 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-
+import SendUINew from '../../../share/sendui_new';
 import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
+
+
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IRollMsg,IFocusMsg } from '../../common';
@@ -99,51 +101,54 @@ class Writing extends React.Component<IWriting> {
 		}
     }
     
-	// private onSend = () => {
-    //     const { actions, state } = this.props;
+	private onSend = () => {
+        const { actions, state } = this.props;
 
-    //     if(	this._title === 'COMPREHENSION' ) {
-    //         if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY) return;
-    //         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
-    //     } else {
-    //         if(state.dialogueProg !== SENDPROG.READY) return;
-    //     }
+        // if(	this._title === 'COMPREHENSION' ) {
+        //     if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY) return;
+        //     if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
+        // } else {
+        //     if(state.dialogueProg !== SENDPROG.READY) return;
+        // }
 
-    //     if(	this._title === 'COMPREHENSION' ) {
-    //         if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
-    //         else state.scriptProg = SENDPROG.SENDING;
-    //     } else state.dialogueProg = SENDPROG.SENDING;
+        // if(	this._title === 'COMPREHENSION' ) {
+        //     if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
+        //     else state.scriptProg = SENDPROG.SENDING;
+        // } else state.dialogueProg = SENDPROG.SENDING;
 
-    //     App.pub_playToPad();
-    //     App.pub_reloadStudents(() => {
-    //         let msg: IMsg;
-    //         if(	this._title === 'COMPREHENSION' ) {
-    //             actions.clearReturnUsers();
-    //             actions.setRetCnt(0);
-    //             actions.setNumOfStudent(App.students.length);
+        App.pub_playToPad();
+        App.pub_reloadStudents(() => {
+            let msg: IMsg;
+            // if(	this._title === 'COMPREHENSION' ) {
+            //     actions.clearReturnUsers();
+            //     actions.setRetCnt(0);
+            //     actions.setNumOfStudent(App.students.length);
                 
-    //             if(this._tab === 'QUESTION') {
-    //                 if(state.questionProg !==  SENDPROG.SENDING) return;
-    //                 state.questionProg = SENDPROG.SENDED;
-    //                 msg = {msgtype: 'quiz_send',};
-    //             } else {
-    //                 if(state.scriptProg !==  SENDPROG.SENDING) return;
-    //                 state.scriptProg = SENDPROG.SENDED;
-    //                 msg = {msgtype: 'script_send',};
-    //                 if(this._viewClue) {
-    //                     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-    //                     msg = {msgtype: 'view_clue',};
-    //                 }
-    //             } 
-    //         } else {
-    //             if(state.dialogueProg !== SENDPROG.SENDING) return;
-    //             state.dialogueProg = SENDPROG.SENDED;
-    //             msg = {msgtype: 'dialogue_send',};
-    //         }
-    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-    //         this._setNavi();
-    //     });
-	// }
+            //     if(this._tab === 'QUESTION') {
+            //         if(state.questionProg !==  SENDPROG.SENDING) return;
+            //         state.questionProg = SENDPROG.SENDED;
+            //         msg = {msgtype: 'quiz_send',};
+            //     } else {
+            //         if(state.scriptProg !==  SENDPROG.SENDING) return;
+            //         state.scriptProg = SENDPROG.SENDED;
+            //         msg = {msgtype: 'script_send',};
+            //         if(this._viewClue) {
+            //             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
+            //             msg = {msgtype: 'view_clue',};
+            //         }
+            //     } 
+            // } else {
+            //     if(state.dialogueProg !== SENDPROG.SENDING) return;
+            //     state.dialogueProg = SENDPROG.SENDED;
+            //     msg = {msgtype: 'dialogue_send',};
+            // }
+            msg = {msgtype: 'dialogue_send',};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
+            this._setNavi();
+        });
+	}
 
 	private _onPopupSend = (roll: ''|'A'|'B') => {
         const {state, actions} = this.props;
@@ -156,6 +161,7 @@ class Writing extends React.Component<IWriting> {
 
             let msg: IMsg = {msgtype: 'qna_send',};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
 
             // this._viewClue = false;
             _.delay(() => {
@@ -175,6 +181,7 @@ class Writing extends React.Component<IWriting> {
 
             let msg: IRollMsg = {msgtype: 'roll_send', roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
             _.delay(() => {
                 if(this._title !== 'DIALOGUE') return;
                 else if(state.dialogueProg !== SENDPROG.SENDED) return;
@@ -191,6 +198,7 @@ class Writing extends React.Component<IWriting> {
 
             let msg: IMsg = {msgtype: 'shadowing_send'};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
             _.delay(() => {
                 if(this._title !== 'DIALOGUE') return;
                 else if(state.dialogueProg !== SENDPROG.SENDED) return;
@@ -222,6 +230,7 @@ class Writing extends React.Component<IWriting> {
         
         const clueMsg: IMsg = { msgtype: (this._viewClue) ? 'view_clue' : 'hide_clue'};
         felsocket.sendPAD($SocketType.MSGTOPAD, clueMsg);
+
         this._viewClue = !this._viewClue;			
 	}
 
@@ -268,6 +277,7 @@ class Writing extends React.Component<IWriting> {
 
         actions.init();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+
 	}
 
 	/* 화면전환 */
@@ -315,6 +325,7 @@ class Writing extends React.Component<IWriting> {
         if(state.scriptProg > SENDPROG.READY) {
             state.scriptProg = SENDPROG.READY;
             felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+
             actions.clearQnaReturns();
         }
         if(this._curQidx === 0) actions.setNavi(false, true);
@@ -381,7 +392,9 @@ class Writing extends React.Component<IWriting> {
         const isCompQ = (this._title === 'COMPREHENSION' && this._tab === 'INTRODUCTION');
 
         if(isCompQ) felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsersForQuiz());
+
         else felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsers());
+
 	}
 
 	/* 누른 학생만 보이게 하는 런쳐결과  수정안됨*/
@@ -391,9 +404,12 @@ class Writing extends React.Component<IWriting> {
 		const quizResult = quizResults[this._curQidx];
 		if(!quizResult) return;
 
-		if(idx === 1) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u1);
-		else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u2);
-		else if(idx === 3) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u3);
+        if(idx === 1) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u1);
+        
+        else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u2);
+        
+        else if(idx === 3) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u3);
+        
 	}
 
 	private _clickAnswer = () => {
@@ -411,6 +427,7 @@ class Writing extends React.Component<IWriting> {
         };
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
+
         actions.quizComplete();
         this.props.actions.setNavi(true, true);
 	}	
@@ -427,13 +444,15 @@ class Writing extends React.Component<IWriting> {
 			msgtype: 'focusidx',
 			idx,
 		};
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        
 	}
 	private _sendDialogueEnd() {
 		const msg: IMsg = {
 			msgtype: 'dialogue_end',
 		};
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        
 	}
 
 	private _letstalkClosed = () => {
@@ -474,6 +493,7 @@ class Writing extends React.Component<IWriting> {
                         // if(state.scriptProg > SENDPROG.READY) {
                         //     state.scriptProg = SENDPROG.READY;
                         //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+
                         //     actions.clearQnaReturns();
                         // }
                     } else if(this._tab === 'ADDITIONAL') {
@@ -614,8 +634,16 @@ class Writing extends React.Component<IWriting> {
         }
 
         const isCompI = (this._title === 'COMPREHENSION' && this._tab === 'INTRODUCTION');
+        const isCompC = (this._title === 'COMPREHENSION' && this._tab === 'CONFIRM');
+        const isCompA = (this._title === 'COMPREHENSION' && this._tab === 'ADDITIONAL');
+        const isCompD = (this._title === 'COMPREHENSION' && this._tab === 'DICTATION');
         const isCompS = (this._title === 'COMPREHENSION' && this._tab === 'SCRIPT');
-    
+        const isViewSend = (!isCompI) &&
+                            (isCompC && state.confirmProg < SENDPROG.SENDED) ||
+                            (isCompA && state.additionalProg < SENDPROG.SENDED) ||
+                            (isCompD && state.dictationProg < SENDPROG.SENDED) ||
+                            (isCompS && state.scriptProg < SENDPROG.SENDED);
+        
         const isViewInfo = (isCompI && questionProg >= SENDPROG.SENDED) || isCompS;
         const isViewReturn = (isCompI && questionProg >= SENDPROG.SENDED) || (isCompS && qnaProg >=  SENDPROG.SENDED);
         const style: React.CSSProperties = {};
@@ -668,6 +696,13 @@ class Writing extends React.Component<IWriting> {
                         </div>              
                     </div>
                 </div>
+                <SendUINew
+                    view={isViewSend}
+                    type={'teacher'}
+                    sended={false}
+                    originY={0}
+                    onSend={this.onSend}
+                />
             </div>
         );
     }
