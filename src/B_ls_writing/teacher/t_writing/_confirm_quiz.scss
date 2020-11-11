@@ -1,0 +1,185 @@
+@import '../../../share/sendui.scss';
+@import '../../../share/Progress_bar.scss';
+@import '../../script_container/index.scss';
+@import '../t_video_box/index.scss';
+
+@import '../../../share/QuizMCBtn.scss';
+
+@mixin confirm_quiz{
+	.question_bg{
+		padding-top:10px;
+		margin:0 auto;
+		position:relative;
+		
+		.closed_hint{
+			display:none;
+		}
+		
+		.btn_hint{
+			@include btn_on(
+				resolve('teacher/images/btn_hint.png'),
+				resolve('teacher/images/btn_hint_down.png'),
+				width('teacher/images/btn_hint.png'),
+				height('teacher/images/btn_hint.png'),
+			);
+			position:absolute;
+			right:20px;
+			top:65px;
+			z-index: 2;
+		}
+
+		.question{
+			position: absolute;
+			top: 50px; bottom: 0px;
+			left: 0px; right: 0px;
+			text-align: center;
+			letter-spacing: -0.6px;
+			white-space: normal;
+			font-size: 34px;
+
+			span.word{
+				display: inline-block;
+				padding: 0px 6px;
+				white-space: nowrap;
+			}
+			.sentence_box{
+				position: relative;
+				height: 80px;
+				&>div{
+					position: relative;
+					display: inline-block;
+					top: 80px;
+					transform: translateY(-50%);
+					left: 0px;
+
+					.btn_audio{
+						@include btn_on(
+							resolve('teacher/images/btn_speaker.png'),
+							resolve('teacher/images/btn_speaker_on.png'),
+							width('teacher/images/btn_speaker.png'),
+							height('teacher/images/btn_speaker.png')
+						);
+						vertical-align: top;
+						margin-top: 12px;
+						margin-right: 12px;
+					}
+					.question_box{
+						text-align: left;
+						display: inline-block;
+						vertical-align: top;
+
+						max-width: 1000px;
+					}
+
+				}
+			}
+
+			.image_box{
+				position:relative;
+				margin-top: 40px;
+				height: 260px;
+				display: inline-block;
+				
+				&>div.bundle {
+					position:relative;
+					overflow: auto;
+					width: 300px;
+					height: 300px;
+					float: left;
+
+					.image{
+						position: absolute;
+						top: 0px; left: 0px;
+						width: 276px;
+						height: 249px;
+						margin: 0px 10px;
+	
+					}
+					.number_box {
+						display: inline-block;
+						position: absolute; top: 5px; left: 10px;
+						z-index: 2;
+						background: resolve('teacher/images/btn_zoom.png') no-repeat;
+						width: width('teacher/images/btn_zoom.png');
+						height: height('teacher/images/btn_zoom.png');
+						&.notonly{
+							position: absolute; top: 5px; left: 5px;
+						}
+					}
+				}
+			}
+
+			.speechbubble_box{
+				position: relative;
+				margin-bottom: 20px;
+
+				&>div{
+					display: inline-table;
+					&>div{
+						display: table-cell;
+						vertical-align: middle;
+					}
+				}
+				
+				.balloon { 
+					position: relative; 
+					background-color: #fff; 
+					border-radius: 10px; 
+					width: 900px;
+					height: 130px;
+					text-align: left;
+					padding: 0 20px;
+
+					.swiper-container {	
+						width: 885px;
+						left: 10px;
+						border-bottom: 2px solid #000;
+
+						.swiper-scrollbar{
+							width: 9px;
+							right: 3px;
+							top: 5%;
+							height: 90%;
+							background-color: transparent;
+							.swiper-scrollbar-drag {
+								background-color: rgba(0, 0, 0, 0.25);
+							}
+						}
+						&>div{
+							width: 850px;
+							max-height: 120px;
+
+							.sample{
+								min-height: 55px;
+								padding-bottom: 5px;
+								span.block{
+									color: transparent;
+									border-bottom: 2px solid #000;
+								}
+							}
+							.hide{
+								display: none;
+							}
+							.hint{
+								min-height: 55px;
+								padding-bottom: 5px;
+								span.block{
+									display: inline;
+									border-bottom: 2px solid rgb(0,240,255);
+								}
+							}
+						}
+					}
+
+					&.view-hint{
+						background-color: rgb(13, 92, 155); 
+						color: rgb(0,240,255);
+						&:after{
+							border-right-color: rgb(13, 92, 155); 
+						}
+					}	
+				} 
+			}
+		}
+	}
+}
