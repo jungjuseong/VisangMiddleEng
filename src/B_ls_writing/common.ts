@@ -108,13 +108,6 @@ export interface ILetstalk {
 }
 
 export interface IData {
-    video: string;
-    video_start: number;
-	speakerA: ISpeaker;
-	speakerB: ISpeaker;
-	speakerC: ISpeaker;
-	speakerD: ISpeaker;
-	speakerE: ISpeaker;
 	quizs: IQuiz[];
 	scripts: IScript[];
 	letstalk: ILetstalk;

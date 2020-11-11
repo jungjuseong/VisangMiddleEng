@@ -125,11 +125,6 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 	}
 	public render() {
 		const { data, selected, qnaReturns } = this.props;
-		const thumbA = data.speakerA.image_s;
-		const thumbB = data.speakerB.image_s;
-		const thumbC = data.speakerC.image_s;
-		const thumbD = data.speakerD.image_s;
-		const thumbE = data.speakerE.image_s;
 
 		const arr: string[] = ['script_box'];
 
@@ -145,37 +140,10 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 			<>
 			<SwiperComponent {...this.m_soption} ref={this._refSwiper}>
 				{data.scripts.map((script, idx) => {
-					let thumb;
-					if (script.roll === 'E')  thumb = thumbE;
-					else if (script.roll === 'D')  thumb = thumbD;
-					else if (script.roll === 'C')  thumb = thumbC;
-					else if (script.roll === 'B')  thumb = thumbB;
-					else thumb = thumbA;
-					const sidx = selected.indexOf(idx); 
-
-					let numOfReturn = (idx < qnaReturns.length) ? qnaReturns[idx].num : 0;
 
 					return (
 						<div className={boxClass} key={'script_' + idx}>
-							<ScriptBox  
-								view={this.props.view}
-								script={script} 
-								image_s={thumb} 
-								idx={idx}
-								focus={idx === this.props.focusIdx}
-								selected={sidx >= 0}
-								numOfReturn={numOfReturn}
-								roll={script.roll}
-								sroll={this.props.roll}
-								shadowing={this.props.shadowing}
-								clickThumb={this.props.clickThumb}
-								clickText={this.props.clickText}
-								qnaReturnsClick={this.props.qnaReturnsClick}
-								compDiv={this.props.compDiv}
-								viewClue={this.props.viewClue}
-								viewScript={this.props.viewScript}
-								viewTrans={this.props.viewTrans}								
-							/>
+							
 						</div>
 					);
 				})}

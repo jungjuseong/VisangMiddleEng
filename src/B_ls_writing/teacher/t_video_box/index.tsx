@@ -63,7 +63,6 @@ class VideoBox extends React.Component<IVideoBox> {
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
 
-		player.load(App.data_url + this.props.data.video);
 		const scripts = this.props.data.scripts;
 		player.addOnTime((time: number) => {
 			time = time / 1000;
