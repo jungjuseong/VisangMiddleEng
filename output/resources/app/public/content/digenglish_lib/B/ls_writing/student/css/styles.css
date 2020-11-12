@@ -163,46 +163,6 @@
     content: url("/content/digenglish_lib/B/ls_writing/student/images/btn_script.png") url("/content/digenglish_lib/B/ls_writing/student/images/btn_script_down.png") url("/content/digenglish_lib/B/ls_writing/student/images/btn_script.png");
 }
 
-#wrap .s_content .s_question .btn_page_box {
-    position: absolute;
-    top: 25px;
-    width: 100%;
-    height: 0px;
-    overflow: visible;
-    text-align: center;
-    z-index: 2;
-    cursor: pointer;
-}
-
-#wrap .s_content .s_question .btn_page_box > span {
-    display: inline-block;
-    vertical-align: top;
-    width: 66px;
-    height: 66px;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    line-height: 55px;
-    font-size: 34px;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.4);
-}
-
-#wrap .s_content .s_question .btn_page_box > span.O {
-    background-image: url("/content/digenglish_lib/B/ls_writing/common/icon_o.png");
-}
-
-#wrap .s_content .s_question .btn_page_box > span.X {
-    background-image: url("/content/digenglish_lib/B/ls_writing/common/icon_x.png");
-}
-
-#wrap .s_content .s_question .btn_page_box > span.on {
-    color: #f8f64d;
-}
-
-#wrap .s_content .s_question .btn_page_box.off {
-    display: none;
-}
-
 #wrap .s_content .s_question .question {
     position: absolute;
     top: 0px;
@@ -230,9 +190,10 @@
 }
 
 #wrap .s_content .s_question .question .q-item .quiz > div {
-    position: relative;
-    top: 50%;
+    position: absolute;
+    top: -50px;
     transform: translateY(-50%);
+    left: 20px;
     display: inline-block;
     white-space: normal;
     word-break: normal;
@@ -247,6 +208,16 @@
     top: 315px;
     text-align: center;
     white-space: normal;
+}
+
+#wrap .s_content .s_question .question .q-item .choice .image {
+    position: relative;
+    background-color: gray;
+    float: left;
+    width: 218px;
+    height: 249px;
+    margin: 104px;
+    bottom: 210px;
 }
 
 #wrap .s_content .s_question .question .q-item .choice .btn_choice {
@@ -415,6 +386,24 @@
 
 #wrap .s_content .s_question .question .q-item .choice .btn_choice.on::after {
     top: 4px;
+}
+
+#wrap .s_content .s_question .question .box {
+    position: absolute;
+    top: 450px;
+    text-align: center;
+    white-space: normal;
+}
+
+#wrap .s_content .s_question .question .box .num {
+    position: relative;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #000;
+    margin: 20px;
+    float: left;
+    font-size: 24px;
 }
 
 #wrap .s_content .s_question .btn_next {

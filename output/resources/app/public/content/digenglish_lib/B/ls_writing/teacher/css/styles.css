@@ -463,6 +463,244 @@ body {
     padding-top: 10px;
     margin: 0 auto;
     position: relative;
+    width: 1150px;
+    height: 600px;
+}
+
+#wrap .t_writing .question_bg .closed_hint {
+    display: none;
+}
+
+#wrap .t_writing .question_bg .btn_hint {
+    touch-action: none;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint.png");
+    background-repeat: no-repeat;
+    width: 58px;
+    height: 58px;
+    cursor: pointer;
+    pointer-events: unset;
+    position: absolute;
+    right: 20px;
+    top: 65px;
+    z-index: 2;
+}
+
+#wrap .t_writing .question_bg .btn_hint.on {
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint_down.png");
+}
+
+#wrap .t_writing .question_bg .btn_hint:before {
+    position: absolute;
+    pointer-events: none;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    overflow: hidden;
+    z-index: -1;
+    content: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint.png") url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint_down.png");
+}
+
+#wrap .t_writing .question_bg .quiz_box {
+    position: absolute;
+    text-align: center;
+    white-space: normal;
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    letter-spacing: -0.6px;
+    padding: 20px;
+}
+
+#wrap .t_writing .question_bg .quiz_box span.word {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0px 6px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board {
+    display: inline-block;
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 950px;
+    height: 400px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .btn_trans {
+    touch-action: none;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint.png");
+    background-repeat: no-repeat;
+    width: 58px;
+    height: 58px;
+    cursor: pointer;
+    pointer-events: unset;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    z-index: 2;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .btn_trans.on {
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint_down.png");
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .btn_trans:before {
+    position: absolute;
+    pointer-events: none;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    overflow: hidden;
+    z-index: -1;
+    content: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint.png") url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_hint_down.png");
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box {
+    height: 100px;
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    padding: 0px 25px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box > div {
+    display: inline-block;
+    transform: translateY(-50%);
+    margin-top: 75px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box > div .btn_audio {
+    touch-action: none;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_speaker.png");
+    background-repeat: no-repeat;
+    width: 37px;
+    height: 31px;
+    cursor: pointer;
+    pointer-events: unset;
+    vertical-align: top;
+    margin-top: 12px;
+    margin-right: 12px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box > div .btn_audio.on {
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_speaker_on.png");
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box > div .btn_audio:before {
+    position: absolute;
+    pointer-events: none;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    overflow: hidden;
+    z-index: -1;
+    content: url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_speaker.png") url("/content/digenglish_lib/B/ls_writing/teacher/images/btn_speaker_on.png");
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .sentence_box > div .question_box {
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 1000px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .image_box {
+    position: relative;
+    margin-top: 5px;
+    height: 260px;
+    display: inline-block;
+}
+
+#wrap .t_writing .question_bg .quiz_box .white_board .image_box > img {
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 218px;
+    height: 249px;
+    margin: 0px 25px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box {
+    position: relative;
+    margin: 10px 0px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box > div {
+    display: inline-table;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box > div > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box > div.view-hint {
+    color: #fff;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box > div.view-hint:after {
+    border-right-color: #0d5c9b;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container {
+    height: 80px;
+    border-bottom: 2px solid #fff;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container .swiper-scrollbar {
+    width: 9px;
+    right: 3px;
+    top: 5%;
+    height: 90%;
+    background-color: transparent;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container .swiper-scrollbar .swiper-scrollbar-drag {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container > div {
+    width: 500px;
+    max-height: 120px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container > div .sample {
+    min-height: 55px;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container > div .sample span.block {
+    color: transparent;
+    border-bottom: 2px solid #fff;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container > div .hide {
+    display: none;
+}
+
+#wrap .t_writing .question_bg .quiz_box .speechbubble_box .swiper-container > div .hint {
+    min-height: 55px;
+    padding-bottom: 5px;
+    font-size: 45px;
+}
+
+#wrap .t_writing .question_bg {
+    padding-top: 10px;
+    margin: 0 auto;
+    position: relative;
 }
 
 #wrap .t_writing .question_bg .closed_hint {
@@ -526,7 +764,7 @@ body {
 }
 
 #wrap .t_writing .question_bg .popbox .image_box > img {
-    width: 409px;
+    width: 309px;
     height: 249px;
     margin: 0px 10px;
 }
@@ -679,8 +917,10 @@ body {
 }
 
 #wrap .t_writing .question_bg .popbox .speechbubble_box .sentence_box {
-    position: relative;
+    position: absolute;
     height: 100px;
+    top: -25px;
+    left: 50px;
 }
 
 #wrap .t_writing .question_bg .popbox .speechbubble_box .sentence_box > div {
@@ -779,6 +1019,7 @@ body {
 #wrap .t_writing .question_bg .popbox .speechbubble_box .balloon .swiper-container > div .hint {
     min-height: 55px;
     padding-bottom: 5px;
+    color: blue;
 }
 
 #wrap .t_writing .question_bg .popbox .speechbubble_box .balloon .swiper-container > div .hint span.block {
@@ -787,8 +1028,7 @@ body {
 }
 
 #wrap .t_writing .question_bg .popbox .speechbubble_box .balloon.view-hint {
-    background-color: #0d5c9b;
-    color: #00f0ff;
+    background-color: white;
 }
 
 #wrap .t_writing .question_bg .popbox .speechbubble_box .balloon.view-hint:after {
