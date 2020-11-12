@@ -62,37 +62,6 @@ class VideoBox extends React.Component<IVideoBox> {
 		const { player } = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
-
-		const scripts = this.props.data.scripts;
-		player.addOnTime((time: number) => {
-			time = time / 1000;
-			const curIdx = _getCurrentIdx(scripts, time);
-			if(this.m_curIdx !== curIdx) {
-				if(this.props.shadowing) {
-					if(this.m_yourturn < 0) {
-						if(this.m_curIdx >= 0) {
-                            this.m_ytNext = curIdx;
-                            player.pause();
-                            const script = scripts[this.m_curIdx];
-                            const delay = (script.dms_end - script.dms_start) * 2000;
-                            this.m_yourturn = _.delay(() => {
-                                if(this.m_yourturn >= 0 && this.props.isShadowPlay) {
-                                    this.m_curIdx = this.m_ytNext;
-                                    this.m_yourturn = -1;
-                                    player.play();
-                                }
-                            }, delay); 
-                            return;
-						}
-					} else {
-						return;
-					}
-
-				}	
-				this.m_curIdx = curIdx;
-				this.props.onChangeScript(curIdx);
-			}
-		});
 	}
 	private _playClick = () => {
 		if(this.m_viewCountDown || this.props.shadowing) return;
@@ -133,26 +102,7 @@ class VideoBox extends React.Component<IVideoBox> {
 		}					
 	
 		const player = this.props.player;
-		const scripts = this.props.data.scripts;
 		const time = player.currentTime / 1000;
-		const curIdx = _getCurrentIdx(scripts, time);
-		if (curIdx >= 0) {
-			if (curIdx > 0) {
-                const script = scripts[curIdx - 1];
-                if(this.props.playerInitTime > script.dms_start) player.seek(this.props.playerInitTime * 1000);
-				else player.seek(script.dms_start * 1000);
-			} else player.seek(this.props.playerInitTime * 1000);
-		} else {
-			for (let len = scripts.length, i = len - 1; i >= 0; i--) {
-				if (time > scripts[i].dms_start) {
-					if(this.props.playerInitTime > scripts[i].dms_start) player.seek(this.props.playerInitTime * 1000);
-				    else player.seek(scripts[i].dms_start * 1000);
-					break;
-				} else if (i === 0) {
-					player.seek(this.props.playerInitTime * 1000);
-				}
-			}
-		}
 		if(this.props.shadowing) {
 			if (this.props.isShadowPlay) player.play();
 			else player.pause();
@@ -167,30 +117,7 @@ class VideoBox extends React.Component<IVideoBox> {
 			this.m_yourturn = -1;
 		}
 		const player = this.props.player;
-		const scripts = this.props.data.scripts;
 		const time = player.currentTime / 1000;
-		const curIdx = _getCurrentIdx(scripts, time);
-
-		if (curIdx >= 0) {
-			if (curIdx < scripts.length - 1) {
-				const script = scripts[curIdx + 1];
-				player.seek(script.dms_start * 1000);
-			} else {
-				this.props.setShadowPlay(false);
-				player.seek(player.duration);
-			}
-		} else {
-			for (let i = 0, len = scripts.length; i < len; i++) {
-				if (time < scripts[i].dms_start) {
-					player.seek(scripts[i].dms_start * 1000);
-					break;
-				} else if (i === len - 1) {
-					// console.log('a->next', this.m_shadowPlay, this.props.shadowing);
-					this.props.setShadowPlay(false);
-					player.seek(player.duration);
-				}
-			}
-		}
 		// console.log('next', this.m_shadowPlay, this.props.shadowing);
 		if(this.props.shadowing) {
 			
@@ -316,9 +243,7 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 	public render() {
 		const { player, data, roll, shadowing, isShadowPlay} = this.props;
-		const scripts = data.scripts;
 		let script;
-		if(this.m_viewCaption && this.m_curIdx >= 0) script = scripts[this.m_curIdx];
 		const isOnRoll = roll === 'A' || roll === 'B';
 		const viewLoading = !isOnRoll && !shadowing && (player.myState === MPRState.BUFFERING || player.myState === MPRState.LOADING);
 		const viewBtnPlay = !isOnRoll && !shadowing && !player.bPlay;

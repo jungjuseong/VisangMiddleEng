@@ -55,14 +55,6 @@ class SQuestion extends React.Component<ISQuestion> {
 
 	constructor(props: ISQuestion) {
 		super(props);
-		const quizs = props.actions.getData().quizs;
-		for(let i = 0; i < quizs.length; i++) {
-			this._choices[i] = {
-				answer: 0,
-				stime: 0,
-				etime: 0,
-			};
-		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -95,18 +87,9 @@ class SQuestion extends React.Component<ISQuestion> {
 		App.pub_playToPad();
 		this.props.state.questionProg = QPROG.SENDING;
 		if(App.student) {
-			const choices: common.IQuizReturn[] = [];
-			this._choices.forEach((choice, idx) => {
-				choices.push({
-					answer: choice.answer,
-					stime: choice.stime,
-					etime: choice.etime,				
-				});
-			});
 			const msg: common.IQuizReturnMsg = {
 				msgtype: 'quiz_return',
-				id: App.student.id,
-				returns: choices,
+				id: App.student.id
 			};
 
 			felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -143,7 +126,6 @@ class SQuestion extends React.Component<ISQuestion> {
 
 		App.pub_playBtnTab();
 		if(this._choices[idx]) {
-			this._choices[idx].answer = choice;
 			this._choices[idx].etime = Date.now();
 		}
 	}
@@ -195,7 +177,6 @@ class SQuestion extends React.Component<ISQuestion> {
 			}
 			if(this.props.questionProg < QPROG.COMPLETE) {
 				for(let i = 0; i < this._choices.length; i++) {
-					this._choices[i].answer = 0;
 					this._choices[i].stime = Date.now();
 					this._choices[i].etime = 0;
 				}
@@ -203,7 +184,6 @@ class SQuestion extends React.Component<ISQuestion> {
 		} else if (!this.props.view && prev.view) {
 			if(this.props.questionProg < QPROG.COMPLETE) {
 				for(let i = 0; i < this._choices.length; i++) {
-					this._choices[i].answer = 0;
 					this._choices[i].stime = Date.now();
 					this._choices[i].etime = 0;
 				}
@@ -225,14 +205,14 @@ class SQuestion extends React.Component<ISQuestion> {
 	public render() {
 		const {view, state, actions, questionProg} = this.props;
 		const c_data = actions.getData();
-		const quizs = c_data.quizs;
+		const introductions = c_data.introduction;
 		const confirm_nomals = c_data.confirm_nomal;
 		const noSwiping = questionProg === QPROG.ON;
 
 		const curChoice = this._curIdx >= 0 ? this._choices[this._curIdx] : undefined;
 		const curAnswer = curChoice ? curChoice.answer : 0;
 		const canNext = curAnswer > 0 && questionProg === QPROG.ON;
-		const isLast = this._curIdx === quizs.length - 1;
+		const isLast = this._curIdx === introductions.length - 1;
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
@@ -245,7 +225,7 @@ class SQuestion extends React.Component<ISQuestion> {
 									<QuizItem
 										view={view} 
 										idx={idx}
-										choice={this._choices[idx].answer}
+										choice={0}
 										confirm_normal={confirm_nomal}
 										questionProg={questionProg}
 										onChoice={this._onChoice}

@@ -85,20 +85,10 @@ class Writing extends React.Component<IWriting> {
 	public constructor(props: IWriting) {
         super(props);
         this.m_data = props.actions.getData();
-
-        const quizs = this.m_data.quizs;
-        for(let i = 0; i < quizs.length; i++) {
-            this._qselected[i] = -1;
-        }
-
     }
     
 	public componentDidMount() {
 		this.m_data = this.props.actions.getData();
-		const quizs = this.m_data.quizs;
-		for(let i = 0; i < quizs.length; i++) {
-			this._qselected[i] = -1;
-		}
     }
     
 	private onSend = () => {
@@ -258,8 +248,8 @@ class Writing extends React.Component<IWriting> {
         this._title = 'COMPREHENSION';
         this._tab = 'INTRODUCTION';
 
-        const quizs = this.m_data.quizs;
-        for(let i = 0; i < quizs.length; i++) {
+        const introductions = this.m_data.introduction;
+        for(let i = 0; i < introductions.length; i++) {
             this._qselected[i] = -1;
         }
         this._curQidx = 0;
@@ -467,7 +457,7 @@ class Writing extends React.Component<IWriting> {
 
         actions.setNaviView(true);
         if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(questionProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.quizs.length - 1 ? false : true);
+        else if(questionProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
 		else actions.setNavi(true, true);
 		
         actions.setNaviFnc(
@@ -486,7 +476,7 @@ class Writing extends React.Component<IWriting> {
                         if(this._curQidx === 0) {
                             this._hint = false;
                             this._tab = 'INTRODUCTION';
-                            this._curQidx = this.m_data.quizs.length - 1;
+                            this._curQidx = this.m_data.introduction.length - 1;
                         } else {
                             this._hint = false;
                             this._curQidx = this._curQidx - 1;
@@ -502,7 +492,7 @@ class Writing extends React.Component<IWriting> {
                         if(this._curQidx === 0) {
                             this._hint = false;
                             this._tab = 'CONFIRM';
-                            this._curQidx = this.m_data.quizs.length - 1;
+                            this._curQidx = this.m_data.introduction.length - 1;
                         } else {
                             this._hint = false;
                             this._curQidx = this._curQidx - 1;
@@ -512,7 +502,7 @@ class Writing extends React.Component<IWriting> {
                         if(this._curQidx === 0) {
                             this._hint = false;
                             this._tab = 'ADDITIONAL';
-                            this._curQidx = this.m_data.quizs.length - 1;
+                            this._curQidx = this.m_data.introduction.length - 1;
                         } else {
                             this._hint = false;
                             this._curQidx = this._curQidx - 1;
@@ -522,7 +512,7 @@ class Writing extends React.Component<IWriting> {
                         if(this._curQidx === 0) {
                             this._hint = false;
                             this._tab = 'DICTATION';
-                            this._curQidx = this.m_data.quizs.length - 1;
+                            this._curQidx = this.m_data.introduction.length - 1;
                         } else {
                             this._hint = false;
                             this._curQidx = this._curQidx - 1;
@@ -540,7 +530,7 @@ class Writing extends React.Component<IWriting> {
             () => {
                 if(this._title === 'COMPREHENSION') {
                     if(this._tab === 'INTRODUCTION') {
-                        if(this._curQidx === this.m_data.quizs.length - 1) {
+                        if(this._curQidx === this.m_data.introduction.length - 1) {
                             if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'CONFIRM';
@@ -551,7 +541,7 @@ class Writing extends React.Component<IWriting> {
                             this._setNavi();
                         }
                     } else if(this._tab === 'CONFIRM') {
-                        if(this._curQidx === this.m_data.quizs.length - 1) {
+                        if(this._curQidx === this.m_data.introduction.length - 1) {
                             if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'ADDITIONAL';
@@ -562,7 +552,7 @@ class Writing extends React.Component<IWriting> {
                             this._setNavi();
                         }
                     } else if(this._tab === 'ADDITIONAL') {
-                        if(this._curQidx === this.m_data.quizs.length - 1) {
+                        if(this._curQidx === this.m_data.introduction.length - 1) {
                             if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'DICTATION';
@@ -573,7 +563,7 @@ class Writing extends React.Component<IWriting> {
                             this._setNavi();
                         }
                     } else if(this._tab === 'DICTATION') {
-                        if(this._curQidx === this.m_data.quizs.length - 1) {
+                        if(this._curQidx === this.m_data.introduction.length - 1) {
                             if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'SCRIPT';
@@ -584,7 +574,7 @@ class Writing extends React.Component<IWriting> {
                             this._setNavi();
                         }
                     } else if(this._tab === 'SCRIPT') {
-                        if(this._curQidx !== this.m_data.quizs.length - 1) {                        
+                        if(this._curQidx !== this.m_data.introduction.length - 1) {                        
                             this._hint = false;
                             this._curQidx = this._curQidx + 1;
                             this._setNavi();

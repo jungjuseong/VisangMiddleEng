@@ -58,7 +58,6 @@ class SContent extends React.Component<ISContent> {
 		App.pub_playBtnTab();
 		state.scriptProg = SPROG.SENDED;
 		if(!App.student) return;
-		const script = this.props.actions.getData().scripts[this.props.state.focusIdx];
 		const msg: common.IQNAMsg = {
 			msgtype: 'qna_return',
 			id: App.student.id,

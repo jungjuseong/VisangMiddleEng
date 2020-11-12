@@ -100,21 +100,6 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 			if(!this.props.noSwiping) tidx = this.m_swiper.activeIndex;
 			bUpdate = true;
 		}
-		if(this.props.viewClue && !prev.viewClue) {
-            bUpdate = true;
-            if(tidx <= 0) {
-                const scripts = this.props.data.scripts;
-                for(let i = 0; i < scripts.length; i++) {
-                    if(scripts[i].qnums !== undefined && scripts[i].qnums!.length > 0) {
-                        if(scripts[i].qnums!.indexOf(1) >= 0) {
-                            if(i > 1) tidx = i - 1;
-                            else tidx = 0;
-                            break;
-                        } 
-                    }
-                }
-            }
-        }
 		if(bUpdate && this.props.view) {
 			this.m_swiper.update();
 			if(this.m_swiper.scrollbar) this.m_swiper.scrollbar.updateSize();
@@ -139,14 +124,6 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		return (
 			<>
 			<SwiperComponent {...this.m_soption} ref={this._refSwiper}>
-				{data.scripts.map((script, idx) => {
-
-					return (
-						<div className={boxClass} key={'script_' + idx}>
-							
-						</div>
-					);
-				})}
 			</SwiperComponent>
 			<div style={{display: 'none'}}>{this.props.numRender}</div>
 			</>

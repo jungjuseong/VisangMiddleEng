@@ -190,21 +190,6 @@ class StudentContext extends StudentContextBase {
 	public setData(data: any) {
 		// console.log(data);
 		this._data = data as common.IData;
-
-		for(let i = 0; i < this._data.quizs.length; i++) {
-			const q = this._data.quizs[i];
-
-			const arr = q.question.split('<br>');
-			
-			q.app_question = (
-				<>{
-					arr.map((str, idx) => {
-						if(idx > 0) return <React.Fragment key={idx}><br/>{str}</React.Fragment>;
-						else return str;
-					})
-				}</>
-			);
-		}
 	}
 }
 

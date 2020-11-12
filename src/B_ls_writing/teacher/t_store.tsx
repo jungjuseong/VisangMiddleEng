@@ -109,9 +109,6 @@ class TeacherContext extends TeacherContextBase {
 		this.actions.clearQnaReturns = () => {
 			
 			this._returnUsers = [];
-			for(let i = 0; i < this._data.scripts.length; i++) {
-				this._qnaReturns[i] = {num: 0, users: []};
-			}
 			this.actions.setRetCnt(0);
 		};
 
@@ -124,12 +121,6 @@ class TeacherContext extends TeacherContextBase {
 			if(this.state.questionProg < SENDPROG.COMPLETE) {
 				this.state.questionProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
-				for(let i = 0; i < this._data.quizs.length; i++) {
-					this._result[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: [], c3: 0, u3: [],};
-				}
-			}
-			for(let i = 0; i < this._data.scripts.length; i++) {
-				this._qnaReturns[i] = {num: 0, users: []};
 			}
 		};
 	}
@@ -144,31 +135,7 @@ class TeacherContext extends TeacherContextBase {
 	}
 
 	private _uploadInclassReport = (qmsg: common.IQuizReturnMsg) => {
-		const quizs = this._data.quizs;
 		const userReports: IInClassReport[] = [];
-
-		quizs.forEach((quiz, idx) => {
-			const ret = qmsg.returns[idx];
-			const stime = StrUtil._toStringTimestamp(new Date(ret.stime));
-			const etime = StrUtil._toStringTimestamp(new Date(ret.etime));
-			if(ret && quiz.tmq_seq) {
-				userReports.push({
-					std_cont_seq: quiz.tmq_seq,
-					studentId: qmsg.id,
-					ans_tf: ret.answer === quiz.answer ? '1' : '0',
-					ans_submit: '' + ret.answer,
-					ans_starttime: stime,
-					ans_endtime: etime,
-					sc_div1: quiz.SC_DIV1 ? quiz.SC_DIV1 : '',
-					sc_div2: quiz.SC_DIV2 ? quiz.SC_DIV2 : '',
-					sc_div3: quiz.SC_DIV3 ? quiz.SC_DIV3 : '',
-					sc_div4: quiz.SC_DIV4 ? quiz.SC_DIV4 : '',
-					files: null,
-					ans_correct: '' + quiz.answer,
-					tab_index: ''
-				});	
-			}
-		});
 
 		if(userReports.length > 0) {
 			console.log('inclassReport(LogFromContentTeacher): ', userReports); // 비상요청 사항                        
@@ -198,25 +165,6 @@ class TeacherContext extends TeacherContextBase {
 						this._returnUsersForQuiz.push(qmsg.id);
 						felsocket.addStudentForStudentReportType6(qmsg.id);
 						this.actions.setRetCnt(this._returnUsersForQuiz.length);
-						for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
-							if(i < this._result.length) {
-								const quiz = this._data.quizs[i];
-								const ret = qmsg.returns[i];						// 사용자가 선택한 번호
-								const result = this._result[i];					// 결과 저장 	
-
-								if(ret.answer === quiz.answer) result.numOfCorrect++;
-								if(ret.answer === 1) {
-									result.c1++;
-									result.u1.push(qmsg.id);
-								} else if(ret.answer === 2) {
-									result.c2++;
-									result.u2.push(qmsg.id);
-								} else if(ret.answer === 3) {
-									result.c3++;
-									result.u3.push(qmsg.id);
-								}
-							}
-						}
 
 						this._uploadInclassReport(qmsg);
 
@@ -254,16 +202,6 @@ class TeacherContext extends TeacherContextBase {
 					const etime = StrUtil._toStringTimestamp(new Date(qmsg.etime));
 					
 					let ans_submit = 'qna;';
-					const scripts = this._data.scripts;
-					if( qmsg.returns.length > 0) {
-						qmsg.returns.forEach((val,idx) => {
-							const script = scripts[val];
-							if(script) {
-								if(ans_submit === 'qna;') ans_submit += script.seq + '|' + script.dms_eng;
-								else ans_submit += '§' + script.seq + '|' + script.dms_eng;
-							}
-						});
-					}
 					
 					userReports.push({
                         std_cont_seq: 0,
@@ -317,23 +255,6 @@ class TeacherContext extends TeacherContextBase {
 			
 			}
 		}
-		// 사전 학습 관련 데이터 셋팅 을 위한 함수 (문장별 학생 전체 평균값 구하기) 
-		const q_arr = [70, 60, 80];		
-
-		const scripts = this._data.scripts;
-
-		for(let i = 0; i < this._data.quizs.length; i++) {
-			const q = this._data.quizs[i];
-			const question = q.question.replace(/\<br\>/g, ' ');
-
-			q.app_question = (<>{question}</>);
-			
-			if(i < q_arr.length) q.app_preview = q_arr[i];
-			else q.app_preview = -1;
-
-			this._result[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: [], c3: 0, u3: []};
-		}
-
 		const previewMsg: IPreviewClassMsg[] = [];
 	
 		console.log('previewMsg~~~', previewMsg.length, previewMsg);
@@ -356,37 +277,12 @@ class TeacherContext extends TeacherContextBase {
 				console.log('text_arr', text_arr_meaning, 'val_arr', val_arr_meaning);
 				// console.log("previewResult~~",previewResult)
 				let resultScript: common.IScript[] = [];
-				for(let i = 0; i < scripts.length; i++) {
-					const script = scripts[i];
-					if(script.sc_COD) {
-						resultScript.push(script);
-					}
-				}
 
 				for(let i = 0; i < resultScript.length; i++) {
 					resultScript[i].app_preview = val_arr_meaning[i].avg;
 				}
-				
-				for(let i = 0; i < resultScript.length; i++) {
-					let idx = scripts.findIndex((item,lidx) => {
-						return item.dms_seq === resultScript[i].dms_seq;
-					});
-					scripts[idx].app_preview = resultScript[i].app_preview;
-				}
-			} else {
-				for(let i = 0; i < scripts.length; i++) {
-					const script = scripts[i];
-					script.app_preview = -1;
-				}
 			}// 서버에서 받아온 1view 사전 학습 결과값이 없으면 -1로 셋팅 
 		
-		} else {
-			for(let i = 0; i < scripts.length; i++) {
-				const script = scripts[i];
-				if(i === 0) script.app_preview = 80;
-				else script.app_preview = i * 2;
-
-			}
 		}// 런처가 아닌 웹 용일 경우 임의 데이터
 	
 	}

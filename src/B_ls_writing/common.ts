@@ -17,7 +17,6 @@ export interface IQuizReturn {
 
 export interface IQuizReturnMsg extends IMsg {
 	id: string;
-	returns: IQuizReturn[];
 }
 
 export interface IQNAMsg extends IMsg {
@@ -87,7 +86,7 @@ export interface IIntroduction {
 	readonly ex_answer: string;
 }
 
-export interface IConfirmNomal {
+export interface IConfirmNomal extends IInClassStudyProps{
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
@@ -111,21 +110,7 @@ export interface IItem {
 	readonly img: string;
 }
 
-export interface IQuiz extends IInClassStudyProps {
-	question: string;
-	answer: number;
-	audio: string;
-	choice_1: string;
-	choice_2: string;
-	choice_3: string;
-
-	app_question: JSX.Element;
-	app_preview: number;
-}
-
 export interface IData {
-	quizs: IQuiz[];
-	scripts: IScript[];
 	introduction: IIntroduction[];
 	confirm_nomal: IConfirmNomal[];
 }

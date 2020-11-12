@@ -313,9 +313,6 @@ class ScriptBox  extends React.Component<IScriptBox> {
 		if(props.script.qnums && props.script.qnums.length > 0) {
 			this.m_clue = (
 				<div className="clue_qnum">{
-					props.script.qnums.map((qnum, idx) => {
-						return <span key={idx} className={'qnum' + qnum}>{qnum}</span>;
-					})
 				}</div>
 			);
 		} else {
