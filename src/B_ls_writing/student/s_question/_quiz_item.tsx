@@ -31,9 +31,15 @@ class QuizItem extends React.Component<IQuizItem> {
 					</WrapTextNew>
 				</div></div>
 				<div className="choice">
-					<QuizChoice view={view} choice={1} answer={answer} on={choice === 1} questionProg={questionProg} onClick={this._onChoice}>{quiz.choice_1}</QuizChoice>
-					<QuizChoice view={view} choice={2} answer={answer} on={choice === 2} questionProg={questionProg} onClick={this._onChoice}>{quiz.choice_2}</QuizChoice>
-					<QuizChoice view={view} choice={3} answer={answer} on={choice === 3} questionProg={questionProg} onClick={this._onChoice}>{quiz.choice_3}</QuizChoice>
+					{/* 예시:  <img src={App.data_url + data.item1.img} draggable={false}/> */}
+					<img className="image" src="#"/>
+					<img className="image" src="#"/>
+					<img className="image" src="#"/>
+				</div>
+				<div className="box">
+					<div className="num" draggable={true}><text>1</text></div>
+					<div className="num" draggable={true}><text>2</text></div>
+					<div className="num" draggable={true}><text>3</text></div>
 				</div>
 			</>		
 		);
