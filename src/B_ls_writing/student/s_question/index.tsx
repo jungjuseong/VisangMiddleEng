@@ -226,6 +226,7 @@ class SQuestion extends React.Component<ISQuestion> {
 		const {view, state, actions, questionProg} = this.props;
 		const c_data = actions.getData();
 		const quizs = c_data.quizs;
+		const confirm_nomals = c_data.confirm_nomal;
 		const noSwiping = questionProg === QPROG.ON;
 
 		const curChoice = this._curIdx >= 0 ? this._choices[this._curIdx] : undefined;
@@ -236,35 +237,16 @@ class SQuestion extends React.Component<ISQuestion> {
 		return (
 			<div className="s_question" style={{...this._style}}>
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
-				<div className="btn_page_box">
-						{quizs.map((quiz, idx) => {
-							let OX: ''|'O'|'X' = '';
-							if(questionProg === QPROG.COMPLETE) {
-								const choice = this._choices[idx];
-								if(choice && choice.answer === quiz.answer) OX = 'O';
-								else OX = 'X';
-							}
-							return (
-								<NItem 
-									key={idx} 
-									on={idx === this._curIdx_tgt} 
-									idx={idx} 
-									OX={OX}
-									onClick={this._onPage} 
-								/>
-							);
-						})}
-				</div>
 				<div className="question">
 					<SwiperComponent ref={this._refSwiper}>
-						{quizs.map((quiz, idx) => {
+						{confirm_nomals.map((confirm_nomal, idx) => {
 							return (
 								<div key={idx} className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 									<QuizItem
 										view={view} 
 										idx={idx}
 										choice={this._choices[idx].answer}
-										quiz={quiz}
+										confirm_normal={confirm_nomal}
 										questionProg={questionProg}
 										onChoice={this._onChoice}
 									/>

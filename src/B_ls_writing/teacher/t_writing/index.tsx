@@ -104,12 +104,14 @@ class Writing extends React.Component<IWriting> {
 	private onSend = () => {
         const { actions, state } = this.props;
 
-        // if(	this._title === 'COMPREHENSION' ) {
-        //     if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY) return;
-        //     if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
-        // } else {
-        //     if(state.dialogueProg !== SENDPROG.READY) return;
-        // }
+        if(	this._title === 'COMPREHENSION' ) {
+            if(this._tab === 'CONFIRM' && state.confirmProg !==  SENDPROG.READY) return;
+            if(this._tab === 'ADDITIONAL' && state.additionalProg !==  SENDPROG.READY) return;
+            if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
+            if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
+        } else {
+            if(state.dialogueProg !== SENDPROG.READY) return;
+        }
 
         // if(	this._title === 'COMPREHENSION' ) {
         //     if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
@@ -124,9 +126,9 @@ class Writing extends React.Component<IWriting> {
             //     actions.setRetCnt(0);
             //     actions.setNumOfStudent(App.students.length);
                 
-            //     if(this._tab === 'QUESTION') {
-            //         if(state.questionProg !==  SENDPROG.SENDING) return;
-            //         state.questionProg = SENDPROG.SENDED;
+            //     if(this._tab === 'CONFIRM') {
+            //         if(state.confirmProg !==  SENDPROG.SENDING) return;
+            //         state.confirmProg = SENDPROG.SENDED;
             //         msg = {msgtype: 'quiz_send',};
             //     } else {
             //         if(state.scriptProg !==  SENDPROG.SENDING) return;
