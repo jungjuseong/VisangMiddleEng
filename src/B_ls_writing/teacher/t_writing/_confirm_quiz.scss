@@ -37,8 +37,8 @@
 			text-align: center;
 			letter-spacing: -0.6px;
 			white-space: normal;
-			width: bold;
-			font-size: 28px;
+			padding: 20px;
+			
 
 			span.word{
 				display: inline-block;
@@ -55,13 +55,17 @@
 				position: relative;
 
 				.sentence_box{
-					height: 80px;
+					height: 100px;
 					position: relative;
+					font-size: 18px;
+					font-weight: bold;
+					text-align: left;
+					padding: 0px 25px;
 
 					&>div{
 						display: inline-block;
 						transform: translateY(-50%);
-						margin-top: 50px;
+						margin-top: 75px;
 	
 						.btn_audio{
 							@include btn_on(
@@ -87,24 +91,23 @@
 	
 				.image_box{
 					position:relative;
-					margin-top: 40px;
+					margin-top: 5px;
 					height: 260px;
 					display: inline-block;
 	
 					&>img{
 						float: left;
 						top: 0px; left: 0px;
-						width: 252px;
+						width: 218px;
 						height: 249px;
-						margin: 0px 10px;
+						margin: 0px 25px;
 					}
 				}
 			}
 
 			.speechbubble_box{
 				position: relative;
-				margin-bottom: 20px;
-				padding: 0 20px;
+				margin: 10px 0px;
 
 				&>div{
 					display: inline-table;
@@ -113,15 +116,14 @@
 						vertical-align: middle;
 					}
 					&.view-hint{
-						background-color: rgb(13, 92, 155); 
-						color: rgb(0,240,255);
+						color: #fff;
 						&:after{
 							border-right-color: rgb(13, 92, 155); 
 						}
 					}
 				}
 				.swiper-container {	
-					width: 885px;
+					height: 80px;
 					border-bottom: 2px solid #fff;
 
 					.swiper-scrollbar{
@@ -135,12 +137,11 @@
 						}
 					}
 					&>div{
-						width: 850px;
+						width: 500px;
 						max-height: 120px;
 
 						.sample{
 							min-height: 55px;
-							padding-bottom: 5px;
 							span.block{
 								color: transparent;
 								border-bottom: 2px solid #fff;
@@ -152,10 +153,7 @@
 						.hint{
 							min-height: 55px;
 							padding-bottom: 5px;
-							span.block{
-								display: inline;
-								border-bottom: 2px solid rgb(0,240,255);
-							}
+							font-size: 45px;
 						}
 					}
 				}
