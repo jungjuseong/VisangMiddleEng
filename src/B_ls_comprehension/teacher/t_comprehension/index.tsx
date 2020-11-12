@@ -788,6 +788,7 @@ class Comprehension extends React.Component<IComprehension> {
 
         const isViewAnswer = (isCompQ && state.questionProg >= SENDPROG.SENDED);
         const isViewClue = isCompS;
+        const isViewTrans = isCompS;
 
         const style: React.CSSProperties = {};
 
@@ -830,7 +831,7 @@ class Comprehension extends React.Component<IComprehension> {
                         <div>{state.retCnt}/{state.numOfStudent}</div>
                     </div>
                     <ToggleBtn className="btn_answer" on={isQComplete} onClick={this._clickAnswer} view={isViewAnswer}/>
-                    <ToggleBtn className="btn_trans" onClick={this._clickTranslate} on={this._viewTrans} view={isViewClue}/>
+                    <ToggleBtn className="btn_trans" onClick={this._clickTranslate} on={this._viewTrans} view={isViewTrans}/>
                     <ToggleBtn className="btn_clue" onClick={this._clickClue} on={this._viewClue} view={isViewClue}/>
                 </div>	
                 <div className="right_box">

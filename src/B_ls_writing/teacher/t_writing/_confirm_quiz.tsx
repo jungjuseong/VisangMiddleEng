@@ -27,6 +27,7 @@ _lets_talk.tsx 참고
 class ConfirmQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
+	@observable private _trans = false;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
 	
@@ -44,6 +45,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	};
 
 	private _jsx_sentence: JSX.Element;
+	private _jsx_eng_sentence: JSX.Element;
 	private _jsx_hint1: number;
 	private _jsx_hint2: number;
 	private _jsx_hint3: number;
@@ -55,6 +57,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		super(props);
 		
 		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
 		this._jsx_hint1 = props.data.item1.answer; // 답
 		this._jsx_hint2 = props.data.item2.answer; // 답
 		this._jsx_hint3 = props.data.item3.answer; // 답
@@ -63,6 +66,25 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
 		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
 		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+	}
+
+	private _viewTrans = () => {
+		App.pub_playBtnTab();
+		this._trans = !this._trans;
+		if(this._trans) this._trans = true;
+
+		if(this._swiper) {
+			this._swiper.slideTo(0, 0);
+			this._swiper.update();
+			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		}
+		_.delay(() => {
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
+				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+			}				
+		}, 300);
 	}
 
 	private _viewHint = () => {
@@ -102,6 +124,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
+			this._trans = false;
 			this._zoom = false;
 			this._zoomImgUrl = '';
 
@@ -128,16 +151,18 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	
 	public render() {
 		const { data, } = this.props;
+		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
 					<div className="quiz_box">
 						<div className="white_board">
+							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 							<div className="sentence_box">
 								<div>
 									<div className="question_box" onClick={this._onClick}>
-										{this._jsx_sentence}
+										{jsx}
 									</div>
 								</div>
 							</div>	

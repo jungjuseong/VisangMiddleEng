@@ -32,27 +32,40 @@
 
 		.quiz_box{
 			position: absolute;
+			text-align: center;
+			white-space: normal;
 			top: 50px; bottom: 0px;
 			left: 0px; right: 0px;
-			text-align: center;
 			letter-spacing: -0.6px;
-			white-space: normal;
 			padding: 20px;
 			
 
 			span.word{
 				display: inline-block;
-				padding: 0px 6px;
 				white-space: nowrap;
+				padding: 0px 6px;
 			}
 			
 			.white_board{
 				display: inline-block;
+				position: relative;
 				background-color: #fff; 
 				border-radius: 10px; 
 				width: 950px;
 				height: 400px;
-				position: relative;
+
+				.btn_trans{
+					@include btn_on(
+						resolve('teacher/images/btn_hint.png'),
+						resolve('teacher/images/btn_hint_down.png'),
+						width('teacher/images/btn_hint.png'),
+						height('teacher/images/btn_hint.png'),
+					);
+					position:absolute;
+					left:20px;
+					top:15px;
+					z-index: 2;
+				}
 
 				.sentence_box{
 					height: 100px;

@@ -143,7 +143,7 @@ class Writing extends React.Component<IWriting> {
             //     state.dialogueProg = SENDPROG.SENDED;
             //     msg = {msgtype: 'dialogue_send',};
             // }
-            msg = {msgtype: 'dialogue_send',};
+            msg = {msgtype: 'quiz_send',};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             this._setNavi();
