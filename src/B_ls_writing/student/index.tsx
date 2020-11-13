@@ -48,9 +48,8 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 						qsMode={state.qsMode}
 						scriptMode={state.scriptMode}
 						questionView={state.questionView}
-						questionProg={state.questionProg}
+						confirmProg={state.confirmProg}
 						scriptProg={state.scriptProg}
-						
 						state={state} 
 						actions={actions}
 					/>

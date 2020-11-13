@@ -35,7 +35,6 @@ interface IQuizResult {
 
 interface IStateCtx extends IStateBase {
 	hasPreview: boolean;
-	questionProg: SENDPROG;
 	confirmProg: SENDPROG;
 	additionalProg: SENDPROG;
 	dictationProg: SENDPROG;
@@ -79,7 +78,6 @@ class TeacherContext extends TeacherContextBase {
 	constructor() {
 		super();
 		this.state.hasPreview = false;
-		this.state.questionProg = SENDPROG.READY;
 		this.state.confirmProg = SENDPROG.READY;
 		this.state.additionalProg = SENDPROG.READY;
 		this.state.dictationProg = SENDPROG.READY;
@@ -104,7 +102,7 @@ class TeacherContext extends TeacherContextBase {
 		
 		this.actions.getQnaReturns = () => this._qnaReturns;
 		this.actions.quizComplete = () => {
-			this.state.questionProg = SENDPROG.COMPLETE;
+			this.state.confirmProg = SENDPROG.COMPLETE;
 		};
 		this.actions.clearQnaReturns = () => {
 			
@@ -118,8 +116,8 @@ class TeacherContext extends TeacherContextBase {
 			this.state.dialogueProg = SENDPROG.READY;
 			this._returnUsers = [];
 
-			if(this.state.questionProg < SENDPROG.COMPLETE) {
-				this.state.questionProg = SENDPROG.READY;
+			if(this.state.confirmProg < SENDPROG.COMPLETE) {
+				this.state.confirmProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
 			}
 		};
@@ -150,7 +148,7 @@ class TeacherContext extends TeacherContextBase {
 		if(data.type === $SocketType.MSGTOTEACHER && data.data) {
 			const msg = data.data as  common.IMsg;
 			if(msg.msgtype === 'quiz_return') {
-				if(this.state.questionProg === SENDPROG.SENDED) {
+				if(this.state.confirmProg === SENDPROG.SENDED) {
 					const qmsg = msg as common.IQuizReturnMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {

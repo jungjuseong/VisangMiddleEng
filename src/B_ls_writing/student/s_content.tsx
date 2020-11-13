@@ -18,7 +18,7 @@ import SScript from './s_script';
 interface ISContent {
 	view: boolean;
 	questionView: boolean;
-	questionProg: QPROG;
+	confirmProg: QPROG;
 	scriptProg: SPROG;
 	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
@@ -76,7 +76,7 @@ class SContent extends React.Component<ISContent> {
 		//
 	}
 	public render() {
-		const {view, state, actions, questionProg, scriptProg, scriptMode, qsMode} = this.props;
+		const {view, state, actions, confirmProg, scriptProg, scriptMode, qsMode} = this.props;
 		const style: React.CSSProperties = {};
 		if(!view) {
 			style.opacity = 0;
@@ -87,7 +87,7 @@ class SContent extends React.Component<ISContent> {
 			<div className="s_content" style={style}>
 				<SScript
 					view={this.props.view && scriptProg > SPROG.UNMOUNT}
-					questionProg={questionProg}
+					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					scriptMode={scriptMode}
 					qsMode={qsMode}
@@ -97,7 +97,7 @@ class SContent extends React.Component<ISContent> {
 				<SQuestion 
 					view={this.props.view && this.props.questionView} 
 					questionView={this.props.questionView}
-					questionProg={questionProg}
+					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					scriptMode={scriptMode}
 					qsMode={qsMode}

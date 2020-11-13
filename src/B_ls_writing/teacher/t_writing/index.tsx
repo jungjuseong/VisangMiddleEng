@@ -95,6 +95,7 @@ class Writing extends React.Component<IWriting> {
         const { actions, state } = this.props;
 
         if(	this._title === 'COMPREHENSION' ) {
+            if(this._tab === 'INTRODUCTION') return;
             if(this._tab === 'CONFIRM' && state.confirmProg !==  SENDPROG.READY) return;
             if(this._tab === 'ADDITIONAL' && state.additionalProg !==  SENDPROG.READY) return;
             if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
@@ -103,39 +104,40 @@ class Writing extends React.Component<IWriting> {
             if(state.dialogueProg !== SENDPROG.READY) return;
         }
 
-        // if(	this._title === 'COMPREHENSION' ) {
-        //     if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
-        //     else state.scriptProg = SENDPROG.SENDING;
-        // } else state.dialogueProg = SENDPROG.SENDING;
+        if(	this._title === 'COMPREHENSION' ) {
+            if(this._tab === 'CONFIRM') state.confirmProg = SENDPROG.SENDING;
+            else if(this._tab === 'ADDITIONAL') state.additionalProg = SENDPROG.SENDING;
+            else if(this._tab === 'DICTATION') state.additionalProg = SENDPROG.SENDING;
+            else if(this._tab === 'SCRIPT') state.additionalProg = SENDPROG.SENDING;
+            else return;
+        } else state.dialogueProg = SENDPROG.SENDING;
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
             let msg: IMsg;
-            // if(	this._title === 'COMPREHENSION' ) {
-            //     actions.clearReturnUsers();
-            //     actions.setRetCnt(0);
-            //     actions.setNumOfStudent(App.students.length);
+            if(	this._title === 'COMPREHENSION' ) {
+                actions.clearReturnUsers();
+                actions.setRetCnt(0);
+                actions.setNumOfStudent(App.students.length);
                 
-            //     if(this._tab === 'CONFIRM') {
-            //         if(state.confirmProg !==  SENDPROG.SENDING) return;
-            //         state.confirmProg = SENDPROG.SENDED;
-            //         msg = {msgtype: 'quiz_send',};
-            //     } else {
-            //         if(state.scriptProg !==  SENDPROG.SENDING) return;
-            //         state.scriptProg = SENDPROG.SENDED;
-            //         msg = {msgtype: 'script_send',};
-            //         if(this._viewClue) {
-            //             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-            //             msg = {msgtype: 'view_clue',};
-            //         }
-            //     } 
-            // } else {
-            //     if(state.dialogueProg !== SENDPROG.SENDING) return;
-            //     state.dialogueProg = SENDPROG.SENDED;
-            //     msg = {msgtype: 'dialogue_send',};
-            // }
-            msg = {msgtype: 'quiz_send',};
+                if(this._tab === 'CONFIRM') {
+                    if(state.confirmProg !==  SENDPROG.SENDING) return;
+                    state.confirmProg = SENDPROG.SENDED;
+                    msg = {msgtype: 'quiz_send',};
+                } else {
+                    if(state.scriptProg !==  SENDPROG.SENDING) return;
+                    state.scriptProg = SENDPROG.SENDED;
+                    msg = {msgtype: 'script_send',};
+                    if(this._viewClue) {
+                        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+                        msg = {msgtype: 'view_clue',};
+                    }
+                } 
+            } else {
+                if(state.dialogueProg !== SENDPROG.SENDING) return;
+                state.dialogueProg = SENDPROG.SENDED;
+                msg = {msgtype: 'dialogue_send',};
+            }
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             this._setNavi();
@@ -290,10 +292,10 @@ class Writing extends React.Component<IWriting> {
     }
     
 	// private _clickDial = (ev: React.MouseEvent<HTMLElement>) => {
-    //     const {questionProg,qnaProg} = this.props.state;
+    //     const {confirmProg,qnaProg} = this.props.state;
 
     //     if(this._title === 'DIALOGUE') return;
-    //     if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+    //     if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 		
     //     App.pub_playBtnTab();
     //     this._clearAll();
@@ -305,11 +307,11 @@ class Writing extends React.Component<IWriting> {
     
 	private _clickIntroduction = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions,state } = this.props;
-        const { questionProg,qnaProg} = state;
+        const { confirmProg,qnaProg} = state;
 
         if(this._title !== 'COMPREHENSION') return;
         if(this._tab === 'INTRODUCTION') return;
-        if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
         
         App.pub_playBtnTab();
         this._hint = false;
@@ -325,10 +327,10 @@ class Writing extends React.Component<IWriting> {
     
 	private _clickConfirm = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions } = this.props;
-        const { questionProg,qnaProg } = this.props.state;
+        const { confirmProg,qnaProg } = this.props.state;
 
         if (this._title !== 'COMPREHENSION' || this._tab === 'CONFIRM') return;
-        if (questionProg === SENDPROG.SENDED ||	questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -338,10 +340,10 @@ class Writing extends React.Component<IWriting> {
     }
     private _clickAdditional = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions } = this.props;
-        const { questionProg,qnaProg } = this.props.state;
+        const { confirmProg,qnaProg } = this.props.state;
 
         if (this._title !== 'COMPREHENSION' || this._tab === 'ADDITIONAL') return;
-        if (questionProg === SENDPROG.SENDED ||	questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -351,10 +353,10 @@ class Writing extends React.Component<IWriting> {
     }
     private _clickDictation = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions } = this.props;
-        const { questionProg,qnaProg } = this.props.state;
+        const { confirmProg,qnaProg } = this.props.state;
 
         if (this._title !== 'COMPREHENSION' || this._tab === 'DICTATION') return;
-        if (questionProg === SENDPROG.SENDED ||	questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -364,10 +366,10 @@ class Writing extends React.Component<IWriting> {
     }
     private _clickScript = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions } = this.props;
-        const { questionProg,qnaProg } = this.props.state;
+        const { confirmProg,qnaProg } = this.props.state;
 
         if (this._title !== 'COMPREHENSION' || this._tab === 'SCRIPT') return;
-        if (questionProg === SENDPROG.SENDED ||	questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -405,21 +407,24 @@ class Writing extends React.Component<IWriting> {
 	}
 
 	private _clickAnswer = () => {
+        console.log('clickAnswer')
+        console.log('endend3')
         const {state, actions} = this.props;
-        const quizProg = state.questionProg;
+        const confirmProg = state.confirmProg;
 
         if(	this._title !== 'COMPREHENSION' || 
-            this._tab !== 'INTRODUCTION' || 
-            quizProg !== SENDPROG.SENDED
+            this._tab !== 'CONFIRM' || 
+            confirmProg !== SENDPROG.SENDED
         ) return;
 
-        App.pub_playBtnTab();
+        console.log('endend1')
         const msg: IMsg = {
             msgtype: 'quiz_end',
         };
+        console.log(msg)
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-
+        console.log('endend2')
         actions.quizComplete();
         this.props.actions.setNavi(true, true);
 	}	
@@ -453,11 +458,11 @@ class Writing extends React.Component<IWriting> {
 	}
 	private _setNavi() {
         const { state,actions } = this.props;
-        const { questionProg,qnaProg } = state;
+        const { confirmProg,qnaProg } = state;
 
         actions.setNaviView(true);
         if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(questionProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
+        else if(confirmProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
 		else actions.setNavi(true, true);
 		
         actions.setNaviFnc(
@@ -472,7 +477,7 @@ class Writing extends React.Component<IWriting> {
                             this._setNavi();
                         }
                     } else if(this._tab === 'CONFIRM') {
-                        // if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                        // if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                         if(this._curQidx === 0) {
                             this._hint = false;
                             this._tab = 'INTRODUCTION';
@@ -531,7 +536,7 @@ class Writing extends React.Component<IWriting> {
                 if(this._title === 'COMPREHENSION') {
                     if(this._tab === 'INTRODUCTION') {
                         if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'CONFIRM';
                             this._curQidx = 0;
@@ -542,7 +547,7 @@ class Writing extends React.Component<IWriting> {
                         }
                     } else if(this._tab === 'CONFIRM') {
                         if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'ADDITIONAL';
                             this._curQidx = 0;
@@ -553,7 +558,7 @@ class Writing extends React.Component<IWriting> {
                         }
                     } else if(this._tab === 'ADDITIONAL') {
                         if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'DICTATION';
                             this._curQidx = 0;
@@ -564,7 +569,7 @@ class Writing extends React.Component<IWriting> {
                         }
                     } else if(this._tab === 'DICTATION') {
                         if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(questionProg === SENDPROG.SENDED || questionProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
                             this._hint = false;
                             this._tab = 'SCRIPT';
                             this._curQidx = 0;
@@ -608,20 +613,19 @@ class Writing extends React.Component<IWriting> {
 
 	public render() {
         const { view, state, actions } = this.props;
-        const { questionProg,qnaProg,numOfStudent,retCnt } = state;
+        const { confirmProg,qnaProg,numOfStudent,retCnt } = state;
 
         const introductions = this.m_data.introduction;
         const confirm_nomals = this.m_data.confirm_nomal;
-        const isQComplete = questionProg >= SENDPROG.COMPLETE;
+        const isQComplete = confirmProg >= SENDPROG.COMPLETE;
 
-        const isOnStudy = (this._title === 'COMPREHENSION' && (questionProg === SENDPROG.SENDING || questionProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING)) 
+        const isOnStudy = (this._title === 'COMPREHENSION' && (confirmProg === SENDPROG.SENDING || confirmProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING)) 
                             || (this._title === 'DIALOGUE' && (this._roll === 'A' || this._roll === 'B' || this._shadowing));
         
         const quizResult = actions.getResult();
         let qResult = -1;        
         if(isQComplete) {
-            if(numOfStudent > 0) qResult = Math.round(100 * quizResult[this._curQidx].numOfCorrect / numOfStudent);
-            else qResult = 0;
+            qResult = 0;
             if(qResult > 100) qResult = 100;
         }
 
@@ -636,8 +640,8 @@ class Writing extends React.Component<IWriting> {
                             (isCompD && state.dictationProg < SENDPROG.SENDED) ||
                             (isCompS && state.scriptProg < SENDPROG.SENDED);
         
-        const isViewInfo = (isCompI && questionProg >= SENDPROG.SENDED) || isCompS;
-        const isViewReturn = (isCompI && questionProg >= SENDPROG.SENDED) || (isCompS && qnaProg >=  SENDPROG.SENDED);
+        const isViewInfo = (isCompI && confirmProg >= SENDPROG.SENDED) || isCompS;
+        const isViewReturn = (isCompI && confirmProg >= SENDPROG.SENDED) || (isCompS && qnaProg >=  SENDPROG.SENDED);
         const style: React.CSSProperties = {};
     
         return (
@@ -665,7 +669,7 @@ class Writing extends React.Component<IWriting> {
                         })}
                     </div>
                     
-                    <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'INTRODUCTION' ? '' : 'none'}}>
+                    <div className={'question' + (confirmProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'INTRODUCTION' ? '' : 'none'}}>
                             {introductions.map((introduction, idx) => {
                                 return (
                                     <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
@@ -678,12 +682,13 @@ class Writing extends React.Component<IWriting> {
                                 );
                             })}
                     </div>
-                    <div className={'question' + (questionProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
+                    <div className={'question' + (confirmProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
                             <ConfirmQuiz 
                                 view={view && 1 === this._curQidx}
                                 data={confirm_nomals[0]} 
                                 onClosed={this._letstalkClosed}
+                                onHintClick={this._clickAnswer}
                             />                          
                         </div>              
                     </div>

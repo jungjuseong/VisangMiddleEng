@@ -24,7 +24,7 @@ const enum SPROG {
 
 interface IStateCtx extends IStateBase {
 	questionView: boolean;
-	questionProg: QPROG;
+	confirmProg: QPROG;
 	scriptProg: SPROG;
 	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	roll: ''|'A'|'B';
@@ -47,7 +47,7 @@ class StudentContext extends StudentContextBase {
 		super();
 
 		this.state.questionView = false;
-		this.state.questionProg = QPROG.UNINIT;
+		this.state.confirmProg = QPROG.UNINIT;
 		this.state.scriptProg = SPROG.UNMOUNT;
 		this.state.scriptMode = 'COMPREHENSION';
 		this.state.qsMode  = '';
@@ -63,7 +63,7 @@ class StudentContext extends StudentContextBase {
 		const state = this.state;
 		if(state.viewDiv !== viewDiv) {
 			this.state.questionView = false;
-			if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
+			if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.UNINIT;
 			
 			this.state.scriptProg = SPROG.UNMOUNT;
 			this.state.qsMode  = '';
@@ -81,25 +81,25 @@ class StudentContext extends StudentContextBase {
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
 			const msg = data.data as  common.IMsg;
 			if(msg.msgtype === 'quiz_send') {
-				// if(this.state.questionProg > QPROG.UNINIT) return;
+				// if(this.state.confirmProg > QPROG.UNINIT) return;
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.questionView = true;
-				this.state.questionProg = QPROG.ON;
+				this.state.confirmProg = QPROG.ON;
 				this.state.viewDiv = 'content';
 				this.state.scriptMode  = 'COMPREHENSION';
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
 			} else if(msg.msgtype === 'quiz_end') {
-				const qProg = this.state.questionProg;
+				const qProg = this.state.confirmProg;
 				if(this.state.viewDiv !== 'content') return;
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 
-				this.state.questionProg = QPROG.COMPLETE;
+				this.state.confirmProg = QPROG.COMPLETE;
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.READYA;
+				if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.READYA;
 				this.state.questionView = true;
 
 				this.state.scriptProg = SPROG.MOUNTED;
@@ -134,10 +134,10 @@ class StudentContext extends StudentContextBase {
 				this.state.scriptProg = SPROG.MOUNTED;
 			} else if(msg.msgtype === 'dialogue_send') {
 				// if(this.state.scriptProg !== SPROG.UNMOUNT) return;
-				// if(this.state.questionProg === QPROG.UNMOUNT) this.state.questionProg = QPROG.MOUNTED;
+				// if(this.state.confirmProg === QPROG.UNMOUNT) this.state.confirmProg = QPROG.MOUNTED;
 				
 				this.state.scriptProg = SPROG.UNMOUNT;
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
+				if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.UNINIT;
 				this.state.viewDiv = 'content';
 				this.state.scriptMode  = 'DIALOGUE';
 				this.state.qsMode  = 'script';
