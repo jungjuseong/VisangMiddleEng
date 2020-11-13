@@ -3,7 +3,6 @@ import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 import * as common from '../common';
 import { App } from '../../App';
