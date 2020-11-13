@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { hot } from 'react-hot-loader/root';
 
 import { observer, Observer } from 'mobx-react';
-import { hot } from 'react-hot-loader/root';
 import * as _ from 'lodash';
 
 import { SVGEmbed, SVGAni } from '../../share/svg_object';

@@ -10,7 +10,7 @@ interface IQuizItem {
 	idx: number;
 	choice: number;
 	confirm_normal: common.IConfirmNomal;
-	questionProg: QPROG;
+	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number) => void;
 }
 
@@ -19,7 +19,7 @@ class QuizItem extends React.Component<IQuizItem> {
 		this.props.onChoice(this.props.idx, choice);
 	}
 	public render() {
-		const {view, idx, choice, confirm_normal, questionProg} = this.props;
+		const {view, idx, choice, confirm_normal, confirmProg} = this.props;
 		return (
 			<>
 				<div className="quiz"><div>

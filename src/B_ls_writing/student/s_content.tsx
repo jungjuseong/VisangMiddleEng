@@ -10,25 +10,24 @@ import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../student/s_store';
 import * as felsocket from '../../felsocket';
-import * as common from '../common';
+import {IQNAMsg} from '../common';
 
 import SQuestion from './s_question';
 import SScript from './s_script';
 
-interface ISContent {
+interface ISContentProps {
 	view: boolean;
 	questionView: boolean;
-	questionProg: QPROG;
+	confirmProg: QPROG;
 	scriptProg: SPROG;
 	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
-
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class SContent extends React.Component<ISContent> {
+class SContent extends React.Component<ISContentProps> {
 	@observable private _img_pop_on = false;
 
 	private _stime = 0;
@@ -36,7 +35,7 @@ class SContent extends React.Component<ISContent> {
 	private _clickYes = () => {
 		if(this._stime === 0) this._stime = Date.now();
 
-		const state = this.props.state;
+		const {state} = this.props;
 		if(state.scriptProg !== SPROG.YESORNO) return;
 		else if(state.scriptMode !== 'COMPREHENSION') return;
 
@@ -49,22 +48,24 @@ class SContent extends React.Component<ISContent> {
 			this._img_pop_on = false;
 		}, 2000); // 시간수정
 	}
+
 	private _clickNo = async () => {
+		const { state} = this.props;
+
 		if(this._stime === 0) this._stime = Date.now();
 
-		const state = this.props.state;
-		if(state.scriptProg !== SPROG.YESORNO) return;
-		else if(state.scriptMode !== 'COMPREHENSION') return;
+		if(state.scriptProg !== SPROG.YESORNO || state.scriptMode !== 'COMPREHENSION') return;
 		App.pub_playBtnTab();
 		state.scriptProg = SPROG.SENDED;
 		if(!App.student) return;
-		const msg: common.IQNAMsg = {
+		const msg: IQNAMsg = {
 			msgtype: 'qna_return',
 			id: App.student.id,
 			returns: [],
 			stime: this._stime,
             etime: Date.now(),
 		};
+
 		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 		// console.log('startGoodJob');
 
@@ -72,22 +73,26 @@ class SContent extends React.Component<ISContent> {
 		App.pub_playGoodjob();
 		this.props.actions.startGoodJob(); // 추가
 	}
-	public componentWillUpdate(next: ISContent) {
+	public componentWillUpdate(next: ISContentProps) {
 		//
 	}
+
 	public render() {
-		const {view, state, actions, questionProg, scriptProg, scriptMode, qsMode} = this.props;
-		const style: React.CSSProperties = {};
+		const {view, state, actions, confirmProg, scriptProg, scriptMode, qsMode} = this.props;
+		let style: React.CSSProperties = {};
 		if(!view) {
-			style.opacity = 0;
-			style.zIndex = -1;
-			style.pointerEvents = 'none';				
+			style = {
+				...style,
+				opacity: 0,
+				zIndex: -1,
+				pointerEvents: 'none'
+			}			
 		}
 		return (
 			<div className="s_content" style={style}>
 				<SScript
 					view={this.props.view && scriptProg > SPROG.UNMOUNT}
-					questionProg={questionProg}
+					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					scriptMode={scriptMode}
 					qsMode={qsMode}
@@ -97,7 +102,7 @@ class SContent extends React.Component<ISContent> {
 				<SQuestion 
 					view={this.props.view && this.props.questionView} 
 					questionView={this.props.questionView}
-					questionProg={questionProg}
+					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					scriptMode={scriptMode}
 					qsMode={qsMode}

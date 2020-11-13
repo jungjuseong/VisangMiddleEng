@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { hot } from 'react-hot-loader';
 
 import { observer, Observer } from 'mobx-react';
-import { hot } from 'react-hot-loader';
 import * as _ from 'lodash';
 
 import { SVGEmbed, SVGAni } from '../../share/svg_object';
@@ -48,9 +48,8 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 						qsMode={state.qsMode}
 						scriptMode={state.scriptMode}
 						questionView={state.questionView}
-						questionProg={state.questionProg}
+						confirmProg={state.confirmProg}
 						scriptProg={state.scriptProg}
-						
 						state={state} 
 						actions={actions}
 					/>

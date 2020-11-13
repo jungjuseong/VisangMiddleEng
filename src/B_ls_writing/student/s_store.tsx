@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observable, action } from 'mobx';
 
 import * as _ from 'lodash';
-import * as common from '../common';
+import { IMsg,IData,IRollMsg,IFocusMsg } from '../common';
 import { StudentContextBase, IActionsBase, IStateBase, VIEWDIV } from '../../share/scontext';
 
 const enum QPROG {
@@ -24,7 +24,7 @@ const enum SPROG {
 
 interface IStateCtx extends IStateBase {
 	questionView: boolean;
-	questionProg: QPROG;
+	confirmProg: QPROG;
 	scriptProg: SPROG;
 	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	roll: ''|'A'|'B';
@@ -35,145 +35,185 @@ interface IStateCtx extends IStateBase {
 	focusIdx: number;
 }
 interface IActionsCtx extends IActionsBase {
-	getData: () => common.IData;
+	getData: () => IData;
 }
 
 class StudentContext extends StudentContextBase {
 	@observable public state!: IStateCtx;
 	public actions!: IActionsCtx;
-	private _data!: common.IData;
+	private _data!: IData;
 
 	constructor() {
 		super();
 
-		this.state.questionView = false;
-		this.state.questionProg = QPROG.UNINIT;
-		this.state.scriptProg = SPROG.UNMOUNT;
-		this.state.scriptMode = 'COMPREHENSION';
-		this.state.qsMode  = '';
-		this.state.roll = '';
-		this.state.viewClue = false;
-		this.state.focusIdx = -1;
-		this.state.isPlay = false;
-		this.state.shadowing = false;
-		this.actions.getData = () => this._data;
+		this.state = {
+			...this.state,
+			questionView: false,
+			confirmProg: QPROG.UNINIT,
+			scriptProg: SPROG.UNMOUNT,
+			scriptMode: 'COMPREHENSION',
+			qsMode: '',
+			roll: '',
+			viewClue: false,
+			focusIdx: -1,
+			isPlay: false,
+			shadowing: false
+		};
+		this.actions.getData = () => this._data
 	}
 
-	@action protected _setViewDiv(viewDiv: VIEWDIV) {
-		const state = this.state;
-		if(state.viewDiv !== viewDiv) {
+	@action protected _setViewDiv(newViewDiv: VIEWDIV) {
+		const { viewDiv } = this.state;
+		if(viewDiv !== newViewDiv) {
 			this.state.questionView = false;
-			if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
-			
-			this.state.scriptProg = SPROG.UNMOUNT;
-			this.state.qsMode  = '';
-			this.state.roll = '';
-			this.state.viewClue = false;
-			this.state.shadowing = false;
-			this.state.isPlay = false;
-			this.state.focusIdx = -1;
+			if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.UNINIT;
+		
+			this.state = {
+				...this.state,
+				scriptProg: SPROG.UNMOUNT,
+				qsMode: '',
+				roll: '',
+				viewClue: false,
+				shadowing: false,
+				isPlay: false,
+				focusIdx: -1
+			}
 		}
-		super._setViewDiv(viewDiv);
+		super._setViewDiv(newViewDiv);
 	}
+
 	@action public receive(data: ISocketData) {
+		const { viewDiv,confirmProg,scriptProg,scriptMode,qsMode } = this.state;
 		super.receive(data);
-		// console.log('receive', data);
+
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IMsg;
-			if(msg.msgtype === 'quiz_send') {
-				// if(this.state.questionProg > QPROG.UNINIT) return;
-				this.state.scriptProg = SPROG.UNMOUNT;
-				this.state.questionView = true;
-				this.state.questionProg = QPROG.ON;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'question';
-				this.state.roll = '';
-				this.state.shadowing = false;
-			} else if(msg.msgtype === 'quiz_end') {
-				const qProg = this.state.questionProg;
-				if(this.state.viewDiv !== 'content') return;
-				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+			const messageType = (data.data as IMsg).msgtype;
 
-				this.state.questionProg = QPROG.COMPLETE;
-			} else if(msg.msgtype === 'script_send') {
-				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
+			switch(messageType) {
+				case 'quiz_send':
+					this.state = {
+						...this.state,
+						scriptProg: SPROG.UNMOUNT,
+						questionView: true,
+						confirmProg: QPROG.ON,
+						viewDiv: 'content',
+						scriptMode: 'COMPREHENSION',
+						qsMode: 'question',
+						roll: '',
+						shadowing: false,
+					};
+					break;
+				case 'quiz_end':
+					if(viewDiv !== 'content' || ![QPROG.ON,QPROG.SENDED,QPROG.SENDING].includes(confirmProg)) return;
+					//else if(questionProg !== QPROG.ON && questionProg !== QPROG.SENDING && questionProg !== QPROG.SENDED) return;
+					this.state = {
+						...this.state,
+						confirmProg: QPROG.COMPLETE
+					}
+					break;
+				case 'script_send':
+					if(scriptProg !== SPROG.UNMOUNT) return;
+					if(confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.READYA;
+					this.state = {
+						...this.state,
+						scriptProg: SPROG.MOUNTED,
+						questionView: true,
+						viewDiv: 'content',
+						scriptMode: 'COMPREHENSION',
+						qsMode: 'script',
+						roll: '',
+						shadowing: false,
+					};
+					break;
+				case 'view_clue':
+					if(viewDiv !== 'content' || scriptProg === SPROG.UNMOUNT) return;
 
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.READYA;
-				this.state.questionView = true;
-
-				this.state.scriptProg = SPROG.MOUNTED;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'script';
-				this.state.roll = '';
-				this.state.shadowing = false;
-			} else if(msg.msgtype === 'view_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
-				this.state.qsMode  = 'script';
-				this.state.viewClue = true;
-			} else if(msg.msgtype === 'hide_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
-				this.state.viewClue = false;
-			} else if(msg.msgtype === 'qna_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg !== SPROG.MOUNTED) return;
-
-				this.state.focusIdx = -1;
-				// this.state.viewClue = false;
-				this.state.scriptProg = SPROG.YESORNO;
-			} else if(msg.msgtype === 'qna_end') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg < SPROG.MOUNTED) return;
-
-				// this.state.viewClue = false;
-				this.state.scriptProg = SPROG.MOUNTED;
-			} else if(msg.msgtype === 'dialogue_send') {
-				// if(this.state.scriptProg !== SPROG.UNMOUNT) return;
-				// if(this.state.questionProg === QPROG.UNMOUNT) this.state.questionProg = QPROG.MOUNTED;
-				
-				this.state.scriptProg = SPROG.UNMOUNT;
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'DIALOGUE';
-				this.state.qsMode  = 'script';
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.viewClue = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'dialogue_end') { 
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.isPlay = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'roll_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;
-
-				const rmsg = msg as common.IRollMsg;
-				this.state.roll = rmsg.roll;
-				this.state.shadowing = false;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'shadowing_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;	
-				this.state.roll = '';
-				this.state.shadowing = true;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'playing' || msg.msgtype === 'paused') {
-				if(this.state.viewDiv !== 'content') return;
-				this.state.isPlay = (msg.msgtype === 'playing');
-			} else if(msg.msgtype === 'focusidx') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode === 'COMPREHENSION') return;
-				const fmsg = msg as common.IFocusMsg;
-				this.state.focusIdx = fmsg.idx;
+					this.state = {
+						...this.state,
+						viewClue: true,
+						qsMode: 'script',
+					};
+					break;
+				case 'hide_clue':
+					if(viewDiv !== 'content' || scriptProg === SPROG.UNMOUNT) return;
+					this.state = {
+						...this.state,
+						viewClue: false,
+					};
+					break;
+				case 'qna_send':
+					if(viewDiv !== 'content' || scriptProg !== SPROG.MOUNTED) return;
+					this.state = {
+						...this.state,
+						focusIdx: -1,
+						scriptProg: SPROG.YESORNO,
+					};
+					break;
+				case 'qna_end':
+					if(viewDiv !== 'content' || scriptProg < SPROG.MOUNTED) return;
+					this.state = {
+						...this.state,
+						scriptProg: SPROG.MOUNTED,
+					};
+					break;
+				case 'dialogue_send':
+					this.state = {
+						...this.state,
+						scriptProg: SPROG.UNMOUNT,
+						confirmProg: (confirmProg < QPROG.COMPLETE) ? QPROG.UNINIT : this.state.confirmProg,
+						viewDiv: 'content',
+						scriptMode: 'DIALOGUE',
+						qsMode: 'script',
+						roll:'',
+						shadowing: false,
+						viewClue: false,
+						focusIdx: -1,
+					};
+					break;			
+				case 'dialogue_end':
+					this.state = {
+						...this.state,
+						roll: '',
+						shadowing: false,
+						isPlay: false,
+						focusIdx: -1
+					};
+					break;	
+				case 'roll_send':
+					if(viewDiv !== 'content' || scriptMode !== 'DIALOGUE' || qsMode !== 'script') return;
+					this.state = {
+						...this.state,
+						roll: (data.data as IRollMsg).roll,
+						shadowing: false,
+						focusIdx: -1,
+					};
+					break;
+				case 'shadowing_send':
+					if(viewDiv !== 'content' || scriptMode !== 'DIALOGUE' || qsMode !== 'script') return;
+					this.state = {
+						...this.state,
+						roll: '',
+						shadowing: true,
+						focusIdx: -1,
+					};
+					break;
+				case 'playing':
+				case 'paused':
+					if(viewDiv !== 'content') return;
+					this.state = {
+						...this.state,
+						isPlay: (messageType === 'playing') 
+					}
+					break;
+				case 'focusidx':
+					if(viewDiv !== 'content' || scriptMode === 'COMPREHENSION') return;
+					this.state = {
+						...this.state,
+						focusIdx: (data.data as IFocusMsg).idx,
+					};
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -189,7 +229,7 @@ class StudentContext extends StudentContextBase {
 
 	public setData(data: any) {
 		// console.log(data);
-		this._data = data as common.IData;
+		this._data = data as IData;
 	}
 }
 
