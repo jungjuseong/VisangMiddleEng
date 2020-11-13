@@ -707,6 +707,11 @@ body {
     display: none;
 }
 
+#wrap .t_writing .question_bg .sub_rate {
+    position: absolute;
+    background-image: url("/content/digenglish_lib/B/ls_writing/teacher/images/subrate.png");
+}
+
 #wrap .t_writing .question_bg .btn_hint {
     touch-action: none;
     padding: 0px;

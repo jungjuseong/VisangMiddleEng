@@ -1,7 +1,5 @@
 import * as React from 'react';
-
 import * as _ from 'lodash';
-import { hot } from 'react-hot-loader';
 
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';

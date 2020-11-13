@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observer } from 'mobx-react';
+import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
@@ -10,12 +10,14 @@ import * as common from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
+	onHintClick: () => void;
 	data: common.IConfirmNomal;
 }
 /*
@@ -50,6 +52,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	private _jsx_hint2: number;
 	private _jsx_hint3: number;
 	private _character: string;
+	private aaaclick : () => void;
 
 	private _btnAudio?: BtnAudio;
 	
@@ -61,6 +64,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		this._jsx_hint1 = props.data.item1.answer; // 답
 		this._jsx_hint2 = props.data.item2.answer; // 답
 		this._jsx_hint3 = props.data.item3.answer; // 답
+		this.aaaclick = props.onHintClick;
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
@@ -87,8 +91,9 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	private _viewHint = () => {
-		App.pub_playBtnTab();
+	private _viewHint = (evt: React.MouseEvent<HTMLElement>) => {
+		console.log('viewHint')
+		this.aaaclick();
 		this._hint = !this._hint;
 
 		if(this._swiper) {
@@ -155,7 +160,8 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
+			<div className="sub_rate"></div>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewHint}/>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

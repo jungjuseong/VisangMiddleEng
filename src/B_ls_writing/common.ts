@@ -10,13 +10,14 @@ export interface IMsg {
 }
 
 export interface IQuizReturn {
-	answer: number;
+	answer: boolean;
 	stime: number;
 	etime: number;
 }
 
 export interface IQuizReturnMsg extends IMsg {
 	id: string;
+	return : IQuizReturn;
 }
 
 export interface IQNAMsg extends IMsg {

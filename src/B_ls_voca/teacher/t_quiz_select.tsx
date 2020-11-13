@@ -1,10 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Observer, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-import { TeacherContext, useTeacher, IStateCtx, IActionsCtx } from './t_store';
+import { IStateCtx, IActionsCtx } from './t_store';
 import * as _ from 'lodash';
-import { hot } from 'react-hot-loader';
 import * as common from '../common';
 import { ToggleBtn } from '@common/component/button';
 import { observable } from 'mobx';
