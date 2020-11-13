@@ -642,6 +642,7 @@ class Writing extends React.Component<IWriting> {
     
         return (
             <div className={'t_writing ' + this._title} style={style}>
+
                 <div className="close_box">
                     <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>
                 </div>

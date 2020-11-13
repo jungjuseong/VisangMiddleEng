@@ -128,30 +128,30 @@ class IntroQuiz extends React.Component<IQuizBox> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
-					<div className="popbox">
-						<div className="image_box">
-							<img  src={App.data_url + data.img} draggable={false}/>
-						</div>						
-						<div className="speechbubble_box" >
-							<div>
-								<div className={'balloon' + (this._hint ? ' view-hint' : '')}>
-									<div className="sentence_box">
-										<div>
-											<div className="question_box" onClick={this._onClick}>
-												{this._jsx_sentence}
-											</div>
+				<div className="popbox">
+					<div className="image_box">
+						<img  src={App.data_url + data.img} draggable={false}/>
+					</div>						
+					<div className="speechbubble_box" >
+						<div>
+							<div className={'balloon' + (this._hint ? ' view-hint' : '')}>
+								<div className="sentence_box">
+									<div>
+										<div className="question_box" onClick={this._onClick}>
+											{this._jsx_sentence}
 										</div>
 									</div>
-									<SwiperComponent {...this._soption} ref={this._refSwiper}>
-										<div>
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
-											<div className={'hint' + (this._hint ? '' : ' hide')}>{this._jsx_hint}</div>
-										</div>
-									</SwiperComponent>
 								</div>
+								<SwiperComponent {...this._soption} ref={this._refSwiper}>
+									<div>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>{this._jsx_hint}</div>
+									</div>
+								</SwiperComponent>
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 			</>
 		);

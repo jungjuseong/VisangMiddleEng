@@ -155,7 +155,8 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
+			<div className="sub_rate"></div>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewHint}/>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

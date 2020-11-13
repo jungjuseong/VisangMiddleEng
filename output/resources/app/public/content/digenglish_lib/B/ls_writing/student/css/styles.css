@@ -390,9 +390,10 @@
 
 #wrap .s_content .s_question .question .box {
     position: absolute;
-    top: 450px;
+    top: 500px;
     text-align: center;
     white-space: normal;
+    left: 320px;
 }
 
 #wrap .s_content .s_question .question .box .num {
