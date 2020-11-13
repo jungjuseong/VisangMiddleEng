@@ -43,10 +43,10 @@
 		"lodash": "^4.17.11",
 		"mobx": "^5.1.2",
 		"mobx-react": "^5.4.2",
-		"react": "^16.7.0",
-		"react-dom": "npm:@hot-loader/react-dom",
+		"react": "^16.5.2",
+		"react-dom": "16.8.6",
 		"react-draggable": "^3.0.5",
-		"react-hot-loader": "^4.12.18",
+		"react-hot-loader": "^4.10.3",
 		"react-id-swiper": "^1.6.9",
 		"react-resize-detector": "^4.0.5"
 	},

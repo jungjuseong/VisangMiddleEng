@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 
 import { observable } from 'mobx';
@@ -9,7 +8,7 @@ import * as kutil from '@common/util/kutil';
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from './s_store';
 import SendUINew from '../../share/sendui_new';
 import ScriptContainer from '../script_container';
-import * as common from '../common';
+import { IQNAMsg,IScript } from '../common';
 import { App } from '../../App';
 
 import * as felsocket from '../../felsocket';
@@ -24,49 +23,55 @@ interface ISScript {
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
+
 @observer
 class SScript extends React.Component<ISScript> {
 	@observable private _selected: number[] = [];
 
 	private _stime = 0;
 	
-	private _clickText = (idx: number, script: common.IScript) => {
+	private _clickText = (idx: number, script: IScript) => {
 		if(this._stime === 0) this._stime = Date.now();
 
 		if(this.props.scriptProg !== SPROG.SELECTING) return; 
 
-		const cidx = this._selected.indexOf(idx);
-		if(cidx < 0) this._selected.push(idx);
-		else this._selected.splice(cidx, 1);
+		const selectedIndex = this._selected.indexOf(idx);
+		if(selectedIndex < 0) this._selected.push(idx);
+		else this._selected.splice(selectedIndex, 1);
 	}
+
 	private _onSend = async () => {
-		if(!App.student || this.props.scriptProg !== SPROG.SELECTING) return; 
+		const { actions,state } = this.props;
+		if(!App.student || state.scriptProg !== SPROG.SELECTING) return; 
 
 		App.pub_playToPad();
-		const msg: common.IQNAMsg = {
+		const qnaMessage: IQNAMsg = {
 			msgtype: 'qna_return',
 			id: App.student.id,
 			returns: this._selected.slice(0), 
 			stime: this._stime,
             etime: Date.now(),
 		};
-		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
-		this.props.state.scriptProg = SPROG.SENDING;
+		felsocket.sendTeacher($SocketType.MSGTOTEACHER, qnaMessage);
+		state.scriptProg = SPROG.SENDING;
 		await kutil.wait(600);
-		if(this.props.state.scriptProg === SPROG.SENDING) {
-			this.props.state.scriptProg = SPROG.SENDED;
+
+		if(state.scriptProg === SPROG.SENDING) {
+			state.scriptProg = SPROG.SENDED;
 			// console.log('startGoodJob');
 			App.pub_playGoodjob();
-			this.props.actions.startGoodJob(); // 추가
+			actions.startGoodJob(); // 추가
 		}
 	}
+
 	private _gotoQuestion = () => {
-		if(this.props.state.scriptMode !== 'COMPREHENSION') return;
-		else if(this.props.state.qsMode === 'question') return;
+		const { state } = this.props;
+		if(state.scriptMode !== 'COMPREHENSION' || state.qsMode === 'question') return;
+		// if(state.qsMode === 'question') return;
 		App.pub_playBtnTab();
-		this.props.state.qsMode = 'question';
-		
+		state.qsMode = 'question';		
 	}
+
 	public componentWillReceiveProps(next: ISScript) {
 		if(next.scriptProg !== this.props.scriptProg) {
 			if(next.scriptProg < SPROG.SELECTING) {
@@ -75,8 +80,9 @@ class SScript extends React.Component<ISScript> {
 			}
 		}
 	}
+
 	public render() {
-		const { view, scriptProg, actions, state, questionProg} = this.props;
+		const { view,scriptProg, actions, state, questionProg} = this.props;
 		const c_data = actions.getData();
 		return (
 			<div className={'s_script ' + state.scriptMode}>
@@ -104,7 +110,7 @@ class SScript extends React.Component<ISScript> {
 					/>
 				</div>
 				<SendUINew
-					view={this.props.view && (scriptProg === SPROG.SELECTING || scriptProg === SPROG.SENDING) && this._selected.length > 0}
+					view={view && (scriptProg === SPROG.SELECTING || scriptProg === SPROG.SENDING) && this._selected.length > 0}
 					type={'pad'}
 					sended={false}
 					originY={0}

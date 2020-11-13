@@ -1,13 +1,10 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Observer, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import * as _ from 'lodash';
-import { TeacherContext, useTeacher, IStateCtx, IActionsCtx } from './t_store';
+import { IStateCtx } from './t_store';
 import * as common from '../common';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../App';
-import { ResponsiveText } from '../../share/ResponsiveText';
-import { hot } from 'react-hot-loader';
 import { observable } from 'mobx';
 
 import * as butil from '@common/component/butil';
