@@ -110,7 +110,7 @@ class TeacherContext extends TeacherContextBase {
 			getReturnUsersForQuiz: () => this._returnUsersForQuiz,
 			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
 			getQnaReturns: () => this._qnaReturns,
-			quizComplete: () =>  this.state.questionProg = SENDPROG.COMPLETE,
+			quizComplete: () =>  this.state.confirmProg = SENDPROG.COMPLETE,
 			clearQnaReturns: () => {			
 				this._returnUsers = [];
 				this.actions.setRetCnt(0);
