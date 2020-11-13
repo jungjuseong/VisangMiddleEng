@@ -104,10 +104,12 @@ class StudentContext extends StudentContextBase {
 					};
 					break;
 				case 'quiz_end':
-					if(viewDiv !== 'content') return;
-					else if(questionProg !== QPROG.ON && questionProg !== QPROG.SENDING && questionProg !== QPROG.SENDED) return;
-
-					this.state.questionProg = QPROG.COMPLETE;
+					if(viewDiv !== 'content' || ![QPROG.ON,QPROG.SENDED,QPROG.SENDING].includes(questionProg)) return;
+					//else if(questionProg !== QPROG.ON && questionProg !== QPROG.SENDING && questionProg !== QPROG.SENDED) return;
+					this.state = {
+						...this.state,
+						questionProg: QPROG.COMPLETE
+					}
 					break;
 				case 'script_send':
 					if(scriptProg !== SPROG.UNMOUNT) return;
@@ -124,8 +126,7 @@ class StudentContext extends StudentContextBase {
 					};
 					break;
 				case 'view_clue':
-					if(viewDiv !== 'content') return;
-					else if(scriptProg === SPROG.UNMOUNT) return;
+					if(viewDiv !== 'content' || scriptProg === SPROG.UNMOUNT) return;
 
 					this.state = {
 						...this.state,

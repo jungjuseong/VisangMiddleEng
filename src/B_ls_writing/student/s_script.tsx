@@ -13,7 +13,7 @@ import { App } from '../../App';
 
 import * as felsocket from '../../felsocket';
 
-interface ISScript {
+interface ISScriptProps {
 	view: boolean;
 	questionProg: QPROG;
 	scriptProg: SPROG;
@@ -25,12 +25,12 @@ interface ISScript {
 }
 
 @observer
-class SScript extends React.Component<ISScript> {
+class SScript extends React.Component<ISScriptProps> {
 	@observable private _selected: number[] = [];
 
 	private _stime = 0;
 	
-	private _clickText = (idx: number, script: IScript) => {
+	private _onTextClick = (idx: number, script: IScript) => {
 		if(this._stime === 0) this._stime = Date.now();
 
 		if(this.props.scriptProg !== SPROG.SELECTING) return; 
@@ -72,7 +72,7 @@ class SScript extends React.Component<ISScript> {
 		state.qsMode = 'question';		
 	}
 
-	public componentWillReceiveProps(next: ISScript) {
+	public componentWillReceiveProps(next: ISScriptProps) {
 		if(next.scriptProg !== this.props.scriptProg) {
 			if(next.scriptProg < SPROG.SELECTING) {
 				while(this._selected.length > 0) this._selected.pop();
@@ -82,8 +82,7 @@ class SScript extends React.Component<ISScript> {
 	}
 
 	public render() {
-		const { view,scriptProg, actions, state, questionProg} = this.props;
-		const c_data = actions.getData();
+		const { view,scriptProg, actions, scriptMode, state, questionProg} = this.props;
 		return (
 			<div className={'s_script ' + state.scriptMode}>
                 <ToggleBtn 
@@ -94,19 +93,19 @@ class SScript extends React.Component<ISScript> {
 				<div className="script_container">
 					<ScriptContainer
 						view={state.viewDiv === 'content'}
-						data={c_data}
+						data={actions.getData()}
 						focusIdx={state.focusIdx}
 						selected={this._selected}
 						qnaReturns={[]}
 						roll={state.roll}
 						shadowing={state.shadowing}
 						noSwiping={state.scriptMode === 'DIALOGUE' && state.isPlay}
-						compDiv={this.props.scriptMode}
+						compDiv={scriptMode}
 						viewClue={state.viewClue}
 						viewScript={true}
 						viewTrans={false}
-						clickThumb={this._clickText}
-						clickText={this._clickText}
+						clickThumb={this._onTextClick}
+						clickText={this._onTextClick}
 					/>
 				</div>
 				<SendUINew
