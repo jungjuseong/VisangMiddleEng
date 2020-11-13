@@ -270,8 +270,11 @@ class ScriptBox  extends React.Component<IScriptBox> {
 
 	constructor(props: IScriptBox) {
 		super(props);
-		let sScript =  props.script.dms_eng;
-		sScript = sScript.replace(/<\s*br\s*\/*\s*>/ig, '<br>');
+
+		const { script } = props;
+		let sScript =  script.dms_eng;
+
+		sScript = sScript.replace(/<\s*br\s*\/*\s*>/ig, '<br>');		
 		let arrLine = sScript.split('<br>');
 
 		this.m_jsx = (
@@ -290,7 +293,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 			</>
 		);
 
-		sScript =  props.script.dms_kor[App.lang];
+		sScript = props.script.dms_kor[App.lang];
 		sScript = sScript.replace(/<\s*br\s*\/*\s*>/ig, '<br>');
 		arrLine = sScript.split('<br>');
 
@@ -324,39 +327,39 @@ class ScriptBox  extends React.Component<IScriptBox> {
 	}
 
 	private _draw() {
+		const { view,focus,selected,roll,compDiv } = this.props;
+
 		if(!this.m_canvas || this.m_width === 0 || this.m_height === 0) return;
 		this.m_ctx.clearRect(0, 0, this.m_canvas.width, this.m_canvas.height);
 		this.m_canvas.width = this.m_width + 15;
 		this.m_canvas.height = this.m_height + 20;
 
-		if(!this.props.view || (this.props.compDiv !== 'DIALOGUE' && !b_ls_writing_s)) return;
+		if(!view || (compDiv !== 'DIALOGUE' && !b_ls_writing_s)) return;
 
-		const props = this.props;
 		let skin: IBallon;
-		if(props.focus || props.selected) {
-			if(props.roll === 'A') {
+		if(focus || selected) {
+			if(roll === 'A') {
 				skin = _focusA;
-
 				/*
 				if(props.sroll === 'A' || props.shadowing || props.selected) skin.brdColor = _brd_focus;
-				else skin.brdColor = _strokA;			
+				else skin.brdColor = _strokA;
 				*/
 				skin.brdColor = _strokA;
-			} else if(props.roll === 'B') {
+			} else if(roll === 'B') {
                 skin = _focusB;
                 /*
                 if(props.sroll === 'B' || props.shadowing || props.selected) skin.brdColor = _brd_focus;
                 else skin.brdColor = _strokB;
                 */
                 skin.brdColor = _strokB;
-            } else if(props.roll === 'C') {
+            } else if(roll === 'C') {
                 skin = _focusC;
                 /*
                 if(props.sroll === 'B' || props.shadowing || props.selected) skin.brdColor = _brd_focus;
                 else skin.brdColor = _strokB;
                 */
                 skin.brdColor = _strokC;
-            } else if(props.roll === 'D') {
+            } else if(roll === 'D') {
                 skin = _focusD;
                 /*
                 if(props.sroll === 'B' || props.shadowing || props.selected) skin.brdColor = _brd_focus;
@@ -372,36 +375,29 @@ class ScriptBox  extends React.Component<IScriptBox> {
 				skin.brdColor = _strokE;
 			}
 		} else {
-			if(props.roll === 'A') {
+			if(roll === 'A') {
 				skin = _normalA;
-			} else if(props.roll === 'B') {
+			} else if(roll === 'B') {
 				skin = _normalB;
-			} else if(props.roll === 'C') {
+			} else if(roll === 'C') {
 				skin = _normalC;
-			} else if(props.roll === 'D') {
+			} else if(roll === 'D') {
 				skin = _normalD;
 			} else {
 				skin = _normalE;
 			}
 		}	
 
-		let brdR;  // 코너 각
-		let left;	// 좌측 면
-		let top;	// 상단 면
-		let px;    // 꼭지점 x위치
-		let py;    // 꼭지점 x위치
+		let brdR = 10;  // 코너 각
+		let left = 12;	// 좌측 면
+		const top = 10;	// 상단 면
+		const px = 2;    // 꼭지점 x위치
+		let py = 38;    // 꼭지점 x위치
+
 		if(b_ls_writing_s) {
 			left = 16;
-			top = 10;
 			brdR = 20;
-			px = 2;
 			py = 58;
-		} else {
-			left = 12;
-			brdR = 10;
-			top = 10;
-			px = 2;
-			py = 38;
 		}
 		_drawBalloon(
 			this.m_ctx,

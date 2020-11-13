@@ -50,7 +50,7 @@ class SContent extends React.Component<ISContentProps> {
 	}
 
 	private _clickNo = async () => {
-		const {state} = this.props;
+		const { state} = this.props;
 
 		if(this._stime === 0) this._stime = Date.now();
 
@@ -65,6 +65,7 @@ class SContent extends React.Component<ISContentProps> {
 			stime: this._stime,
             etime: Date.now(),
 		};
+
 		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 		// console.log('startGoodJob');
 
@@ -75,14 +76,17 @@ class SContent extends React.Component<ISContentProps> {
 	public componentWillUpdate(next: ISContentProps) {
 		//
 	}
-	
+
 	public render() {
 		const {view, state, actions, confirmProg, scriptProg, scriptMode, qsMode} = this.props;
-		const style: React.CSSProperties = {};
+		let style: React.CSSProperties = {};
 		if(!view) {
-			style.opacity = 0;
-			style.zIndex = -1;
-			style.pointerEvents = 'none';				
+			style = {
+				...style,
+				opacity: 0,
+				zIndex: -1,
+				pointerEvents: 'none'
+			}			
 		}
 		return (
 			<div className="s_content" style={style}>
