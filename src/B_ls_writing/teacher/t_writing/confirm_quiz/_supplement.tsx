@@ -21,7 +21,7 @@ interface IQuizBox {
 	data: common.IConfirmSup;
 }
 /*
-2020 11 10 작업
+2020 11 16 작업
 _lets_talk.tsx 참고
 이동윤
 */
@@ -30,6 +30,7 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
+	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
 	
@@ -48,6 +49,9 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
+	private _jsx_question1: common.IProblem;
+	private _jsx_question2: common.IProblem;
+	private _jsx_question3: common.IProblem;
 	private _character: string;
 	private aaaclick : () => void;
 
@@ -58,6 +62,9 @@ class Supplement extends React.Component<IQuizBox> {
 		
 		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
+		this._jsx_question1= props.data.problem1;
+		this._jsx_question2= props.data.problem2;
+		this._jsx_question3= props.data.problem3;
 		this.aaaclick = props.onHintClick;
 
 		const randomIndex = Math.floor(Math.random() * 3);
@@ -65,7 +72,7 @@ class Supplement extends React.Component<IQuizBox> {
 		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
 		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
 	}
-
+	// Translation 토글 기능
 	private _viewTrans = () => {
 		App.pub_playBtnTab();
 		this._trans = !this._trans;
@@ -84,8 +91,27 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+	// True / False 토글 기능
+	private _selectedValue = () => {
+		App.pub_playBtnTab();
+		this._select = !this._select;
+		if(this._select) this._select = true;
 
-	private _viewHint = (evt: React.MouseEvent<HTMLElement>) => {
+		if(this._swiper) {
+			this._swiper.slideTo(0, 0);
+			this._swiper.update();
+			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		}
+		_.delay(() => {
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
+				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+			}				
+		}, 300);
+	}
+	// 답 확인 토글 기능 answer
+	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
 		this.aaaclick();
 		this._hint = !this._hint;
@@ -124,6 +150,7 @@ class Supplement extends React.Component<IQuizBox> {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
+			this._select = true;
 			this._zoom = false;
 			this._zoomImgUrl = '';
 
@@ -155,7 +182,7 @@ class Supplement extends React.Component<IQuizBox> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 			<div className="sub_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewHint}/>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
@@ -166,16 +193,19 @@ class Supplement extends React.Component<IQuizBox> {
 									</div>
 								</div>
 							</div>
-						</div>
-						<div className="speechbubble_box" >
-							<div className={(this._hint ? ' view-hint' : '')}>
-								<SwiperComponent {...this._soption} ref={this._refSwiper}>
-									<div>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-										</div>
-									</div>
-								</SwiperComponent>
+							<div className = "question">
+								<div>
+									<div>1. {this._jsx_question1.question}</div>
+									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								</div>
+								<div>
+									<div>2. {this._jsx_question2.question}</div>
+									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								</div>
+								<div>
+									<div>3. {this._jsx_question3.question}</div>
+									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								</div>
 							</div>
 						</div>
 					</div>

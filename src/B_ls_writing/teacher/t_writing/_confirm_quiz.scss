@@ -50,6 +50,9 @@
                 border-radius: 10px;
                 width: 950px;
                 height: 400px;
+                padding: 0px 25px;
+                
+                /*public*/
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
                     position: absolute;
@@ -57,13 +60,14 @@
                     top: 15px;
                     z-index: 2;
                 }
+                /*public*/
                 .sentence_box {
                     height: 100px;
                     position: relative;
                     font-size: 18px;
                     font-weight: bold;
                     text-align: left;
-                    padding: 0px 25px;
+                    
                     &>div {
                         display: inline-block;
                         transform: translateY(-50%);
@@ -82,6 +86,27 @@
                         }
                     }
                 }
+                
+                /*T3일 때*/
+                .question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    &>div{
+                        margin: 25px 0px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                }
+                .true_false_btn {
+                    @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
+                    right: 20px;
+                    z-index: 2;
+                }
+
+                /*T2일 때*/
                 .image_box {
                     position: relative;
                     margin-top: 5px;
@@ -97,6 +122,7 @@
                     }
                 }
             }
+            /*T2일 때*/
             .speechbubble_box {
                 position: relative;
                 margin: 10px 0px;

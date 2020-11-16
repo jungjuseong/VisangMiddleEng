@@ -21,7 +21,7 @@ interface IQuizBox {
 	data: common.IConfirmNomal;
 }
 /*
-2020 11 10 작업
+2020 11 16 작업
 _lets_talk.tsx 참고
 이동윤
 */
@@ -91,7 +91,7 @@ class Basic extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	private _viewHint = (evt: React.MouseEvent<HTMLElement>) => {
+	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
 		this.aaaclick();
 		this._hint = !this._hint;
@@ -161,7 +161,7 @@ class Basic extends React.Component<IQuizBox> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 			<div className="sub_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewHint}/>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
@@ -184,7 +184,8 @@ class Basic extends React.Component<IQuizBox> {
 									<div>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>
 										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}</div>
+											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}
+										</div>
 									</div>
 								</SwiperComponent>
 							</div>
