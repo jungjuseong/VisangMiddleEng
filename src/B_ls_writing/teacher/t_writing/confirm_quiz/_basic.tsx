@@ -50,7 +50,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 	private _jsx_hint1: number;
 	private _jsx_hint2: number;
 	private _jsx_hint3: number;
-	private _character: string;
+	private _characterImage: string;
 	private _btnAudio?: BtnAudio;
 	
 	public constructor(props: IQuizBoxProps) {
@@ -67,7 +67,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
-		this._character = pathPrefix + characterImages[randomIndex];
+		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
 	private _viewTranslation = () => {

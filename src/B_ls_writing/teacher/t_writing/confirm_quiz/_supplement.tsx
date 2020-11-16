@@ -48,8 +48,7 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _character: string;
-	private aaaclick : () => void;
+	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
 	
@@ -58,12 +57,12 @@ class Supplement extends React.Component<IQuizBox> {
 		
 		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this.aaaclick = props.onHintClick;
+
+		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
+		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
-		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
-		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
 	private _viewTrans = () => {
@@ -87,7 +86,7 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _viewHint = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
-		this.aaaclick();
+		this.props.onHintClick();
 		this._hint = !this._hint;
 
 		if(this._swiper) {
