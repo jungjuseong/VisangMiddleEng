@@ -18,7 +18,7 @@ interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IConfirmSuq;
+	data: common.IConfirmSup;
 }
 /*
 2020 11 10 작업
@@ -165,10 +165,7 @@ class Supplement extends React.Component<IQuizBox> {
 										{jsx}
 									</div>
 								</div>
-							</div>	
-							<div className="image_box">
-
-							</div>	
+							</div>
 						</div>
 						<div className="speechbubble_box" >
 							<div className={(this._hint ? ' view-hint' : '')}>
