@@ -100,7 +100,7 @@ export interface IConfirmNomal extends IInClassStudyProps{
 	readonly item6: IItem;
 }
 
-export interface IConfirmSuq extends IInClassStudyProps{
+export interface IConfirmSup extends IInClassStudyProps{
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
@@ -130,5 +130,5 @@ export interface IProblem {
 export interface IData {
 	introduction: IIntroduction[];
 	confirm_nomal: IConfirmNomal[];
-	confirm_suq: IConfirmSuq[];
+	confirm_sup: IConfirmSup[];
 }

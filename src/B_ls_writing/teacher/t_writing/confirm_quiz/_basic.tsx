@@ -4,12 +4,12 @@ import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
-import { App } from '../../../App';
+import { App } from '../../../../App';
 
-import * as common from '../../common';
-import { BtnAudio } from '../../../share/BtnAudio';
+import * as common from '../../../common';
+import { BtnAudio } from '../../../../share/BtnAudio';
 
-import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -26,7 +26,7 @@ _lets_talk.tsx 참고
 이동윤
 */
 @observer
-class ConfirmQuiz extends React.Component<IQuizBox> {
+class Basic extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -196,4 +196,4 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	}
 }
 
-export default ConfirmQuiz;
+export default Basic;

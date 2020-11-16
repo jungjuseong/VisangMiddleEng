@@ -18,7 +18,7 @@ import ScriptContainer from '../../script_container';
 import { TimerState } from '../../../share/Timer';
 
 import IntroQuiz from './_intro_quiz';
-import ConfirmQuiz from './_confirm_quiz';
+import ConfirmQuiz from './confirm_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -615,8 +615,9 @@ class Writing extends React.Component<IWriting> {
                     <div className={'question' + (confirmProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
                             <ConfirmQuiz 
-                                view={view && 1 === this._curQidx}
-                                data={confirm_nomals[0]} 
+                                view={view}
+                                index ={this._curQidx}
+                                mdata={this.m_data} 
                                 onClosed={this._letstalkClosed}
                                 onHintClick={this._clickAnswer}
                             />                          
