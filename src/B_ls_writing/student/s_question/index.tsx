@@ -88,7 +88,7 @@ class SQuestion extends React.Component<ISQuestion> {
 		};
 		if(App.student) {
 			const msg: common.IQuizReturnMsg = {
-				msgtype: 'quiz_return',
+				msgtype: 'confirm_return',
 				id: App.student.id,
 				return: choice
 			};

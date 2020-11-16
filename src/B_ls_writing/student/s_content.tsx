@@ -58,15 +58,15 @@ class SContent extends React.Component<ISContentProps> {
 		App.pub_playBtnTab();
 		state.scriptProg = SPROG.SENDED;
 		if(!App.student) return;
-		const msg: IQNAMsg = {
-			msgtype: 'qna_return',
-			id: App.student.id,
-			returns: [],
-			stime: this._stime,
-            etime: Date.now(),
-		};
+		// const msg: IQNAMsg = {
+		// 	msgtype: 'qna_return',
+		// 	id: App.student.id,
+		// 	returns: [],
+		// 	stime: this._stime,
+        //     etime: Date.now(),
+		// };
 
-		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
+		// felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 		// console.log('startGoodJob');
 
 		await kutil.wait(300);

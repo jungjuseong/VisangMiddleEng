@@ -45,14 +45,14 @@ class SScript extends React.Component<ISScriptProps> {
 		if(!App.student || state.scriptProg !== SPROG.SELECTING) return; 
 
 		App.pub_playToPad();
-		const qnaMessage: IQNAMsg = {
-			msgtype: 'qna_return',
-			id: App.student.id,
-			returns: this._selected.slice(0), 
-			stime: this._stime,
-            etime: Date.now(),
-		};
-		felsocket.sendTeacher($SocketType.MSGTOTEACHER, qnaMessage);
+		// const qnaMessage: IQNAMsg = {
+		// 	msgtype: 'qna_return',
+		// 	id: App.student.id,
+		// 	returns: this._selected.slice(0), 
+		// 	stime: this._stime,
+        //     etime: Date.now(),
+		// };
+		// felsocket.sendTeacher($SocketType.MSGTOTEACHER, qnaMessage);
 		state.scriptProg = SPROG.SENDING;
 		await kutil.wait(600);
 

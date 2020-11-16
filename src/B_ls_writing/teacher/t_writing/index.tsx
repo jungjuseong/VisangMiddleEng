@@ -108,7 +108,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
-            let msg: IMsg;
+            let msg: IFocusMsg;
             
             actions.clearReturnUsers();
             actions.setRetCnt(0);
@@ -117,15 +117,11 @@ class Writing extends React.Component<IWriting> {
             if(this._tab === 'CONFIRM') {
                 if(state.confirmProg !==  SENDPROG.SENDING) return;
                 state.confirmProg = SENDPROG.SENDED;
-                msg = {msgtype: 'quiz_send',};
+                msg = {msgtype: 'confirm_send',idx: 1,};
             } else {
                 if(state.scriptProg !==  SENDPROG.SENDING) return;
                 state.scriptProg = SENDPROG.SENDED;
-                msg = {msgtype: 'script_send',};
-                if(this._viewClue) {
-                    felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-                    msg = {msgtype: 'view_clue',};
-                }
+                msg = {msgtype: 'script_send',idx : 1,};
             } 
             
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -261,7 +257,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmProg,qnaProg} = state;
 
         if(this._tab === 'INTRODUCTION') return;
-        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if(confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
         
         App.pub_playBtnTab();
         this._hint = false;
@@ -280,7 +276,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmProg,qnaProg } = this.props.state;
 
         if (this._tab === 'CONFIRM') return;
-        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -293,7 +289,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmProg,qnaProg } = this.props.state;
 
         if (this._tab === 'ADDITIONAL') return;
-        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -306,7 +302,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmProg,qnaProg } = this.props.state;
 
         if (this._tab === 'DICTATION') return;
-        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -319,7 +315,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmProg,qnaProg } = this.props.state;
 
         if (this._tab === 'SCRIPT') return;
-        if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+        if (confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -357,8 +353,6 @@ class Writing extends React.Component<IWriting> {
 	}
 
 	private _clickAnswer = () => {
-        console.log('clickAnswer')
-        console.log('endend3')
         const {state, actions} = this.props;
         const confirmProg = state.confirmProg;
 
@@ -366,33 +360,35 @@ class Writing extends React.Component<IWriting> {
             confirmProg !== SENDPROG.SENDED
         ) return;
 
-        console.log('endend1')
-        const msg: IMsg = {
-            msgtype: 'quiz_end',
+        App.pub_playBtnTab();
+       
+        const msg: IFocusMsg = {
+            msgtype: 'confirm_end',
+            idx:1
         };
-        console.log(msg)
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-        console.log('endend2')
+        this.props.state.confirmProg = SENDPROG.COMPLETE;
         actions.quizComplete();
-        this.props.actions.setNavi(true, true);
+        console.log(this.props.state.confirmProg);
+        // this.props.actions.setNavi(true,true);
 	}
 
-	private _sendFocusIdx(idx: number) {
-		const msg: IFocusMsg = {
-			msgtype: 'focusidx',
-			idx,
-		};
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+	// private _sendFocusIdx(idx: number) {
+	// 	const msg: IFocusMsg = {
+	// 		msgtype: 'focusidx',
+	// 		idx,
+	// 	};
+    //     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         
-	}
-	private _sendDialogueEnd() {
-		const msg: IMsg = {
-			msgtype: 'dialogue_end',
-		};
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+	// }
+	// private _sendDialogueEnd() {
+	// 	const msg: IMsg = {
+	// 		msgtype: 'dialogue_end',
+	// 	};
+    //     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         
-	}
+	// }
 
 	private _letstalkClosed = () => {
 		this._letstalk = false;

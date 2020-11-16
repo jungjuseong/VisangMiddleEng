@@ -110,7 +110,8 @@ class TeacherContext extends TeacherContextBase {
 			getReturnUsersForQuiz: () => this._returnUsersForQuiz,
 			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
 			getQnaReturns: () => this._qnaReturns,
-			quizComplete: () =>  this.state.confirmProg = SENDPROG.COMPLETE,
+			quizComplete: () =>  {this.state.confirmProg = SENDPROG.COMPLETE
+			console.log('quizComplete',this.state.confirmProg)},
 			clearQnaReturns: () => {			
 				this._returnUsers = [];
 				this.actions.setRetCnt(0);
@@ -143,7 +144,7 @@ class TeacherContext extends TeacherContextBase {
 		if(messageFromPad.type === $SocketType.MSGTOTEACHER && messageFromPad.data) {
 			const messageType = (messageFromPad.data as  IMsg).msgtype;
 			switch(messageType) {
-			case 'quiz_return':
+			case 'confirm_return':
 				if(this.state.confirmProg === SENDPROG.SENDED) {
 					const quizReturnMsg = (messageFromPad.data as IQuizReturnMsg);
 					let sidx = -1;
@@ -162,59 +163,6 @@ class TeacherContext extends TeacherContextBase {
 					}
 				}
 				break;
-			case 'qna_return':
-				if(this.state.qnaProg === SENDPROG.SENDED) {
-					const qnaMessage = messageFromPad.data as IQNAMsg;
-					let sidx = -1;
-					for(let i = 0; i < App.students.length; i++) {
-						if(App.students[i].id === qnaMessage.id) {
-							sidx = i;
-							break;
-						}
-					}
-					const ridx = this._returnUsers.indexOf(qnaMessage.id);
-					if(sidx >= 0 && ridx < 0) {
-						for(let i = 0; i < qnaMessage.returns.length; i++) {  // 문제별 
-							const scriptIdx = qnaMessage.returns[i];
-							if(scriptIdx < this._qnaReturns.length) {
-								const users = this._qnaReturns[scriptIdx].users;
-								if(users.indexOf(qnaMessage.id) < 0) users.push(qnaMessage.id);
-
-								this._qnaReturns[scriptIdx].num = users.length;
-							}
-						}
-						this._returnUsers.push(qnaMessage.id);
-						felsocket.addStudentForStudentReportType6(qnaMessage.id);
-						this.actions.setRetCnt(this._returnUsers.length);
-					}
-
-					const userReports: IInClassReport[] = [];
-					const stime = StrUtil._toStringTimestamp(new Date(qnaMessage.stime));
-					const etime = StrUtil._toStringTimestamp(new Date(qnaMessage.etime));
-					
-					let ans_submit = 'qna;';
-					
-					userReports.push({
-                        std_cont_seq: 0,
-                        studentId: qnaMessage.id,
-                        ans_tf: qnaMessage.returns.length === 0 ? '0' : '1',
-                        ans_submit,
-                        ans_starttime: stime ? stime : '',
-                        ans_endtime: etime ? etime : '',
-                        sc_div1: '',
-                        sc_div2: '',
-                        sc_div3: '',
-                        sc_div4: '',
-                        files: null,
-                        ans_correct: '',
-                        tab_index: '5',
-                    });
-
-					if(userReports.length > 0) {
-						console.log('inclassReport(LogFromContentTeacher): ', userReports); // 비상요청 사항                        
-						felsocket.uploadInclassReport(userReports);
-					}
-				}
 			}
 		}
 

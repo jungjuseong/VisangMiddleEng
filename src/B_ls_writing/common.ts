@@ -1,12 +1,11 @@
 import * as _ from 'lodash';
 
 export interface IMsg {
-	msgtype: 	'quiz_send'|'quiz_end'|'quiz_return'|
-				'script_send'|'dialogue_send'|
-				'roll_send'|'shadowing_send'|'dialogue_end'|
-				'qna_send'|'qna_return'|'qna_end'|
-				'view_clue'|'hide_clue'|
-				'focusidx'|'playing'|'paused';
+	msgtype: 	'intro_send'|'intro_end'|'intro_return'|
+				'confirm_send'|'confirm_end'|'confirm_return'|
+				'additional_send'|'additional_end'|'additional_return'|
+				'dictation_send'|'dictation_end'|'dictation_return'|
+				'script_send'|'script_end'|'script_return';
 }
 
 export interface IQuizReturn {

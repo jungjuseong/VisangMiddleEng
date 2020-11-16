@@ -79,23 +79,26 @@ class StudentContext extends StudentContextBase {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IMsg;
-			if(msg.msgtype === 'quiz_send') {
-				// if(this.state.confirmProg > QPROG.UNINIT) return;
-				this.state.scriptProg = SPROG.UNMOUNT;
-				this.state.questionView = true;
-				this.state.confirmProg = QPROG.ON;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'question';
-				this.state.roll = '';
-				this.state.shadowing = false;
-			} else if(msg.msgtype === 'quiz_end') {
-				const qProg = this.state.confirmProg;
-				if(this.state.viewDiv !== 'content') return;
-				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-
-				this.state.confirmProg = QPROG.COMPLETE;
+			const msg = data.data as  common.IFocusMsg;
+			if(msg.msgtype === 'confirm_send') {
+				if(msg.idx === 1){
+					// if(this.state.confirmProg > QPROG.UNINIT) return;
+					this.state.scriptProg = SPROG.UNMOUNT;
+					this.state.questionView = true;
+					this.state.confirmProg = QPROG.ON;
+					this.state.viewDiv = 'content';
+					this.state.scriptMode  = 'COMPREHENSION';
+					this.state.qsMode  = 'question';
+					this.state.roll = '';
+					this.state.shadowing = false;
+				}
+			} else if(msg.msgtype === 'confirm_end') {
+				if(msg.idx === 1){
+					const qProg = this.state.confirmProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.confirmProg = QPROG.COMPLETE;
+				}
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
@@ -108,72 +111,6 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
-			} else if(msg.msgtype === 'view_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
-				this.state.qsMode  = 'script';
-				this.state.viewClue = true;
-			} else if(msg.msgtype === 'hide_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
-				this.state.viewClue = false;
-			} else if(msg.msgtype === 'qna_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg !== SPROG.MOUNTED) return;
-
-				this.state.focusIdx = -1;
-				// this.state.viewClue = false;
-				this.state.scriptProg = SPROG.YESORNO;
-			} else if(msg.msgtype === 'qna_end') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg < SPROG.MOUNTED) return;
-
-				// this.state.viewClue = false;
-				this.state.scriptProg = SPROG.MOUNTED;
-			} else if(msg.msgtype === 'dialogue_send') {
-				// if(this.state.scriptProg !== SPROG.UNMOUNT) return;
-				// if(this.state.confirmProg === QPROG.UNMOUNT) this.state.confirmProg = QPROG.MOUNTED;
-				
-				this.state.scriptProg = SPROG.UNMOUNT;
-				if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.UNINIT;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'DIALOGUE';
-				this.state.qsMode  = 'script';
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.viewClue = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'dialogue_end') { 
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.isPlay = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'roll_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;
-
-				const rmsg = msg as common.IRollMsg;
-				this.state.roll = rmsg.roll;
-				this.state.shadowing = false;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'shadowing_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;	
-				this.state.roll = '';
-				this.state.shadowing = true;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'playing' || msg.msgtype === 'paused') {
-				if(this.state.viewDiv !== 'content') return;
-				this.state.isPlay = (msg.msgtype === 'playing');
-			} else if(msg.msgtype === 'focusidx') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode === 'COMPREHENSION') return;
-				const fmsg = msg as common.IFocusMsg;
-				this.state.focusIdx = fmsg.idx;
 			}
 		}
 	}
