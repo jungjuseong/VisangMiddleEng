@@ -69,7 +69,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 				}				
 			}, 300);
 
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._view = false;	
 			this._zoom = false;
 			this._zoomImgUrl = '';

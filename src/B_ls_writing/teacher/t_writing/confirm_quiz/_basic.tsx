@@ -20,7 +20,7 @@ interface IQuizBoxProps {
 	data: common.IConfirmNomal;
 }
 /*
-2020 11 10 작업
+2020 11 16 작업
 _lets_talk.tsx 참고
 이동윤
 */
@@ -50,7 +50,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 	private _jsx_hint1: number;
 	private _jsx_hint2: number;
 	private _jsx_hint3: number;
-	private _character: string;
+	private _characterImage: string;
 	private _btnAudio?: BtnAudio;
 	
 	public constructor(props: IQuizBoxProps) {
@@ -67,7 +67,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
-		this._character = pathPrefix + characterImages[randomIndex];
+		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
 	private _viewTranslation = () => {
@@ -90,7 +90,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 	}
 
 	@action
-	private _viewHint = (evt: React.MouseEvent<HTMLElement>) => {
+	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
 
 		this.props.onHintClick();
@@ -156,7 +156,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 			<div className="sub_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewHint}/>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>
@@ -179,7 +179,8 @@ class Basic extends React.Component<IQuizBoxProps> {
 									<div>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>
 										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}</div>
+											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}
+										</div>
 									</div>
 								</SwiperComponent>
 							</div>
