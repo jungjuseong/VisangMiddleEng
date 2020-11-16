@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observable, action } from 'mobx';
 
 import * as _ from 'lodash';
-import { IMsg. IData, IFocusMsg, IRollMsg } from '../common';
+import { IMsg, IData, IFocusMsg, IRollMsg } from '../common';
 import { StudentContextBase, IActionsBase, IStateBase, VIEWDIV } from '../../share/scontext';
 
 const enum QPROG {
