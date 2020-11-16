@@ -125,7 +125,7 @@ declare interface IMsgGaNa extends IMessage<TEAM_GROUPING_MSG> {
 }
 
 declare interface IMsgQuizIdx extends IMessage<TEAM_SPINDLE_MSG> {
-	qidx: number;
+	quizIndex: number;
 	point: number;
 }
 declare interface IFlipMsg extends IMessage<TEAM_SPINDLE_MSG> {
@@ -183,7 +183,7 @@ declare interface IQuizGroupResult {
 	/** 팀B 포인트 */
 	na_point: number;
 	/** 설정된 시간 */
-	qtime: number;
+	quizTime: number;
 }
 
 /** 싱글 퀴즈에서 결과 저장 인터페이스 */
@@ -193,7 +193,7 @@ declare interface IQuizSingleResult {
 	/** 학생 결과 정보 array */
 	readonly users: IUserResult[];
 	/** 설정된 시간 */
-	qtime: number;
+	quizTime: number;
 }
 
 declare interface IQuizPageProps<T> {
@@ -213,9 +213,9 @@ declare interface IQuizPageProps<T> {
 }
 
 interface IStudentQuizInfo {
-	qidxs: number[];
+	quizIndices: number[];
 	points: number[];
-	qtime: number;
+	quizTime: number;
 }
 
 interface IShareQuizData {
@@ -254,7 +254,6 @@ declare interface IPreviewDmsMsg {
 	eval: PREVIEW_EVAL;
 }
 
-
 declare interface IPreviewClassMsg {
     evalCode: string;
     vsFromData: string;
@@ -284,6 +283,13 @@ declare interface IInClassStudyProps {
 	SC_SAVE?: boolean;
 	tmq_seq?: number;
 }
+
+declare interface IKlassStudyProps {
+	SC_DIV_LIST?: Array<string>;
+	SC_SAVE?: boolean;
+	tmq_seq?: number;
+}
+
 declare interface IInClassReport {
 	std_cont_seq: number;
 	studentId: string;

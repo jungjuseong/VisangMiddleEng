@@ -3,14 +3,11 @@ import * as _ from 'lodash';
 import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
-import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
 import * as common from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
-import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
 
 import Basic from './_basic';
 import Supplement from './_supplement';
@@ -39,7 +36,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',
@@ -49,29 +46,6 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		followFinger: true,
 		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
 	};
-
-
-	private _btnAudio?: BtnAudio;
-	
-	public constructor(props: IQuizBox) {
-		super(props);
-		
-	}
-
-
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
-	private _onClick = () => {
-		if(this._btnAudio) this._btnAudio.toggle();
-	}
 
  	public componentDidUpdate(prev: IQuizBox) {
 		const { view } = this.props;
@@ -107,18 +81,8 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		const { mdata, view,index, onClosed, onHintClick} = this.props;
 		return (
 			<>
-				<Supplement
-					view={view && index === 0}
-					data={mdata.confirm_sup[0]} 
-					onClosed={onClosed}
-					onHintClick={onHintClick}
-				/>
-				<Basic
-					view={view && index === 1}
-					data={mdata.confirm_nomal[0]} 
-					onClosed={onClosed}
-					onHintClick={onHintClick}
-				/>
+				<Supplement view={view && index === 0} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Basic view={view && index === 1} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 			</>
 		);
 	}

@@ -4,13 +4,13 @@ import { observer } from 'mobx-react';
 import { IStateCtx, IActionsCtx } from './t_store';
 import { IWordData,TypeQuiz } from '../common';
 
-import QuizSound from '../quiz_sound';
-import QuizMeaning from '../quiz_meaning';
+import QuizSound from '../sound_quiz';
+import QuizMeaning from '../meaning_quiz';
 import QuizSpelling from '../quiz_spelling';
-import QuizUsage from '../quiz_usage';
+import QuizUsage from '../usage_quiz';
 import QuizTeacher from '../../share/QuizTeacher';
 
-interface ITQuiz {
+interface IQuizProps {
 	view: boolean;
 	quizProg: TypeQuizProg;
 	numOfReturn: number;
@@ -19,45 +19,45 @@ interface ITQuiz {
 }
 
 @observer
-class TQuiz extends React.Component<ITQuiz> {
+class TQuiz extends React.Component<IQuizProps> {
 	private _quizs: IWordData[] = [];
-	private _qtype: TypeQuiz = '';
-	private _qtime: number = 0;
+	private _quizType: TypeQuiz = '';
+	private _quizTime: number = 0;
 
-	public componentWillUpdate(next: ITQuiz) {
+	public componentWillUpdate(next: IQuizProps) {
 		if(next.view && !this.props.view) {
 			while(this._quizs.length > 0) this._quizs.pop();
 
 			const words = next.actions.getWords();
-			let qtime = 60;
+			let quizTime = 60;
 			if(next.state.isGroup) {
 				const group = next.actions.getGroupInfo();
 				for(let i = 0; i < group.questions.length; i++) {
 					const q = group.questions[i];
 					this._quizs[i] = words[q.qidx];
 				}
-				qtime = group.qtime;
+				quizTime = group.quizTime;
 			} else {
 				const single = next.actions.getSingleInfo();
 				for(let i = 0; i < single.questions.length; i++) {
 					const quiz = single.questions[i];
 					this._quizs[i] = words[quiz.qidx];
 				}
-				qtime = single.qtime;
+				quizTime = single.quizTime;
 			}
-			this._qtype = next.state.qtype;
-			this._qtime = qtime;
+			this._quizType = next.state.quizType;
+			this._quizTime = quizTime;
 		}
 	}
 
 	public render() {
 		const {view, state, actions, quizProg, numOfReturn} = this.props;
 
-		let ItemComponent;
-		if(this._qtype === 'sound') ItemComponent = QuizSound;
-		else if(this._qtype === 'meaning') ItemComponent = QuizMeaning;
-		else if(this._qtype === 'spelling') ItemComponent = QuizSpelling;
-		else if(this._qtype === 'usage') ItemComponent = QuizUsage;
+		let quizItem;
+		if(this._quizType === 'sound') quizItem = QuizSound;
+		else if(this._quizType === 'meaning') quizItem = QuizMeaning;
+		else if(this._quizType === 'spelling') quizItem = QuizSpelling;
+		else if(this._quizType === 'usage') quizItem = QuizUsage;
 
 		return (
 			<QuizTeacher 
@@ -66,13 +66,13 @@ class TQuiz extends React.Component<ITQuiz> {
 				quizProg={quizProg}
 				numOfReturn={numOfReturn}
 				isGroup={state.isGroup}
-				qtime={this._qtime}
+				quizTime={this._quizTime}
 				numOfGa={state.gas.length}
 				numOfNa={state.nas.length}
 				hasPreview={state.hasPreview}
 				quizs={this._quizs}
-				ItemComponent={ItemComponent}
-				qtype={this._qtype}
+				ItemComponent={quizItem}
+				quizType={this._quizType}
 				getSingleInfo={actions.getSingleInfo}
 				getGroupInfo={actions.getGroupInfo}
 				setQIdx={actions.setQIdx}
