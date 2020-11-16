@@ -36,7 +36,7 @@ class Supplement extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',
@@ -52,8 +52,7 @@ class Supplement extends React.Component<IQuizBox> {
 	private _jsx_question1: common.IProblem;
 	private _jsx_question2: common.IProblem;
 	private _jsx_question3: common.IProblem;
-	private _character: string;
-	private aaaclick : () => void;
+	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
 	
@@ -65,12 +64,12 @@ class Supplement extends React.Component<IQuizBox> {
 		this._jsx_question1= props.data.problem1;
 		this._jsx_question2= props.data.problem2;
 		this._jsx_question3= props.data.problem3;
-		this.aaaclick = props.onHintClick;
+		
+		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
+		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
-		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
-		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 	// Translation 토글 기능
 	private _viewTrans = () => {
@@ -113,7 +112,7 @@ class Supplement extends React.Component<IQuizBox> {
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
-		this.aaaclick();
+		this.props.onHintClick();
 		this._hint = !this._hint;
 
 		if(this._swiper) {

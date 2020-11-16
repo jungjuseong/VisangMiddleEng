@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observer, PropTypes } from 'mobx-react';
-import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
@@ -10,11 +10,10 @@ import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
-import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizBox {
+interface IQuizBoxProps {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
@@ -26,7 +25,7 @@ _lets_talk.tsx 참고
 이동윤
 */
 @observer
-class Basic extends React.Component<IQuizBox> {
+class Basic extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -35,7 +34,7 @@ class Basic extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',
@@ -51,28 +50,27 @@ class Basic extends React.Component<IQuizBox> {
 	private _jsx_hint1: number;
 	private _jsx_hint2: number;
 	private _jsx_hint3: number;
-	private _character: string;
-	private aaaclick : () => void;
-
+	private _characterImage: string;
 	private _btnAudio?: BtnAudio;
 	
-	public constructor(props: IQuizBox) {
+	public constructor(props: IQuizBoxProps) {
 		super(props);
 		
-		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this._jsx_hint1 = props.data.item1.answer; // 답
-		this._jsx_hint2 = props.data.item2.answer; // 답
-		this._jsx_hint3 = props.data.item3.answer; // 답
-		this.aaaclick = props.onHintClick;
+		const { directive, item1, item2, item3 } = props.data;
+		this._jsx_sentence = _getJSX(directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(directive.eng); // 문제
+		this._jsx_hint1 = item1.answer; // 답
+		this._jsx_hint2 = item2.answer; // 답
+		this._jsx_hint3 = item3.answer; // 답
+
+		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
+		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
-		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
-		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
-	private _viewTrans = () => {
+	private _viewTranslation = () => {
 		App.pub_playBtnTab();
 		this._trans = !this._trans;
 		if(this._trans) this._trans = true;
@@ -91,9 +89,11 @@ class Basic extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
+	@action
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
-		this.aaaclick();
+
+		this.props.onHintClick();
 		this._hint = !this._hint;
 
 		if(this._swiper) {
@@ -115,16 +115,11 @@ class Basic extends React.Component<IQuizBox> {
 		this._swiper = el.swiper;
 	}
 
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBox) {
+ 	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -155,7 +150,7 @@ class Basic extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { item1, item2, item3 } = this.props.data;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
@@ -164,7 +159,7 @@ class Basic extends React.Component<IQuizBox> {
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
-							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
+							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>
 							<div className="sentence_box">
 								<div>
 									<div className="question_box" onClick={this._onClick}>
@@ -173,9 +168,9 @@ class Basic extends React.Component<IQuizBox> {
 								</div>
 							</div>	
 							<div className="image_box">
-								<img src={App.data_url + data.item1.img} draggable={false}/>
-								<img src={App.data_url + data.item2.img} draggable={false}/>
-								<img src={App.data_url + data.item3.img} draggable={false}/>
+								<img src={App.data_url + item1.img} draggable={false}/>
+								<img src={App.data_url + item2.img} draggable={false}/>
+								<img src={App.data_url + item3.img} draggable={false}/>
 							</div>	
 						</div>
 						<div className="speechbubble_box" >

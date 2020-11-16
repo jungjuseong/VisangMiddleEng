@@ -32,7 +32,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',

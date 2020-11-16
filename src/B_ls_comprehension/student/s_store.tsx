@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observable, action } from 'mobx';
 
 import * as _ from 'lodash';
-import * as common from '../common';
+import { IMsg. IData, IFocusMsg, IRollMsg } from '../common';
 import { StudentContextBase, IActionsBase, IStateBase, VIEWDIV } from '../../share/scontext';
 
 const enum QPROG {
@@ -35,145 +35,177 @@ interface IStateCtx extends IStateBase {
 	focusIdx: number;
 }
 interface IActionsCtx extends IActionsBase {
-	getData: () => common.IData;
+	getData: () => IData;
 }
 
 class StudentContext extends StudentContextBase {
 	@observable public state!: IStateCtx;
 	public actions!: IActionsCtx;
-	private _data!: common.IData;
+	private _data!: IData;
 
 	constructor() {
 		super();
-
-		this.state.questionView = false;
-		this.state.questionProg = QPROG.UNINIT;
-		this.state.scriptProg = SPROG.UNMOUNT;
-		this.state.scriptMode = 'COMPREHENSION';
-		this.state.qsMode  = '';
-		this.state.roll = '';
-		this.state.viewClue = false;
-		this.state.focusIdx = -1;
-		this.state.isPlay = false;
-		this.state.shadowing = false;
+		this.state = {
+			...this.state,
+			questionView: false,
+			questionProg: QPROG.UNINIT,
+			scriptProg: SPROG.UNMOUNT,
+			scriptMode: 'COMPREHENSION',
+			qsMode : '',
+			roll: '',
+			viewClue: false,
+			focusIdx: -1,
+			isPlay: false,
+			shadowing: false,
+		}
 		this.actions.getData = () => this._data;
 	}
 
-	@action protected _setViewDiv(viewDiv: VIEWDIV) {
-		const state = this.state;
-		if(state.viewDiv !== viewDiv) {
-			this.state.questionView = false;
+	@action 
+	protected _setViewDiv(newViewDiv: VIEWDIV) {
+		const {viewDiv} = this.state;
+		if(viewDiv !== newViewDiv) {
 			if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
 			
-			this.state.scriptProg = SPROG.UNMOUNT;
-			this.state.qsMode  = '';
-			this.state.roll = '';
-			this.state.viewClue = false;
-			this.state.shadowing = false;
-			this.state.isPlay = false;
-			this.state.focusIdx = -1;
+			this.state = {
+				...this.state,
+				questionView: false,
+				scriptProg: SPROG.UNMOUNT,
+				qsMode: '',
+				roll: '',
+				viewClue: false,
+				shadowing: false,
+				isPlay: false,
+				focusIdx: -1,
+			}
 		}
-		super._setViewDiv(viewDiv);
+		super._setViewDiv(newViewDiv);
 	}
-	@action public receive(data: ISocketData) {
+	@action 
+	public receive(data: ISocketData) {
 		super.receive(data);
+
+		const { viewDiv,scriptProg,scriptMode, qsMode, questionProg } = this.state;
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IMsg;
-			if(msg.msgtype === 'quiz_send') {
-				// if(this.state.questionProg > QPROG.UNINIT) return;
-				this.state.scriptProg = SPROG.UNMOUNT;
-				this.state.questionView = true;
-				this.state.questionProg = QPROG.ON;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'question';
-				this.state.roll = '';
-				this.state.shadowing = false;
-			} else if(msg.msgtype === 'quiz_end') {
+			const padMessage = data.data as  IMsg;
+			switch(padMessage.msgtype) {
+			case 'quiz_send':
+				this.state = {
+					...this.state,
+					scriptProg: SPROG.UNMOUNT,
+					questionView: true,
+					questionProg: QPROG.ON,
+					viewDiv: 'content',
+					scriptMode : 'COMPREHENSION',
+					qsMode : 'question',
+					roll: '',
+					shadowing: false,
+				};
+				break;
+			case 'quiz_end':
 				const qProg = this.state.questionProg;
 				if(this.state.viewDiv !== 'content') return;
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 
 				this.state.questionProg = QPROG.COMPLETE;
-			} else if(msg.msgtype === 'script_send') {
-				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
+				break;
+			case 'script_send':
+				if(scriptProg !== SPROG.UNMOUNT) return;
+				if(questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.READYA;
 
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.READYA;
-				this.state.questionView = true;
+				this.state = {
+					...this.state,
+					questionView: true,
+					scriptProg: SPROG.MOUNTED,
+					viewDiv: 'content',
+					scriptMode: 'COMPREHENSION',
+					qsMode: 'script',
+					roll: '',
+					shadowing: false,
+				}
+				break;
+			case 'view_clue':
+				if(viewDiv !== 'content' || scriptProg === SPROG.UNMOUNT) return;
 
-				this.state.scriptProg = SPROG.MOUNTED;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'script';
-				this.state.roll = '';
-				this.state.shadowing = false;
-			} else if(msg.msgtype === 'view_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
-				this.state.qsMode  = 'script';
-				this.state.viewClue = true;
-			} else if(msg.msgtype === 'hide_clue') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg === SPROG.UNMOUNT) return;
-
+				this.state = {
+					...this.state,
+					qsMode: 'script',
+					viewClue: true,
+				}
+				break;
+			case 'hide_clue':
+				if(viewDiv !== 'content' || scriptProg === SPROG.UNMOUNT) return;
 				this.state.viewClue = false;
-			} else if(msg.msgtype === 'qna_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg !== SPROG.MOUNTED) return;
+				break;
+			case 'qna_send':
+				if(viewDiv !== 'content' || scriptProg !== SPROG.MOUNTED) return;
 
-				this.state.focusIdx = -1;
-				// this.state.viewClue = false;
-				this.state.scriptProg = SPROG.YESORNO;
-			} else if(msg.msgtype === 'qna_end') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg < SPROG.MOUNTED) return;
-
-				// this.state.viewClue = false;
+				this.state = {
+					...this.state,
+					focusIdx: -1,
+					scriptProg: SPROG.YESORNO,
+				}
+				break;
+			case 'qna_end':
+				if(viewDiv !== 'content' || scriptProg < SPROG.MOUNTED) return;
 				this.state.scriptProg = SPROG.MOUNTED;
-			} else if(msg.msgtype === 'dialogue_send') {
-				// if(this.state.scriptProg !== SPROG.UNMOUNT) return;
-				// if(this.state.questionProg === QPROG.UNMOUNT) this.state.questionProg = QPROG.MOUNTED;
-				
-				this.state.scriptProg = SPROG.UNMOUNT;
-				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'DIALOGUE';
-				this.state.qsMode  = 'script';
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.viewClue = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'dialogue_end') { 
-				this.state.roll = '';
-				this.state.shadowing = false;
-				this.state.isPlay = false;
-				this.state.focusIdx = -1;			
-			} else if(msg.msgtype === 'roll_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;
+				break;
+			case 'dialogue_send':
+		
+				this.state = {
+					...this.state,
+					scriptProg: SPROG.UNMOUNT,
+					viewDiv: 'content',
+					scriptMode : 'DIALOGUE',
+					qsMode : 'script',
+					roll: '',
+					shadowing: false,
+					viewClue: false,
+					focusIdx: -1,	
+				};
+				if(questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
+	
+				break;
+			case 'dialogue_end':
+				this.state = {
+					...this.state,
+					roll: '',
+					shadowing: false,
+					isPlay: false,
+					focusIdx: -1
+				}
+				break;		
+			case 'roll_send':
+				if(viewDiv !== 'content' || scriptMode !== 'DIALOGUE' || qsMode !== 'script') return;
 
-				const rmsg = msg as common.IRollMsg;
-				this.state.roll = rmsg.roll;
-				this.state.shadowing = false;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'shadowing_send') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode !== 'DIALOGUE') return;
-				else if(this.state.qsMode !== 'script') return;	
-				this.state.roll = '';
-				this.state.shadowing = true;
-				this.state.focusIdx = -1;
-			} else if(msg.msgtype === 'playing' || msg.msgtype === 'paused') {
-				if(this.state.viewDiv !== 'content') return;
-				this.state.isPlay = (msg.msgtype === 'playing');
-			} else if(msg.msgtype === 'focusidx') {
-				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptMode === 'COMPREHENSION') return;
-				const fmsg = msg as common.IFocusMsg;
-				this.state.focusIdx = fmsg.idx;
+				this.state = {
+					...this.state,
+					roll: (padMessage as IRollMsg).roll,
+					shadowing: false,
+					focusIdx: -1
+				}
+				break;
+			case 'shadowing_send':
+				if(viewDiv !== 'content' || scriptMode !== 'DIALOGUE' || qsMode !== 'script') return;	
+				this.state = {
+					...this.state,
+					roll: '',
+					shadowing: true,
+					focusIdx: -1
+				}
+				break
+
+			case 'playing':
+			case 'paused':
+				if(viewDiv !== 'content') return;
+				this.state.isPlay = (padMessage.msgtype === 'playing');
+				break;
+			case'focusidx':
+				if(viewDiv !== 'content' || scriptMode === 'COMPREHENSION') return;
+				const focusMessage = padMessage as IFocusMsg;
+				this.state.focusIdx = focusMessage.idx;
+				break;
 			}
 		}
 	}
@@ -189,34 +221,30 @@ class StudentContext extends StudentContextBase {
 
 	public setData(data: any) {
 		// console.log(data);
-		this._data = data as common.IData;
+		this._data = data as IData;
 
-		const scripts = this._data.scripts;
-		const speakerA = this._data.speakerA.name;
-		const speakerB = this._data.speakerB.name;
-		const speakerC = this._data.speakerC.name;
-		if(!this._data.speakerD) {
+		const { scripts, speakerA, speakerB, speakerC, speakerD, speakerE } = this._data;
+
+		if(!speakerD) {
 			this._data.speakerD = {
 				name: '',
 				image_s: '',
 				image_l: '',
 			};
 		}
-		if(!this._data.speakerE) {
+		if(!speakerE) {
 			this._data.speakerE = {
 				name: '',
 				image_s: '',
 				image_l: '',
 			};
 		}
-		const speakerD = this._data.speakerD.name;
-		const speakerE = this._data.speakerE.name;
-		for(let i = 0; i < this._data.quizs.length; i++) {
-			const q = this._data.quizs[i];
 
-			const arr = q.question.split('<br>');
+		for(let i = 0; i < this._data.quizs.length; i++) {
+			const quizes = this._data.quizs[i];
+			const arr = quizes.question.split('<br>');
 			
-			q.app_question = (
+			quizes.app_question = (
 				<>{
 					arr.map((str, idx) => {
 						if(idx > 0) return <React.Fragment key={idx}><br/>{str}</React.Fragment>;
@@ -226,10 +254,10 @@ class StudentContext extends StudentContextBase {
 			);
 		}
 		scripts.forEach((script) => {
-			if(script.dms_speaker === speakerA) script.roll = 'A';
-			else if (script.dms_speaker === speakerB) script.roll = 'B';
-			else if (script.dms_speaker === speakerC) script.roll = 'C';
-			else if (script.dms_speaker === speakerD) script.roll = 'D';
+			if(script.dms_speaker === speakerA.name) script.roll = 'A';
+			else if (script.dms_speaker === speakerB.name) script.roll = 'B';
+			else if (script.dms_speaker === speakerC.name) script.roll = 'C';
+			else if (script.dms_speaker === speakerD.name) script.roll = 'D';
 			else script.roll = 'E';
 		});
 	}

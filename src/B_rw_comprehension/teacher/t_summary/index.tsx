@@ -72,7 +72,7 @@ class Summary extends React.Component<ISummary> {
 		}
 	}
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',

@@ -46,57 +46,54 @@ export function _sentence2jsx(sentence: string,	blockClass: string|null = 'block
 }
 
 export function _splitSpace(sentence: string, keyObj: {key: number}, splitClass?: string) {
-	const arrS = sentence.split(/\s/g);
+	const tokens = sentence.split(/\s/g);
 	const pattern = new RegExp(/[\.\!\?\s]/g);
 
-	let ret: JSX.Element[] = [];
-	for(let i = 0; i < arrS.length; i++ ) {
-		const txt = arrS[i];
-		if(txt === '') continue;
+	let elements: JSX.Element[] = [];
+	for(let i = 0; i < tokens.length; i++ ) {
+		const token = tokens[i];
+		if(token === '') continue;
 
-		let arr: React.ReactNode[] = [];
-
-		let result = pattern.exec(txt);
+		let nodes: React.ReactNode[] = [];
 		let lastIdx = 0;
 		let sTmp = '';
 		
+		let result = pattern.exec(token);
 		while (result) {
 			if(result.index > lastIdx) {
-				sTmp = txt.substring(lastIdx, result.index);
-				arr.push(<span key={keyObj.key++}>{sTmp}</span>);
+				sTmp = token.substring(lastIdx, result.index);
+				nodes.push(<span key={keyObj.key++}>{sTmp}</span>);
 			}
 			sTmp = result[0];
-
-			arr.push(sTmp);
+			nodes.push(sTmp);
 	
 			lastIdx = pattern.lastIndex;
-			result = pattern.exec(txt);
+			result = pattern.exec(token);
 		}
-		if(lastIdx < txt.length) {
-			sTmp = txt.substring(lastIdx);
-			arr.push(<span key={keyObj.key++}>{sTmp}</span>);
+		if(lastIdx < token.length) {
+			sTmp = token.substring(lastIdx);
+			nodes.push(<span key={keyObj.key++}>{sTmp}</span>);
 		}
-
-		ret.push(<span key={keyObj.key++} className={splitClass}>{arr.map((node) => node)}</span>);
+		elements.push(<span key={keyObj.key++} className={splitClass}>{nodes.map((node) => node)}</span>);
 	}
-	return ret;
+	return elements;
 }
 
 export function _getJSX(text: string) {
-	const els = _sentence2jsx(text, 'block', undefined, true, 'word');
+	const elements = _sentence2jsx(text, 'block', undefined, true, 'word');
 	return (
-		<>{els.map((el, idx) => {
-			if(idx === els.length - 1) return el;
+		<>{elements.map((el, idx) => {
+			if(idx === elements.length - 1) return el;
 			else return <React.Fragment key={idx}>{el}<br/></React.Fragment>;
 		})}</>
 	);
 }
 
 export function _getBlockJSX(text: string) {
-	const els = _sentence2jsx(text, 'block', undefined, true, 'word');
+	const elements = _sentence2jsx(text, 'block', undefined, true, 'word');
 	return (
-		<>{els.map((el, idx) => {
-			if(idx === els.length - 1) return el;
+		<>{elements.map((el, idx) => {
+			if(idx === elements.length - 1) return el;
 			else return <React.Fragment key={idx}>{el}<br/></React.Fragment>;
 		})}</>
 	);
