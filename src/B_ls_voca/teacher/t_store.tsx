@@ -1,92 +1,79 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+
 import * as _ from 'lodash';
 import { observable, action } from 'mobx';
-import { App, IMain } from '../../App';
+import { App } from '../../App';
 import * as felsocket from '../../felsocket';
 import * as kutil from '@common/util/kutil';
 import * as StrUtil from '@common/util/StrUtil';
-import * as common from '../common';
+import { initData, TypeQuiz, IWordData, IData, IMsg, IRecordedMsg, ISpellingReturnMsg } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
-
-/*
-			this.state.numOfStudent = 0;
-			this.state.retCnt = 0;
-*/
 
 export type TProg = 'direction'|'list'|'quiz-select'|'grouping'|'timer'|'board'|'quiz';
 
 /** 싱글 퀴즈에서 결과 저장 인터페이스 */
 interface ISingleResult extends IQuizSingleResult {
-	qtype: common.TypeQuiz;
+	quizType: TypeQuiz;
 }
-
 
 /** 1View 사전학습 데이터 관련 인터페이스 */
 interface IValArr {
-	avg: number;
-	cnt: number;
+	average: number;
+	count: number;
 	sum: number;
 	txt: string;
 }
-
 
 /**
  * 싱글 결과물을 복제
  * @param {ISingleResult} obj - 복제될 소스
  * @return {ISingleResult} - 복제 결과물
  */
-function _cloneSingleResult(obj: ISingleResult) {
-	const ret: ISingleResult = {
+function _cloneSingleResult(singleResult: ISingleResult) {
+	const cloned: ISingleResult = {
 		questions: [],
 		users: [],
-		qtime: 0,
-		qtype: '',
+		quizTime: 0,
+		quizType: '',
 	};
-	const {questions, users} = obj;
-
-	questions.forEach((val, idx) => {
-		ret.questions[idx] = {...val};
-	});
-	users.forEach((val, idx) => {
-		ret.users[idx] = {...val};
-	});
-	ret.qtime = obj.qtime;
-	ret.qtype = obj.qtype;
-	return ret;
+	singleResult.questions.forEach((val, idx) => cloned.questions[idx] = {...val});
+	singleResult.users.forEach((val, idx) => cloned.users[idx] = {...val});
+	
+	return {
+		...cloned,
+		quizTime: singleResult.quizTime,
+		questioType: singleResult.quizType,
+	};
 }
+
 /** 팀형식 퀴즈 결과물 인터페이스 */
 interface IGroupResult extends IQuizGroupResult {
-	/** 설정된 문제 형식 */
-	qtype: common.TypeQuiz;
+	quizType: TypeQuiz;
 }
-
 
 /**
  * 팀 결과물을 복제
- * @param {IGroupResult} obj - 복제될 소스
+ * @param {IGroupResult} groupResult - 복제될 소스
  * @return {IGroupResult} - 복제 결과물
  */
-function _cloneGroupResult(obj: IGroupResult) {
-	const ret: IGroupResult = {
-		ga_point: obj.ga_point,
-		na_point: obj.na_point,
+function _cloneGroupResult(groupResult: IGroupResult) {
+	const cloned: IGroupResult = {
+		ga_point: groupResult.ga_point,
+		na_point: groupResult.na_point,
 		questions: [],
 		users: [],
-		qtime: 0,
-		qtype: '',
+		quizTime: 0,
+		quizType: '',
 	};
-	const {questions, users} = obj;
 	
-	questions.forEach((val, idx) => {
-		ret.questions[idx] = {...val};
-	});
-	users.forEach((val, idx) => {
-		ret.users[idx] = {...val};
-	});
-	ret.qtime = obj.qtime;
-	ret.qtype = obj.qtype;
-	return ret;
+	groupResult.questions.forEach((item, idx) => cloned.questions[idx] = {...item});
+	groupResult.users.forEach((item, idx) => cloned.users[idx] = {...item});
+	
+	return {
+		...cloned,
+		quizTime: groupResult.quizTime,
+		quizType: groupResult.quizType,
+	}
 }
 
 /** 글로벌 상태 */
@@ -108,7 +95,7 @@ interface IStateCtx extends IStateBase {
 	*/
 	quizProg: TypeQuizProg;
 	/** 퀴즈 형식  */
-	qtype: common.TypeQuiz;
+	quizType: TypeQuiz;
 	/** 퀴즈 팀/싱글 여부 */
 	isGroup: boolean;
 	/** 사전 학습 결과가 있는지 여부 */
@@ -128,14 +115,14 @@ interface IStateCtx extends IStateBase {
 	/** 팀 B 학생들 */
 	nas: IStudent[];
 	/** 퀴즈에서 학생들 return 수, 한 문제 시작시 리셋  */
-    numOfReturn: number;
-    
+    numOfReturn: number;    
     returnUsers: string[];
 }
+
 /** 글로벌 액션 */
 interface IActionsCtx extends IActionsBase {
-	/** @returns {common.IWordData[]} 전체 어휘 array  */
-	getWords: () => common.IWordData[];
+	/** @returns {IWordData[]} 전체 어휘 array  */
+	getWords: () => IWordData[];
 	/** timer에서 설정된 문제및 시간 팀여부 셋팅
 	 * @param {number[]} idxs - 문제들 인덱스 array
 	 * @param {number} qtime - 제한시간
@@ -147,81 +134,87 @@ interface IActionsCtx extends IActionsBase {
 	getSingleInfo: () => ISingleResult;
 
 	waitResult: () => void;
-
 	prepareGroupResult: () => void;
 	prepareSingleResult: () => void;
 
-
-	getQuizResult: (type: common.TypeQuiz) => {single: ISingleResult|null, group: IGroupResult|null};
-	gotoQuizResult: (type: common.TypeQuiz, isGroup: boolean) => boolean;
+	getQuizResult: (type: TypeQuiz) => { single: ISingleResult|null, group: IGroupResult|null};
+	gotoQuizResult: (type: TypeQuiz, isGroup: boolean) => boolean;
 	gotoQuizSelect: () => void;
 
 	setQIdx: (idx: number) => void;
 	setQuizProg: (prog: TypeQuizProg) => void;
 }
 
+interface IBothResult {
+	single: ISingleResult|null;
+	group: IGroupResult|null;
+}
+
 class TeacherContext extends TeacherContextBase {
 	@observable public state!: IStateCtx;
 	public actions!: IActionsCtx;
-	private _data!: common.IData;
+	private _data!: IData;
 	private _qidx: number = 0;
 
-	private _r_sound: {single: ISingleResult|null, group: IGroupResult|null};
-	private _r_meaning: {single: ISingleResult|null, group: IGroupResult|null};
-	private _r_spelling: {single: ISingleResult|null, group: IGroupResult|null};
-	private _r_sentence: {single: ISingleResult|null, group: IGroupResult|null};
+	private _sound_result: IBothResult;
+	private _meaning_result: IBothResult;
+	private _spelling_reult: IBothResult;
+	private _sentence_result: IBothResult;
 
-	private _r_single: ISingleResult = {
+	private _single_result: ISingleResult = {
 		questions: [],
 		users: [],
-		qtime: 0,
-		qtype: '',
+		quizTime: 0,
+		quizType: '',
 	};
-	private _r_group: IGroupResult = {
+
+	private _group_result: IGroupResult = {
 		questions: [],
 		users: [],
 		ga_point: 0,
 		na_point: 0,
-		qtime: 0,
-		qtype: '',
+		quizTime: 0,
+		quizType: '',
 	};
 
 	constructor() {
 		super();
-		this.state.prog = 'direction';
-		this.state.qtype = '';
-		this.state.isGroup = false;
-		this.state.quizProg = '';
-		this.state.speak_audio = false;
-		this.state.speak_video = false;
 
-		this.state.speaking_audio = false;
-		this.state.speaking_video = false;
-
-		this.state.gas = [];
-		this.state.nas = [];
-
-		this._r_sound = {single: null, group: null,};
-		this._r_meaning = {single: null, group: null,};
-		this._r_spelling = {single: null, group: null,};
-		this._r_sentence = {single: null, group: null,};
+		this.state = {
+			...this.state,
+			prog: 'direction',
+			quizType: '',
+			isGroup: false,
+			quizProg: '',
+			speak_audio: false,
+			speak_video: false,	
+			speaking_audio: false,
+			speaking_video: false,	
+			gas: [],
+			nas: [],
+			returnUsers: [],
+		}
+		this._sound_result = {single: null, group: null};
+		this._meaning_result = {single: null, group: null};
+		this._spelling_reult = {single: null, group: null};
+		this._sentence_result = {single: null, group: null};
 		
-		this.state.returnUsers = [];
-
 		this.actions.getWords = () => this._data.page1.words;
 
 		this.actions.setQuizInfo = (idxs:  number[], qtime: number, isGroup: boolean) => {
 			const words = this._data.page1.words;
-			let tmp: IUserResult[];
+			let userResult: IUserResult[];
 			if(isGroup) {
-				const { questions, users } = this._r_group;
-				tmp = users;
+				const { questions, users } = this._group_result;
+				userResult = users;
 				while(questions.length > 0) questions.pop();	
-				this._r_group.ga_point = 0;
-				this._r_group.na_point = 0;
-				this._r_group.qtime = qtime;
-				this._r_group.qtype = this.state.qtype;
-
+				this._group_result = {
+					...this._group_result,
+					ga_point: 0,
+					na_point: 0,
+					quizTime: qtime,
+					quizType: this.state.quizType,
+				}
 				idxs.forEach((val, idx) => {
 					questions[idx] = {
 							qidx: val,
@@ -232,15 +225,14 @@ class TeacherContext extends TeacherContextBase {
 						};
 				});
 			} else {
-				const { questions, users } = this._r_single;
-				tmp = users;
-				while(questions.length > 0) questions.pop();
-				
+				const { questions, users } = this._single_result;
+				userResult = users;
+				while(questions.length > 0) questions.pop();				
 
-				this._r_single.qtime = qtime;
-				this._r_single.qtype = this.state.qtype;
+				this._single_result.quizTime = qtime;
+				this._single_result.quizType = this.state.quizType;
 
-				const qtype = this.state.qtype;
+				const qtype = this.state.quizType;
 				const hasPreview = this.state.hasPreview;
 				idxs.forEach((val, idx) => {
 					const word = words[val];
@@ -263,11 +255,10 @@ class TeacherContext extends TeacherContextBase {
 					};
 				});
 			} 
-			while(tmp.length > 0) tmp.pop();
+			while(userResult.length > 0) userResult.pop();
 
 			if(idxs.length > 0) {
-				const students = App.students;
-				students.forEach((student, idx) => {
+				App.students.forEach((student, idx) => {
 					const result: boolean[] = [];
 					const inputs: string[] = [];
 					const stimes: string[] = [];
@@ -284,7 +275,7 @@ class TeacherContext extends TeacherContextBase {
 						if(find < 0) ga_na = 'ga';
 						else ga_na = 'na';
 					}
-					tmp[idx] = {
+					userResult[idx] = {
 						id: student.id,
 						result,
 						inputs,
@@ -304,21 +295,20 @@ class TeacherContext extends TeacherContextBase {
 			this.state.numOfReturn = 0;
 			this.state.isGroup = isGroup;
 		};
-		this.actions.getGroupInfo = () => this._r_group;
-		this.actions.getSingleInfo = () => this._r_single;
+		this.actions.getGroupInfo = () => this._group_result;
+		this.actions.getSingleInfo = () => this._single_result;
 
 		this.actions.waitResult = async () => {
 			// console.log('this.actions.waitResult this.state.quizProg=' + this.state.quizProg);
 			
-			let quizProg = this.state.quizProg;
+			const { quizProg } = this.state;
 
 			if(quizProg !== 'quiz') return;
 
-
 			this.actions.setQuizProg('wait-result');
 			await kutil.wait(5000);
-			quizProg = this.state.quizProg;
-			if(quizProg !== 'wait-result') return;
+
+			if(this.state.quizProg !== 'wait-result') return;
 			this.actions.prepareSingleResult();
 			this.actions.setQuizProg('result');
 		};
@@ -352,21 +342,21 @@ class TeacherContext extends TeacherContextBase {
 		};
 
 		this.actions.prepareGroupResult = () => {
-			const {users, questions} = this._r_group;
+			const {users, questions} = this._group_result;
 			prepareUserResult(users);
 
-			switch(this.state.qtype) {
+			switch(this.state.quizType) {
 				case 'sound': 
-					this._r_sound.group = _cloneGroupResult(this._r_group);
+					this._sound_result.group = _cloneGroupResult(this._group_result);
 					break;
 				case 'meaning': 
-					this._r_meaning.group = _cloneGroupResult(this._r_group);
+					this._meaning_result.group = _cloneGroupResult(this._group_result);
 					break;
 				case 'spelling': 
-					this._r_spelling.group = _cloneGroupResult(this._r_group);
+					this._spelling_reult.group = _cloneGroupResult(this._group_result);
 					break;
 				case 'usage': 
-					this._r_sentence.group = _cloneGroupResult(this._r_group);
+					this._sentence_result.group = _cloneGroupResult(this._group_result);
 					break;
 				default: break;
 			}
@@ -375,21 +365,21 @@ class TeacherContext extends TeacherContextBase {
 		};
 
 		this.actions.prepareSingleResult = () => {
-			const {users, questions} = this._r_single;
+			const {users, questions} = this._single_result;
 			prepareUserResult(users);
 
-			switch(this.state.qtype) {
+			switch(this.state.quizType) {
 			case 'sound': 
-				this._r_sound.single = _cloneSingleResult(this._r_single);
+				this._sound_result.single = _cloneSingleResult(this._single_result);
 				break;
 			case 'meaning': 
-				this._r_meaning.single = _cloneSingleResult(this._r_single);
+				this._meaning_result.single = _cloneSingleResult(this._single_result);
 				break;
 			case 'spelling': 
-				this._r_spelling.single = _cloneSingleResult(this._r_single);
+				this._spelling_reult.single = _cloneSingleResult(this._single_result);
 				break;
 			case 'usage': 
-				this._r_sentence.single = _cloneSingleResult(this._r_single);
+				this._sentence_result.single = _cloneSingleResult(this._single_result);
 				break;
 			default: break;
 			}
@@ -397,35 +387,37 @@ class TeacherContext extends TeacherContextBase {
 			this._uploadInclassReport(users, questions);
 			// console.log(this._r_single.users);
 		};
-		this.actions.getQuizResult = (type: common.TypeQuiz) => {
+
+		this.actions.getQuizResult = (type: TypeQuiz) => {
 			switch(type) {
-			case 'sound': return this._r_sound;
-			case 'meaning': return this._r_meaning;
-			case 'spelling': return this._r_spelling;
-			case 'usage': return this._r_sentence;
+			case 'sound': return this._sound_result;
+			case 'meaning': return this._meaning_result;
+			case 'spelling': return this._spelling_reult;
+			case 'usage': return this._sentence_result;
 			default: return {single: null, group: null,};
 			}
 		};
-		this.actions.gotoQuizResult = (type: common.TypeQuiz, isGroup: boolean) => {
+
+		this.actions.gotoQuizResult = (type: TypeQuiz, isGroup: boolean) => {
 			let ret = false;
 			let result: {single: ISingleResult|null, group: IGroupResult|null}|null = null;
 			switch(type) {
-				case 'sound': result = this._r_sound; break;
-				case 'meaning': result = this._r_meaning; break;
-				case 'spelling': result = this._r_spelling; break;
-				case 'usage': result = this._r_sentence; break;
+				case 'sound': result = this._sound_result; break;
+				case 'meaning': result = this._meaning_result; break;
+				case 'spelling': result = this._spelling_reult; break;
+				case 'usage': result = this._sentence_result; break;
 				default: break;
 			}
 			
-			let qtype: common.TypeQuiz = '';
+			let qtype: TypeQuiz = '';
 			if(result) {
 				if(isGroup && result.group) {
 					while(this.state.gas.length > 0) this.state.gas.pop();
 					while(this.state.nas.length > 0) this.state.nas.pop();
-					this._r_group = _cloneGroupResult(result.group);
+					this._group_result = _cloneGroupResult(result.group);
 
 					const students = App.students;
-					const users = this._r_group.users;
+					const users = this._group_result.users;
 					for(const u of users) {
 						const s = _.find(students, {id: u.id});
 						if(u.ga_na === 'ga' && s) {
@@ -434,25 +426,22 @@ class TeacherContext extends TeacherContextBase {
 							this.state.nas.push(s);
 						}
 					}
-					qtype = this._r_group.qtype;
+					qtype = this._group_result.quizType;
 					ret = true;
 				} else if(!isGroup && result.single) {
 					while(this.state.gas.length > 0) this.state.gas.pop();
 					while(this.state.nas.length > 0) this.state.nas.pop();
-					this._r_single = _cloneSingleResult(result.single);
+					this._single_result = _cloneSingleResult(result.single);
 					
-					qtype = this._r_single.qtype;
+					qtype = this._single_result.quizType;
 					ret = true;
 				}
 			}
 			if(ret) {
-
-				this.state.qtype = qtype;
+				this.state.quizType = qtype;
 				this.actions.setQuizProg('result');
 				this.state.isGroup = isGroup;
-				this.state.prog = 'quiz';
-
-			
+				this.state.prog = 'quiz';			
 			}
 			return ret;	
 		};
@@ -460,7 +449,6 @@ class TeacherContext extends TeacherContextBase {
 
 		this.actions.gotoQuizSelect = () => {
 			this.state.prog = 'quiz-select';
-
 			/*
 			await kutil.wait(3000);
 			// console.log('reset');
@@ -469,12 +457,8 @@ class TeacherContext extends TeacherContextBase {
 		};
 		this.actions.setQIdx = (idx: number) => {
 			
-			let qlen = 0;
-			if(this.state.isGroup) qlen = this._r_group.questions.length;
-			else qlen = this._r_single.questions.length;
-
-			// console.log('setQIdx idx=' + idx, 'qlen = ' + qlen, 'this.state.quizProg = ' + this.state.quizProg);
-			if(idx < 0 || idx >= qlen) return;
+			const questionLength = (this.state.isGroup) ? this._group_result.questions.length : 0
+			if(idx < 0 || idx >= questionLength) return;
 
 			this._qidx = idx;
 			this.state.numOfReturn = 0;
@@ -483,15 +467,20 @@ class TeacherContext extends TeacherContextBase {
 			this.state.quizProg = prog;
 		};
 	}
-	private _reset() {
-		this.state.qtype = '';
-		this.actions.setQuizProg('');
-		this.state.speak_audio = false;
-		this.state.speak_video = false;
-		this.state.speaking_audio = false;
-		this.state.speaking_video = false;
 
-		this.state.numOfReturn = 0;
+	private _reset() {
+		this.actions.setQuizProg('');
+
+		this.state = {
+			...this.state,
+			quizType: '',
+			speak_audio: false,
+			speak_video: false,
+			speaking_audio: false,
+			speaking_video: false,
+			numOfReturn: 0,
+		}
+
 		while(this.state.gas.length > 0) this.state.gas.pop();
 		while(this.state.nas.length > 0) this.state.nas.pop();
 		while(this.state.returnUsers.length > 0) this.state.returnUsers.pop();
@@ -505,7 +494,7 @@ class TeacherContext extends TeacherContextBase {
 			if(word) {
 				let studyProps: IInClassStudyProps|undefined;
 				let ans_correct: string|undefined;
-				switch(this.state.qtype) {
+				switch(this.state.quizType) {
 					case 'sound':
 						studyProps = word.quiz_sound;
 						ans_correct = word.quiz_sound.correct.toString();
@@ -567,13 +556,13 @@ class TeacherContext extends TeacherContextBase {
 	public receive(data: ISocketData) {
 		super.receive(data);
 		if(data.type === $SocketType.MSGTOTEACHER && data.data) {
-			const msg = data.data as common.IMsg;
+			const msg = data.data as IMsg;
 			if(msg.msgtype === 'quiz_result') {
 				if(this.state.prog !== 'quiz' && this.state.prog !== 'board') return;
 				
 				const qmsg = msg as IQuizResultMsg;
 				if(this.state.isGroup) {
-					const { questions, users } = this._r_group;
+					const { questions, users } = this._group_result;
 					if(qmsg.idx >= 0 && qmsg.idx < questions.length) {
 						const user = _.find(users, {id: qmsg.id});
 						if(user) {
@@ -600,7 +589,7 @@ class TeacherContext extends TeacherContextBase {
 						}
 					}
 				} else {
-					const { questions, users } = this._r_single;
+					const { questions, users } = this._single_result;
 					if(qmsg.idx >= 0 && qmsg.idx < questions.length) {
 						const user = _.find(users, {id: qmsg.id});
 						if(user) {
@@ -655,7 +644,7 @@ class TeacherContext extends TeacherContextBase {
 				) { 
 					this.actions.setRetCnt(this.state.retCnt + 1);
 
-					const rmsg = msg as common.IRecordedMsg;
+					const rmsg = msg as IRecordedMsg;
 					const word = _.find(this._data.page1.words, {idx: rmsg.word_idx});
 					if(!word) return;
 
@@ -703,7 +692,7 @@ class TeacherContext extends TeacherContextBase {
                     }
 				} 
 			} else if(msg.msgtype === 'spelling_return') {
-				const rmsg = msg as common.ISpellingReturnMsg;
+				const rmsg = msg as ISpellingReturnMsg;
 				const ridx = this.state.returnUsers.indexOf(rmsg.id);
 				if(ridx < 0) {
                     this.state.returnUsers.push(rmsg.id);
@@ -743,8 +732,9 @@ class TeacherContext extends TeacherContextBase {
 			}
 		}
 	}
-	public async setData(data: common.IData) {
-		data = common.initData(data);
+
+	public async setData(data: IData) {
+		data = initData(data);
 
 		this._data = data;
 		this.state.hasPreview = true;
@@ -771,10 +761,7 @@ class TeacherContext extends TeacherContextBase {
 			
 			}
 		}// 사전 학습 관련 데이터 셋팅 을 위한 함수 
-
-
-
-
+		
 		const previewMsg: IPreviewClassMsg[] = [];
 
 		for(let i = 0; i < words.length; i++) {
@@ -785,87 +772,57 @@ class TeacherContext extends TeacherContextBase {
 			word.app_result = false;
 
 			if(!App.isDvlp && word.tmq_COD && word.tmq_COD[0] !== undefined) {
-				previewMsg.push({evalCode: '1',vsFromData: word.tmq_COD[0].codType,vsFromSeq: Number(word.tmq_COD[0].codSeq)});
-				
-			}
-
-			
+				previewMsg.push({evalCode: '1',vsFromData: word.tmq_COD[0].codType,vsFromSeq: Number(word.tmq_COD[0].codSeq)});				
+			}			
 		}
+
 		console.log('previewMsg~~~', previewMsg.length, previewMsg);
-		let previewResult;
-		let len = 0;
-		let sound_result;
-		let meaning_result;
-		let spelling_result;
-		let usage_result;
-
-		let text_arr_sound: string[] = [];
-		let val_arr_sound: IValArr[] = [];
-
-		let text_arr_spelling: string[] = [];
-		let val_arr_spelling: IValArr[] = [];
-
-		let text_arr_meaning: string[] = [];
-		let val_arr_meaning: IValArr[] = [];
-
-		let text_arr_usage: string[] = [];
-		let val_arr_usage: IValArr[] = [];
 
 		if(!App.isDvlp && App.lang === 'ko') {
-			previewResult =  await felsocket.getPreviewResultClass(previewMsg);
-			len = previewResult.length;
-			if(len > 0) {
+			const previewResult =  await felsocket.getPreviewResultClass(previewMsg);
 
-			
-				sound_result = previewResult.filter((item,idx) => {
-					return item.mttSeq === 6;
-				});
-				meaning_result = previewResult.filter((item,idx) => {
-					return item.mttSeq === 7;
-				});
-				spelling_result = previewResult.filter((item,idx) => {
-					return item.mttSeq === 8;
-				});
-				usage_result = previewResult.filter((item,idx) => {
-					return item.mttSeq === 9;
-				});
+			if(previewResult.length > 0) {			
+				const sound_result = previewResult.filter((item,idx) => item.mttSeq === 6);
+				const meaning_result = previewResult.filter((item,idx) => item.mttSeq === 7);
+				const spelling_result = previewResult.filter((item,idx) => item.mttSeq === 8);
+				const usage_result = previewResult.filter((item,idx) => item.mttSeq === 9);
 
-				_initAvgPercent(text_arr_sound,val_arr_sound,sound_result);
-				console.log('text_arr', text_arr_sound, 'val_arr', val_arr_sound);
-				_initAvgPercent(text_arr_spelling,val_arr_spelling,spelling_result);
-				console.log('text_arr', text_arr_spelling, 'val_arr', val_arr_spelling);
-				_initAvgPercent(text_arr_meaning,val_arr_meaning,meaning_result);
-				console.log('text_arr', text_arr_meaning, 'val_arr', val_arr_meaning);
-				_initAvgPercent(text_arr_usage,val_arr_usage,usage_result);
-				console.log('text_arr', text_arr_usage, 'val_arr', val_arr_usage);
+				let soundTextList: string[] = [];
+				let soundValues: IValArr[] = [];
 		
-				for(let i = 0; i < val_arr_sound.length; i++) {
-					let idx = words.findIndex((item) => {
-						return item.entry === val_arr_sound[i].txt;
-					});
-					words[idx].app_sound = val_arr_sound[i].avg;
-				}
+				let spellingTextList: string[] = [];
+				let spellingValues: IValArr[] = [];
 		
-				for(let i = 0; i < val_arr_spelling.length; i++) {
-					let idx = words.findIndex((item) => {
-						return item.entry === val_arr_spelling[i].txt;
-					});
-					words[idx].app_spelling = val_arr_spelling[i].avg;
-				}
+				let meaningTextList: string[] = [];
+				let meaningValues: IValArr[] = [];
+		
+				let usageTextList: string[] = [];
+				let usageValues: IValArr[] = [];
 
-				for(let i = 0; i < val_arr_meaning.length; i++) {
-					let idx = words.findIndex((item) => {
-						return item.entry === val_arr_meaning[i].txt;
-					});
-					words[idx].app_meaning = val_arr_meaning[i].avg;
-				}
+				_initAvgPercent(soundTextList, soundValues, sound_result);
+				_initAvgPercent(spellingTextList, spellingValues, spelling_result);
+				_initAvgPercent(meaningTextList, meaningValues, meaning_result);
+				_initAvgPercent(usageTextList, usageValues, usage_result);
 
-				for(let i = 0; i < val_arr_usage.length; i++) {
-					let idx = words.findIndex((item) => {
-						return item.entry === val_arr_usage[i].txt;
-					});
-					words[idx].app_sentence = val_arr_usage[i].avg;
-				}
+				soundValues.forEach(value => {
+					let idx = words.findIndex(item => item.entry === value.txt);
+					words[idx].app_sound = value.average;
+				});
+
+				spellingValues.forEach(value => {
+					let idx = words.findIndex(item => item.entry === value.txt);
+					words[idx].app_spelling = value.average;
+				});
+
+				meaningValues.forEach(value => {
+					let idx = words.findIndex(item => item.entry === value.txt);
+					words[idx].app_meaning = value.average;
+				});
+
+				usageValues.forEach(value => {
+					let idx = words.findIndex(item => item.entry === value.txt);
+					words[idx].app_sentence = value.average;
+				});
 			} else {
 				for(let i = 0; i < words.length; i++) {
 					words[i].app_sound = -1;
@@ -889,7 +846,6 @@ class TeacherContext extends TeacherContextBase {
 		}
 	}
 }
-
 
 const tContext = new TeacherContext();
 const  { Provider: TProvider, Consumer: TeacherConsumer } = React.createContext( tContext );

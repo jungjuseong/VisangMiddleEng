@@ -1,10 +1,9 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import * as common from '../common';
+import { IQuizReturnMsg, IMsg, IQNAMsg, IScript, IData, IQnaReturn } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 import * as StrUtil from '@common/util/StrUtil';
 
@@ -43,7 +42,7 @@ interface IStateCtx extends IStateBase {
 }
 
 interface IActionsCtx extends IActionsBase {
-	getData: () => common.IData;
+	getData: () => IData;
 	getResult: () => IQuizResult[];
 	gotoDirection: () => void;
 	gotoNextBook: () => void;
@@ -53,11 +52,8 @@ interface IActionsCtx extends IActionsBase {
 
 	getReturnUsersForQuiz: () => string[];
 	clearReturnUsersForQuiz: () => void;
-
-	// getQuizReturns: () => common.IReturn[];
-	// clearQuizReturns: () => void;
 	
-	getQnaReturns: () => common.IQnaReturn[];
+	getQnaReturns: () => IQnaReturn[];
 	clearQnaReturns: () => void;
 
 	quizComplete: () => void;
@@ -68,67 +64,69 @@ interface IActionsCtx extends IActionsBase {
 class TeacherContext extends TeacherContextBase {
 	@observable public state!: IStateCtx;
 	public actions!: IActionsCtx;
-	private _data!: common.IData;
+	private _data!: IData;
 
 	private _result: IQuizResult[] = [];
 	private _returnUsers: string[] = [];
 
 	private _returnUsersForQuiz: string[] = [];
-	private _qnaReturns: common.IQnaReturn[] = [];
+	private _qnaReturns: IQnaReturn[] = [];
 
 	constructor() {
 		super();
-		this.state.hasPreview = false;
-		this.state.questionProg = SENDPROG.READY;
-		this.state.scriptProg = SENDPROG.READY;
-		this.state.qnaProg = SENDPROG.READY;
-		this.state.dialogueProg = SENDPROG.READY;
 
-		this.actions.getData = () => this._data;
-		this.actions.getResult = () => this._result;
-		this.actions.gotoDirection = () => this._setViewDiv('direction');
-		this.actions.gotoNextBook = () => {
-			felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null);
-		};
+		this.state = {
+			...this.state,
+			hasPreview: false,
+			questionProg: SENDPROG.READY,
+			scriptProg: SENDPROG.READY,
+			qnaProg: SENDPROG.READY,
+			dialogueProg: SENDPROG.READY,
+		}
 
-		this.actions.getReturnUsers = () => this._returnUsers;
-		this.actions.clearReturnUsers = () => {this._returnUsers = [];};
-
-		this.actions.getReturnUsersForQuiz = () => this._returnUsersForQuiz;
-		this.actions.clearReturnUsersForQuiz = () => {
-			this._returnUsersForQuiz = [];
-		};
-		
-		this.actions.getQnaReturns = () => this._qnaReturns;
-		this.actions.quizComplete = () => {
-			this.state.questionProg = SENDPROG.COMPLETE;
-		};
-		this.actions.clearQnaReturns = () => {
+		this.actions = {
+			...this.actions,
+			getData: () => this._data,
+			getResult: () => this._result,
+			gotoDirection: () => this._setViewDiv('direction'),
+			gotoNextBook: () => felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null),
+	
+			getReturnUsers: () => this._returnUsers,
+			clearReturnUsers: () => {this._returnUsers = [];},
+	
+			getReturnUsersForQuiz: () => this._returnUsersForQuiz,
+			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
 			
-			this._returnUsers = [];
-			for(let i = 0; i < this._data.scripts.length; i++) {
-				this._qnaReturns[i] = {num: 0, users: []};
-			}
-			this.actions.setRetCnt(0);
-		};
-
-		this.actions.init = () => {			
-			this.state.scriptProg = SENDPROG.READY;
-			this.state.qnaProg = SENDPROG.READY;
-			this.state.dialogueProg = SENDPROG.READY;
-			this._returnUsers = [];
-
-			if(this.state.questionProg < SENDPROG.COMPLETE) {
-				this.state.questionProg = SENDPROG.READY;
-				this._returnUsersForQuiz = [];
-				for(let i = 0; i < this._data.quizs.length; i++) {
-					this._result[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: [], c3: 0, u3: [],};
+			getQnaReturns: () => this._qnaReturns,
+			quizComplete: () => this.state.questionProg = SENDPROG.COMPLETE,
+			clearQnaReturns: () => {			
+				this._returnUsers = [];
+				for(let i = 0; i < this._data.scripts.length; i++) {
+					this._qnaReturns[i] = {num: 0, users: []};
 				}
-			}
-			for(let i = 0; i < this._data.scripts.length; i++) {
-				this._qnaReturns[i] = {num: 0, users: []};
-			}
-		};
+				this.actions.setRetCnt(0);
+			},
+			init: () => {		
+				this.state = {
+					...this.state,				
+					scriptProg: SENDPROG.READY,
+					qnaProg: SENDPROG.READY,
+					dialogueProg: SENDPROG.READY,
+				}
+				this._returnUsers = [];
+
+				if(this.state.questionProg < SENDPROG.COMPLETE) {
+					this.state.questionProg = SENDPROG.READY;
+					this._returnUsersForQuiz = [];
+					for(let i = 0; i < this._data.quizs.length; i++) {
+						this._result[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: [], c3: 0, u3: [],};
+					}
+				}
+				for(let i = 0; i < this._data.scripts.length; i++) {
+					this._qnaReturns[i] = {num: 0, users: []};
+				}
+			},
+		}
 	}
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
@@ -140,7 +138,7 @@ class TeacherContext extends TeacherContextBase {
 		super._setViewDiv(viewDiv);
 	}
 
-	private _uploadInclassReport = (qmsg: common.IQuizReturnMsg) => {
+	private _uploadInclassReport = (qmsg: IQuizReturnMsg) => {
 		const quizs = this._data.quizs;
 		const userReports: IInClassReport[] = [];
 
@@ -171,17 +169,16 @@ class TeacherContext extends TeacherContextBase {
 			console.log('inclassReport(LogFromContentTeacher): ', userReports); // 비상요청 사항                        
 			felsocket.uploadInclassReport(userReports);
 		}
-
 	}
 
 	public receive(data: ISocketData) {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOTEACHER && data.data) {
-			const msg = data.data as  common.IMsg;
+			const msg = data.data as  IMsg;
 			if(msg.msgtype === 'quiz_return') {
 				if(this.state.questionProg === SENDPROG.SENDED) {
-					const qmsg = msg as common.IQuizReturnMsg;
+					const qmsg = msg as IQuizReturnMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
 						if(App.students[i].id === qmsg.id) {
@@ -189,7 +186,6 @@ class TeacherContext extends TeacherContextBase {
 							break;
 						}
 					}
-
 					const ridx = this._returnUsersForQuiz.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
 						this._returnUsersForQuiz.push(qmsg.id);
@@ -221,7 +217,7 @@ class TeacherContext extends TeacherContextBase {
 				}
 			} else if(msg.msgtype === 'qna_return') {
 				if(this.state.qnaProg === SENDPROG.SENDED) {
-					const qmsg = msg as common.IQNAMsg;
+					const qmsg = msg as IQNAMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
 						if(App.students[i].id === qmsg.id) {
@@ -289,9 +285,8 @@ class TeacherContext extends TeacherContextBase {
 	}
 	
 	public async setData(data: any) {
-		this._data = data as common.IData;
+		this._data = data as IData;
 		this.state.hasPreview = true;
-
 			
 		function _initAvgPercent(text_arr: string[], val_arr: any[], preview_data: IPreviewResultClassMember[]) {
 		
@@ -337,7 +332,6 @@ class TeacherContext extends TeacherContextBase {
 			};
 		}
 		const speakerD = this._data.speakerD.name;
-		const speakerE = this._data.speakerE.name;
 
 		for(let i = 0; i < this._data.quizs.length; i++) {
 			const q = this._data.quizs[i];
@@ -391,7 +385,7 @@ class TeacherContext extends TeacherContextBase {
 				_initAvgPercent(text_arr_meaning,val_arr_meaning,meaning_result);
 				console.log('text_arr', text_arr_meaning, 'val_arr', val_arr_meaning);
 				// console.log("previewResult~~",previewResult)
-				let resultScript: common.IScript[] = [];
+				let resultScript: IScript[] = [];
 				for(let i = 0; i < scripts.length; i++) {
 					const script = scripts[i];
 					if(script.sc_COD) {

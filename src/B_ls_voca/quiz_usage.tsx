@@ -11,32 +11,30 @@ import PreInBox from '../share/PreInBox';
 import QuizMCBtn from '../share/QuizMCBtn';
 import WrapTextNew from '@common/component/WrapTextNew';
 
+function findLongestWord(words: Array<string>) {
+	let longestWord = '';
+  
+	words.forEach(word => {
+	  if(word.length > longestWord.length) {
+		longestWord = word;
+	  }
+	});  
+	return longestWord;
+}
+
 @observer
 class QuizUsage extends React.Component<IQuizPage> {
 	@observable private _selected: number = 0;
 	@observable private _rcalcNum = 0;
 	private _jsx: JSX.Element;
 	private _div?: HTMLElement;
+
 	constructor(props: IQuizPage) {
 		super(props);
 
-		const qs = props.quiz.quiz_usage;
-		let max = 0;
-		let sMax = '';
-		sMax = qs.choice1;
-		max = sMax.length;
-
-		if(qs.choice2.length > max) {
-			sMax = qs.choice2;
-			max = sMax.length;
-		}
-		if(qs.choice3.length > max) {
-			sMax = qs.choice3;
-			max = sMax.length;
-		}
-
-
-		this._jsx = this._getJSX(qs.sentence, sMax);
+		const { choices, sentence} = props.quiz.quiz_usage;
+		const longestWord = findLongestWord(choices);
+		this._jsx = this._getJSX(sentence, longestWord);
 	}
 
 	private _getJSX(text: string, max: string) {
@@ -46,7 +44,6 @@ class QuizUsage extends React.Component<IQuizPage> {
 				{nodes.map((node) => node)}
 			</>
 		);
-
 	}
 
 	private async _soundComplete() {
@@ -122,9 +119,9 @@ class QuizUsage extends React.Component<IQuizPage> {
 		}
 
 		let choice: string|undefined;
-		if(num === 1) choice = quiz.quiz_usage.choice1;
-		else if(num === 2) choice = quiz.quiz_usage.choice2;
-		else choice = quiz.quiz_usage.choice3;		
+		if(num === 1) choice = quiz.quiz_usage.choices[0];
+		else if(num === 2) choice = quiz.quiz_usage.choices[1];
+		else choice = quiz.quiz_usage.choices[2];		
 
 		if(bView && !block.classList.contains('view')) block.classList.add('view');
 		else if(!bView && block.classList.contains('view')) block.classList.remove('view');
@@ -135,11 +132,11 @@ class QuizUsage extends React.Component<IQuizPage> {
 	}	
 
 	public render() {
-		const { isTeacher, quizProg, hasPreview, percent }  = this.props;
+		const { quiz, isTeacher, quizProg, hasPreview, percent }  = this.props;
 		const word = this.props.quiz;
-		const quiz = word.quiz_usage;
-		const correct = quiz.correct;
-		const choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3];
+		// const quiz = word.quiz_usage;
+		const { correct, choices } = quiz.quiz_usage;
+		// const choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3];
 
 		return (
 			<>

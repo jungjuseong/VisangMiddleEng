@@ -23,7 +23,7 @@ interface IQuiz {
 @observer
 class Comp extends React.Component<IQuiz> {
 	private _quizs: IWordData[] = [];
-	private _qtype: TypeQuiz = '';
+	private _quiztype: TypeQuiz = '';
 	private _isGroup = false;
 	private _qtime = 60;
 
@@ -39,14 +39,14 @@ class Comp extends React.Component<IQuiz> {
 
 			const info = next.actions.getQuizInfo();
 			const words = next.actions.getWords();
-			let qtime = info.qtime;
+			let qtime = info.quizTime;
 
-			for(let i = 0; i < info.qidxs.length; i++) {
-				const word = words[info.qidxs[i]];
+			for(let i = 0; i < info.quizIndices.length; i++) {
+				const word = words[info.quizIndices[i]];
 				word.app_result = false;
 				this._quizs[i] = word;
 			}
-			this._qtype = info.qtype;
+			this._quiztype = info.quizType;
 			this._isGroup = next.state.isGroup;
 			this._qtime = qtime;
 		}
@@ -58,10 +58,10 @@ class Comp extends React.Component<IQuiz> {
 		const points = actions.getQuizInfo().points;
 
 		let ItemComponent;
-		if(this._qtype === 'sound') ItemComponent = QuizSound;
-		else if(this._qtype === 'meaning') ItemComponent = QuizMeaning;
-		else if(this._qtype === 'spelling') ItemComponent = QuizSpelling;
-		else if(this._qtype === 'usage') ItemComponent = QuizUsage;		
+		if(this._quiztype === 'sound') ItemComponent = QuizSound;
+		else if(this._quiztype === 'meaning') ItemComponent = QuizMeaning;
+		else if(this._quiztype === 'spelling') ItemComponent = QuizSpelling;
+		else if(this._quiztype === 'usage') ItemComponent = QuizUsage;		
 
 		return (
 			<QuizStudent
@@ -73,7 +73,7 @@ class Comp extends React.Component<IQuiz> {
 				forceStopIdx={forceStopIdx}
 				groupProg={groupProg}
 				groupResult={groupResult}
-				qtype={this._qtype}
+				qtype={this._quiztype}
 				qtime={this._qtime}
 				points={points}
 				ga_na={state.ga_na}

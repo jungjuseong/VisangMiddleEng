@@ -9,7 +9,7 @@ import { StudentContextBase, IActionsBase, IStateBase, VIEWDIV } from '../../sha
 type MYPROG = ''|'quiz'|'spelling'|'record';
 
 interface IQuizInfo extends IStudentQuizInfo {
-	qtype: TypeQuiz;
+	quizType: TypeQuiz;
 }
 
 interface IStateCtx extends IStateBase {
@@ -50,100 +50,115 @@ class StudentContext extends StudentContextBase {
 	private _data!: IData;
 
 	private _quizInfo: IQuizInfo = {
-		qidxs: [],
+		quizIndices: [],
 		points: [],
-		qtime: 0,
-		qtype: '',
+		quizTime: 0,
+		quizType: '',
 	};
 
 	private _word!: IWordData;
 
 	constructor() {
 		super();
-		this.state.prog = '';
-		this.state.ga_na = undefined;
-		this.state.qidx = 0;
-		this.state.groupProg = '';
-		this.state.startSelectedAni = false;
-		this.state.forceStopIdx = -1;
-		this.state.quizProg = '';
-		this.state.isGroup = false;
-		this.state.mediaType = 'audio';
-		this.state.bRecordSend = false;
-		this.state.recorded = '';
-		this.state.uploaded = '';
-		this.state.notice = '';
-		this.state.groupResult = '';
 
-		this.actions.getWord = () => this._word;
-		this.actions.getWords = () => this._data.page1.words;
-		this.actions.getQuizInfo = () => this._quizInfo;
-
-		this.actions.setQuizProg = (prog: TypeQuizProg) => {
-			this.state.quizProg = prog;
+		this.state = {
+			...this.state,
+			prog: '',
+			ga_na: undefined,
+			qidx: 0,
+			groupProg: '',
+			startSelectedAni: false,
+			forceStopIdx: -1,
+			quizProg: '',
+			isGroup: false,
+			mediaType: 'audio',
+			bRecordSend: false,
+			recorded: '',
+			uploaded: '',
+			notice: '',
+			groupResult: '',
 		};
 
-		this.actions.unsetForceStop = () => {
-			this.state.forceStopIdx = -1;
-		};
+		this.actions = {
+			...this.actions,
+			getWord: () => this._word,
+			getWords: () => this._data.page1.words,
+			getQuizInfo: () => this._quizInfo,
+			setQuizProg: (prog: TypeQuizProg) => 	this.state.quizProg = prog,
+			unsetForceStop: () =>  this.state.forceStopIdx = -1,	
 
-		this.actions.onStartRecord = () => {
-			this.state.notice = '';
-			this.state.recorded = '';
-			if(App.isDvlp) {
-				_.delay(() => {
-					if(this.state.mediaType === 'video') this.state.notice = 'notifyStartVideoRecord';
-					else this.state.notice = 'notifyStartVoice';
-				}, 300);
-			}
-		};
-		this.actions.onStopRecord = () => {
-			this.state.notice = '';
-			if(App.isDvlp) {
-				_.delay(() => {
-					if(this.state.mediaType === 'video') this.notifyVideoRecord('/content/B_ls_voca/data/LS_L6_U7_L1_10_watch.mp4');
-					else this.notifyRecorded('/content/B_ls_voca/data/LS_L6_U7_L1_SENTENCE_10_watch.mp3');
-				}, 300);
-			}
-		};
-
-		this.actions.onUploadMedia = (url: string) => {
-			this.state.uploaded = '';
-			if(App.isDvlp) {
-				_.delay(() => {
-					this.state.uploaded = url;
-				}, 300);
-			}
-		};
+			onStartRecord: () => {
+				this.state.notice = '';
+				this.state.recorded = '';
+				if(App.isDvlp) {
+					_.delay(() => {
+						if(this.state.mediaType === 'video') this.state.notice = 'notifyStartVideoRecord';
+						else this.state.notice = 'notifyStartVoice';
+					}, 300);
+				}
+			},
+			onStopRecord: () => {
+				this.state.notice = '';
+				if(App.isDvlp) {
+					_.delay(() => {
+						if(this.state.mediaType === 'video') this.notifyVideoRecord('/content/B_ls_voca/data/LS_L6_U7_L1_10_watch.mp4');
+						else this.notifyRecorded('/content/B_ls_voca/data/LS_L6_U7_L1_SENTENCE_10_watch.mp3');
+					}, 300);
+				}
+			},
+			onUploadMedia: (url: string) => {
+				this.state.uploaded = '';
+				if(App.isDvlp) {
+					_.delay(() => {
+						this.state.uploaded = url;
+					}, 300);
+				}
+			},
+		}
 	}
 
-	@action protected _setViewDiv(viewDiv: VIEWDIV) {
-		const state = this.state;
-		if(state.viewDiv !== viewDiv) {
+	@action 
+	protected _setViewDiv(newViewDiv: VIEWDIV) {
+		const { viewDiv } = this.state;
+		if(viewDiv !== newViewDiv) {
 			if(viewDiv !== 'content') {
-				this.state.prog = '';
-				this.state.groupProg = '';
-				this.state.forceStopIdx = -1;
-				this.state.ga_na = undefined;
+				this.state = {
+					...this.state,
+					prog: '',
+					groupProg: '',
+					forceStopIdx: -1,
+					ga_na: undefined,
+				};
 			}
 		}
-		super._setViewDiv(viewDiv);
+		super._setViewDiv(newViewDiv);
 	}
-	@action public receive(data: ISocketData) {
-		super.receive(data);
-		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  IMsg;
-			if(msg.msgtype === 'quiz') {           // 문제수/시간 설정에서 start 버튼 클릭시
-				const qmsg = msg as IQuizMsg;
 
-				this._quizInfo.qidxs = qmsg.qidxs;
-				this._quizInfo.points = [];
-				for(let i = 0; i < qmsg.qidxs.length; i++) {
+	@action 
+	public receive(data: ISocketData) {
+		super.receive(data);
+
+		const { viewDiv, prog, ga_na, quizProg, isGroup,groupProg } = this.state;
+		if(data.type === $SocketType.MSGTOPAD && data.data) {
+
+			const padMessage =  data.data as IMsg;
+			
+			switch (padMessage.msgtype) {
+			case 'quiz': // 문제수/시간 설정에서 start 버튼 클릭시
+				const quizMessage = padMessage as IQuizMsg;
+
+				this._quizInfo = {
+					...this._quizInfo,
+					quizIndices: quizMessage.quizIndices,
+					points: [],
+					quizTime: quizMessage.quizTime,
+					quizType: quizMessage.quizType,
+				}
+				for(let i = 0; i < quizMessage.quizIndices.length; i++) {
 					this._quizInfo.points[i] = 0;
 				}
-				this._quizInfo.qtime = qmsg.qtime;
-				this._quizInfo.qtype = qmsg.qtype;
-				this.state.isGroup = qmsg.isGroup;
+
+				this.state.isGroup = quizMessage.isGroup;
 				this.state.forceStopIdx = -1;
 
 				this.actions.setQuizProg('');
@@ -152,107 +167,109 @@ class StudentContext extends StudentContextBase {
 				this.state.groupResult = '';
 				if(this.state.isGroup) this.state.groupProg = 'inited';
 				this.state.prog = 'quiz';
-			} else if(msg.msgtype === 'force_stop') {
-				if(
-					this.state.viewDiv === 'content' && 
-					this.state.prog === 'quiz' && 
-					(this.state.quizProg === '' || this.state.quizProg === 'quiz')
-				) {
-					const fmsg = msg as IFlipMsg;
+				break;
+
+			case 'force_stop':
+				if(viewDiv === 'content' && prog === 'quiz' && (quizProg === '' || quizProg === 'quiz')) {
+					const fmsg = padMessage as IFlipMsg;
 					this.state.forceStopIdx = fmsg.idx;
 				}
-			} else if(msg.msgtype === 'start_quiz') {         // 타이머 스타트 시
-				if(this.state.viewDiv === 'content' && this.state.prog === 'quiz' && this.state.quizProg === '') {
-					const qmsg = msg as IMsgQuizIdx;
-					this.state.qidx = qmsg.qidx;
+				break;
+			case 'start_quiz': // 타이머 스타트 시
+				if(viewDiv === 'content' && prog === 'quiz' && quizProg === '') {
+					const quizIndexMessage = padMessage as IMsgQuizIdx;
+					this.state.qidx = quizIndexMessage.quizIndex;
 					this.actions.setQuizProg('quiz');
 				}
-			} else if(msg.msgtype === 'pad_gana') {            // 팀 A, B 결정
-				const qmsg = msg as IMsgGaNa;
+				break;
+			case 'pad_gana': // 팀 A, B 결정
+				const ganaMessage = padMessage as IMsgGaNa;
 				if(App.student) {
 					let ga_na: undefined|'ga'|'na';
-					if(App.student.id === qmsg.ga) ga_na = 'ga';
-					else if(App.student.id === qmsg.na) ga_na = 'na';
+					if(App.student.id === ganaMessage.ga) ga_na = 'ga';
+					else if(App.student.id === ganaMessage.na) ga_na = 'na';
 					
 					if(ga_na) {
-						this._quizInfo.qidxs = [];
+						this._quizInfo.quizIndices = [];
 						this._quizInfo.points = [];
-						this._quizInfo.qtime = 5;
-						this.state.isGroup = true;
-						this.state.ga_na = ga_na;
+						this._quizInfo.quizTime = 5;
+
+						this.state = {
+							...this.state,
+							isGroup: true,
+							ga_na: ga_na,
+							groupProg: 'initing',
+							prog: 'quiz',
+							startSelectedAni: false,
+						}
+			
 						this.actions.setQuizProg('');
 						this._setViewDiv('content');
-						this.state.groupProg = 'initing';
-						this.state.prog = 'quiz';
-						this.state.startSelectedAni = false;
+
 						_.delay(() => {
-							if(this.state.groupProg === 'initing') {
-								this.state.startSelectedAni = true;
-							}
-								
+							if(groupProg === 'initing') this.state.startSelectedAni = true;														
 						}, 10);
 					}
 				}
-			} else if(msg.msgtype === 'send_point') {      // 그룹일 경우 포인트 전달
-				if(!this.state.isGroup) return;
-				else if(this.state.prog !== 'quiz') return;
-				else if(this.state.groupProg !== 'inited') return;
+				break;
+			case 'send_point': // 그룹일 경우 포인트 전달
+				if(!isGroup || prog !== 'quiz' || groupProg !== 'inited') return;
 
-				const qmsg = msg as IMsgQuizIdx;
-				this._quizInfo.points[qmsg.qidx] = qmsg.point;
-				this.state.qidx = qmsg.qidx;
+				const sendPointMessage = padMessage as IMsgQuizIdx;
+				this._quizInfo.points[sendPointMessage.quizIndex] = sendPointMessage.point;
+				this.state.qidx = sendPointMessage.quizIndex;
 				this.state.groupProg = 'onquiz';
 
 				this.actions.setQuizProg('');
-			} else if(msg.msgtype === 'next_quiz') {        // 그룹일 경우 스핀들 버튼 클릭시
-				if(!this.state.isGroup) return;
-				else if(this.state.prog !== 'quiz') return;
+				break;
+			case 'next_quiz': // 그룹일 경우 스핀들 버튼 클릭시
+				if(!isGroup || prog != 'quiz') return;
 
-				const qmsg = msg as IMsgQuizIdx;
-				this.state.qidx = qmsg.qidx;
+				const nexQuizMessage = padMessage as IMsgQuizIdx;
+				this.state.qidx = nexQuizMessage.quizIndex;
 				
 				this.state.groupProg = 'inited';
 				this.actions.setQuizProg('');
+				break;
 
-			} else if(msg.msgtype === 'end_quiz') {           // 그룹일 경우  모든 계산이 완료.
-				if(!this.state.isGroup) return;
-				else if(this.state.prog !== 'quiz') return;
+			case 'end_quiz':           // 그룹일 경우  모든 계산이 완료.
+				if(!isGroup || prog !== 'quiz') return;
 
-				const qmsg = msg as IMsgGaNaResult;
-				if(qmsg.ga_point === qmsg.na_point) this.state.groupResult = 'tie';
-				else if(qmsg.ga_point > qmsg.na_point && this.state.ga_na === 'ga') this.state.groupResult = 'win';
-				else if(qmsg.ga_point < qmsg.na_point && this.state.ga_na === 'na') this.state.groupResult = 'win';
+				const endQuizMessage = padMessage as IMsgGaNaResult;
+				if(endQuizMessage.ga_point === endQuizMessage.na_point) this.state.groupResult = 'tie';
+				else if(endQuizMessage.ga_point > endQuizMessage.na_point && ga_na === 'ga') this.state.groupResult = 'win';
+				else if(endQuizMessage.ga_point < endQuizMessage.na_point && ga_na === 'na') this.state.groupResult = 'win';
 				else this.state.groupResult = 'lose';
 					
 				// this.state.qidx = 0;
 				this.state.groupProg = 'complete';
 				this.actions.setQuizProg('result');
-			} else if(
-					msg.msgtype === 'spelling' || 
-					msg.msgtype === 'speak_audio' || 
-					msg.msgtype === 'speak_video' ||
-					msg.msgtype === 'speaking_audio' || 
-					msg.msgtype === 'speaking_video' 
-			) {
-				const qmsg = msg as IDrillMsg;
+				break;
+			case 'spelling':
+			case 'speak_audio':
+			case 'speak_video':
+			case 'speaking_audio':
+			case 'speaking_video':			
+				const drillMessage = padMessage as IDrillMsg;
 
-				const word = _.find(this._data.page1.words, {idx: qmsg.word_idx});
+				const word = _.find(this._data.page1.words, {idx: drillMessage.word_idx});
 				if(word) {
 					this._word = word;
 					this._setViewDiv('content');
-					this.state.mediaType = (msg.msgtype === 'speak_video' || msg.msgtype === 'speaking_video') ? 'video' : 'audio';
+					this.state.mediaType = (padMessage.msgtype === 'speak_video' || padMessage.msgtype === 'speaking_video') ? 'video' : 'audio';
 
-					if(msg.msgtype === 'spelling') this.state.prog = msg.msgtype;
+					if(padMessage.msgtype === 'spelling') this.state.prog = padMessage.msgtype;
 					else this.state.prog = 'record';
 
 					this.state.bRecordSend = (
-						msg.msgtype === 'speak_audio' || msg.msgtype === 'speak_video' ||
-						msg.msgtype === 'speaking_audio' || msg.msgtype === 'speaking_video'
+						padMessage.msgtype === 'speak_audio' || padMessage.msgtype === 'speak_video' ||
+						padMessage.msgtype === 'speaking_audio' || padMessage.msgtype === 'speaking_video'
 					);
 				}
 			}
 		}
 	}
+
 	public uploaded = (url: string) => {
 		if(this.state.viewDiv === 'content' && this.state.prog === 'record') {
 			this.state.uploaded = url;
