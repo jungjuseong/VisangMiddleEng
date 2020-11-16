@@ -100,6 +100,16 @@ export interface IConfirmNomal extends IInClassStudyProps{
 	readonly item6: IItem;
 }
 
+export interface IConfirmSup extends IInClassStudyProps{
+	readonly seq: number;
+	readonly main_sound: string;
+	readonly kor_eng: boolean;
+	readonly directive: IDirecrive;
+	readonly problem1: IProblem;
+	readonly problem2: IProblem;
+	readonly problem3: IProblem;
+}
+
 export interface IDirecrive {
 	readonly kor: string;
 	readonly eng: string;
@@ -111,7 +121,14 @@ export interface IItem {
 	readonly img: string;
 }
 
+export interface IProblem {
+	readonly question: string;
+	readonly question_audio: string;
+	readonly answer: number;
+}
+
 export interface IData {
 	introduction: IIntroduction[];
 	confirm_nomal: IConfirmNomal[];
+	confirm_sup: IConfirmSup[];
 }
