@@ -107,8 +107,8 @@ class RecordSpeak extends React.Component<IRecordSpeak> {
 	private _onStartRecord = () => {
 		const { view,actions,mediaType } = this.props;
 
-		if(!view) return;
-		else if(this._state !== MYSTATE.READY && this._state !== MYSTATE.RECORDED) return;
+		if(!view || this._state !== MYSTATE.READY && this._state !== MYSTATE.RECORDED) return;
+
 		this._video.pause();
 		this._audio.pause();
 		
@@ -124,8 +124,7 @@ class RecordSpeak extends React.Component<IRecordSpeak> {
 	private _onStopRecord = () => {
 		const { view,actions,mediaType } = this.props;
 
-		if(!view) return;
-		if(this._state !== MYSTATE.RECORDING && this._state !== MYSTATE.WAIT_START) return;
+		if(!view || this._state !== MYSTATE.RECORDING && this._state !== MYSTATE.WAIT_START) return;
 		if(this._time >= 0 && this._time <= 2.0) return;
 		
 		if(this._state === MYSTATE.RECORDING) {

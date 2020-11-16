@@ -80,7 +80,6 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 	private _stime: string = '';
 	private _etime: string = '';
 	private _input: string = '';
-
 	
 	private _swiper: Swiper|null = null;
 	private _refSwiper = (el: SwiperComponent|null) => {

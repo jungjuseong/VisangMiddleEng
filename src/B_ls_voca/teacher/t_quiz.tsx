@@ -4,10 +4,10 @@ import { observer } from 'mobx-react';
 import { IStateCtx, IActionsCtx } from './t_store';
 import { IWordData,TypeQuiz } from '../common';
 
-import QuizSound from '../quiz_sound';
-import QuizMeaning from '../quiz_meaning';
+import QuizSound from '../sound_quiz';
+import QuizMeaning from '../meaning_quiz';
 import QuizSpelling from '../quiz_spelling';
-import QuizUsage from '../quiz_usage';
+import QuizUsage from '../usage_quiz';
 import QuizTeacher from '../../share/QuizTeacher';
 
 interface IQuizProps {

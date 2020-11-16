@@ -23,7 +23,7 @@ function findLongestWord(words: Array<string>) {
 }
 
 @observer
-class QuizUsage extends React.Component<IQuizPage> {
+class UsageQuiz extends React.Component<IQuizPage> {
 	@observable private _selected: number = 0;
 	@observable private _rcalcNum = 0;
 	private _jsx: JSX.Element;
@@ -57,7 +57,7 @@ class QuizUsage extends React.Component<IQuizPage> {
 	}
 
 	public componentDidUpdate(prev: IQuizPage) {
-		const { on,view, quiz, isTeacher,quizProg } = this.props;
+		const { on, view, quiz, isTeacher,quizProg } = this.props;
 		if(on && !prev.on) {
 			if(isTeacher) this._selected = 0;
 
@@ -67,11 +67,7 @@ class QuizUsage extends React.Component<IQuizPage> {
 			if(isTeacher) this._selected = 0;
 		}
 		
-		if(view && !prev.view) {
-			this._rcalcNum = 0;
-			this._selected = 0;
-			this._setBlock(0, false);
-		} else if(!view && prev.view) {
+		if(view && !prev.view || !view && prev.view) {
 			this._rcalcNum = 0;
 			this._selected = 0;
 			this._setBlock(0, false);
@@ -85,11 +81,9 @@ class QuizUsage extends React.Component<IQuizPage> {
 	private _onMc = (num: number) => {
 		const { on,idx, quiz,onItemChange, isTeacher,quizProg } = this.props;
 
-		if(!on) return;
-		else if(quizProg !== 'quiz') return;
+		if(!on || quizProg !== 'quiz') return;
 
-		if(this._selected === num) this._selected = 0;
-		else this._selected = num;
+		this._selected = (this._selected === num) ? 0 : num;
 
 		if(!isTeacher) {
 			quiz.app_result = (this._selected === quiz.quiz_usage.correct);
@@ -126,33 +120,24 @@ class QuizUsage extends React.Component<IQuizPage> {
 		if(bView && !block.classList.contains('view')) block.classList.add('view');
 		else if(!bView && block.classList.contains('view')) block.classList.remove('view');
 
-
 		block.innerHTML = choice;
 		this._rcalcNum++;
 	}	
 
 	public render() {
-		const { quiz, isTeacher, quizProg, hasPreview, percent }  = this.props;
-		const word = this.props.quiz;
-		// const quiz = word.quiz_usage;
+		const { view, quiz, isTeacher, quizProg, hasPreview, percent }  = this.props;
 		const { correct, choices } = quiz.quiz_usage;
-		// const choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3];
 
 		return (
 			<>
-				<PreInBox
-					view={isTeacher && quizProg === 'result'}
-					preClass={hasPreview ? word.app_sentence : -1}
-					inClass={percent}
-					top={150}
-					right={140}
-				/>
+				<PreInBox view={isTeacher && quizProg === 'result'}	preClass={hasPreview ? quiz.app_sentence : -1} inClass={percent} top={150} right={140}/>
 
 				<div className="img_box">
 					{/*<CorrectBar className={p_type + ' sentence'}/>*/}
-					<img src={App.data_url + word.quiz_usage.image} draggable={false} />
+					<img src={App.data_url + quiz.quiz_usage.image} draggable={false} />
 					<div className={'quiz_usage' + (quizProg === 'result' ? ' result' : '')}><div ref={this._refSentence}>
-						<WrapTextNew view={this.props.view} maxSize={48} minSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewWhenInit={true}>{this._jsx}</WrapTextNew>
+						<WrapTextNew view={view} maxSize={48} minSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewWhenInit={true}>{this._jsx}
+						</WrapTextNew>
 					</div></div>
 				</div>
 				<div className="usage">{choices.map((choice, idx) => {
@@ -184,15 +169,8 @@ class QuizUsage extends React.Component<IQuizPage> {
 						}
 					}
 					return (
-						<QuizMCBtn 
-							key={idx}
-							className={arr.join(' ') + wordClass} 
-							num={idx + 1} 
-							on={selected === (idx + 1)} 
-							onClick={this._onMc} 
-							disabled={this.props.quizProg !== 'quiz'}
-						>
-							<WrapTextNew view={this.props.view} /*maxSize={36} minSize={36}*/ lineHeight={110} viewWhenInit={true}>{choice}</WrapTextNew>
+						<QuizMCBtn key={idx} className={arr.join(' ') + wordClass} num={idx + 1} on={selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
+							<WrapTextNew view={view} /*maxSize={36} minSize={36}*/ lineHeight={110} viewWhenInit={true}>{choice}</WrapTextNew>
 						</QuizMCBtn>
 					);
 				})}</div>
@@ -201,6 +179,6 @@ class QuizUsage extends React.Component<IQuizPage> {
 	}
 }
 
-export default QuizUsage;
+export default UsageQuiz;
 
 

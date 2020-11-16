@@ -31,7 +31,7 @@ class LetsTalk extends React.Component<ILetsTalk> {
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
+	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
 		slidesPerView: 'auto',

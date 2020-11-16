@@ -145,34 +145,38 @@ class StudentContext extends StudentContextBase {
 			
 			switch (padMessage.msgtype) {
 			case 'quiz': // 문제수/시간 설정에서 start 버튼 클릭시
-				const quizMessage = padMessage as IQuizMsg;
-
+				// const quizMessage = padMessage as IQuizMsg;
+				const { quizIndices, quizTime, quizType, isGroup } = padMessage as IQuizMsg;
 				this._quizInfo = {
 					...this._quizInfo,
-					quizIndices: quizMessage.quizIndices,
+					quizIndices,
 					points: [],
-					quizTime: quizMessage.quizTime,
-					quizType: quizMessage.quizType,
+					quizTime,
+					quizType,
 				}
-				for(let i = 0; i < quizMessage.quizIndices.length; i++) {
+				for(let i = 0; i < quizIndices.length; i++) {
 					this._quizInfo.points[i] = 0;
 				}
 
-				this.state.isGroup = quizMessage.isGroup;
+				this.state.isGroup = isGroup;
 				this.state.forceStopIdx = -1;
 
 				this.actions.setQuizProg('');
 				this.state.qidx = 0;
 				this._setViewDiv('content');
-				this.state.groupResult = '';
-				if(this.state.isGroup) this.state.groupProg = 'inited';
-				this.state.prog = 'quiz';
+
+				this.state = {
+					...this.state,
+					groupResult: '',
+					prog: 'quiz',
+					groupProg: (this.state.isGroup) ? 'inited' : this.state.groupProg,
+				}
 				break;
 
 			case 'force_stop':
 				if(viewDiv === 'content' && prog === 'quiz' && (quizProg === '' || quizProg === 'quiz')) {
-					const fmsg = padMessage as IFlipMsg;
-					this.state.forceStopIdx = fmsg.idx;
+					const flipMessage = padMessage as IFlipMsg;
+					this.state.forceStopIdx = flipMessage.idx;
 				}
 				break;
 			case 'start_quiz': // 타이머 스타트 시
@@ -190,10 +194,14 @@ class StudentContext extends StudentContextBase {
 					else if(App.student.id === ganaMessage.na) ga_na = 'na';
 					
 					if(ga_na) {
-						this._quizInfo.quizIndices = [];
-						this._quizInfo.points = [];
-						this._quizInfo.quizTime = 5;
+						this._quizInfo = {
+							...this._quizInfo,
+							quizIndices: [],
+							points: [],
+							quizTime: 5,
+						}
 
+						// needs testing
 						this.state = {
 							...this.state,
 							isGroup: true,

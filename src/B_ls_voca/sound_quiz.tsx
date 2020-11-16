@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import * as common from './common';
+import { IQuizPage } from './common';
 import { App } from '../App';
 import { BtnAudio } from '../share/BtnAudio';
 import QuizMCBtn from '../share/QuizMCBtn';
@@ -11,7 +11,7 @@ import { observable } from 'mobx';
 import WrapTextNew from '@common/component/WrapTextNew';
 
 @observer
-class QuizSound extends React.Component<common.IQuizPage> {
+class SoundQuiz extends React.Component<IQuizPage> {
 	@observable private _nPlay = 0;
 	@observable private _selected: number = 0;
 	@observable private _btnAudioDisabled: boolean = true;
@@ -20,7 +20,7 @@ class QuizSound extends React.Component<common.IQuizPage> {
 		this._nPlay = 0;
 		this._selected = 0;
 	}
-	public componentDidUpdate(prev: common.IQuizPage) {
+	public componentDidUpdate(prev: IQuizPage) {
 		const { on,isTeacher,view,quizProg } = this.props;
 		if(on && !prev.on) {
 			if(isTeacher) this._selected = 0;
@@ -132,5 +132,5 @@ class QuizSound extends React.Component<common.IQuizPage> {
 		);
 	}
 }
-export default QuizSound;
+export default SoundQuiz;
 
