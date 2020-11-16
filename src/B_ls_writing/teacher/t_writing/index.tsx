@@ -54,7 +54,6 @@ class Writing extends React.Component<IWriting> {
 	private m_data: IData;
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
-	@observable private _title: 'COMPREHENSION'|'DIALOGUE' = 'COMPREHENSION';
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
 
 	private _tab_save: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
@@ -94,113 +93,104 @@ class Writing extends React.Component<IWriting> {
 	private onSend = () => {
         const { actions, state } = this.props;
 
-        if(	this._title === 'COMPREHENSION' ) {
-            if(this._tab === 'INTRODUCTION') return;
-            if(this._tab === 'CONFIRM' && state.confirmProg !==  SENDPROG.READY) return;
-            if(this._tab === 'ADDITIONAL' && state.additionalProg !==  SENDPROG.READY) return;
-            if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
-            if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
-        } else {
-            if(state.dialogueProg !== SENDPROG.READY) return;
-        }
+        if(this._tab === 'INTRODUCTION') return;
+        if(this._tab === 'CONFIRM' && state.confirmProg !==  SENDPROG.READY) return;
+        if(this._tab === 'ADDITIONAL' && state.additionalProg !==  SENDPROG.READY) return;
+        if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
+        if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
 
-        if(	this._title === 'COMPREHENSION' ) {
-            if(this._tab === 'CONFIRM') state.confirmProg = SENDPROG.SENDING;
-            else if(this._tab === 'ADDITIONAL') state.additionalProg = SENDPROG.SENDING;
-            else if(this._tab === 'DICTATION') state.additionalProg = SENDPROG.SENDING;
-            else if(this._tab === 'SCRIPT') state.additionalProg = SENDPROG.SENDING;
-            else return;
-        } else state.dialogueProg = SENDPROG.SENDING;
+        
+        if(this._tab === 'CONFIRM') state.confirmProg = SENDPROG.SENDING;
+        else if(this._tab === 'ADDITIONAL') state.additionalProg = SENDPROG.SENDING;
+        else if(this._tab === 'DICTATION') state.additionalProg = SENDPROG.SENDING;
+        else if(this._tab === 'SCRIPT') state.additionalProg = SENDPROG.SENDING;
+        else return;
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
             let msg: IMsg;
-            if(	this._title === 'COMPREHENSION' ) {
-                actions.clearReturnUsers();
-                actions.setRetCnt(0);
-                actions.setNumOfStudent(App.students.length);
-                
-                if(this._tab === 'CONFIRM') {
-                    if(state.confirmProg !==  SENDPROG.SENDING) return;
-                    state.confirmProg = SENDPROG.SENDED;
-                    msg = {msgtype: 'quiz_send',};
-                } else {
-                    if(state.scriptProg !==  SENDPROG.SENDING) return;
-                    state.scriptProg = SENDPROG.SENDED;
-                    msg = {msgtype: 'script_send',};
-                    if(this._viewClue) {
-                        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-                        msg = {msgtype: 'view_clue',};
-                    }
-                } 
+            
+            actions.clearReturnUsers();
+            actions.setRetCnt(0);
+            actions.setNumOfStudent(App.students.length);
+            
+            if(this._tab === 'CONFIRM') {
+                if(state.confirmProg !==  SENDPROG.SENDING) return;
+                state.confirmProg = SENDPROG.SENDED;
+                msg = {msgtype: 'quiz_send',};
             } else {
-                if(state.dialogueProg !== SENDPROG.SENDING) return;
-                state.dialogueProg = SENDPROG.SENDED;
-                msg = {msgtype: 'dialogue_send',};
-            }
+                if(state.scriptProg !==  SENDPROG.SENDING) return;
+                state.scriptProg = SENDPROG.SENDED;
+                msg = {msgtype: 'script_send',};
+                if(this._viewClue) {
+                    felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+                    msg = {msgtype: 'view_clue',};
+                }
+            } 
+            
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             this._setNavi();
         });
 	}
 
-	private _onPopupSend = (roll: ''|'A'|'B') => {
-        const {state, actions} = this.props;
-        if(this.c_popup === 'Q&A') {
-            if(this._title !== 'COMPREHENSION') return;
-            else if(state.qnaProg > SENDPROG.READY) return;
+	// private _onPopupSend = (roll: ''|'A'|'B') => {
+    //     const {state, actions} = this.props;
+    //     if(this.c_popup === 'Q&A') {
+    //         if(this._title !== 'COMPREHENSION') return;
+    //         else if(state.qnaProg > SENDPROG.READY) return;
 
-            state.qnaProg = SENDPROG.SENDING;
-            App.pub_playToPad();
+    //         state.qnaProg = SENDPROG.SENDING;
+    //         App.pub_playToPad();
 
-            let msg: IMsg = {msgtype: 'qna_send',};
-            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    //         let msg: IMsg = {msgtype: 'qna_send',};
+    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
 
-            // this._viewClue = false;
-            _.delay(() => {
-                if(	this._title !== 'COMPREHENSION' ) return;
-                else if(state.qnaProg !== SENDPROG.SENDING) return;
+    //         // this._viewClue = false;
+    //         _.delay(() => {
+    //             if(	this._title !== 'COMPREHENSION' ) return;
+    //             else if(state.qnaProg !== SENDPROG.SENDING) return;
 
-                state.qnaProg = SENDPROG.SENDED;
-            }, 300);            
+    //             state.qnaProg = SENDPROG.SENDED;
+    //         }, 300);            
             
-        } else if(this.c_popup === 'ROLE PLAY') {
-            if (this._title !== 'DIALOGUE') return;
-            if(state.dialogueProg !== SENDPROG.SENDED) return;
-            if(this._roll !== '' || roll === '') return;
+    //     } else if(this.c_popup === 'ROLE PLAY') {
+    //         if (this._title !== 'DIALOGUE') return;
+    //         if(state.dialogueProg !== SENDPROG.SENDED) return;
+    //         if(this._roll !== '' || roll === '') return;
 
-            this._lastFocusIdx = 0;
-            this._focusIdx = -1;
+    //         this._lastFocusIdx = 0;
+    //         this._focusIdx = -1;
 
-            let msg: IRollMsg = {msgtype: 'roll_send', roll};
-            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    //         let msg: IRollMsg = {msgtype: 'roll_send', roll};
+    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-            _.delay(() => {
-                if(this._title !== 'DIALOGUE') return;
-                else if(state.dialogueProg !== SENDPROG.SENDED) return;
-                this._roll = roll;
-            }, 300);
+    //         _.delay(() => {
+    //             if(this._title !== 'DIALOGUE') return;
+    //             else if(state.dialogueProg !== SENDPROG.SENDED) return;
+    //             this._roll = roll;
+    //         }, 300);
 
-        } else if(this.c_popup === 'SHADOWING') {
-            if(this._title !== 'DIALOGUE') return;
-            else if(state.dialogueProg !== SENDPROG.SENDED) return;
-            else if(this._shadowing) return;
+    //     } else if(this.c_popup === 'SHADOWING') {
+    //         if(this._title !== 'DIALOGUE') return;
+    //         else if(state.dialogueProg !== SENDPROG.SENDED) return;
+    //         else if(this._shadowing) return;
 
-            this._lastFocusIdx = 0;
-            this._focusIdx = -1;
+    //         this._lastFocusIdx = 0;
+    //         this._focusIdx = -1;
 
-            let msg: IMsg = {msgtype: 'shadowing_send'};
-            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    //         let msg: IMsg = {msgtype: 'shadowing_send'};
+    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-            _.delay(() => {
-                if(this._title !== 'DIALOGUE') return;
-                else if(state.dialogueProg !== SENDPROG.SENDED) return;
-                this._shadowing = true;
-            }, 300);
-        }
-        this.props.actions.setNavi(false, false);
-    }
+    //         _.delay(() => {
+    //             if(this._title !== 'DIALOGUE') return;
+    //             else if(state.dialogueProg !== SENDPROG.SENDED) return;
+    //             this._shadowing = true;
+    //         }, 300);
+    //     }
+    //     this.props.actions.setNavi(false, false);
+    // }
     // 인트로 페이지로 이동
 	private _goToIntro = () => {
         alert('go to Intro page');
@@ -209,32 +199,11 @@ class Writing extends React.Component<IWriting> {
         return;
     }
 
-    /* Hint Bubble */
-	private _clickTranslate = () => {
-        if (this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;        
-        App.pub_playBtnTab();        
-        this._viewTrans = !this._viewTrans;	
-    }
-    
-	/* Hint Bubble */
-	private _clickClue = () => {
-        if (this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;		
-        
-        App.pub_playBtnTab();
-        
-        const clueMsg: IMsg = { msgtype: (this._viewClue) ? 'view_clue' : 'hide_clue'};
-        felsocket.sendPAD($SocketType.MSGTOPAD, clueMsg);
-
-        this._viewClue = !this._viewClue;			
-	}
-
 	private _onPage = (idx: number) => {
         const { actions } = this.props;
 
         App.pub_stop();
         App.pub_playBtnTab();
-
-        if (this._title !== 'COMPREHENSION') return;
         
         this._curQidx = idx;
         actions.setNavi((this._tab !== 'INTRODUCTION' || this._curQidx !== 0), true);
@@ -247,7 +216,6 @@ class Writing extends React.Component<IWriting> {
 	private _clearAll() {
         const { actions } = this.props;
         App.pub_stop();
-        this._title = 'COMPREHENSION';
         this._tab = 'INTRODUCTION';
 
         const introductions = this.m_data.introduction;
@@ -273,23 +241,6 @@ class Writing extends React.Component<IWriting> {
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 
 	}
-
-	/* 화면전환 */
-	private _clickCompre = (ev: React.MouseEvent<HTMLElement>) => {
-        const { actions } = this.props;
-
-        if(this._title === 'COMPREHENSION') return;
-        if(this._roll === 'A' || this._roll === 'B' || this._shadowing) return;
-
-        App.pub_stop(); 
-        App.pub_playBtnTab();
-        
-        this._clearAll();
-        this._tab = 'INTRODUCTION';
-        this._title = 'COMPREHENSION';
-        
-        if(this._tab === 'INTRODUCTION' && this._curQidx === 0) actions.setNavi(false, true);
-    }
     
 	// private _clickDial = (ev: React.MouseEvent<HTMLElement>) => {
     //     const {confirmProg,qnaProg} = this.props.state;
@@ -309,7 +260,6 @@ class Writing extends React.Component<IWriting> {
         const { actions,state } = this.props;
         const { confirmProg,qnaProg} = state;
 
-        if(this._title !== 'COMPREHENSION') return;
         if(this._tab === 'INTRODUCTION') return;
         if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
         
@@ -329,7 +279,7 @@ class Writing extends React.Component<IWriting> {
         const { actions } = this.props;
         const { confirmProg,qnaProg } = this.props.state;
 
-        if (this._title !== 'COMPREHENSION' || this._tab === 'CONFIRM') return;
+        if (this._tab === 'CONFIRM') return;
         if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
@@ -342,7 +292,7 @@ class Writing extends React.Component<IWriting> {
         const { actions } = this.props;
         const { confirmProg,qnaProg } = this.props.state;
 
-        if (this._title !== 'COMPREHENSION' || this._tab === 'ADDITIONAL') return;
+        if (this._tab === 'ADDITIONAL') return;
         if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
@@ -355,7 +305,7 @@ class Writing extends React.Component<IWriting> {
         const { actions } = this.props;
         const { confirmProg,qnaProg } = this.props.state;
 
-        if (this._title !== 'COMPREHENSION' || this._tab === 'DICTATION') return;
+        if (this._tab === 'DICTATION') return;
         if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
@@ -368,7 +318,7 @@ class Writing extends React.Component<IWriting> {
         const { actions } = this.props;
         const { confirmProg,qnaProg } = this.props.state;
 
-        if (this._title !== 'COMPREHENSION' || this._tab === 'SCRIPT') return;
+        if (this._tab === 'SCRIPT') return;
         if (confirmProg === SENDPROG.SENDED ||	confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
 
         App.pub_stop();
@@ -383,7 +333,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_playBtnTab();
 
-        const isCompQ = (this._title === 'COMPREHENSION' && this._tab === 'INTRODUCTION');
+        const isCompQ = (this._tab === 'INTRODUCTION');
 
         if(isCompQ) felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsersForQuiz());
 
@@ -412,8 +362,7 @@ class Writing extends React.Component<IWriting> {
         const {state, actions} = this.props;
         const confirmProg = state.confirmProg;
 
-        if(	this._title !== 'COMPREHENSION' || 
-            this._tab !== 'CONFIRM' || 
+        if(	this._tab !== 'CONFIRM' || 
             confirmProg !== SENDPROG.SENDED
         ) return;
 
@@ -427,14 +376,7 @@ class Writing extends React.Component<IWriting> {
         console.log('endend2')
         actions.quizComplete();
         this.props.actions.setNavi(true, true);
-	}	
-	/* Popup화면 */
-	private _onPopupClosed = () => {
-        const { state,actions} = this.props;
-        if(this._title === 'COMPREHENSION' && this._tab === 'SCRIPT' && state.qnaProg === SENDPROG.READY) actions.setNavi(true, true);
-        else if (this._title === 'DIALOGUE' && this._roll === '' && !this._shadowing) actions.setNavi(true, true);
-        this.c_popup = 'off';
-    }
+	}
 
 	private _sendFocusIdx(idx: number) {
 		const msg: IFocusMsg = {
@@ -467,126 +409,114 @@ class Writing extends React.Component<IWriting> {
 		
         actions.setNaviFnc(
             () => {
-                if(this._title === 'COMPREHENSION') {
-                    if(this._tab === 'INTRODUCTION') {
-                        if(this._curQidx === 0) {
-                            actions.gotoDirection();
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx - 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'CONFIRM') {
-                        // if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                        if(this._curQidx === 0) {
-                            this._hint = false;
-                            this._tab = 'INTRODUCTION';
-                            this._curQidx = this.m_data.introduction.length - 1;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx - 1;
-                            this._setNavi();
-                        }
-                        // if(state.scriptProg > SENDPROG.READY) {
-                        //     state.scriptProg = SENDPROG.READY;
-                        //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-
-                        //     actions.clearQnaReturns();
-                        // }
-                    } else if(this._tab === 'ADDITIONAL') {
-                        if(this._curQidx === 0) {
-                            this._hint = false;
-                            this._tab = 'CONFIRM';
-                            this._curQidx = this.m_data.introduction.length - 1;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx - 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'DICTATION') {
-                        if(this._curQidx === 0) {
-                            this._hint = false;
-                            this._tab = 'ADDITIONAL';
-                            this._curQidx = this.m_data.introduction.length - 1;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx - 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'SCRIPT') {
-                        if(this._curQidx === 0) {
-                            this._hint = false;
-                            this._tab = 'DICTATION';
-                            this._curQidx = this.m_data.introduction.length - 1;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx - 1;
-                            this._setNavi();
-                        }
+                if(this._tab === 'INTRODUCTION') {
+                    if(this._curQidx === 0) {
+                        actions.gotoDirection();
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx - 1;
+                        this._setNavi();
                     }
-                } else {
-                    if(this._roll === 'A' || this._roll === 'B' || this._shadowing) return;
-                    this._clearAll();
-                    this._title = 'COMPREHENSION';
-                    this._tab = 'SCRIPT';
-                    this._curQidx = 0;
+                } else if(this._tab === 'CONFIRM') {
+                    // if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                    if(this._curQidx === 0) {
+                        this._hint = false;
+                        this._tab = 'INTRODUCTION';
+                        this._curQidx = this.m_data.introduction.length - 1;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx - 1;
+                        this._setNavi();
+                    }
+                    // if(state.scriptProg > SENDPROG.READY) {
+                    //     state.scriptProg = SENDPROG.READY;
+                    //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+
+                    //     actions.clearQnaReturns();
+                    // }
+                } else if(this._tab === 'ADDITIONAL') {
+                    if(this._curQidx === 0) {
+                        this._hint = false;
+                        this._tab = 'CONFIRM';
+                        this._curQidx = this.m_data.introduction.length - 1;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx - 1;
+                        this._setNavi();
+                    }
+                } else if(this._tab === 'DICTATION') {
+                    if(this._curQidx === 0) {
+                        this._hint = false;
+                        this._tab = 'ADDITIONAL';
+                        this._curQidx = this.m_data.introduction.length - 1;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx - 1;
+                        this._setNavi();
+                    }
+                } else if(this._tab === 'SCRIPT') {
+                    if(this._curQidx === 0) {
+                        this._hint = false;
+                        this._tab = 'DICTATION';
+                        this._curQidx = this.m_data.introduction.length - 1;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx - 1;
+                        this._setNavi();
+                    }
                 }
             },
             () => {
-                if(this._title === 'COMPREHENSION') {
-                    if(this._tab === 'INTRODUCTION') {
-                        if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                            this._hint = false;
-                            this._tab = 'CONFIRM';
-                            this._curQidx = 0;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx + 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'CONFIRM') {
-                        if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                            this._hint = false;
-                            this._tab = 'ADDITIONAL';
-                            this._curQidx = 0;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx + 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'ADDITIONAL') {
-                        if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                            this._hint = false;
-                            this._tab = 'DICTATION';
-                            this._curQidx = 0;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx + 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'DICTATION') {
-                        if(this._curQidx === this.m_data.introduction.length - 1) {
-                            if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                            this._hint = false;
-                            this._tab = 'SCRIPT';
-                            this._curQidx = 0;
-                        } else {
-                            this._hint = false;
-                            this._curQidx = this._curQidx + 1;
-                            this._setNavi();
-                        }
-                    } else if(this._tab === 'SCRIPT') {
-                        if(this._curQidx !== this.m_data.introduction.length - 1) {                        
-                            this._hint = false;
-                            this._curQidx = this._curQidx + 1;
-                            this._setNavi();
-                        }
+                if(this._tab === 'INTRODUCTION') {
+                    if(this._curQidx === this.m_data.introduction.length - 1) {
+                        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                        this._hint = false;
+                        this._tab = 'CONFIRM';
+                        this._curQidx = 0;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx + 1;
+                        this._setNavi();
                     }
-                } else {
-                    actions.gotoNextBook();
+                } else if(this._tab === 'CONFIRM') {
+                    if(this._curQidx === this.m_data.introduction.length - 1) {
+                        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                        this._hint = false;
+                        this._tab = 'ADDITIONAL';
+                        this._curQidx = 0;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx + 1;
+                        this._setNavi();
+                    }
+                } else if(this._tab === 'ADDITIONAL') {
+                    if(this._curQidx === this.m_data.introduction.length - 1) {
+                        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                        this._hint = false;
+                        this._tab = 'DICTATION';
+                        this._curQidx = 0;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx + 1;
+                        this._setNavi();
+                    }
+                } else if(this._tab === 'DICTATION') {
+                    if(this._curQidx === this.m_data.introduction.length - 1) {
+                        if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
+                        this._hint = false;
+                        this._tab = 'SCRIPT';
+                        this._curQidx = 0;
+                    } else {
+                        this._hint = false;
+                        this._curQidx = this._curQidx + 1;
+                        this._setNavi();
+                    }
+                } else if(this._tab === 'SCRIPT') {
+                    if(this._curQidx !== this.m_data.introduction.length - 1) {                        
+                        this._hint = false;
+                        this._curQidx = this._curQidx + 1;
+                        this._setNavi();
+                    }
                 }
             }
         );
@@ -619,8 +549,7 @@ class Writing extends React.Component<IWriting> {
         const confirm_nomals = this.m_data.confirm_nomal;
         const isQComplete = confirmProg >= SENDPROG.COMPLETE;
 
-        const isOnStudy = (this._title === 'COMPREHENSION' && (confirmProg === SENDPROG.SENDING || confirmProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING)) 
-                            || (this._title === 'DIALOGUE' && (this._roll === 'A' || this._roll === 'B' || this._shadowing));
+        const isOnStudy = ((confirmProg === SENDPROG.SENDING || confirmProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING));
         
         const quizResult = actions.getResult();
         let qResult = -1;        
@@ -629,11 +558,11 @@ class Writing extends React.Component<IWriting> {
             if(qResult > 100) qResult = 100;
         }
 
-        const isCompI = (this._title === 'COMPREHENSION' && this._tab === 'INTRODUCTION');
-        const isCompC = (this._title === 'COMPREHENSION' && this._tab === 'CONFIRM');
-        const isCompA = (this._title === 'COMPREHENSION' && this._tab === 'ADDITIONAL');
-        const isCompD = (this._title === 'COMPREHENSION' && this._tab === 'DICTATION');
-        const isCompS = (this._title === 'COMPREHENSION' && this._tab === 'SCRIPT');
+        const isCompI = (this._tab === 'INTRODUCTION');
+        const isCompC = (this._tab === 'CONFIRM');
+        const isCompA = (this._tab === 'ADDITIONAL');
+        const isCompD = (this._tab === 'DICTATION');
+        const isCompS = (this._tab === 'SCRIPT');
         const isViewSend = (!isCompI) &&
                             (isCompC && state.confirmProg < SENDPROG.SENDED) ||
                             (isCompA && state.additionalProg < SENDPROG.SENDED) ||
@@ -645,7 +574,7 @@ class Writing extends React.Component<IWriting> {
         const style: React.CSSProperties = {};
     
         return (
-            <div className={'t_writing ' + this._title} style={style}>
+            <div className={'t_writing '} style={style}>
 
                 <div className="close_box">
                     <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>

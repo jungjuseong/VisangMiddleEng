@@ -598,6 +598,58 @@ var ls_writing ={
 			feedback:{_type:obj_e.TYPE_TEXT, _excel:"BB"},
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"BC"}
 		}
+	},
+	confirm_sup:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"확인_보충",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"I"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"K",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"L",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"M",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"O"},
+			problem1:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"P"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"Q",_default:''},
+				answer:{_type:obj_e.TYPE_INT, _excel:"R"},
+				choice1:{_type:obj_e.TYPE_TEXT, _excel:"S"},
+				choice2:{_type:obj_e.TYPE_TEXT, _excel:"T"}
+			},
+			problem2:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"U"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"V",_default:''},
+				answer:{_type:obj_e.TYPE_INT, _excel:"W"},
+				choice1:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				choice2:{_type:obj_e.TYPE_TEXT, _excel:"Y"}
+			},
+			problem3:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"Z"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"AA",_default:''},
+				answer:{_type:obj_e.TYPE_INT, _excel:"AB"},
+				choice1:{_type:obj_e.TYPE_TEXT, _excel:"AC"},
+				choice2:{_type:obj_e.TYPE_TEXT, _excel:"AD"}
+			},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AE"}
+		}
 	}
 }
 

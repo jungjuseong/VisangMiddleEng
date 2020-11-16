@@ -99,5 +99,46 @@
             "text": "",
             "image": ""
         }
+    }],
+    "confirm_sup": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "mc",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "main_sound": "main.mp3",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를  듣고, 내용과 일치하면 T, 일치하지 않으면 F로 말해 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "problem1": {
+            "question": "Steve is going to go to Switzerland.",
+            "question_audio": "q_plus1_001.mp3",
+            "answer": 1,
+            "choice1": "TRUE",
+            "choice2": "FALSE"
+        },
+        "problem2": {
+            "question": "Jessie is going to visit a tower.",
+            "question_audio": "q_plus1_002.mp3",
+            "answer": 2,
+            "choice1": "TRUE",
+            "choice2": "FALSE"
+        },
+        "problem3": {
+            "question": "Brett is in Jejudo now.",
+            "question_audio": "q_plus1_003.mp3",
+            "answer": 1,
+            "choice1": "TRUE",
+            "choice2": "FALSE"
+        }
     }]
 };
