@@ -13,7 +13,7 @@
         .closed_hint {
             display: none;
         }
-        .subject_rate {
+        .sub_rate {
             position: absolute;
             width: 87px;
             height: 26px;
@@ -28,14 +28,6 @@
             top: 15px;
             z-index: 2;
         }
-        .correct_answer_rate {
-            position: absolute;
-            width: 118px;
-            height: 26px;
-            left: 97px;
-            top: -80px;
-            background-image: resolve('teacher/images/correct_answer_rate.png')
-        }
         .quiz_box {
             position: absolute;
             text-align: center;
@@ -46,9 +38,6 @@
             right: 0px;
             letter-spacing: -0.6px;
             padding: 20px;
-            :first-child{
-                left: 0px
-            }
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -59,9 +48,9 @@
                 position: relative;
                 background-color: #fff;
                 border-radius: 10px;
-                width: 1000px;
-                height: 500px;
-                padding: 0px 0px;
+                width: 950px;
+                height: 400px;
+                padding: 0px 25px;
                 overflow: hidden;
                 /*public*/
                 .btn_trans {
@@ -99,9 +88,8 @@
                     position: relative;
                     width: 885px;
                     height: 350px;
-                    left: 0px;
-
-                    .swiper-scrollbar{
+                    left: 10px;
+                    .swiper-scrollbar {
                         width: 9px;
                         right: 3px;
                         top: 5%;
@@ -114,11 +102,8 @@
                     &>div {
                         p {
                             display: inline-block;
-                            .block{
-                                text-decoration: underline;
-                            }
                         }
-                        .sample{
+                        .sample {
                             min-height: 55px;
                             padding-bottom: 5px;
                             span.block {
@@ -132,6 +117,10 @@
                         .hint {
                             min-height: 55px;
                             padding-bottom: 5px;
+                            span.block {
+                                display: inline;
+                                border-bottom: 2px solid rgb(0, 240, 255);
+                            }
                         }
                     }
                 }
@@ -149,7 +138,7 @@
                     }
                 }
                 .true_false_btn {
-                    @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_true_false.png'), );
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     right: 20px;
                     z-index: 2;
                 }
@@ -157,15 +146,11 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
-                    padding: 0px 0px;
-                    
-                    .answer_box{
+                    padding: 0px 25px;
+                    .answer_box {
                         border-bottom: 2px solid #000;
                         width: 180px;
-                        .noelement{
-                            border-bottom: none;
-                        }
-                        .sample{
+                        .sample {
                             min-height: 55px;
                             padding-bottom: 5px;
                         }

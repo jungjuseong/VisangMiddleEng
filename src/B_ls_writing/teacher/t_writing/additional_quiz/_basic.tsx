@@ -40,6 +40,7 @@ class Basic extends React.Component<IQuizBox> {
 		mousewheel: true,			
 		noSwiping: false,
 		followFinger: true,
+		noSwipingClass: 'swiper-no-swiping',
 		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
 	};
 
@@ -137,10 +138,12 @@ class Basic extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
+	private m_swiper!: Swiper;
 	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
+		if(this.m_swiper || !el) return;
+		this.m_swiper = el.swiper;
 	}
+
 
 	private _refAudio = (btn: BtnAudio) => {
 		if(this._btnAudio || !btn) return;
@@ -153,6 +156,19 @@ class Basic extends React.Component<IQuizBox> {
 
  	public componentDidUpdate(prev: IQuizBox) {
 		const { view } = this.props;
+
+		if(!this.m_swiper) return;
+		let bUpdate = false;
+
+		let tidx = -1;
+
+		if(bUpdate && this.props.view) {
+			this.m_swiper.update();
+			if(this.m_swiper.scrollbar) this.m_swiper.scrollbar.updateSize();
+			if(tidx >= 0) {
+				this.m_swiper.slideTo(tidx, 0);
+			}
+		}
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
@@ -237,7 +253,7 @@ class Basic extends React.Component<IQuizBox> {
 										</div>
 									</div>
 									<div>
-										<p>1. {this._jsx_question3}</p>
+										<p>3. {_getJSX(this._jsx_question3)}</p>
 										<div className="answer_box">
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
