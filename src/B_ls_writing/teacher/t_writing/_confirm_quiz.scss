@@ -110,6 +110,30 @@
                     right: 20px;
                     z-index: 2;
                 }
+                .hard_question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    .answer_box {
+                        border-bottom: 2px solid #000;
+                        .sample {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                        }
+                        .hide {
+                            display: none;
+                        }
+                        .hint {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            color: rgb(0, 0, 255);
+                            .block {
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
                 /*T2일 때*/
                 .image_box {
                     position: relative;

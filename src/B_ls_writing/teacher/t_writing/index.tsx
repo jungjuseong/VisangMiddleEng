@@ -619,6 +619,17 @@ class Writing extends React.Component<IWriting> {
                             />                          
                         </div>              
                     </div>
+                    <div className={'question' + (confirmProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
+                        <div key={1} >
+                            <ConfirmQuiz 
+                                view={view}
+                                index ={this._curQidx}
+                                mdata={this.m_data} 
+                                onClosed={this._letstalkClosed}
+                                onHintClick={this._clickAnswer}
+                            />                          
+                        </div>              
+                    </div>
                 </div>
                 <SendUINew
                     view={isViewSend}

@@ -19,11 +19,6 @@ interface IQuizBoxProps {
 	onHintClick: () => void;
 	data: common.IConfirmNomal;
 }
-/*
-2020 11 16 작업
-_lets_talk.tsx 참고
-이동윤
-*/
 @observer
 class Basic extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;

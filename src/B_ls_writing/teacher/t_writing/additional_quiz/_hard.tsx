@@ -1,16 +1,17 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observer, PropTypes } from 'mobx-react';
-import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
+
+import * as butil from '@common/component/butil';
 
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
-import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -18,10 +19,10 @@ interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IConfirmSup;
+	data: common.IConfirmHard;
 }
 @observer
-class Supplement extends React.Component<IQuizBox> {
+class Hard extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -44,9 +45,9 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblemSup;
-	private _jsx_question2: common.IProblemSup;
-	private _jsx_question3: common.IProblemSup;
+	private _jsx_question1: common.IProblemHard;
+	private _jsx_question2: common.IProblemHard;
+	private _jsx_question3: common.IProblemHard;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -175,8 +176,7 @@ class Supplement extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<div className="subject_rate"></div>
-			<div className="correct_answer_rate"></div>
+				<div className="sub_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
@@ -188,18 +188,33 @@ class Supplement extends React.Component<IQuizBox> {
 									</div>
 								</div>
 							</div>
-							<div className = "question">
+							<div className = "hard_question">
 								<div>
 									<div>1. {this._jsx_question1.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+									<div className="answer_box">
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{butil.parseBlock(this._jsx_question1.answer, 'block')}
+										</div>
+									</div>
 								</div>
 								<div>
 									<div>2. {this._jsx_question2.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+									<div className="answer_box">
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{butil.parseBlock(this._jsx_question2.answer, 'block')}
+										</div>
+									</div>
 								</div>
 								<div>
 									<div>3. {this._jsx_question3.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+									<div className="answer_box">
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{butil.parseBlock(this._jsx_question3.answer, 'block')}
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -210,4 +225,4 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 }
 
-export default Supplement;
+export default Hard;

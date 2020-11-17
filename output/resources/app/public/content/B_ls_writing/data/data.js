@@ -184,5 +184,341 @@
             "answer": "",
             "hint": ""
         }
+    }],
+    "additional_basic": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 1,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: What are you going to do this {winter}, Steve?<br>\n▪ M: I’m going to go on a ski trip to Switzerland.<br>\n▪ W: Wow! That sounds like a {hot} summer.<br>",
+        "sentence_answer1": "summer",
+        "sentence_answer2": "",
+        "sentence_answer3": "cool",
+        "sentence_answer4": "",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 밑줄 친 부분을 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 2,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 2,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: A long weekend is coming up.<br>\n▪ M: Yeah. {Where} are you going to do, Jessie?<br>\n▪ W: I’m going to visit a water park with my friend.<br>",
+        "sentence_answer1": "Where",
+        "sentence_answer2": "",
+        "sentence_answer3": "",
+        "sentence_answer4": "",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 밑줄 친 부분을 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 3,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 3,
+        "main_sound": "main.mp3",
+        "sentence": "▪ M: Summer vacation starts {last} week.<br>\n▪ W: So, what are you going to do, Brett?<br>\n▪ M: I’m going to {go} Jejudo and try horse riding.<br>",
+        "sentence_answer1": "next",
+        "sentence_answer2": "",
+        "sentence_answer3": "visit",
+        "sentence_answer4": "",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 밑줄 친 부분을 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        }
+    }],
+    "additional_sup": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "mc",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 1,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: What are you going to do this ({summer} / {winter}), Steve?<br>\n▪ M: I’m going to ({go} / {visit}) on a ski trip to Switzerland.<br>\n▪ W: Wow! That sounds like a ({cool} / {hot}) summer.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer": 1,
+            "choice1": "summer",
+            "choice2": "winter",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence2": {
+            "answer": 1,
+            "choice1": "go",
+            "choice2": "visit",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence3": {
+            "answer": 1,
+            "choice1": "cool",
+            "choice2": "hot",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence4": {
+            "answer": 0,
+            "choice1": "",
+            "choice2": "",
+            "choice3": "",
+            "choice4": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 2,
+        "question_type": "mc",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 2,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: A long weekend is ({going} / {coming}) up.<br>\n▪ M: Yeah. ({Where} / {What}) are you going to do, Jessie?<br>\n▪ W: I’m going to ({dance} / {visit}) a water park with my friend.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer": 2,
+            "choice1": "going",
+            "choice2": "coming",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence2": {
+            "answer": 2,
+            "choice1": "Where",
+            "choice2": "What",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence3": {
+            "answer": 2,
+            "choice1": "dance",
+            "choice2": "visit",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence4": {
+            "answer": 0,
+            "choice1": "",
+            "choice2": "",
+            "choice3": "",
+            "choice4": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 3,
+        "question_type": "mc",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 3,
+        "main_sound": "main.mp3",
+        "sentence": "▪ M: Summer vacation ({finishes} / {starts}) next week.<br>\n▪ W: So, ({what} / {how}) are you going to do, Brett?<br>\n▪ M: I’m going to visit Jejudo and ({try} / {buy}) horse riding.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer": 2,
+            "choice1": "finishes",
+            "choice2": "starts",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence2": {
+            "answer": 1,
+            "choice1": "what",
+            "choice2": "how",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence3": {
+            "answer": 1,
+            "choice1": "try",
+            "choice2": "buy",
+            "choice3": "",
+            "choice4": ""
+        },
+        "sentence4": {
+            "answer": 0,
+            "choice1": "",
+            "choice2": "",
+            "choice3": "",
+            "choice4": ""
+        }
+    }],
+    "additional_hard": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 1,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: What are you going to do this summer, Steve?<br>\n▪ M: I’m planning to go on a ski trip to Switzerland.<br>\n▪ W: Wow! That sounds like a cool summer.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 틀린 부분을 찾아 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer1": "planning",
+            "answer2": "going"
+        },
+        "sentence2": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence3": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence4": {
+            "answer1": "",
+            "answer2": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 2,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 2,
+        "main_sound": "main.mp3",
+        "sentence": "▪ W: A long weekday is coming up.<br>\n▪ M: Yeah. What are you going to do, Jessie?<br>\n▪ W: I’m going to visit a water park with my friend.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 틀린 부분을 찾아 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer1": "weekday",
+            "answer2": "weekend"
+        },
+        "sentence2": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence3": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence4": {
+            "answer1": "",
+            "answer2": ""
+        }
+    }, {
+        "activity_code": "A",
+        "seq": 3,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "table_title": 3,
+        "main_sound": "main.mp3",
+        "sentence": "▪ M: Summer vacation starts next week.<br>\n▪ W: So, what are you going to buy, Brett?<br>\n▪ M: I’m going to visit Jejudo and try horse riding.<br>",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 잘 듣고, 틀린 부분을 찾아 바르게 고쳐 써 봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "sentence1": {
+            "answer1": "buy",
+            "answer2": "do"
+        },
+        "sentence2": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence3": {
+            "answer1": "",
+            "answer2": ""
+        },
+        "sentence4": {
+            "answer1": "",
+            "answer2": ""
+        }
     }]
 };
