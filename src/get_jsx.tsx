@@ -27,7 +27,7 @@ export function _sentence2jsx(sentence: string,	blockClass: string|null = 'block
 					if(isBlockWorkWrap) jsx = _splitSpace(str, keyObj, splitClass);
 					else jsx = str;
 
-					arr.push((<span key={keyObj.key++} className={blockClass} data-correct={sTmp}>aaaaaaaaaa</span>));
+					arr.push((<span key={keyObj.key++} className={blockClass} data-correct={sTmp}> {str} </span>));
 			
 					lastIdx = pattern.lastIndex;
 					result = pattern.exec(line);
