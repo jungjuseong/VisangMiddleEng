@@ -120,6 +120,49 @@ export interface IConfirmHard extends IInClassStudyProps{
 	readonly problem4: IProblemHard;
 }
 
+export interface IAdditional extends IInClassStudyProps{
+	readonly seq: number;
+	readonly main_sound: string;
+	readonly kor_eng: boolean;
+	readonly directive: IDirecrive;
+	readonly table_title: number;
+	readonly sentence : string;
+}
+
+export interface IAdditionalBasic extends IAdditional{
+	readonly sentence_answer1:string;
+	readonly sentence_answer2:string;
+	readonly sentence_answer3:string;
+	readonly sentence_answer4:string;
+}
+
+export interface IAdditionalSup extends IAdditional{
+	readonly sentence_answer1:ISentenceSup;
+	readonly sentence_answer2:ISentenceSup;
+	readonly sentence_answer3:ISentenceSup;
+	readonly sentence_answer4:ISentenceSup;
+}
+
+export interface IAdditionalHard extends IAdditional{
+	readonly sentence_answer1:ISentenceHard;
+	readonly sentence_answer2:ISentenceHard;
+	readonly sentence_answer3:ISentenceHard;
+	readonly sentence_answer4:ISentenceHard;
+}
+
+export interface ISentenceSup{
+	readonly answer : number;
+	readonly choice1 : string;
+	readonly choice2 : string;
+	readonly choice3 : string;
+	readonly choice4 : string;
+}
+
+export interface ISentenceHard{
+	readonly answer1 : string;
+	readonly answer2 : string;
+}
+
 export interface IDirecrive {
 	readonly kor: string;
 	readonly eng: string;
@@ -152,4 +195,7 @@ export interface IData {
 	confirm_nomal: IConfirmNomal[];
 	confirm_sup: IConfirmSup[];
 	confirm_hard: IConfirmHard[];
+	additional_basic: IAdditionalBasic[];
+	additional_sup: IAdditionalSup[];
+	additional_hard: IAdditionalHard[];
 }
