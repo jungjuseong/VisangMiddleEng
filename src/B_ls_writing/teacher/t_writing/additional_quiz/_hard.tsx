@@ -21,11 +21,6 @@ interface IQuizBox {
 	onHintClick: () => void;
 	data: common.IConfirmHard;
 }
-/*
-2020 11 16 작업
-_lets_talk.tsx 참고
-이동윤
-*/
 @observer
 class Hard extends React.Component<IQuizBox> {
 	@observable private _view = false;

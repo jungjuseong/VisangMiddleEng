@@ -18,11 +18,6 @@ interface IQuizBox {
 	onClosed: () => void;
 	data: common.IIntroduction;
 }
-/*
-2020 11 09 작업
-_lets_talk.tsx 참고
-이동윤
-*/
 @observer
 class IntroQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;

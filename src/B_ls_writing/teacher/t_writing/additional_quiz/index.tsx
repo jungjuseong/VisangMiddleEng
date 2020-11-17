@@ -22,11 +22,6 @@ interface IQuizBox {
 	onHintClick: () => void;
 	mdata: common.IData;
 }
-/*
-2020 11 10 작업
-_lets_talk.tsx 참고
-이동윤
-*/
 @observer
 class ConfirmQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
@@ -83,7 +78,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		return (
 			<>
 				<Supplement view={view && index === 0} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Basic view={view && index === 1} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Basic view={view && index === 1} data={mdata.confirm_hard[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 				<Hard view={view && index === 2} data={mdata.confirm_hard[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 			</>
 		);
