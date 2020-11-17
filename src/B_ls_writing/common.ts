@@ -104,9 +104,20 @@ export interface IConfirmSup extends IInClassStudyProps{
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
 	readonly directive: IDirecrive;
-	readonly problem1: IProblem;
-	readonly problem2: IProblem;
-	readonly problem3: IProblem;
+	readonly problem1: IProblemSup;
+	readonly problem2: IProblemSup;
+	readonly problem3: IProblemSup;
+}
+
+export interface IConfirmHard extends IInClassStudyProps{
+	readonly seq: number;
+	readonly main_sound: string;
+	readonly kor_eng: boolean;
+	readonly directive: IDirecrive;
+	readonly problem1: IProblemHard;
+	readonly problem2: IProblemHard;
+	readonly problem3: IProblemHard;
+	readonly problem4: IProblemHard;
 }
 
 export interface IDirecrive {
@@ -123,11 +134,22 @@ export interface IItem {
 export interface IProblem {
 	readonly question: string;
 	readonly question_audio: string;
+}
+
+export interface IProblemSup extends IProblem{
 	readonly answer: number;
+	readonly choice1 : string;
+	readonly choice2 : string;
+}
+
+export interface IProblemHard extends IProblem{
+	readonly answer: string;
+	readonly hint : string;
 }
 
 export interface IData {
 	introduction: IIntroduction[];
 	confirm_nomal: IConfirmNomal[];
 	confirm_sup: IConfirmSup[];
+	confirm_hard: IConfirmHard[];
 }

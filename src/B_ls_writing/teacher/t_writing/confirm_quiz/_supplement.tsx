@@ -49,9 +49,9 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblem;
-	private _jsx_question2: common.IProblem;
-	private _jsx_question3: common.IProblem;
+	private _jsx_question1: common.IProblemSup;
+	private _jsx_question2: common.IProblemSup;
+	private _jsx_question3: common.IProblemSup;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
