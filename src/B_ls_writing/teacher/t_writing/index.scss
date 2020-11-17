@@ -233,19 +233,19 @@
             top: 100px;
             left: 87px;
             .btn_tab_introduction {
-                @include btn_on( resolve('teacher/images/btn_tab_question.png'), resolve('teacher/images/btn_tab_question_down.png'), width('teacher/images/btn_tab_question.png'), height('teacher/images/btn_tab_question.png'));
+                @include btn_on( resolve('teacher/images/btn_tab_introduction_down.png'), resolve('teacher/images/btn_tab_introduction.png'), width('teacher/images/btn_tab_introduction.png'), height('teacher/images/btn_tab_introduction.png'));
             }
             .btn_tab_confirm {
-                @include btn_on( resolve('teacher/images/btn_tab_script.png'), resolve('teacher/images/btn_tab_script_down.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
+                @include btn_on( resolve('teacher/images/btn_tab_confirm_down.png'), resolve('teacher/images/btn_tab_confirm.png'), width('teacher/images/btn_tab_confirm.png'), height('teacher/images/btn_tab_confirm.png'));
             }
             .btn_tab_additional {
-                @include btn_on( resolve('teacher/images/btn_tab_script.png'), resolve('teacher/images/btn_tab_script_down.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
+                @include btn_on( resolve('teacher/images/btn_tab_additional_down.png'), resolve('teacher/images/btn_tab_additional.png'), width('teacher/images/btn_tab_additional.png'), height('teacher/images/btn_tab_additional.png'));
             }
             .btn_tab_dictation {
-                @include btn_on( resolve('teacher/images/btn_tab_script.png'), resolve('teacher/images/btn_tab_script_down.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
+                @include btn_on( resolve('teacher/images/btn_tab_dictation_down.png'), resolve('teacher/images/btn_tab_dictation.png'), width('teacher/images/btn_tab_dictation.png'), height('teacher/images/btn_tab_dictation.png'));
             }
             .btn_tab_script {
-                @include btn_on( resolve('teacher/images/btn_tab_script.png'), resolve('teacher/images/btn_tab_script_down.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
+                @include btn_on( resolve('teacher/images/btn_tab_script_down.png'), resolve('teacher/images/btn_tab_script.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
             }
         }
         /* 제출수*/
