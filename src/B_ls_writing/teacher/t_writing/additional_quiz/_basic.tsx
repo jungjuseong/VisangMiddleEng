@@ -6,6 +6,8 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
+import * as butil from '@common/component/butil';
+
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 
@@ -13,22 +15,18 @@ import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizBoxProps {
+interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IConfirmNomal;
+	data: common.IAdditionalBasic[];
 }
-/*
-2020 11 16 작업
-_lets_talk.tsx 참고
-이동윤
-*/
 @observer
-class Basic extends React.Component<IQuizBoxProps> {
+class Basic extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
+	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
 	
@@ -47,30 +45,38 @@ class Basic extends React.Component<IQuizBoxProps> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_hint1: number;
-	private _jsx_hint2: number;
-	private _jsx_hint3: number;
+	private _jsx_question1: string;
+	private _jsx_question1_answer: string;
+	private _jsx_question2: string;
+	private _jsx_question2_answer: string;
+	private _jsx_question3: string;
+	private _jsx_question3_answer: string;
+
 	private _characterImage: string;
+
 	private _btnAudio?: BtnAudio;
 	
-	public constructor(props: IQuizBoxProps) {
+	public constructor(props: IQuizBox) {
 		super(props);
 		
-		const { directive, item1, item2, item3 } = props.data;
-		this._jsx_sentence = _getJSX(directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(directive.eng); // 문제
-		this._jsx_hint1 = item1.answer; // 답
-		this._jsx_hint2 = item2.answer; // 답
-		this._jsx_hint3 = item3.answer; // 답
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
+		this._jsx_question1= props.data[0].sentence;
+		this._jsx_question1_answer= props.data[0].sentence_answer1;
+		this._jsx_question2= props.data[1].sentence;
+		this._jsx_question2_answer= props.data[1].sentence_answer1;
+		this._jsx_question3= props.data[2].sentence;
+		this._jsx_question3_answer= props.data[2].sentence_answer1;
+		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
-
-	private _viewTranslation = () => {
+	// Translation 토글 기능
+	private _viewTrans = () => {
 		App.pub_playBtnTab();
 		this._trans = !this._trans;
 		if(this._trans) this._trans = true;
@@ -88,11 +94,28 @@ class Basic extends React.Component<IQuizBoxProps> {
 			}				
 		}, 300);
 	}
+	// True / False 토글 기능
+	private _selectedValue = () => {
+		App.pub_playBtnTab();
+		this._select = !this._select;
+		if(this._select) this._select = true;
 
-	@action
+		if(this._swiper) {
+			this._swiper.slideTo(0, 0);
+			this._swiper.update();
+			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		}
+		_.delay(() => {
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
+				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+			}				
+		}, 300);
+	}
+	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
-
 		this.props.onHintClick();
 		this._hint = !this._hint;
 
@@ -115,16 +138,22 @@ class Basic extends React.Component<IQuizBoxProps> {
 		this._swiper = el.swiper;
 	}
 
+	private _refAudio = (btn: BtnAudio) => {
+		if(this._btnAudio || !btn) return;
+		this._btnAudio = btn;
+	}
+
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBoxProps) {
+ 	public componentDidUpdate(prev: IQuizBox) {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
+			this._select = true;
 			this._zoom = false;
 			this._zoomImgUrl = '';
 
@@ -150,40 +179,60 @@ class Basic extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { item1, item2, item3 } = this.props.data;
+		const { data, } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<div className="sub_rate"></div>
+				<div className="sub_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 					<div className="quiz_box">
 						<div className="white_board">
-							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>
+							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 							<div className="sentence_box">
 								<div>
 									<div className="question_box" onClick={this._onClick}>
 										{jsx}
 									</div>
 								</div>
-							</div>	
-							<div className="image_box">
-								<img src={App.data_url + item1.img} draggable={false}/>
-								<img src={App.data_url + item2.img} draggable={false}/>
-								<img src={App.data_url + item3.img} draggable={false}/>
-							</div>	
-						</div>
-						<div className="speechbubble_box" >
-							<div className={(this._hint ? ' view-hint' : '')}>
-								<SwiperComponent {...this._soption} ref={this._refSwiper}>
+							</div>
+							<SwiperComponent {...this._soption} ref={this._refSwiper}>
+								<div className = "basic_question">
 									<div>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}
+										<p>1. {this._jsx_question1}</p>
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{this._jsx_question1_answer}
+											</div>
+										</div>
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{this._jsx_question1_answer}
+											</div>
 										</div>
 									</div>
-								</SwiperComponent>
-							</div>
+									<div>
+										<p>2.{this._jsx_question2}</p>
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{this._jsx_question2_answer}
+											</div>
+										</div>
+									</div>
+									<div>
+										<p>1. {this._jsx_question3}</p>
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{this._jsx_question3_answer}
+											</div>
+										</div>
+									</div>
+								</div>
+							</SwiperComponent>
 						</div>
 					</div>
 			</div>

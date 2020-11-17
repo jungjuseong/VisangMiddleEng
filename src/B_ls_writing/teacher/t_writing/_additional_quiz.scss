@@ -1,0 +1,181 @@
+@import '../../../share/sendui.scss';
+@import '../../../share/Progress_bar.scss';
+@import '../../script_container/index.scss';
+@import '../t_video_box/index.scss';
+@import '../../../share/QuizMCBtn.scss';
+@mixin additional_quiz {
+    .question_bg {
+        padding-top: 10px;
+        margin: 0 auto;
+        position: relative;
+        width: 1150px;
+        height: 600px;
+        .closed_hint {
+            display: none;
+        }
+        .sub_rate {
+            position: absolute;
+            width: 87px;
+            height: 26px;
+            top: -80px;
+            left: 4px;
+            background-image: resolve('teacher/images/sub_rate.png');
+        }
+        .correct_answer {
+            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 2;
+        }
+        .quiz_box {
+            position: absolute;
+            text-align: center;
+            white-space: normal;
+            top: 50px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            letter-spacing: -0.6px;
+            padding: 20px;
+            span.word {
+                display: inline-block;
+                white-space: nowrap;
+                padding: 0px 6px;
+            }
+            .white_board {
+                display: inline-block;
+                position: relative;
+                background-color: #fff;
+                border-radius: 10px;
+                width: 950px;
+                height: 400px;
+                padding: 0px 25px;
+                overflow: hidden;
+                
+                /*public*/
+                .btn_trans {
+                    @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
+                    position: absolute;
+                    left: 20px;
+                    top: 15px;
+                    z-index: 2;
+                }
+                .sentence_box {
+                    height: 100px;
+                    position: relative;
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-align: left;
+                    
+                    &>div {
+                        display: inline-block;
+                        transform: translateY(-50%);
+                        margin-top: 75px;
+                        .btn_audio {
+                            @include btn_on( resolve('teacher/images/btn_speaker.png'), resolve('teacher/images/btn_speaker_on.png'), width('teacher/images/btn_speaker.png'), height('teacher/images/btn_speaker.png'));
+                            vertical-align: top;
+                            margin-top: 12px;
+                            margin-right: 12px;
+                        }
+                        .question_box {
+                            text-align: left;
+                            display: inline-block;
+                            vertical-align: top;
+                            max-width: 1000px;
+                        }
+                    }
+                }
+                .swiper-container {	
+                    position: relative; 
+                    width: 885px;
+                    height: 350px;
+                    left: 10px;
+
+                    .swiper-scrollbar{
+                        width: 9px;
+                        right: 3px;
+                        top: 5%;
+                        height: 90%;
+                        background-color: transparent;
+                        .swiper-scrollbar-drag {
+                            background-color: rgba(0, 0, 0, 0.25);
+                        }
+                    }
+                    &>div{
+                        p{
+                            display: inline-block;
+                        }
+
+                        .sample{
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            span.block{
+                                color: transparent;
+                                border-bottom: 2px solid #000;
+                            }
+                        }
+                        .hide{
+                            display: none;
+                        }
+                        .hint{
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            span.block{
+                                display: inline;
+                                border-bottom: 2px solid rgb(0,240,255);
+                            }
+                        }
+                    }
+                }
+                
+                /*T3일 때*/
+                .question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    &>div{
+                        margin: 25px 0px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                }
+                .true_false_btn {
+                    @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
+                    right: 20px;
+                    z-index: 2;
+                }
+
+                .basic_question{
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    
+                    .answer_box{
+                        border-bottom: 2px solid #000;
+                        width: 180px;
+
+                        .sample{
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                        }
+                        .hide{
+                            display: none;
+                        }
+                        .hint{
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            color: rgb(0, 0, 255);
+                            .block{
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
