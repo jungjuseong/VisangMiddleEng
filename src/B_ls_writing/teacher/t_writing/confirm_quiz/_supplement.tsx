@@ -181,6 +181,7 @@ class Supplement extends React.Component<IQuizBox> {
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
+
 							<div className="sentence_box">
 								<div>
 									<div className="question_box" onClick={this._onClick}>

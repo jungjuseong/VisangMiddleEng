@@ -176,8 +176,9 @@ class Hard extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="sub_rate"></div>
+				<div className="subject_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<div className="correct_answer_rate"></div>
 					<div className="quiz_box">
 						<div className="white_board">
 							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

@@ -13,7 +13,7 @@
         .closed_hint {
             display: none;
         }
-        .sub_rate {
+        .subject_rate {
             position: absolute;
             width: 87px;
             height: 26px;
@@ -27,6 +27,14 @@
             right: 15px;
             top: 15px;
             z-index: 2;
+        }
+        .correct_answer_rate {
+            position: absolute;
+            width: 118px;
+            height: 26px;
+            left: 97px;
+            top: -80px;
+            background-image: resolve('teacher/images/correct_answer_rate.png')
         }
         .quiz_box {
             position: absolute;
@@ -138,7 +146,7 @@
                     }
                 }
                 .true_false_btn {
-                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                    @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_true_false.png'), );
                     right: 20px;
                     z-index: 2;
                 }
