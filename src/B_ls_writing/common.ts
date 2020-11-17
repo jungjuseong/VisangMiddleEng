@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 
 export interface IMsg {
-	msgtype: 	'intro_send'|'intro_end'|'intro_return'|
-				'confirm_send'|'confirm_end'|'confirm_return'|
+	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
 				'dictation_send'|'dictation_end'|'dictation_return'|
 				'script_send'|'script_end'|'script_return';
@@ -26,9 +25,6 @@ export interface IQNAMsg extends IMsg {
 	etime: number;
 }
 
-export interface IRollMsg extends IMsg {
-	roll: 'A'|'B';
-}
 export interface IFocusMsg extends IMsg {
 	idx: number;
 }

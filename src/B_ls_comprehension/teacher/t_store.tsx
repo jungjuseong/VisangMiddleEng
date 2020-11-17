@@ -98,7 +98,11 @@ class TeacherContext extends TeacherContextBase {
 			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
 			
 			getQnaReturns: () => this._qnaReturns,
-			quizComplete: () => this.state.questionProg = SENDPROG.COMPLETE,
+			quizComplete: () => 
+			this.state = {
+				...this.state,
+				questionProg: SENDPROG.COMPLETE,
+			},
 			clearQnaReturns: () => {			
 				this._returnUsers = [];
 				for(let i = 0; i < this._data.scripts.length; i++) {

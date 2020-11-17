@@ -79,26 +79,22 @@ class StudentContext extends StudentContextBase {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IFocusMsg;
+			const msg = data.data as  common.IMsg;
 			if(msg.msgtype === 'confirm_send') {
-				if(msg.idx === 1){
-					// if(this.state.confirmProg > QPROG.UNINIT) return;
-					this.state.scriptProg = SPROG.UNMOUNT;
-					this.state.questionView = true;
-					this.state.confirmProg = QPROG.ON;
-					this.state.viewDiv = 'content';
-					this.state.scriptMode  = 'COMPREHENSION';
-					this.state.qsMode  = 'question';
-					this.state.roll = '';
-					this.state.shadowing = false;
-				}
+				// if(this.state.confirmProg > QPROG.UNINIT) return;
+				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.questionView = true;
+				this.state.confirmProg = QPROG.ON;
+				this.state.viewDiv = 'content';
+				this.state.scriptMode  = 'COMPREHENSION';
+				this.state.qsMode  = 'question';
+				this.state.roll = '';
+				this.state.shadowing = false;
 			} else if(msg.msgtype === 'confirm_end') {
-				if(msg.idx === 1){
-					const qProg = this.state.confirmProg;
-					if(this.state.viewDiv !== 'content') return;
-					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmProg = QPROG.COMPLETE;
-				}
+				const qProg = this.state.confirmProg;
+				if(this.state.viewDiv !== 'content') return;
+				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+				this.state.confirmProg = QPROG.COMPLETE;
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 

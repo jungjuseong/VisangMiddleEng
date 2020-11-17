@@ -35,8 +35,12 @@ interface IQuizResult {
 
 interface IStateCtx extends IStateBase {
 	hasPreview: boolean;
-	confirmProg: SENDPROG;
-	additionalProg: SENDPROG;
+	confirmBasicProg: SENDPROG;
+	confirmProgSup: SENDPROG;
+	confirmProgHard: SENDPROG;
+	additionalBasicProg: SENDPROG;
+	additionalProgSup: SENDPROG;
+	additionalProgHard: SENDPROG;
 	dictationProg: SENDPROG;
 	scriptProg: SENDPROG;
 	qnaProg: SENDPROG;
@@ -73,16 +77,17 @@ class TeacherContext extends TeacherContextBase {
 	constructor() {
 		super();
 
-		this.state = {
-			...this.state,
-			hasPreview: false,
-			confirmProg: SENDPROG.READY,
-			additionalProg: SENDPROG.READY,
-			dictationProg: SENDPROG.READY,
-			scriptProg: SENDPROG.READY,
-			qnaProg: SENDPROG.READY,
-			dialogueProg: SENDPROG.READY
-		}
+		this.state.hasPreview =  false,
+		this.state.confirmBasicProg= SENDPROG.READY,
+		this.state.confirmProgSup = SENDPROG.READY,
+		this.state.confirmProgHard = SENDPROG.READY,
+		this.state.additionalBasicProg = SENDPROG.READY,
+		this.state.additionalProgSup = SENDPROG.READY,
+		this.state.additionalProgHard = SENDPROG.READY,
+		this.state.dictationProg = SENDPROG.READY,
+		this.state.scriptProg = SENDPROG.READY,
+		this.state.qnaProg = SENDPROG.READY,
+		this.state.dialogueProg = SENDPROG.READY
 
 		this.actions.init = () => {	
 			this.state = {
@@ -93,8 +98,8 @@ class TeacherContext extends TeacherContextBase {
 			};
 			this._returnUsers = [];
 
-			if(this.state.confirmProg < SENDPROG.COMPLETE) {
-				this.state.confirmProg = SENDPROG.READY;
+			if(this.state.confirmBasicProg < SENDPROG.COMPLETE) {
+				this.state.confirmBasicProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
 			}
 		};
@@ -110,8 +115,11 @@ class TeacherContext extends TeacherContextBase {
 			getReturnUsersForQuiz: () => this._returnUsersForQuiz,
 			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
 			getQnaReturns: () => this._qnaReturns,
-			quizComplete: () =>  {this.state.confirmProg = SENDPROG.COMPLETE
-			console.log('quizComplete',this.state.confirmProg)},
+			quizComplete : () => 
+				this.state = {
+					...this.state,
+					confirmBasicProg: SENDPROG.COMPLETE,
+				},
 			clearQnaReturns: () => {			
 				this._returnUsers = [];
 				this.actions.setRetCnt(0);
@@ -145,7 +153,7 @@ class TeacherContext extends TeacherContextBase {
 			const messageType = (messageFromPad.data as  IMsg).msgtype;
 			switch(messageType) {
 			case 'confirm_return':
-				if(this.state.confirmProg === SENDPROG.SENDED) {
+				if(this.state.confirmBasicProg === SENDPROG.SENDED) {
 					const quizReturnMsg = (messageFromPad.data as IQuizReturnMsg);
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
