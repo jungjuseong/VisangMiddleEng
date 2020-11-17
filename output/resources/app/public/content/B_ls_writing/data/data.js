@@ -140,5 +140,49 @@
             "choice1": "TRUE",
             "choice2": "FALSE"
         }
+    }],
+    "confirm_hard": [{
+        "activity_code": "A",
+        "seq": 1,
+        "question_type": "sa",
+        "SC_DIV1": "",
+        "SC_DIV2": "",
+        "SC_DIV3": "",
+        "SC_DIV4": "",
+        "SC_SAVE": false,
+        "main_sound": "main.mp3",
+        "kor_eng": true,
+        "directive": {
+            "kor": "대화를 듣고, 질문에 대한 알맞은 대답을 해봅시다.",
+            "eng": "",
+            "movie": "",
+            "audio": "",
+            "img": "",
+            "icon": ""
+        },
+        "problem1": {
+            "question": "When is Steve going to go to Switzerland?",
+            "question_audio": "q_plus2_001.mp3",
+            "answer": "He’s going to go to Switzerland {this summer}.",
+            "hint": "He’s going to go to Switzerland { }."
+        },
+        "problem2": {
+            "question": "What are the two people talking about?",
+            "question_audio": "q_plus2_002.mp3",
+            "answer": "They’re talking about {the weekend plan}.",
+            "hint": "They’re talking about { }."
+        },
+        "problem3": {
+            "question": "When is the summer vacation going to start?",
+            "question_audio": "q_plus2_003.mp3",
+            "answer": "It is going to start {next week}.",
+            "hint": "It is going to start { }."
+        },
+        "problem4": {
+            "question": "",
+            "question_audio": "",
+            "answer": "",
+            "hint": ""
+        }
     }]
 };

@@ -650,6 +650,62 @@ var ls_writing ={
 			},
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AE"}
 		}
+	},
+	confirm_hard:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"확인_심화",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"I"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"K",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"L",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"M",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"O",_default:''},
+			problem1:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"P"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"Q",_default:''},
+				answer:{_type:obj_e.TYPE_TEXT, _excel:"R"},
+				hint:{_type:obj_e.TYPE_TEXT, _excel:"S"}
+			},
+			problem2:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"T"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"U",_default:''},
+				answer:{_type:obj_e.TYPE_TEXT, _excel:"V"},
+				hint:{_type:obj_e.TYPE_TEXT, _excel:"W"}
+			},
+			problem3:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"Y",_default:''},
+				answer:{_type:obj_e.TYPE_TEXT, _excel:"Z"},
+				hint:{_type:obj_e.TYPE_TEXT, _excel:"AA"}
+			},
+			problem4:{
+				_type: obj_e.TYPE_OBJECT,
+				question:{_type:obj_e.TYPE_TEXT, _excel:"AB"},
+				question_audio:{_type:obj_e.TYPE_SOUND, _excel:"AC",_default:''},
+				answer:{_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				hint:{_type:obj_e.TYPE_TEXT, _excel:"AE"}
+			},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AF"}
+		}
 	}
 }
 
