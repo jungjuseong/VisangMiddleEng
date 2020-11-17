@@ -3,16 +3,18 @@
 @import '../../../share/CoverPopup.scss';
 @import '../../script_container/index.scss';
 @import '../t_video_box/index.scss';
-@import '_confirm_quiz.scss';
 @import '_intro_quiz.scss';
+@import '_confirm_quiz.scss';
+@import '_additional_quiz.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin comprehension {
     .t_writing {
         background: resolve('teacher/images/bg_write.png') no-repeat;
         width: width('teacher/images/bg_write.png');
         height: height('teacher/images/bg_write.png');
-        @include confirm_quiz;
         @include intro_quiz;
+        @include confirm_quiz;
+        @include additional_quiz;
         .lets_talk {
             @include CoverPopup(10001);
             background-color: rgba(0, 0, 0, 0.5);
