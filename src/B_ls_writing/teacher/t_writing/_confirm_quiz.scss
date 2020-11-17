@@ -13,13 +13,21 @@
         .closed_hint {
             display: none;
         }
-        .sub_rate {
+        .subject_rate {
             position: absolute;
             width: 87px;
             height: 26px;
             top: -80px;
             left: 4px;
             background-image: resolve('teacher/images/sub_rate.png');
+        }
+        .correct_answer_rate {
+            position: absolute;
+            width: 118px;
+            height: 26px;
+            left: 97px;
+            top: -80px;
+            background-image: resolve('teacher/images/correct_answer_rate.png')
         }
         .correct_answer {
             @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
@@ -51,10 +59,9 @@
                 width: 950px;
                 height: 400px;
                 padding: 0px 25px;
-                
                 /*public*/
                 .btn_trans {
-                    @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
                     left: 20px;
                     top: 15px;
@@ -67,7 +74,6 @@
                     font-size: 18px;
                     font-weight: bold;
                     text-align: left;
-                    
                     &>div {
                         display: inline-block;
                         transform: translateY(-50%);
@@ -86,14 +92,13 @@
                         }
                     }
                 }
-                
                 /*T3일 때*/
                 .question {
                     position: relative;
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
-                    &>div{
+                    &>div {
                         margin: 25px 0px;
                         display: flex;
                         align-items: center;
@@ -101,11 +106,10 @@
                     }
                 }
                 .true_false_btn {
-                    @include btn_on( resolve('teacher/images/btn_hint.png'), resolve('teacher/images/btn_hint_down.png'), width('teacher/images/btn_hint.png'), height('teacher/images/btn_hint.png'), );
+                    @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
                     right: 20px;
                     z-index: 2;
                 }
-
                 /*T2일 때*/
                 .image_box {
                     position: relative;
