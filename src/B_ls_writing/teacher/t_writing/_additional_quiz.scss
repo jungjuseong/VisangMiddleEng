@@ -38,6 +38,9 @@
             right: 0px;
             letter-spacing: -0.6px;
             padding: 20px;
+            :first-child{
+                left: 0px
+            }
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -48,9 +51,9 @@
                 position: relative;
                 background-color: #fff;
                 border-radius: 10px;
-                width: 950px;
-                height: 400px;
-                padding: 0px 25px;
+                width: 1000px;
+                height: 500px;
+                padding: 0px 0px;
                 overflow: hidden;
                 
                 /*public*/
@@ -90,7 +93,7 @@
                     position: relative; 
                     width: 885px;
                     height: 350px;
-                    left: 10px;
+                    left: 0px;
 
                     .swiper-scrollbar{
                         width: 9px;
@@ -105,8 +108,10 @@
                     &>div{
                         p{
                             display: inline-block;
+                            .block{
+                                text-decoration: underline;
+                            }
                         }
-
                         .sample{
                             min-height: 55px;
                             padding-bottom: 5px;
@@ -121,10 +126,6 @@
                         .hint{
                             min-height: 55px;
                             padding-bottom: 5px;
-                            span.block{
-                                display: inline;
-                                border-bottom: 2px solid rgb(0,240,255);
-                            }
                         }
                     }
                 }
@@ -152,12 +153,14 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
-                    padding: 0px 25px;
+                    padding: 0px 0px;
                     
                     .answer_box{
                         border-bottom: 2px solid #000;
                         width: 180px;
-
+                        .noelement{
+                            border-bottom: none;
+                        }
                         .sample{
                             min-height: 55px;
                             padding-bottom: 5px;

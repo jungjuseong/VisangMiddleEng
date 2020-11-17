@@ -46,7 +46,9 @@ class Basic extends React.Component<IQuizBox> {
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	private _jsx_question1: string;
-	private _jsx_question1_answer: string;
+	private _jsx_question1_answer1: string;
+	private _jsx_question1_answer2: string;
+	private _jsx_question1_answer3: string;
 	private _jsx_question2: string;
 	private _jsx_question2_answer: string;
 	private _jsx_question3: string;
@@ -63,7 +65,9 @@ class Basic extends React.Component<IQuizBox> {
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
 		this._jsx_question1= props.data[0].sentence;
-		this._jsx_question1_answer= props.data[0].sentence_answer1;
+		this._jsx_question1_answer1= props.data[0].sentence_answer1;
+		this._jsx_question1_answer2= props.data[0].sentence_answer2;
+		this._jsx_question1_answer3= props.data[0].sentence_answer3;
 		this._jsx_question2= props.data[1].sentence;
 		this._jsx_question2_answer= props.data[1].sentence_answer1;
 		this._jsx_question3= props.data[2].sentence;
@@ -198,23 +202,32 @@ class Basic extends React.Component<IQuizBox> {
 							</div>
 							<SwiperComponent {...this._soption} ref={this._refSwiper}>
 								<div className = "basic_question">
-									<div>
-										<p>1. {this._jsx_question1}</p>
-										<div className="answer_box">
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
-											<div className={'hint' + (this._hint ? '' : ' hide')}>
-												{this._jsx_question1_answer}
+									<div style={{display : "flex"}}>
+										<p>{_getJSX(this._jsx_question1)}</p>
+										<div>
+											<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer1 != '' ? '' : 'none' }}>
+												<div className={'sample' + (this._hint ? ' hide' : '')}/>
+												<div className={'hint' + (this._hint ? '' : ' hide')}>
+													{this._jsx_question1_answer1}
+												</div>
+											</div>
+											<div className="answer_box" style={{ borderBottom : this._jsx_question1_answer2 != '' ? '' : 'none' }}>
+												<div className={'sample' + (this._hint ? ' hide' : '')}/>
+												<div className={'hint' + (this._hint ? '' : ' hide')}>
+													{this._jsx_question1_answer2}
+												</div>
+											</div>
+											<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer3 != '' ? '' : 'none' }}>
+												<div className={'sample' + (this._hint ? ' hide' : '')}/>
+												<div className={'hint' + (this._hint ? '' : ' hide')}>
+													{this._jsx_question1_answer3}
+												</div>
 											</div>
 										</div>
-										<div className="answer_box">
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
-											<div className={'hint' + (this._hint ? '' : ' hide')}>
-												{this._jsx_question1_answer}
-											</div>
-										</div>
+									
 									</div>
 									<div>
-										<p>2.{this._jsx_question2}</p>
+										<p>2.{_getJSX(this._jsx_question2)}</p>
 										<div className="answer_box">
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
