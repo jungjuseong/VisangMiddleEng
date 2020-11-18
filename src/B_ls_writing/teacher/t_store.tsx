@@ -4,9 +4,8 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg } from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
-import * as StrUtil from '@common/util/StrUtil';
 
 const enum SENDPROG {
 	READY,
@@ -177,7 +176,7 @@ class TeacherContext extends TeacherContextBase {
 	}
 	
 	public async setData(data: any) {
-		this._data = data as IData;
+		this._data = initData(data);
 		this.state.hasPreview = true;
 			
 		function _initAvgPercent(text_arr: string[], val_arr: any[], preview_data: IPreviewResultClassMember[]) {

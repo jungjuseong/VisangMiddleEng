@@ -137,8 +137,15 @@ export interface IAdditionalSup extends IAdditional{
 	readonly sentence2:ISentenceSup;
 	readonly sentence3:ISentenceSup;
 	readonly sentence4:ISentenceSup;
-}
 
+	app_drops: IDropDown[];
+}
+export interface IDropDown {
+	answer: number;
+	correct: string;
+	choices: string[];
+	inputed: string;
+}
 export interface IAdditionalHard extends IAdditional{
 	readonly sentence1:ISentenceHard;
 	readonly sentence2:ISentenceHard;
@@ -194,4 +201,62 @@ export interface IData {
 	additional_basic: IAdditionalBasic[];
 	additional_sup: IAdditionalSup[];
 	additional_hard: IAdditionalHard[];
+}
+
+function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: string) {
+	if(!answer || answer <= 0 || answer > 4) return;
+	const ret: IDropDown = {
+		answer,
+		correct: '',
+		choices: [],
+		inputed: '',
+	};
+
+	if(answer === 1) ret.correct = c1;
+	else if(answer === 2) ret.correct = c2;
+	else if(answer === 3) ret.correct = c3;
+	else if(answer === 4) ret.correct = c4;
+
+	if(!ret.correct || ret.correct === '') return null;
+
+	if(c1 && c1 !== '') ret.choices[0] = c1;
+	else return null;
+
+	if(c2 && c2 !== '') ret.choices[1] = c2;
+	else return null;
+
+	if(c3 && c3 !== '') ret.choices[2] = c3;
+	else return ret;
+
+	if(c4 && c4 !== '') ret.choices[3] = c4;
+
+
+
+	return ret;
+}
+export function initData(data: IData) {
+
+	for(let i = 0; i < data.additional_sup.length; i++) {
+		const grap = data.additional_sup[i];
+
+		grap.app_drops = [];
+
+		let drop = _getDrops(grap.sentence1.answer, grap.sentence1.choice1, grap.sentence1.choice2, grap.sentence1.choice3, grap.sentence1.choice4);
+		if(drop) grap.app_drops[0] = drop;
+		else continue;
+
+		drop = _getDrops(grap.sentence2.answer, grap.sentence2.choice1, grap.sentence2.choice2, grap.sentence2.choice3, grap.sentence2.choice4);
+		if(drop) grap.app_drops[1] = drop;
+		else continue;
+
+		drop = _getDrops(grap.sentence3.answer, grap.sentence3.choice1, grap.sentence3.choice2, grap.sentence3.choice3, grap.sentence3.choice4);
+		if(drop) grap.app_drops[2] = drop;
+		else continue;
+
+		drop = _getDrops(grap.sentence4.answer, grap.sentence4.choice1, grap.sentence4.choice2, grap.sentence4.choice3, grap.sentence4.choice4);
+		if(drop) grap.app_drops[3] = drop;
+		else continue;
+	}
+
+	return data;
 }

@@ -77,7 +77,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		const { mdata, view,index, onClosed, onHintClick} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Supplement view={view && index === 0} data={mdata.additional_sup} onClosed={onClosed}	onHintClick={onHintClick}/>
 				<Basic view={view && index === 1} data={mdata.additional_basic} onClosed={onClosed}	onHintClick={onHintClick}/>
 				<Hard view={view && index === 2} data={mdata.additional_hard} onClosed={onClosed}	onHintClick={onHintClick}/>
 			</>

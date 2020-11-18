@@ -18,7 +18,7 @@ interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IConfirmSup;
+	data: common.IAdditionalSup[];
 }
 @observer
 class Supplement extends React.Component<IQuizBox> {
@@ -44,9 +44,6 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblemSup;
-	private _jsx_question2: common.IProblemSup;
-	private _jsx_question3: common.IProblemSup;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -54,11 +51,8 @@ class Supplement extends React.Component<IQuizBox> {
 	public constructor(props: IQuizBox) {
 		super(props);
 		
-		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this._jsx_question1= props.data.problem1;
-		this._jsx_question2= props.data.problem2;
-		this._jsx_question3= props.data.problem3;
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -189,18 +183,7 @@ class Supplement extends React.Component<IQuizBox> {
 							</div>
 						</div>
 						<div className = "question">
-							<div>
-								<div>1. {this._jsx_question1.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
-							</div>
-							<div>
-								<div>2. {this._jsx_question2.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
-							</div>
-							<div>
-								<div>3. {this._jsx_question3.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
-							</div>
+							{data[0].sentence}
 						</div>
 					</div>
 				</div>

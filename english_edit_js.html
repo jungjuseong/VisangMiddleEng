@@ -854,15 +854,189 @@ var ls_writing ={
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"Z"}
 		}
 	},
+	dictation_basic:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"딕테이션_기본",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			table_title : {_type:obj_e.TYPE_INT, _excel:"I"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"K"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"L",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"M",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"O",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"P",_default:''},
+			sentence:{_type:obj_e.TYPE_TEXT, _excel:"Q"},
+			sentence1:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"R"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"S"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"T"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"U"}
+			},
+			sentence2:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"V"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"W"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"Y"}
+			},
+			sentence3:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"Z"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AA"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AB"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AC"}
+			},
+			sentence4:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AE"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AF"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AG"}
+			},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AH"}
+		}
+	},
+	dictation_sup:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"딕테이션_보충",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			table_title : {_type:obj_e.TYPE_INT, _excel:"I"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"K"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"L",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"M",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"O",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"P",_default:''},
+			sentence:{_type:obj_e.TYPE_TEXT, _excel:"Q"},
+			sentence1:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"R"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"S"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"T"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"U"}
+			},
+			sentence2:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"V"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"W"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"Y"}
+			},
+			sentence3:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"Z"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AA"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AB"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AC"}
+			},
+			sentence4:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AE"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AF"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AG"}
+			},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AH"}
+		}
+	},
+	dictation_hard:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"딕테이션_심화",
+		_startRow:3,
+		_key:"seq",
+		_item:{
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},
+			question_type:{_type:obj_e.TYPE_TEXT, _excel:"C"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H"},
+			table_title : {_type:obj_e.TYPE_INT, _excel:"I"},
+			directive:{
+				_type: obj_e.TYPE_OBJECT,
+				kor:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				eng:{_type:obj_e.TYPE_TEXT, _excel:"K"},
+				movie:{_type:obj_e.TYPE_MOVIE, _excel:"L",_default:''},
+				audio:{_type:obj_e.TYPE_SOUND, _excel:"M",_default:''},
+				img:{_type:obj_e.TYPE_IMAGE, _excel:"N",_default:''},
+				icon:{_type:obj_e.TYPE_IMAGE, _excel:"O",_default:''}
+			},
+			main_sound:{_type:obj_e.TYPE_SOUND, _excel:"P",_default:''},
+			sentence:{_type:obj_e.TYPE_TEXT, _excel:"Q"},
+			sentence1:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"R"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"S"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"T"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"U"}
+			},
+			sentence2:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"V"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"W"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"X"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"Y"}
+			},
+			sentence3:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"Z"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AA"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AB"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AC"}
+			},
+			sentence4:{
+				_type: obj_e.TYPE_OBJECT,
+				answer1:{_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				answer2:{_type:obj_e.TYPE_TEXT, _excel:"AE"},
+				answer3:{_type:obj_e.TYPE_TEXT, _excel:"AF"},
+				answer4:{_type:obj_e.TYPE_TEXT, _excel:"AG"}
+			},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AH"}
+		}
+	},
 }
 
 
 
 var area = document.getElementById('area');
-alert('ls_voca');
-area.value = JSON.stringify(ls_voca);
+alert('ls_writing');
+area.value = JSON.stringify(ls_writing);
 // document.write(JSON.stringify(korea_speak_quiz ))
-console.log(JSON.stringify(ls_voca));
+console.log(JSON.stringify(ls_writing));
 	</script>
  </body>
 </html>
