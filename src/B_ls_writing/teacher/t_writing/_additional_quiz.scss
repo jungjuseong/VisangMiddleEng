@@ -84,46 +84,6 @@
                         }
                     }
                 }
-                .swiper-container {
-                    position: relative;
-                    width: 950px;
-                    height: 350px;
-                    left: 10px;
-                    .swiper-scrollbar {
-                        width: 9px;
-                        right: 3px;
-                        top: 5%;
-                        height: 90%;
-                        background-color: transparent;
-                        .swiper-scrollbar-drag {
-                            background-color: rgba(0, 0, 0, 0.25);
-                        }
-                    }
-                    &>div {
-                        p {
-                            display: inline-block;
-                        }
-                        .sample {
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                            span.block {
-                                color: transparent;
-                                border-bottom: 2px solid #000;
-                            }
-                        }
-                        .hide {
-                            display: none;
-                        }
-                        .hint {
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                            span.block {
-                                display: inline;
-                                border-bottom: 2px solid rgb(0, 240, 255);
-                            }
-                        }
-                    }
-                }
                 /*T3일 때*/
                 .question {
                     position: relative;
@@ -143,6 +103,8 @@
                     z-index: 2;
                 }
                 .basic_question {
+                    overflow: auto;
+                    height: 290px;
                     position: relative;
                     text-align: left;
                     font-size: 28px;
