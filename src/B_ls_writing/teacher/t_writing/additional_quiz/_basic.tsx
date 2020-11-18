@@ -182,7 +182,7 @@ class Basic extends React.Component<IQuizBox> {
 						</div>
 						<div className = "basic_question">
 							<div style={{display : "flex"}}>
-								<p>{_getJSX(this._jsx_question1)}</p>
+								<p>1.{_getJSX(this._jsx_question1)}</p>
 								<div>
 									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer1 != '' ? '' : 'none' }}>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -203,7 +203,6 @@ class Basic extends React.Component<IQuizBox> {
 										</div>
 									</div>
 								</div>
-							
 							</div>
 							<div>
 								<p>2.{_getJSX(this._jsx_question2)}</p>

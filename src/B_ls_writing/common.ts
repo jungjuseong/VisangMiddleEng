@@ -133,17 +133,17 @@ export interface IAdditionalBasic extends IAdditional{
 }
 
 export interface IAdditionalSup extends IAdditional{
-	readonly sentence_answer1:ISentenceSup;
-	readonly sentence_answer2:ISentenceSup;
-	readonly sentence_answer3:ISentenceSup;
-	readonly sentence_answer4:ISentenceSup;
+	readonly sentence1:ISentenceSup;
+	readonly sentence2:ISentenceSup;
+	readonly sentence3:ISentenceSup;
+	readonly sentence4:ISentenceSup;
 }
 
 export interface IAdditionalHard extends IAdditional{
-	readonly sentence_answer1:ISentenceHard;
-	readonly sentence_answer2:ISentenceHard;
-	readonly sentence_answer3:ISentenceHard;
-	readonly sentence_answer4:ISentenceHard;
+	readonly sentence1:ISentenceHard;
+	readonly sentence2:ISentenceHard;
+	readonly sentence3:ISentenceHard;
+	readonly sentence4:ISentenceHard;
 }
 
 export interface ISentenceSup{

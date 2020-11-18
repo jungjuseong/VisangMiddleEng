@@ -19,7 +19,7 @@ interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IConfirmHard;
+	data: common.IAdditionalHard[];
 }
 @observer
 class Hard extends React.Component<IQuizBox> {
@@ -45,9 +45,16 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblemHard;
-	private _jsx_question2: common.IProblemHard;
-	private _jsx_question3: common.IProblemHard;
+	private _jsx_question1: string;
+	private _jsx_question2: string;
+	private _jsx_question3: string;
+	private _jsx_question1_answer1: string;
+	private _jsx_question1_answer2: string;
+	private _jsx_question2_answer1: string;
+	private _jsx_question2_answer2: string;
+	private _jsx_question3_answer1: string;
+	private _jsx_question3_answer2: string;
+	
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -55,11 +62,18 @@ class Hard extends React.Component<IQuizBox> {
 	public constructor(props: IQuizBox) {
 		super(props);
 		
-		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this._jsx_question1= props.data.problem1;
-		this._jsx_question2= props.data.problem2;
-		this._jsx_question3= props.data.problem3;
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
+
+		this._jsx_question1= props.data[0].sentence;
+		this._jsx_question2= props.data[1].sentence;
+		this._jsx_question3= props.data[2].sentence;
+		this._jsx_question1_answer1= props.data[0].sentence1.answer1;
+		this._jsx_question1_answer2= props.data[0].sentence1.answer2;
+		this._jsx_question2_answer1= props.data[1].sentence1.answer1;
+		this._jsx_question2_answer2= props.data[1].sentence1.answer2;
+		this._jsx_question3_answer1= props.data[2].sentence1.answer1;
+		this._jsx_question3_answer2= props.data[2].sentence1.answer2;
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -191,29 +205,50 @@ class Hard extends React.Component<IQuizBox> {
 						</div>
 						<div className = "hard_question">
 							<div>
-								<div>1. {this._jsx_question1.question}</div>
+								<p>1. {_getJSX(this._jsx_question1)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{butil.parseBlock(this._jsx_question1.answer, 'block')}
+										{this._jsx_question1_answer1}
+									</div>
+								</div>
+								{' → '}
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{this._jsx_question1_answer2}
 									</div>
 								</div>
 							</div>
 							<div>
-								<div>2. {this._jsx_question2.question}</div>
+								<p>2. {_getJSX(this._jsx_question2)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-									{butil.parseBlock(this._jsx_question2.answer, 'block')}
+										{this._jsx_question2_answer1}
+									</div>
+								</div>
+								{' → '}
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{this._jsx_question2_answer2}
 									</div>
 								</div>
 							</div>
 							<div>
-								<div>3. {this._jsx_question3.question}</div>
+								<p>3. {_getJSX(this._jsx_question3)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-									{butil.parseBlock(this._jsx_question3.answer, 'block')}
+										{this._jsx_question3_answer1}
+									</div>
+								</div>
+								{' → '}
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{this._jsx_question3_answer2}
 									</div>
 								</div>
 							</div>

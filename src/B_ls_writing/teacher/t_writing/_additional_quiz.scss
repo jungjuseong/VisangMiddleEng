@@ -129,6 +129,37 @@
                         }
                     }
                 }
+                .hard_question {
+                    overflow: auto;
+                    height: 290px;
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    .answer_box {
+                        display: inline-block;
+                        border-bottom: 2px solid #000;
+                        margin-bottom: 25px;
+
+                        .sample {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                        }
+                        .hide {
+                            display: none;
+                        }
+                        .hint {
+                            display: inline-block;
+                            vertical-align: center;
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            color: rgb(0, 0, 255);
+                            .block {
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
