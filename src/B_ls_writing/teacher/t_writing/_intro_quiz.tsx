@@ -56,7 +56,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
 	}
 
-	private _viewHint = () => {
+	private _viewAnswer = () => {
 		App.pub_playBtnTab();
 		this._hint = !this._hint;
 
@@ -121,28 +121,28 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		const { data, } = this.props;
 		return (
 			<>
-			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
-				<div className="popbox">
-					<div className="image_box">
+			<div className="intro_question_bg" style={{ display: this._view ? '' : 'none' }}>
+				<div className="subject_rate"></div>
+				<div className="correct_answer_rate"></div>
+				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<div className="quiz_box">
+					<div className="white_board">
+						<div className="image_box">
 						<img  src={App.data_url + data.img} draggable={false}/>
-					</div>						
-					<div className="speechbubble_box" >
+						</div>	
+					</div>
+					<div className="sentence_box">
 						<div>
-							<div className={'balloon' + (this._hint ? ' view-hint' : '')}>
-								<div className="sentence_box">
-									<div>
-										<div className="question_box" onClick={this._onClick}>
-											{this._jsx_sentence}
-										</div>
-									</div>
-								</div>
-								<SwiperComponent {...this._soption} ref={this._refSwiper}>
-									<div>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>{this._jsx_hint}</div>
-									</div>
-								</SwiperComponent>
+							<div className="question_box" onClick={this._onClick}>
+							{this._jsx_sentence}
+							</div>
+						</div>
+					</div>
+					<div className="speechbubble_box" >
+						<div className={(this._hint ? ' view-hint' : '')}>
+							<div className={'sample' + (this._hint ? ' hide' : '')}/>
+							<div className={'hint' + (this._hint ? '' : ' hide')}>
+								{this._jsx_hint}
 							</div>
 						</div>
 					</div>

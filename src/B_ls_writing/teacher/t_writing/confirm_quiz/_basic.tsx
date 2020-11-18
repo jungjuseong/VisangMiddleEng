@@ -149,39 +149,35 @@ class Basic extends React.Component<IQuizBoxProps> {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
-			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<div className="subject_rate"></div>
-			<div className="correct_answer_rate"></div>
+			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
+				<div className="subject_rate"></div>
+				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
-					<div className="quiz_box">
-						<div className="white_board">
-							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>
-							<div className="sentence_box">
-								<div>
-									<div className="question_box" onClick={this._onClick}>
-										{jsx}
-									</div>
+				<div className="quiz_box">
+					<div className="white_board basic">
+						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>
+						<div className="sentence_box">
+							<div>
+								<div className="question_box" onClick={this._onClick}>
+									{jsx}
 								</div>
-							</div>	
-							<div className="image_box">
-								<img src={App.data_url + item1.img} draggable={false}/>
-								<img src={App.data_url + item2.img} draggable={false}/>
-								<img src={App.data_url + item3.img} draggable={false}/>
-							</div>	
+							</div>
 						</div>
-						<div className="speechbubble_box" >
-							<div className={(this._hint ? ' view-hint' : '')}>
-								<SwiperComponent {...this._soption} ref={this._refSwiper}>
-									<div>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}
-										</div>
-									</div>
-								</SwiperComponent>
+						<div className="image_box">
+							<img src={App.data_url + item1.img} draggable={false}/>
+							<img src={App.data_url + item2.img} draggable={false}/>
+							<img src={App.data_url + item3.img} draggable={false}/>
+						</div>	
+					</div>
+					<div className="speechbubble_box" >
+						<div className={(this._hint ? ' view-hint' : '')}>
+							<div className={'sample' + (this._hint ? ' hide' : '')}/>
+							<div className={'hint' + (this._hint ? '' : ' hide')}>
+								{this._jsx_hint1},{this._jsx_hint2},{this._jsx_hint3}
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 			</>
 		);

@@ -175,51 +175,51 @@ class Hard extends React.Component<IQuizBox> {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
-			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className="subject_rate"></div>
 				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
-					<div className="quiz_box">
-						<div className="white_board">
-							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
-							<div className="sentence_box">
-								<div>
-									<div className="question_box" onClick={this._onClick}>
-										{jsx}
+				<div className="quiz_box">
+					<div className="white_board">
+						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
+						<div className="sentence_box">
+							<div>
+								<div className="question_box" onClick={this._onClick}>
+									{jsx}
+								</div>
+							</div>
+						</div>
+						<div className = "hard_question">
+							<div>
+								<div>1. {this._jsx_question1.question}</div>
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{butil.parseBlock(this._jsx_question1.answer, 'block')}
 									</div>
 								</div>
 							</div>
-							<div className = "hard_question">
-								<div>
-									<div>1. {this._jsx_question1.question}</div>
-									<div className="answer_box">
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{butil.parseBlock(this._jsx_question1.answer, 'block')}
-										</div>
+							<div>
+								<div>2. {this._jsx_question2.question}</div>
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+									{butil.parseBlock(this._jsx_question2.answer, 'block')}
 									</div>
 								</div>
-								<div>
-									<div>2. {this._jsx_question2.question}</div>
-									<div className="answer_box">
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{butil.parseBlock(this._jsx_question2.answer, 'block')}
-										</div>
-									</div>
-								</div>
-								<div>
-									<div>3. {this._jsx_question3.question}</div>
-									<div className="answer_box">
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{butil.parseBlock(this._jsx_question3.answer, 'block')}
-										</div>
+							</div>
+							<div>
+								<div>3. {this._jsx_question3.question}</div>
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+									{butil.parseBlock(this._jsx_question3.answer, 'block')}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 			</>
 		);

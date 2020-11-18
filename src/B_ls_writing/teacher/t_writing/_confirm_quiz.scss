@@ -4,7 +4,7 @@
 @import '../t_video_box/index.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin confirm_quiz {
-    .question_bg {
+    .confirm_question_bg {
         padding-top: 10px;
         margin: 0 auto;
         position: relative;
@@ -56,10 +56,10 @@
                 position: relative;
                 background-color: #fff;
                 border-radius: 10px;
-                width: 950px;
-                height: 400px;
+                width: 1000px;
+                height: 450px;
                 padding: 0px 0px;
-                /*public*/
+
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
@@ -67,7 +67,6 @@
                     top: 15px;
                     z-index: 2;
                 }
-                /*public*/
                 .sentence_box {
                     height: 100px;
                     position: relative;
@@ -92,24 +91,42 @@
                         }
                     }
                 }
-                /*T3일 때*/
-                .question {
+                /*보충*/
+                .sup_question {
                     position: relative;
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
+
                     &>div {
                         margin: 25px 0px;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
+
+                        .true_false_btn {
+                            @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
+                            right: 20px;
+                            z-index: 2;
+                        }
                     }
                 }
-                .true_false_btn {
-                    @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
-                    right: 20px;
-                    z-index: 2;
+                /*기본*/
+                .image_box {
+                    position: relative;
+                    margin-top: 5px;
+                    height: 260px;
+                    display: inline-block;
+                    &>img {
+                        float: left;
+                        top: 0px;
+                        left: 0px;
+                        width: 218px;
+                        height: 249px;
+                        margin: 0px 25px;
+                    }
                 }
+                /*심화*/
                 .hard_question {
                     position: relative;
                     text-align: left;
@@ -134,70 +151,41 @@
                         }
                     }
                 }
-                /*T2일 때*/
-                .image_box {
-                    position: relative;
-                    margin-top: 5px;
-                    height: 260px;
-                    display: inline-block;
-                    &>img {
-                        float: left;
-                        top: 0px;
-                        left: 0px;
-                        width: 218px;
-                        height: 249px;
-                        margin: 0px 25px;
-                    }
-                }
             }
-            /*T2일 때*/
+            .basic{
+                height: 400px;
+            }
             .speechbubble_box {
                 position: relative;
                 margin: 10px 0px;
                 &>div {
                     display: inline-table;
-                    &>div {
-                        display: table-cell;
-                        vertical-align: middle;
-                    }
+                    vertical-align: middle;
+                    width: 590px;
+                    height: 80px;
+                    border-bottom: 4px solid #fff;
+                    max-height: 120px;
+
                     &.view-hint {
-                        color: #fff;
+                        color: rgb(255, 253, 138);
                         &:after {
                             border-right-color: rgb(13, 92, 155);
                         }
                     }
-                }
-                .swiper-container {
-                    height: 80px;
-                    border-bottom: 2px solid #fff;
-                    .swiper-scrollbar {
-                        width: 9px;
-                        right: 3px;
-                        top: 5%;
-                        height: 90%;
-                        background-color: transparent;
-                        .swiper-scrollbar-drag {
-                            background-color: rgba(0, 0, 0, 0.25);
+                    .sample {
+                        min-height: 55px;
+                        span.block {
+                            color: transparent;
+                            border-bottom: 2px solid #fff;
                         }
                     }
-                    &>div {
-                        width: 500px;
-                        max-height: 120px;
-                        .sample {
-                            min-height: 55px;
-                            span.block {
-                                color: transparent;
-                                border-bottom: 2px solid #fff;
-                            }
-                        }
-                        .hide {
-                            display: none;
-                        }
-                        .hint {
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                            font-size: 45px;
-                        }
+                    .hide {
+                        display: none;
+                    }
+                    .hint {
+                        min-height: 55px;
+                        padding-bottom: 5px;
+                        font-size: 40px;
                     }
                 }
             }

@@ -174,37 +174,36 @@ class Supplement extends React.Component<IQuizBox> {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
-			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<div className="subject_rate"></div>
-			<div className="correct_answer_rate"></div>
+			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
+				<div className="subject_rate"></div>
+				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
-					<div className="quiz_box">
-						<div className="white_board">
-							<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
-
-							<div className="sentence_box">
-								<div>
-									<div className="question_box" onClick={this._onClick}>
-										{jsx}
-									</div>
-								</div>
-							</div>
-							<div className = "question">
-								<div>
-									<div>1. {this._jsx_question1.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
-								</div>
-								<div>
-									<div>2. {this._jsx_question2.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
-								</div>
-								<div>
-									<div>3. {this._jsx_question3.question}</div>
-									<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+				<div className="quiz_box">
+					<div className="white_board">
+						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
+						<div className="sentence_box">
+							<div>
+								<div className="question_box" onClick={this._onClick}>
+									{jsx}
 								</div>
 							</div>
 						</div>
+						<div className = "sup_question">
+							<div>
+								<div>1. {this._jsx_question1.question}</div>
+								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+							</div>
+							<div>
+								<div>2. {this._jsx_question2.question}</div>
+								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+							</div>
+							<div>
+								<div>3. {this._jsx_question3.question}</div>
+								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+							</div>
+						</div>
 					</div>
+				</div>
 			</div>
 			</>
 		);

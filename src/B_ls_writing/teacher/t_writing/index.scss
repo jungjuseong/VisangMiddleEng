@@ -15,6 +15,7 @@
         @include intro_quiz;
         @include confirm_quiz;
         @include additional_quiz;
+
         .lets_talk {
             @include CoverPopup(10001);
             background-color: rgba(0, 0, 0, 0.5);
