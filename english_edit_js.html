@@ -54,29 +54,30 @@ var ls_voca = {
 				SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"G", _column: 'SC_DIV4'},
 				SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"H", _column: 'SC_SAVE'},
 				pumsa: {_type:obj_e.TYPE_TEXT, _excel:"I"},
-				meaning: {_type:obj_e.TYPE_TEXT, _excel:"J"},
-				image: {_type:obj_e.TYPE_IMAGE, _excel:"K"},
-				thumbnail: {_type:obj_e.TYPE_IMAGE, _excel:"L"},
-				image_pad: {_type:obj_e.TYPE_IMAGE, _excel:"M"},
-				audio: {_type:obj_e.TYPE_SOUND, _excel:"N"},
-				meaning_eng: {_type:obj_e.TYPE_TEXT, _excel:"O"},
-				meaning_audio:  {_type:obj_e.TYPE_SOUND, _excel:"P"},
-				sentence: {_type:obj_e.TYPE_TEXT, _excel:"Q"},
-				sentence_audio: {_type:obj_e.TYPE_SOUND, _excel:"R"},
-				video:  {_type:obj_e.TYPE_MOVIE, _excel:"S"},
-				sound_start: {_type:obj_e.TYPE_FLOAT, _excel:"T"},
-				sound_end: {_type:obj_e.TYPE_FLOAT, _excel:"U"},
-				meaning_start: {_type:obj_e.TYPE_FLOAT, _excel:"V"},
-				meaning_end: {_type:obj_e.TYPE_FLOAT, _excel:"W"},
-				sentence_start: {_type:obj_e.TYPE_FLOAT, _excel:"X"},
-				sentence_end: {_type:obj_e.TYPE_FLOAT, _excel:"Y"},
-				usage_video: {_type:obj_e.TYPE_MOVIE, _excel:"Z",_default:''},
-				usage_start: {_type:obj_e.TYPE_FLOAT, _excel:"AA"},
-				usage_end: {_type:obj_e.TYPE_FLOAT, _excel:"AB"},
-				usage_script: {_type:obj_e.TYPE_TEXT, _excel:"AC"},
-				key_word: {_type:obj_e.TYPE_YESORNO, _excel:"AD"},
-				sentence_meaning: {_type:obj_e.TYPE_TEXT, _excel:"AE"},
-				reading: {_type:obj_e.TYPE_YESORNO, _excel:"AF"},	
+				pumsa_kor:{_type:obj_e.TYPE_TEXT, _excel:"J"},
+				meaning: {_type:obj_e.TYPE_TEXT, _excel:"K"},
+				image: {_type:obj_e.TYPE_IMAGE, _excel:"L"},
+				thumbnail: {_type:obj_e.TYPE_IMAGE, _excel:"M"},
+				image_pad: {_type:obj_e.TYPE_IMAGE, _excel:"N"},
+				audio: {_type:obj_e.TYPE_SOUND, _excel:"O"},
+				meaning_eng: {_type:obj_e.TYPE_TEXT, _excel:"P"},
+				meaning_audio:  {_type:obj_e.TYPE_SOUND, _excel:"Q"},
+				sentence: {_type:obj_e.TYPE_TEXT, _excel:"R"},
+				sentence_audio: {_type:obj_e.TYPE_SOUND, _excel:"S"},
+				video:  {_type:obj_e.TYPE_MOVIE, _excel:"T"},
+				sound_start: {_type:obj_e.TYPE_FLOAT, _excel:"U"},
+				sound_end: {_type:obj_e.TYPE_FLOAT, _excel:"V"},
+				meaning_start: {_type:obj_e.TYPE_FLOAT, _excel:"W"},
+				meaning_end: {_type:obj_e.TYPE_FLOAT, _excel:"X"},
+				sentence_start: {_type:obj_e.TYPE_FLOAT, _excel:"Y"},
+				sentence_end: {_type:obj_e.TYPE_FLOAT, _excel:"Z"},
+				usage_video: {_type:obj_e.TYPE_MOVIE, _excel:"AA",_default:''},
+				usage_start: {_type:obj_e.TYPE_FLOAT, _excel:"AB"},
+				usage_end: {_type:obj_e.TYPE_FLOAT, _excel:"AC"},
+				usage_script: {_type:obj_e.TYPE_TEXT, _excel:"AD"},
+				key_word: {_type:obj_e.TYPE_YESORNO, _excel:"AE"},
+				sentence_meaning: {_type:obj_e.TYPE_TEXT, _excel:"AF"},
+				reading: {_type:obj_e.TYPE_YESORNO, _excel:"AG"},	
 				tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}	
 			}			
 		},
@@ -858,10 +859,10 @@ var ls_writing ={
 
 
 var area = document.getElementById('area');
-alert('ls_writing');
-area.value = JSON.stringify(ls_writing);
+alert('ls_voca');
+area.value = JSON.stringify(ls_voca);
 // document.write(JSON.stringify(korea_speak_quiz ))
-console.log(JSON.stringify(ls_writing));
+console.log(JSON.stringify(ls_voca));
 	</script>
  </body>
 </html>

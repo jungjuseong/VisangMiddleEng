@@ -217,7 +217,7 @@ class Basic extends React.Component<IQuizBox> {
 								</div>
 							</div>
 						</div>
-						<SwiperComponent {...this._soption} ref={this._refSwiper}>
+						<div>
 							<div className = "basic_question">
 								<div style={{display : "flex"}}>
 									<p>{_getJSX(this._jsx_question1)}</p>
@@ -241,7 +241,6 @@ class Basic extends React.Component<IQuizBox> {
 											</div>
 										</div>
 									</div>
-								
 								</div>
 								<div>
 									<p>2.{_getJSX(this._jsx_question2)}</p>
@@ -262,7 +261,7 @@ class Basic extends React.Component<IQuizBox> {
 									</div>
 								</div>
 							</div>
-						</SwiperComponent>
+						</div>
 					</div>
 				</div>
 			</div>

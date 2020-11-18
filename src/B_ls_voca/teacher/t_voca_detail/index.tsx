@@ -23,7 +23,7 @@ function DetailItem(props: {word: IWordData}) {
 							{word.entry}
 						</ResponsiveText>
 						<ResponsiveText className="re_meaning" maxSize={35} minSize={24} lineHeight={120} length={word.meaning.length}>
-							{word.meaning}
+							{word.pumsa_kor}. {word.meaning}
 						</ResponsiveText>
 					</AudioText>
 					{/*  19-02-11 190211 LS_voca 검수 p.8 수정

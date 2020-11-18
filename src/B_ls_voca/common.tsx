@@ -96,6 +96,7 @@ export interface IWordData extends IShareQuizData, IKlassStudyProps {
 	idx: string;
 	entry: string;
 	pumsa: string;
+	pumsa_kor : string;
 	meaning: string;
 	image: string;
 	thumbnail: string;
