@@ -6,6 +6,7 @@
 @import '_intro_quiz.scss';
 @import '_confirm_quiz.scss';
 @import '_additional_quiz.scss';
+@import '_dictation_quiz.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin comprehension {
     .t_writing {
@@ -15,6 +16,7 @@
         @include intro_quiz;
         @include confirm_quiz;
         @include additional_quiz;
+        @include dictation_quiz;
 
         .lets_talk {
             @include CoverPopup(10001);

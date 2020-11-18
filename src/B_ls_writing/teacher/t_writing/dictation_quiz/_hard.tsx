@@ -19,10 +19,10 @@ interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IAdditionalBasic[];
+	data: common.IConfirmHard;
 }
 @observer
-class Basic extends React.Component<IQuizBox> {
+class Hard extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -32,17 +32,22 @@ class Basic extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
+	private readonly _soption: SwiperOptions = {
+		direction: 'vertical',
+		observer: true,
+		slidesPerView: 'auto',
+		freeMode: true,
+		mousewheel: true,			
+		noSwiping: false,
+		followFinger: true,
+		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
+	};
+
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: string;
-	private _jsx_question1_answer1: string;
-	private _jsx_question1_answer2: string;
-	private _jsx_question1_answer3: string;
-	private _jsx_question2: string;
-	private _jsx_question2_answer: string;
-	private _jsx_question3: string;
-	private _jsx_question3_answer: string;
-
+	private _jsx_question1: common.IProblemHard;
+	private _jsx_question2: common.IProblemHard;
+	private _jsx_question3: common.IProblemHard;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -50,17 +55,11 @@ class Basic extends React.Component<IQuizBox> {
 	public constructor(props: IQuizBox) {
 		super(props);
 		
-		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
-
-		this._jsx_question1= props.data[0].sentence;
-		this._jsx_question1_answer1= props.data[0].sentence_answer1;
-		this._jsx_question1_answer2= props.data[0].sentence_answer2;
-		this._jsx_question1_answer3= props.data[0].sentence_answer3;
-		this._jsx_question2= props.data[1].sentence;
-		this._jsx_question2_answer= props.data[1].sentence_answer1;
-		this._jsx_question3= props.data[2].sentence;
-		this._jsx_question3_answer= props.data[2].sentence_answer1;
+		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
+		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
+		this._jsx_question1= props.data.problem1;
+		this._jsx_question2= props.data.problem2;
+		this._jsx_question3= props.data.problem3;
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -126,6 +125,16 @@ class Basic extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
+	private _refSwiper = (el: SwiperComponent) => {
+		if(this._swiper || !el) return;
+		this._swiper = el.swiper;
+	}
+
+	private _refAudio = (btn: BtnAudio) => {
+		if(this._btnAudio || !btn) return;
+		this._btnAudio = btn;
+	}
+
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
@@ -166,10 +175,10 @@ class Basic extends React.Component<IQuizBox> {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
-			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className="subject_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="correct_answer_rate"></div>
+				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
@@ -180,45 +189,31 @@ class Basic extends React.Component<IQuizBox> {
 								</div>
 							</div>
 						</div>
-						<div className = "basic_question">
-							<div style={{display : "flex"}}>
-								<p>1.{_getJSX(this._jsx_question1)}</p>
-								<div>
-									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer1 != '' ? '' : 'none' }}>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_question1_answer1}
-										</div>
-									</div>
-									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer2 != '' ? '' : 'none' }}>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_question1_answer2}
-										</div>
-									</div>
-									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer3 != '' ? '' : 'none' }}>
-										<div className={'sample' + (this._hint ? ' hide' : '')}/>
-										<div className={'hint' + (this._hint ? '' : ' hide')}>
-											{this._jsx_question1_answer3}
-										</div>
+						<div className = "hard_question">
+							<div>
+								<div>1. {this._jsx_question1.question}</div>
+								<div className="answer_box">
+									<div className={'sample' + (this._hint ? ' hide' : '')}/>
+									<div className={'hint' + (this._hint ? '' : ' hide')}>
+										{butil.parseBlock(this._jsx_question1.answer, 'block')}
 									</div>
 								</div>
 							</div>
 							<div>
-								<p>2.{_getJSX(this._jsx_question2)}</p>
+								<div>2. {this._jsx_question2.question}</div>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question2_answer}
+									{butil.parseBlock(this._jsx_question2.answer, 'block')}
 									</div>
 								</div>
 							</div>
 							<div>
-								<p>3. {_getJSX(this._jsx_question3)}</p>
+								<div>3. {this._jsx_question3.question}</div>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question3_answer}
+									{butil.parseBlock(this._jsx_question3.answer, 'block')}
 									</div>
 								</div>
 							</div>
@@ -231,4 +226,4 @@ class Basic extends React.Component<IQuizBox> {
 	}
 }
 
-export default Basic;
+export default Hard;

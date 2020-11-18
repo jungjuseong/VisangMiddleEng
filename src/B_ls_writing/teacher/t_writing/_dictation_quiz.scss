@@ -3,8 +3,8 @@
 @import '../../script_container/index.scss';
 @import '../t_video_box/index.scss';
 @import '../../../share/QuizMCBtn.scss';
-@mixin additional_quiz {
-    .additional_question_bg {
+@mixin dictation_quiz {
+    .dict_question_bg {
         padding-top: 10px;
         margin: 0 auto;
         position: relative;
@@ -114,6 +114,12 @@
                     }
                     &>div:last-child{
                         margin-bottom: 0px;
+                    }
+                    .first{
+                        top: 0px;
+                    }
+                    .third{
+                        bottom: 0px;
                     }
                     .answer_box {
                         border-bottom: 2px solid #000;

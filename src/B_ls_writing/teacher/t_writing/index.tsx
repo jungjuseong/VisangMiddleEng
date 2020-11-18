@@ -20,6 +20,7 @@ import { TimerState } from '../../../share/Timer';
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
+import DictationQuiz from './dictation_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -634,6 +635,17 @@ class Writing extends React.Component<IWriting> {
                     <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
                         <div key={1} >
                             <AdditionalQuiz 
+                                view={view}
+                                index ={this._curQidx}
+                                mdata={this.m_data} 
+                                onClosed={this._letstalkClosed}
+                                onHintClick={this._clickAnswer}
+                            />                          
+                        </div>              
+                    </div>
+                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
+                        <div key={1} >
+                            <DictationQuiz 
                                 view={view}
                                 index ={this._curQidx}
                                 mdata={this.m_data} 
