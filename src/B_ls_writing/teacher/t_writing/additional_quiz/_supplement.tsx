@@ -27,7 +27,7 @@ interface IQuizBox {
 class Supplement extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
-	@observable private _trans = false;
+	@observable private _trans = false;	
 	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
@@ -83,6 +83,7 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+
 	// True / False 토글 기능
 	private _selectedValue = () => {
 		App.pub_playBtnTab();
@@ -190,6 +191,7 @@ class Supplement extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+									<BtnAudio className={'btn_audio'} url={App.data_url +data[0].main_sound}/>	
 								</div>
 							</div>
 						</div>

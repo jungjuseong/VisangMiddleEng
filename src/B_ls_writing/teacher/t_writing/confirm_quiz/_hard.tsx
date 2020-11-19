@@ -67,6 +67,7 @@ class Hard extends React.Component<IQuizBox> {
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
+
 	// Translation 토글 기능
 	private _viewTrans = () => {
 		App.pub_playBtnTab();
@@ -140,6 +141,7 @@ class Hard extends React.Component<IQuizBox> {
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
+		 
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -186,6 +188,7 @@ class Hard extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+								<BtnAudio className={'btn_audio'} url={App.data_url + data.main_sound}/>
 								</div>
 							</div>
 						</div>

@@ -25,6 +25,7 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
+	@observable private _listen = false;
 	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
@@ -85,6 +86,7 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+
 	// True / False 토글 기능
 	private _selectedValue = () => {
 		App.pub_playBtnTab();
@@ -144,6 +146,7 @@ class Supplement extends React.Component<IQuizBox> {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
+			this._listen = false;
 			this._select = true;
 			this._zoom = false;
 			this._zoomImgUrl = '';
@@ -185,6 +188,7 @@ class Supplement extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+									<BtnAudio className={'btn_audio'} url={App.data_url + data.main_sound}/>
 								</div>
 							</div>
 						</div>

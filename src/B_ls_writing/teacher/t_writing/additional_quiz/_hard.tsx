@@ -100,6 +100,7 @@ class Hard extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+
 	// True / False 토글 기능
 	private _selectedValue = () => {
 		App.pub_playBtnTab();
@@ -200,6 +201,7 @@ class Hard extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+									<BtnAudio className={'btn_audio'} url={App.data_url +data[0].main_sound}/>											
 								</div>
 							</div>
 						</div>
