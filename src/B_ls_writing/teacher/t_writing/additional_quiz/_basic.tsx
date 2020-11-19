@@ -106,6 +106,7 @@ class Basic extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
@@ -177,6 +178,7 @@ class Basic extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+									<BtnAudio className={'btn_audio'} url={App.data_url +data[0].main_sound}/>	
 								</div>
 							</div>
 						</div>

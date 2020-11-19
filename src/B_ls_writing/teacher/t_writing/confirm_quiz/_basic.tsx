@@ -160,6 +160,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
+									<BtnAudio className={'btn_audio'} url={App.data_url + this.props.data.main_sound}/>	
 								</div>
 							</div>
 						</div>

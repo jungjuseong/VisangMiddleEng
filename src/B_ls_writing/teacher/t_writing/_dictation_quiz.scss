@@ -52,7 +52,6 @@
                 height: 490px;
                 padding-left: 25px;
                 overflow: hidden;
-
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
@@ -71,10 +70,9 @@
                         transform: translateY(-50%);
                         margin-top: 75px;
                         .btn_audio {
-                            @include btn_on( resolve('teacher/images/btn_speaker.png'), resolve('teacher/images/btn_speaker_on.png'), width('teacher/images/btn_speaker.png'), height('teacher/images/btn_speaker.png'));
-                            vertical-align: top;
-                            margin-top: 12px;
-                            margin-right: 12px;
+                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                            position: absolute;
+                            z-index: 2;
                         }
                         .question_box {
                             text-align: left;
@@ -91,16 +89,13 @@
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
-
-                    .block{
+                    .block {
                         border-bottom: 2px solid #000;
                     }
-
                     .answer_box {
                         display: inline-block;
                         border-bottom: 2px solid #000;
                         margin-bottom: 25px;
-
                         .sample {
                             min-height: 55px;
                             padding-bottom: 5px;
