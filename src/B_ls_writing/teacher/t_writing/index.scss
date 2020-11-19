@@ -578,8 +578,8 @@
         .fel_topad {
             @include fel_topad;
             position: absolute;
-            bottom: 4px;
-            right: 6px;
+            bottom: -50px;
+            right: -50px;
         }
         /* 팝업관련*/
         .compre_popup {

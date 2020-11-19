@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import SendUINew from '../../../share/sendui_new';
+
 import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
 
@@ -372,10 +372,12 @@ class Writing extends React.Component<IWriting> {
 	private _clickAnswer = () => {
         const {state, actions} = this.props;
         const confirmBasicProg = state.confirmBasicProg;
+        const additionalSupProg = state.additionalSupProg
 
         if(	this._tab !== 'CONFIRM' || 
             confirmBasicProg !== SENDPROG.SENDED
         ) return;
+
 
         App.pub_playBtnTab();
        
@@ -385,7 +387,7 @@ class Writing extends React.Component<IWriting> {
         };
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-        this.props.state.confirmBasicProg = SENDPROG.COMPLETE;
+        //this.props.state.confirmBasicProg = SENDPROG.COMPLETE;
         actions.quizComplete();
         console.log(this.props.state.confirmBasicProg);
         // this.props.actions.setNavi(true,true);
@@ -650,7 +652,7 @@ class Writing extends React.Component<IWriting> {
                     <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
                         {dictations.map((dictation, idx) => {
                             return (
-                            <div key={1}>
+                            <div key={idx}>
                                 <DictationQuiz 
                                     view={view && idx === this._curQidx}
                                     data={dictation}
@@ -662,13 +664,6 @@ class Writing extends React.Component<IWriting> {
                         })}
                     </div>
                 </div>
-                <SendUINew
-                    view={isViewSend}
-                    type={'teacher'}
-                    sended={false}
-                    originY={0}
-                    onSend={this.onSend}
-                />
             </div>
         );
     }

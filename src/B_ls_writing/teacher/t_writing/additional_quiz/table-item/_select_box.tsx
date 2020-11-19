@@ -87,18 +87,20 @@ class SelectBox extends React.Component<ISelectBox> {
 				const optH = optBox.offsetHeight;
 				const gapB = tableItmBottom - selectBoxBottom;
 
-				this._boxPositon = optH < gapB ? 'bottom' : 'top';
+				this._boxPositon = 'bottom';
 
 				/*result page가 아닌 경우 아래의 swiper 예외처리 필요 없음*/
-				if (!this.props.className.includes('zoom-in')) {
-					/*optionsBox를 위로 올렸을 때, swiper에 의해 위쪽이 잘려나가면 아래 방향으로 바꾼다*/
-					const swiperPar = this.props.isStudent ? document.querySelector('.s_graphic_result') : document.querySelector('.GraphicOrganizer');
-					const topOfSwiper = swiperPar!.querySelector('.top')!.getBoundingClientRect().top;
-					const selectBoxTop = selectBox.top;
-					if (optH > selectBoxTop - topOfSwiper) {
-						this._boxPositon = 'bottom';
-					}
-				}
+				// if (!this.props.className.includes('zoom-in')) {
+				// 	/*optionsBox를 위로 올렸을 때, swiper에 의해 위쪽이 잘려나가면 아래 방향으로 바꾼다*/
+				// 	const swiperPar = this.props.isStudent ? document.querySelector('.s_graphic_result') : document.querySelector('.white_board');
+				// 	console.log(swiperPar)
+				// 	const topOfSwiper = swiperPar!.querySelector('.top')!.getBoundingClientRect().top;
+					
+				// 	const selectBoxTop = selectBox.top;
+				// 	if (optH > selectBoxTop - topOfSwiper) {
+				// 		this._boxPositon = 'bottom';
+				// 	}
+				// }
 
 			} else this._boxPositon = this.props.boxPositon;
 

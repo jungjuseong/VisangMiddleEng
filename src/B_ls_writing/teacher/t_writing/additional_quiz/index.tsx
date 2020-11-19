@@ -23,7 +23,7 @@ interface IQuizBox {
 	mdata: common.IData;
 }
 @observer
-class ConfirmQuiz extends React.Component<IQuizBox> {
+class AdditionalQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -85,4 +85,4 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	}
 }
 
-export default ConfirmQuiz;
+export default AdditionalQuiz;

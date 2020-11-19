@@ -17,16 +17,14 @@ interface ITableItem {
 	graphic: common.IAdditionalSup;
 	maxWidth: number;
 	className: string;
-	headerColor?: string | null;
 	optionBoxPosition: 'top' | 'bottom';
 	disableSelect?: boolean;
 	viewResult?: boolean;
-	isStudent?: boolean;
 	viewCorrect?: boolean;
 	onChange?: (value: string, idx: number) => void;
 	viewBtn?: boolean;
-	onClickBtn?: () => void;
 	renderCnt?: number;
+	onClickBtn?: () => void;
 	idx?: number;
 }
 
@@ -38,7 +36,6 @@ class TableItem extends React.Component<ITableItem> {
 
 	private _drop = false;
 	private _jsx!: JSX.Element;
-	private _jsx2!: JSX.Element;
 	private SELECT_KEY = 0;
 	private _cont!: JSX.Element;
 	private _sbox: SelectBox[] = [];
@@ -113,7 +110,7 @@ class TableItem extends React.Component<ITableItem> {
 									className={this.props.className}
 									totalStncNum={this._totalNumOfSentnc}
 									sentncNum={bIdx}
-									isStudent={this.props.isStudent}
+									isStudent={false}
 								/>
 							)(boxIdx));
 							boxIdx++;
@@ -149,6 +146,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	public componentDidMount() {
 		while (this._sbox.length > 0) this._sbox.pop();
+		console.log('didmount')
 		this._jsx = this._parseBlock(
 			this.props.graphic,
 			this._refSelect,
@@ -212,7 +210,6 @@ class TableItem extends React.Component<ITableItem> {
 		if (this.props.inview && !prev.inview) {
 			this._initSBox();
 		}
-
 		if (this.props.renderCnt !== prev.renderCnt) {
 			this._initSBox();
 		}
@@ -249,49 +246,16 @@ class TableItem extends React.Component<ITableItem> {
 
 
 	public render() {
-		let headStyle: React.CSSProperties = {};
-		if (this.props.headerColor) {
-			headStyle.backgroundColor = this.props.headerColor;
-		}
-
-		if (
-			((this.props.className.startsWith('type_3') || this.props.className.startsWith('type_7')) && this.props.className.indexOf('zoom-in') < 0) ||
-			this.props.className.startsWith('type_6')
-		) {
-			console.log(this.props.className.indexOf('zoom-in'));
-			this._cont = (
-				<SwiperComponent
-					id="table-container"
-					ref={this._refSwiper}
-					direction="vertical"
-					scrollbar={{ el: '.swiper-scrollbar', draggable: true, }}
-					observer={true}
-					slidesPerView="auto"
-					freeMode={true}
-					noSwiping={this._opt}
-					followFinger={true}
-					noSwipingClass={'swiper-no-swiping'}
-				>
-					<div className="content-box">
-						<div>
-							<ul className="content">{this._jsx}</ul>
-						</div>
-					</div>
-				</SwiperComponent>
-			);
-		} else {
-			this._cont = (
-				<div className="content-box">
-					<div>
-						<ul className="content">{this._jsx}</ul>
-					</div>
+	
+		this._cont = (
+			<div className="content-box">
+				<div>
+					<ul className="content">{this._jsx}</ul>
 				</div>
-			);
-		}
-
+			</div>
+		);
 		return (
 			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (_zIndex[0] === this.props.idx ? 100 : 0) }}>
-				<div className="head" style={headStyle}><span>{this._jsx2}</span></div>
 				{this._cont}
 				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
 			</div>

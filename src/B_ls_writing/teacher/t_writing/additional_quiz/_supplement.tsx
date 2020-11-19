@@ -5,9 +5,12 @@ import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
-
+import SendUINew from '../../../../share/sendui_new';
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
+import TableItem from './table-item';
+
+import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ProgBox from 'src/B_rw_comprehension/teacher/t_video_box/_prog_box';
@@ -28,7 +31,8 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
-	
+	@observable private _renderCnt = 0;
+	@observable private _prog = SENDPROG.READY;
 	private _swiper?: Swiper;
 
 	private readonly _soption: SwiperOptions = {
@@ -98,9 +102,12 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+	private _done: string = '';
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
+		this._prog = SENDPROG.COMPLETE
+		this._done = 'done'
 		this.props.onHintClick();
 		this._hint = !this._hint;
 
@@ -130,6 +137,10 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
+	}
+
+	private onSend = () =>{
+		this._prog = SENDPROG.SENDING
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
@@ -164,7 +175,7 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { data ,view} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		return (
 			<>
@@ -173,7 +184,7 @@ class Supplement extends React.Component<IQuizBox> {
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="correct_answer_rate"></div>
 				<div className="quiz_box">
-					<div className="white_board">
+					<div className={"white_board " + this._done} >
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
@@ -182,12 +193,32 @@ class Supplement extends React.Component<IQuizBox> {
 								</div>
 							</div>
 						</div>
-						<div className = "question">
-							{data[0].sentence}
+						<div className = "table_box">
+							{data.map((datasup , idx) =>
+								<TableItem
+								viewCorrect={this._prog === SENDPROG.COMPLETE}
+								disableSelect={this._prog === SENDPROG.COMPLETE}
+								inview={view}
+								graphic={datasup}
+								className="type_3"
+								maxWidth={1000}
+								renderCnt={this._renderCnt}
+								optionBoxPosition="top"
+								viewBtn={false}
+								idx={idx}
+								/>
+							)}
 						</div>
 					</div>
 				</div>
 			</div>
+			<SendUINew
+                    view={view}
+                    type={'teacher'}
+                    sended={false}
+                    originY={0}
+                    onSend={this.onSend}
+                />
 			</>
 		);
 	}
