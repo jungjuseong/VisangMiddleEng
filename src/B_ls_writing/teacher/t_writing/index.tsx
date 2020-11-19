@@ -20,7 +20,7 @@ import { TimerState } from '../../../share/Timer';
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
-import DictationQuiz from './dictation_quiz';
+import DictationQuiz from './_dictation_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -229,6 +229,10 @@ class Writing extends React.Component<IWriting> {
 
         const introductions = this.m_data.introduction;
         for(let i = 0; i < introductions.length; i++) {
+            this._qselected[i] = -1;
+        }
+        const dictations = this.m_data.introduction;
+        for(let i = 0; i < dictations.length; i++) {
             this._qselected[i] = -1;
         }
         this._curQidx = 0;
@@ -555,7 +559,7 @@ class Writing extends React.Component<IWriting> {
         const { confirmBasicProg,qnaProg,numOfStudent,retCnt } = state;
 
         const introductions = this.m_data.introduction;
-        const confirm_nomals = this.m_data.confirm_nomal;
+        const dictations = [this.m_data.dictation_sup, this.m_data.dictation_basic, this.m_data.dictation_hard];
         const isQComplete = confirmBasicProg >= SENDPROG.COMPLETE;
 
         const isOnStudy = ((confirmBasicProg === SENDPROG.SENDING || confirmBasicProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING));
@@ -644,15 +648,18 @@ class Writing extends React.Component<IWriting> {
                         </div>              
                     </div>
                     <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
-                        <div key={1} >
-                            <DictationQuiz 
-                                view={view}
-                                index ={this._curQidx}
-                                mdata={this.m_data} 
-                                onClosed={this._letstalkClosed}
-                                onHintClick={this._clickAnswer}
-                            />                          
-                        </div>              
+                        {dictations.map((dictation, idx) => {
+                            return (
+                            <div key={1}>
+                                <DictationQuiz 
+                                    view={view && idx === this._curQidx}
+                                    data={dictation}
+                                    onClosed={this._letstalkClosed}
+                                    onHintClick={this._clickAnswer}
+                                />                          
+                            </div>
+                            );
+                        })}
                     </div>
                 </div>
                 <SendUINew

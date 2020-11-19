@@ -5,7 +5,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { ToggleBtn } from '@common/component/button';
-import { App } from '../../App';
+import { App } from '../../../../../App';
 
 interface IOptionBox {
 	text: string;

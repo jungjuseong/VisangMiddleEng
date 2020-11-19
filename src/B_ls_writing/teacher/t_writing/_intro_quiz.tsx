@@ -128,13 +128,13 @@ class IntroQuiz extends React.Component<IQuizBox> {
 				<div className="quiz_box">
 					<div className="white_board">
 						<div className="image_box">
-						<img  src={App.data_url + data.img} draggable={false}/>
+							<img  src={App.data_url + data.img} draggable={false}/>
 						</div>	
 					</div>
 					<div className="sentence_box">
 						<div>
 							<div className="question_box" onClick={this._onClick}>
-							{this._jsx_sentence}
+								{this._jsx_sentence}
 							</div>
 						</div>
 					</div>

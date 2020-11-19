@@ -140,17 +140,38 @@ export interface IAdditionalSup extends IAdditional{
 
 	app_drops: IDropDown[];
 }
+export interface IAdditionalHard extends IAdditional{
+	readonly sentence1:ISentenceHard;
+	readonly sentence2:ISentenceHard;
+	readonly sentence3:ISentenceHard;
+	readonly sentence4:ISentenceHard;
+}
+
+export interface IDictation extends IInClassStudyProps{
+	readonly seq: number;
+	readonly main_sound: string;
+	readonly kor_eng: boolean;
+	readonly directive: IDirecrive;
+	readonly table_title: number;
+	readonly sentence : string;
+	readonly sentence1:ISentenceDic;
+	readonly sentence2:ISentenceDic;
+	readonly sentence3:ISentenceDic;
+	readonly sentence4:ISentenceDic;
+}
+
 export interface IDropDown {
 	answer: number;
 	correct: string;
 	choices: string[];
 	inputed: string;
 }
-export interface IAdditionalHard extends IAdditional{
-	readonly sentence1:ISentenceHard;
-	readonly sentence2:ISentenceHard;
-	readonly sentence3:ISentenceHard;
-	readonly sentence4:ISentenceHard;
+
+export interface ISentenceDic{
+	readonly answer1 : string;
+	readonly answer2 : string;
+	readonly answer3 : string;
+	readonly answer4 : string;
 }
 
 export interface ISentenceSup{
@@ -201,6 +222,9 @@ export interface IData {
 	additional_basic: IAdditionalBasic[];
 	additional_sup: IAdditionalSup[];
 	additional_hard: IAdditionalHard[];
+	dictation_sup: IDictation[];
+	dictation_basic: IDictation[];
+	dictation_hard: IDictation[];
 }
 
 function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: string) {

@@ -84,64 +84,6 @@
                         }
                     }
                 }
-                /*T3일 때*/
-                .question {
-                    position: relative;
-                    text-align: left;
-                    font-size: 28px;
-                    padding: 0px 25px;
-                    &>div {
-                        margin: 25px 0px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                    }
-                }
-                .true_false_btn {
-                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
-                    right: 20px;
-                    z-index: 2;
-                }
-                .basic_question {
-                    overflow: auto;
-                    height: 385px;
-                    position: relative;
-                    text-align: left;
-                    font-size: 28px;
-
-                    &>div{
-                        margin-bottom: 25px;
-                    }
-                    &>div:last-child{
-                        margin-bottom: 0px;
-                    }
-                    .first{
-                        top: 0px;
-                    }
-                    .third{
-                        bottom: 0px;
-                    }
-                    .answer_box {
-                        border-bottom: 2px solid #000;
-                        width: 180px;
-                        .sample {
-                            min-height: 41px;
-                            padding-bottom: 5px;
-                        }
-                        .hide {
-                            display: none;
-                        }
-                        .hint {
-                            text-align: center;
-                            min-height: 41px;
-                            padding-bottom: 5px;
-                            color: rgb(0, 0, 255);
-                            .block {
-                                font-weight: bold;
-                            }
-                        }
-                    }
-                }
                 .hard_question {
                     overflow: auto;
                     height: 385px;
@@ -149,6 +91,11 @@
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
+
+                    .block{
+                        border-bottom: 2px solid #000;
+                    }
+
                     .answer_box {
                         display: inline-block;
                         border-bottom: 2px solid #000;
@@ -162,7 +109,6 @@
                             display: none;
                         }
                         .hint {
-                            display: inline-block;
                             vertical-align: center;
                             min-height: 55px;
                             padding-bottom: 5px;
