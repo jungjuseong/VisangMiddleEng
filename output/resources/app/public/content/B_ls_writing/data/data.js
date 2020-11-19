@@ -272,7 +272,7 @@
         "SC_SAVE": false,
         "table_title": 1,
         "main_sound": "main.mp3",
-        "sentence": "▪ W: What are you going to do this ({summer} / {winter}), Steve?<br>\n▪ M: I’m going to ({go} / {visit}) on a ski trip to Switzerland.<br>\n▪ W: Wow! That sounds like a ({cool} / {hot}) summer.<br>",
+        "sentence": "▪ W: What are you going to do this {summer}, Steve?<br>\n▪ M: I’m going to {go} on a ski trip to Switzerland.<br>\n▪ W: Wow! That sounds like a {cool} summer.<br>",
         "kor_eng": true,
         "directive": {
             "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
@@ -321,7 +321,7 @@
         "SC_SAVE": false,
         "table_title": 2,
         "main_sound": "main.mp3",
-        "sentence": "▪ W: A long weekend is ({going} / {coming}) up.<br>\n▪ M: Yeah. ({Where} / {What}) are you going to do, Jessie?<br>\n▪ W: I’m going to ({dance} / {visit}) a water park with my friend.<br>",
+        "sentence": "▪ W: A long weekend is {going} up.<br>\n▪ M: Yeah. {Where} are you going to do, Jessie?<br>\n▪ W: I’m going to {dance} a water park with my friend.<br>",
         "kor_eng": true,
         "directive": {
             "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
@@ -370,7 +370,7 @@
         "SC_SAVE": false,
         "table_title": 3,
         "main_sound": "main.mp3",
-        "sentence": "▪ M: Summer vacation ({finishes} / {starts}) next week.<br>\n▪ W: So, ({what} / {how}) are you going to do, Brett?<br>\n▪ M: I’m going to visit Jejudo and ({try} / {buy}) horse riding.<br>",
+        "sentence": "▪ M: Summer vacation {finishes} next week.<br>\n▪ W: So, {what} are you going to do, Brett?<br>\n▪ M: I’m going to visit Jejudo and {try} horse riding.<br>",
         "kor_eng": true,
         "directive": {
             "kor": "대화를 잘 듣고, 괄호 안에서 알맞은 말을 골라 봅시다.",
