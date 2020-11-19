@@ -81,7 +81,6 @@
   $content-font-size,
   $content-padding,
   $radius,
-  $box-shadow,
   $normal,
   $on,
   $width,
@@ -97,7 +96,6 @@
     min-width: $min-width;
     border-radius: $radius;
     background-color: rgb(255, 255, 255);
-    box-shadow: $box-shadow;
     .head {
       border-top-left-radius: $radius;
       border-top-right-radius: $radius;

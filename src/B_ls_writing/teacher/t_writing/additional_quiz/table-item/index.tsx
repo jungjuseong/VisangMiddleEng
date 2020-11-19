@@ -25,7 +25,7 @@ interface ITableItem {
 	viewBtn?: boolean;
 	renderCnt?: number;
 	onClickBtn?: () => void;
-	idx?: number;
+	idx: number;
 }
 
 @inject()
@@ -255,7 +255,7 @@ class TableItem extends React.Component<ITableItem> {
 			</div>
 		);
 		return (
-			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (_zIndex[0] === this.props.idx ? 100 : 0) }}>
+			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100-this.props.idx) }}>
 				{this._cont}
 				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
 			</div>

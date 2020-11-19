@@ -181,7 +181,7 @@ class Supplement extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<div className="subject_rate"></div>
+				<div className="subject_rate"></div>
 				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="correct_answer_rate"></div>
 				<div className="quiz_box">
@@ -197,30 +197,32 @@ class Supplement extends React.Component<IQuizBox> {
 						</div>
 						<div className = "table_box">
 							{data.map((datasup , idx) =>
-								<TableItem
-								viewCorrect={this._prog === SENDPROG.COMPLETE}
-								disableSelect={this._prog === SENDPROG.COMPLETE}
-								inview={view}
-								graphic={datasup}
-								className="type_3"
-								maxWidth={1000}
-								renderCnt={this._renderCnt}
-								optionBoxPosition="top"
-								viewBtn={false}
-								idx={idx}
-								/>
+								<div key={idx}>
+									<TableItem
+									viewCorrect={this._prog === SENDPROG.COMPLETE}
+									disableSelect={this._prog === SENDPROG.COMPLETE}
+									inview={view}
+									graphic={datasup}
+									className="type_3"
+									maxWidth={1000}
+									renderCnt={this._renderCnt}
+									optionBoxPosition="bottom"
+									viewBtn={false}
+									idx={idx}
+									/>
+								</div>
 							)}
 						</div>
 					</div>
 				</div>
 			</div>
 			<SendUINew
-                    view={view}
-                    type={'teacher'}
-                    sended={false}
-                    originY={0}
-                    onSend={this.onSend}
-                />
+					view={view}
+					type={'teacher'}
+					sended={false}
+					originY={0}
+					onSend={this.onSend}
+				/>
 			</>
 		);
 	}
