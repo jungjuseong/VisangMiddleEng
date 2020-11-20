@@ -4,10 +4,10 @@ import { Observer, observer } from 'mobx-react';
 import { StudentContext, useStudent, IStateCtx, IActionsCtx } from './s_store';
 import { IWordData, TypeQuiz } from '../common';
 
-import QuizSound from '../sound_quiz';
-import QuizMeaning from '../meaning_quiz';
+import QuizSound from '../quiz_sound';
+import QuizMeaning from '../quiz_meaning';
 import QuizSpelling from '../quiz_spelling';
-import QuizUsage from '../usage_quiz';
+import QuizUsage from '../quiz_usage';
 import QuizStudent from '../../share/QuizStudent';
 
 interface IQuiz {
@@ -21,11 +21,11 @@ interface IQuiz {
 	actions: IActionsCtx;
 }
 @observer
-class SQuizComp extends React.Component<IQuiz> {
+class Comp extends React.Component<IQuiz> {
 	private _quizs: IWordData[] = [];
-	private _quizType: TypeQuiz = '';
+	private _qtype: TypeQuiz = '';
 	private _isGroup = false;
-	private _quizTime = 60;
+	private _qtime = 60;
 
 	public componentWillUpdate(next: IQuiz) {
 		let bReset = false;
@@ -39,15 +39,16 @@ class SQuizComp extends React.Component<IQuiz> {
 
 			const info = next.actions.getQuizInfo();
 			const words = next.actions.getWords();
+			let qtime = info.qtime;
 
-			for(let i = 0; i < info.quizIndices.length; i++) {
-				const word = words[info.quizIndices[i]];
+			for(let i = 0; i < info.qidxs.length; i++) {
+				const word = words[info.qidxs[i]];
 				word.app_result = false;
 				this._quizs[i] = word;
 			}
-			this._quizType = info.quizType;
+			this._qtype = info.qtype;
 			this._isGroup = next.state.isGroup;
-			this._quizTime = info.quizTime;
+			this._qtime = qtime;
 		}
 	}
 
@@ -56,11 +57,11 @@ class SQuizComp extends React.Component<IQuiz> {
 
 		const points = actions.getQuizInfo().points;
 
-		let quizItem;
-		if(this._quizType === 'sound') quizItem = QuizSound;
-		else if(this._quizType === 'meaning') quizItem = QuizMeaning;
-		else if(this._quizType === 'spelling') quizItem = QuizSpelling;
-		else if(this._quizType === 'usage') quizItem = QuizUsage;		
+		let ItemComponent;
+		if(this._qtype === 'sound') ItemComponent = QuizSound;
+		else if(this._qtype === 'meaning') ItemComponent = QuizMeaning;
+		else if(this._qtype === 'spelling') ItemComponent = QuizSpelling;
+		else if(this._qtype === 'usage') ItemComponent = QuizUsage;		
 
 		return (
 			<QuizStudent
@@ -72,23 +73,25 @@ class SQuizComp extends React.Component<IQuiz> {
 				forceStopIdx={forceStopIdx}
 				groupProg={groupProg}
 				groupResult={groupResult}
-				qtype={this._quizType}
-				qtime={this._quizTime}
+				qtype={this._qtype}
+				qtime={this._qtime}
 				points={points}
 				ga_na={state.ga_na}
 				startSelectedAni={state.startSelectedAni}
 				quizs={this._quizs}
-				ItemComponent={quizItem}
+				ItemComponent={ItemComponent}
 				unsetForceStop={actions.unsetForceStop}
 				setQuizProg={actions.setQuizProg}
 			/>			
 		);
+
+
 	}
 }
 
 const Quiz = useStudent((store: StudentContext) => (
 	<Observer>{() => (
-		<SQuizComp 
+		<Comp 
 			view={store.state.viewDiv === 'content' && store.state.prog === 'quiz'}
 			quizProg={store.state.quizProg}
 			forceStopIdx={store.state.forceStopIdx}

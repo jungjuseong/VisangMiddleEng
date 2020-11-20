@@ -7,16 +7,15 @@ import { App } from '../../App';
 import { IStateCtx, IActionsCtx } from './t_store';
 import TeamGrouping from '../../share/TeamGrouping';
 
-interface IGroupProps {
+interface IGroup {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
-
 @observer
-class Grouping extends React.Component<IGroupProps> {
+class Grouping extends React.Component<IGroup> {
 	
-	public componentDidUpdate(prev: IGroupProps) {
+	public componentDidUpdate(prev: IGroup) {
 		const { view,actions } = this.props;
 		if(view && !prev.view) {
 			actions.setNaviView(false);

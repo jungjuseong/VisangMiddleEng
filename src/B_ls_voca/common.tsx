@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
-export interface IQuizPage extends IQuizPageProps<IWordData> {}
+export interface IQuizPage extends IQuizPageProps<IWordData> {
+}
 
 export type TypeQuiz = ''|'sound'|'meaning'|'spelling'|'usage';
 export type TypePuzzles = string[];
@@ -36,9 +37,9 @@ export interface IDrillMsg extends IMsg {
 }
 
 export interface IQuizMsg extends IMsg {
-	quizIndices: number[];
-	quizTime: number;
-	quizType: TypeQuiz;
+	qidxs: number[];
+	qtime: number;
+	qtype: TypeQuiz;
 	isGroup: boolean;
 }
 
@@ -59,20 +60,24 @@ export interface ISpellingReturnMsg extends IMsg {
 	user_input: string;
 }
 
-interface IQuizSound extends IKlassStudyProps {
+interface IQuizSound extends IInClassStudyProps {
 	idx: string;
 	entry: string;
 	correct: number;
 	audio: string;
-	choices: Array<string>;	
+	choice1: string;
+	choice2: string;
+	choice3: string;
+	choice4: string;	
 }
-
-interface IQuizMeaning extends IKlassStudyProps {
+interface IQuizMeaning extends IInClassStudyProps {
 	idx: string;
 	entry: string;
 	correct: number;
 	audio: string;
-	choices: Array<string>;		
+	choice1: string;
+	choice2: string;
+	choice3: string;	
 }
 interface IQuizUsage extends IInClassStudyProps {
 	idx: string;
@@ -80,7 +85,9 @@ interface IQuizUsage extends IInClassStudyProps {
 	correct: number;
 	image: string;
 	sentence: string;
-	choices: Array<string>;	
+	choice1: string;
+	choice2: string;
+	choice3: string;
 }
 
 interface IQuizSpelling extends IInClassStudyProps {
@@ -92,11 +99,11 @@ interface ITmqCOD {
 	codSeq: number;
 }
 
-export interface IWordData extends IShareQuizData, IKlassStudyProps {
+export interface IWordData extends IShareQuizData, IInClassStudyProps {
 	idx: string;
 	entry: string;
 	pumsa: string;
-	pumsa_kor : string;
+	pumsa_kor: string;
 	meaning: string;
 	image: string;
 	thumbnail: string;

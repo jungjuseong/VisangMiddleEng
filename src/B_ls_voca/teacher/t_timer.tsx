@@ -33,7 +33,7 @@ class Timer extends React.Component<ITimer> {
 		const { view, actions} = this.props;
 
 		if(next.view && !view) {
-			const qtype = next.state.quizType;
+			const qtype = next.state.qtype;
 			const hasPreview = next.state.hasPreview;
 			const words = actions.getWords();
 			this._numAll = words.length;
@@ -67,7 +67,7 @@ class Timer extends React.Component<ITimer> {
 
 			const words = actions.getWords();
 			let arr: number[] = [];
-			const qtype = state.quizType;
+			const qtype = state.qtype;
 	
 			for(let i = 0; i < words.length; i++) {
 				const word = words[i];
@@ -97,13 +97,13 @@ class Timer extends React.Component<ITimer> {
 			actions.setQuizInfo(arr, timeOfQuiz, this.props.state.isGroup);
 			const msg: IQuizMsg = {
 				msgtype: 'quiz',
-				quizIndices: arr,
-				quizTime: timeOfQuiz,
-				quizType: qtype,
+				qidxs: arr,
+				qtime: timeOfQuiz,
+				qtype,
 				isGroup: this.props.state.isGroup,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-			if(state.isGroup) {
+			if(this.props.state.isGroup) {
 				actions.setQuizProg('');
 				state.prog = 'board';			
 			} else {
@@ -119,7 +119,7 @@ class Timer extends React.Component<ITimer> {
 			<QuizNumTime
 				className="t_timer"
 				view={view}
-				title={state.quizType}
+				title={state.qtype}
 				numAll={this._numAll}
 				numStudied={this._numStudied}
 				numAi={this._numAi}

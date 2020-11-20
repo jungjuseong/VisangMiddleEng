@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import { IStateCtx, IActionsCtx } from './t_store';
 import * as _ from 'lodash';
-import { TypeQuiz } from '../common';
+import * as common from '../common';
 import { ToggleBtn } from '@common/component/button';
 import { observable } from 'mobx';
 
@@ -11,81 +11,90 @@ import { App } from '../../App';
 import * as felsocket from '../../felsocket';
 import * as kutil from '@common/util/kutil';
 
-interface IBtnItemProps {
-	myQuestionType: TypeQuiz;
-	qtype: TypeQuiz;
-	// average: number;
-	// viewSingleBtn: boolean;
-	// view_s: boolean;
-	// view_g: boolean;
-	onClick: (qtype: TypeQuiz) => void;
-	onResult: (qtype: TypeQuiz, isGroup: boolean) => void;
+interface IBtnItem {
+	myqtype: common.TypeQuiz;
+	qtype: common.TypeQuiz;
+	average: number;
+	viewSingleBtn: boolean;
+	view_s: boolean;
+	view_g: boolean;
+	onClick: (qtype: common.TypeQuiz) => void;
+	onResult: (qtype: common.TypeQuiz, isGroup: boolean) => void;
 }
 
-const BtnItem: React.FC<IBtnItemProps> = ({onClick, qtype, myQuestionType}) => {
-	const _onClick = () => {
-		onClick(myQuestionType);
+class BtnItem extends React.Component<IBtnItem> {
+	private _onClick = () => {
+		this.props.onClick(this.props.myqtype);
 	}
+	public render() {
+		const {myqtype, qtype} = this.props;
+		return (
+			<div className={'quiz_' + myqtype}>
+				<ToggleBtn className={'btn_quiz_' + myqtype} on={myqtype === qtype} onClick={this._onClick}/>
+			</div>
+		);		
+	}
+}
 
-	return (
-		<div className={'quiz_' + myQuestionType}>
-			<ToggleBtn className={'btn_quiz_' + myQuestionType} on={myQuestionType === qtype} onClick={_onClick}/>
-		</div>
-	);			
-};
-
-interface IQuizSelectProps {
+interface IQuizSelect {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class QuizSelect extends React.Component<IQuizSelectProps> {
+class QuizSelect extends React.Component<IQuizSelect> {
 	private _sound_avg = -1;
 	private _meaning_avg = -1;
 	private _spelling_avg = -1;
 	private _sentence_avg = -1;
 
-	@observable private _quiztype: TypeQuiz = '';
+	@observable private _qtype: common.TypeQuiz = '';
 	@observable private _numOfStudent = 0;
 
+	private _souns_s: boolean = false;
+	private _souns_g: boolean = false;
 
-	private _sound_result: any;
-	private _meaning_result: any;
-	private _spelling_result: any;
-	private _sentence_result: any;
+	private _meaning_s: boolean = false;
+	private _meaning_g: boolean = false;
 
-	
-	private _onClickBtn = (qtype: TypeQuiz) => {
+	private _spelling_s: boolean = false;
+	private _spelling_g: boolean = false;
+
+	private _sentence_s: boolean = false;
+	private _sentence_g: boolean = false;
+
+
+	private _onClickBtn = (qtype: common.TypeQuiz) => {
 		App.pub_playBtnTab();
-		this._quiztype = (this._quiztype === qtype) ? '' : qtype;
+		if(this._qtype === qtype) this._qtype = '';
+		else this._qtype = qtype;
+		// this.props.state.qtype = this._qtype;
 	}
-
-	private _onResult = (qtype: TypeQuiz, isGroup: boolean) => {
-		const { actions } = this.props;
+	private _onResult = (qtype: common.TypeQuiz, isGroup: boolean) => {
+		const {state, actions} = this.props;
 		if(actions.gotoQuizResult(qtype, isGroup)) {
 			App.pub_playBtnTab();
 		}
 	}
 
 	private _onSingle = () => {
-		if(this._quiztype === '') return;
+		if(this._qtype === '') return;
 		App.pub_playBtnTab();
 		this.props.actions.setQuizInfo([], 5, false);
 		// this.props.state.isGroup = false;
-		this.props.state.quizType = this._quiztype;
+		this.props.state.qtype = this._qtype;
 		this.props.state.prog = 'timer';
 	}
 
 	private _onGroup = () => {
-		const { state, actions } = this.props;
-
-		if(this._quiztype === '' || this._numOfStudent < 2) return;
+		const { state, actions} = this.props;
+		if(this._qtype === '') return;
+		if(this._numOfStudent < 2) return;
 		App.pub_playBtnTab();
 		actions.setQuizInfo([], 5, true);
 		// this.props.state.isGroup = true;
-		state.quizType = this._quiztype;
+		state.qtype = this._qtype;
 		state.prog = 'grouping';
 	}
 
@@ -94,28 +103,37 @@ class QuizSelect extends React.Component<IQuizSelectProps> {
 
 		actions.setNaviView(true);
 		actions.setNavi(true, App.nextBook);
-		actions.setNaviFnc(() => state.prog = 'list', null);
+		actions.setNaviFnc(
+			() => {
+				state.prog = 'list';
+			},
+			null
+		);
 	}
 	private _reloadedStudent = async () => {
-		const { view } = this.props;
+		const { view} = this.props;
 
 		if(view) {
 			this._numOfStudent = App.students.length;
-			await kutil.wait(3000);
+		} else {
+			this._numOfStudent = 0;
+			return;
+		}
+		
+		await kutil.wait(3000);
+		if(view) {
 			App.pub_reloadStudents(this._reloadedStudent);
 		} else {
 			this._numOfStudent = 0;
 		}
-		return;
 	}
-
-	public componentWillUpdate(next: IQuizSelectProps) {
+	public componentWillUpdate(next: IQuizSelect) {
 		const { view } = this.props;
 
 		if(next.view && !view) {
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 			this._setNavi();
-			this._quiztype = '';
+			this._qtype = '';
 			if(next.state.hasPreview) {
 				const words = next.actions.getWords();
 				let sound = 0;
@@ -138,14 +156,21 @@ class QuizSelect extends React.Component<IQuizSelectProps> {
 				this._spelling_avg = -1;
 				this._sentence_avg = -1;				
 			}
-
-			this._sound_result = next.actions.getQuizResult('sound');
-			this._meaning_result = next.actions.getQuizResult('meaning');
-			this._spelling_result = next.actions.getQuizResult('spelling');
-			this._sentence_result = next.actions.getQuizResult('usage');
+			let tmp = next.actions.getQuizResult('sound');
+			this._souns_s = tmp.single !== null;
+			this._souns_g = tmp.group !== null;
+			tmp = next.actions.getQuizResult('meaning');
+			this._meaning_s = tmp.single !== null;
+			this._meaning_g = tmp.group !== null;
+			tmp = next.actions.getQuizResult('spelling');
+			this._spelling_s = tmp.single !== null;
+			this._spelling_g = tmp.group !== null;
+			tmp = next.actions.getQuizResult('usage');
+			this._sentence_s = tmp.single !== null;
+			this._sentence_g = tmp.group !== null;
 		}
 	}
-	public componentDidUpdate(prev: IQuizSelectProps) {
+	public componentDidUpdate(prev: IQuizSelect) {
 		if(this.props.view && !prev.view) {
 			this._numOfStudent = 0;
 			App.pub_reloadStudents(this._reloadedStudent);
@@ -154,9 +179,9 @@ class QuizSelect extends React.Component<IQuizSelectProps> {
 	public render() {
 		const { view } = this.props;
 
-		const qtype = this._quiztype;
-		const selected = this._quiztype !== '';
-		// const viewSingle = this._souns_s || this._meaning_s || this._spelling_s || this._sentence_s;
+		const qtype = this._qtype;
+		const selected = this._qtype !== '';
+		const viewSingle = this._souns_s || this._meaning_s || this._spelling_s || this._sentence_s;
 		const style: React.CSSProperties = {};
 
 		if(!view) {
@@ -169,42 +194,42 @@ class QuizSelect extends React.Component<IQuizSelectProps> {
 				<div className="title">QUIZ</div>
 				<div className="quiz">
 					<BtnItem 
-						myQuestionType="sound" 
+						myqtype="sound" 
 						qtype={qtype} 
-						// average={this._sound_avg} 
-						// viewSingleBtn={viewSingle} 
-						// view_s={this._sound_result.single != null} 
-						// view_g={this._sound_result.group != null} 
+						average={this._sound_avg} 
+						viewSingleBtn={viewSingle} 
+						view_s={this._souns_s} 
+						view_g={this._souns_g} 
 						onClick={this._onClickBtn}
 						onResult={this._onResult}
 					/>
 					<BtnItem 
-						myQuestionType="meaning" 
+						myqtype="meaning" 
 						qtype={qtype} 
-						// average={this._meaning_avg} 
-						// viewSingleBtn={viewSingle} 
-						// view_s={this._meaning_result.single != null} 
-						// view_g={this._meaning_result.group != null} 
+						average={this._meaning_avg} 
+						viewSingleBtn={viewSingle} 
+						view_s={this._meaning_s} 
+						view_g={this._meaning_g} 
 						onClick={this._onClickBtn}
 						onResult={this._onResult}
 					/>
 					<BtnItem 
-						myQuestionType="spelling" 
+						myqtype="spelling" 
 						qtype={qtype} 
-						// average={this._spelling_avg} 
-						// viewSingleBtn={viewSingle} 
-						// view_s={this._spelling_result.single != null} 
-						// view_g={this._spelling_result.group != null} 
+						average={this._spelling_avg} 
+						viewSingleBtn={viewSingle} 
+						view_s={this._spelling_s} 
+						view_g={this._spelling_g} 
 						onClick={this._onClickBtn}
 						onResult={this._onResult}
 					/>	
 					<BtnItem 
-						myQuestionType="usage" 
+						myqtype="usage" 
 						qtype={qtype} 
-						// average={this._sentence_avg} 
-						// viewSingleBtn={viewSingle} 
-						// view_s={this._sentence_result.single != null} 
-						// view_g={this._sentence_result.group != null} 
+						average={this._sentence_avg} 
+						viewSingleBtn={viewSingle} 
+						view_s={this._sentence_s} 
+						view_g={this._sentence_g} 
 						onClick={this._onClickBtn}
 						onResult={this._onResult}
 					/>

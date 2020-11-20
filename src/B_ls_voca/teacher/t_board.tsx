@@ -36,7 +36,7 @@ function Board(props: React.PropsWithChildren<IBoardProps>) {
 			numOfReturn={numOfReturn}
 			numOfGa={state.gas.length}
 			numOfNa={state.nas.length}
-			hasAudio={state.quizType !== 'usage'}
+			hasAudio={state.qtype !== 'usage'}
 			getAudio={_getAudio}
 			gotoResult={_gotoResult}
 
@@ -78,7 +78,7 @@ class BoardClass extends React.Component<IBoardProps> {
 				numOfReturn={numOfReturn}
 				numOfGa={state.gas.length}
 				numOfNa={state.nas.length}
-				hasAudio={state.quizType !== 'usage'}
+				hasAudio={state.qtype !== 'usage'}
 				getAudio={this._getAudio}
 				gotoResult={this._gotoResult}
 
