@@ -122,8 +122,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="intro_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate"></div>
-				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">

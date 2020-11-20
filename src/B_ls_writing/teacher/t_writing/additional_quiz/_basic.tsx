@@ -39,9 +39,13 @@ class Basic extends React.Component<IQuizBox> {
 	private _jsx_question1_answer2: string;
 	private _jsx_question1_answer3: string;
 	private _jsx_question2: string;
-	private _jsx_question2_answer: string;
+	private _jsx_question2_answer1: string;
+	private _jsx_question2_answer2: string;
+	private _jsx_question2_answer3: string;
 	private _jsx_question3: string;
-	private _jsx_question3_answer: string;
+	private _jsx_question3_answer1: string;
+	private _jsx_question3_answer2: string;
+	private _jsx_question3_answer3: string;
 
 	private _characterImage: string;
 
@@ -58,9 +62,13 @@ class Basic extends React.Component<IQuizBox> {
 		this._jsx_question1_answer2= props.data[0].sentence_answer2;
 		this._jsx_question1_answer3= props.data[0].sentence_answer3;
 		this._jsx_question2= props.data[1].sentence;
-		this._jsx_question2_answer= props.data[1].sentence_answer1;
+		this._jsx_question2_answer1= props.data[1].sentence_answer1;
+		this._jsx_question2_answer2= props.data[1].sentence_answer2;
+		this._jsx_question2_answer3= props.data[1].sentence_answer3;
 		this._jsx_question3= props.data[2].sentence;
-		this._jsx_question3_answer= props.data[2].sentence_answer1;
+		this._jsx_question3_answer1= props.data[2].sentence_answer1;
+		this._jsx_question3_answer2= props.data[2].sentence_answer2;
+		this._jsx_question3_answer3= props.data[2].sentence_answer3;
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -183,7 +191,7 @@ class Basic extends React.Component<IQuizBox> {
 							</div>
 						</div>
 						<div className = "basic_question">
-							<div style={{display : "flex"}}>
+							<div>
 								<p>1.{_getJSX(this._jsx_question1)}</p>
 								<div>
 									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer1 != '' ? '' : 'none' }}>
@@ -208,19 +216,47 @@ class Basic extends React.Component<IQuizBox> {
 							</div>
 							<div>
 								<p>2.{_getJSX(this._jsx_question2)}</p>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question2_answer}
+								<div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question2_answer1 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question2_answer1}
+										</div>
+									</div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question2_answer2 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question2_answer2}
+										</div>
+									</div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question2_answer3 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question2_answer3}
+										</div>
 									</div>
 								</div>
 							</div>
 							<div>
 								<p>3. {_getJSX(this._jsx_question3)}</p>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question3_answer}
+								<div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question3_answer1 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question3_answer1}
+										</div>
+									</div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question3_answer2 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question3_answer2}
+										</div>
+									</div>
+									<div className="answer_box" style={{ borderBottom: this._jsx_question3_answer3 != '' ? '' : 'none' }}>
+										<div className={'sample' + (this._hint ? ' hide' : '')}/>
+										<div className={'hint' + (this._hint ? '' : ' hide')}>
+											{this._jsx_question3_answer3}
+										</div>
 									</div>
 								</div>
 							</div>

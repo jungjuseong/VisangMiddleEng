@@ -748,8 +748,12 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
+                    padding-bottom: 5px;
+                    
                     &>div {
-                        margin-bottom: 25px;
+                        margin-bottom: 40px;
+                        display : flex;
+                        justify-content: space-between;
                     }
                     &>div:last-child {
                         margin-bottom: 0px;
@@ -757,9 +761,9 @@
                     .answer_box {
                         border-bottom: 2px solid #000;
                         width: 180px;
+
                         .sample {
                             min-height: 41px;
-                            padding-bottom: 5px;
                         }
                         .hide {
                             display: none;
@@ -767,7 +771,6 @@
                         .hint {
                             text-align: center;
                             min-height: 41px;
-                            padding-bottom: 5px;
                             color: rgb(0, 0, 255);
                             .block {
                                 font-weight: bold;

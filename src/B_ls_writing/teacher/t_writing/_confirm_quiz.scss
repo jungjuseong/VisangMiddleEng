@@ -58,7 +58,8 @@
                 border-radius: 10px;
                 width: 1000px;
                 height: 460px;
-                padding: 0px 0px;
+                padding-left: 25px;
+                
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
