@@ -59,7 +59,6 @@
                 width: 1000px;
                 height: 460px;
                 padding-left: 25px;
-                
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
@@ -102,7 +101,7 @@
                         align-items: center;
                         justify-content: space-between;
                         .true_false_btn {
-                            @include btn_on( resolve('teacher/images/btn_true_false.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
+                            @include btn_on( resolve('teacher/images/btn_true_false_down.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
                             right: 20px;
                             z-index: 2;
                         }
