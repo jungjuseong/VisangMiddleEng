@@ -93,13 +93,14 @@
                 &>div {
                     display: inline-table;
                     vertical-align: middle;
-                    width: 590px;
+                    width: 530px;
                     height: 80px;
                     border-bottom: 4px solid #fff;
                     max-height: 120px;
 
                     &.view-hint {
                         color: rgb(255, 253, 138);
+                        white-space: nowrap;
                         &:after {
                             border-right-color: rgb(13, 92, 155);
                         }
