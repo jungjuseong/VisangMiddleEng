@@ -1028,6 +1028,27 @@ var ls_writing ={
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AH"}
 		}
 	},
+	script:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"메인음원_스크립트",
+		_startRow:2,
+		_key:"seq",
+		_item: {
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},	
+			dms_seq: {_type:obj_e.TYPE_INT, _excel:"C"},
+			script_group: {_type:obj_e.TYPE_INT, _excel:"D"},
+			coordinate_num: {_type:obj_e.TYPE_INT, _excel:"E"},
+			start: {_type:obj_e.TYPE_SECOND, _excel:"F"},
+			end: {_type:obj_e.TYPE_SECOND, _excel:"G"},
+			audio_start: {_type:obj_e.TYPE_SECOND, _excel:"H"},
+			audio_end: {_type:obj_e.TYPE_SECOND, _excel:"I"},
+			speaker: {_type:obj_e.TYPE_TEXT, _excel:"J"},
+			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"K"},
+			dms_kor: {_type:obj_e.TYPE_TEXT, _excel:"L"},
+		}
+	}
 }
 
 
