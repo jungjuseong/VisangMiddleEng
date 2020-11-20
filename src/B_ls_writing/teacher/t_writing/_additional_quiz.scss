@@ -98,7 +98,7 @@
                     }
                 }
                 .table_box {
-                    width: 1000px;
+                    width: 975px;
                     height: 380px;
                     text-align: left;
                     margin: 0 auto;
@@ -777,34 +777,45 @@
                 }
                 .hard_question {
                     overflow: auto;
-                    height: 385px;
                     position: relative;
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
-                    .answer_box {
-                        display: inline-block;
-                        border-bottom: 2px solid #000;
-                        margin-bottom: 25px;
-                        .sample {
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                        }
-                        .hide {
-                            display: none;
-                        }
-                        .hint {
-                            display: inline-block;
-                            vertical-align: center;
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                            color: rgb(0, 0, 255);
-                            .block {
-                                font-weight: bold;
-                            }
+                    height: 385px;
+
+                  &>p {
+                      margin-bottom: 40px;
+                  }
+
+                  &>div {
+                      display: flex;
+                      align-items: center;
+                      text-align: center;
+                      margin-bottom: 30px;
+                  }
+                  .answer_box {
+                    display: inline-block;
+                    width: 150px;
+                    border-bottom: 2px solid #000;
+                    margin: 15px 10px;
+
+                    .sample {
+                        min-height: 55px;
+                        padding-bottom: 5px;
+                    }
+                    .hide {
+                        display: none;
+                    }
+                    .hint {
+                        min-height: 55px;
+                        padding-bottom: 5px;
+                        color: rgb(0, 0, 255);
+                        .block {
+                            font-weight: bold;
                         }
                     }
-                }
+                  }
+              }
             }
         }
     }
