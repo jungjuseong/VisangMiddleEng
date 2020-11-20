@@ -12,7 +12,7 @@ const SwiperComponent = require('react-id-swiper').default;
 
 let _zIndex = observable([0]);
 
-interface ITableItem {
+export interface ITableItemProps {
 	inview: boolean;
 	graphic: common.IGraphicOrganizer;
 	maxWidth: number;
@@ -32,7 +32,7 @@ interface ITableItem {
 
 @inject()
 @observer
-class TableItem extends React.Component<ITableItem> {
+class TableItem extends React.Component<ITableItemProps> {
 
 	@observable private m_view = false;
 
@@ -46,7 +46,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	@observable private _opt = true;
 
-	constructor(props: ITableItem) {
+	constructor(props: ITableItemProps) {
 		super(props);
 		const { answer, answer2, answer3, answer4 } = props.graphic;
 		const answerList = [answer, answer2, answer3, answer4];
@@ -210,7 +210,7 @@ class TableItem extends React.Component<ITableItem> {
 		);
 		this._jsx2 = this._parseBlock2(this.props.graphic);
 	}
-	public componentWillReceiveProps(next: ITableItem) {
+	public componentWillReceiveProps(next: ITableItemProps) {
 		if (next.graphic !== this.props.graphic) {
 			while (this._sbox.length > 0) this._sbox.pop();
 			this._jsx = this._parseBlock(
@@ -245,7 +245,7 @@ class TableItem extends React.Component<ITableItem> {
 		this.m_swiper = el.swiper;
 	}
 
-	public componentDidUpdate(prev: ITableItem) {
+	public componentDidUpdate(prev: ITableItemProps) {
 
 		if (this.props.inview && !prev.inview) {
 			if (this.m_swiper) {

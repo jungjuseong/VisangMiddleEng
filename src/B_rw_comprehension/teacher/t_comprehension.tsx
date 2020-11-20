@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 import Warmup from './t_warmup';
 import Passage from './t_passage';
 import Question from './t_question';
-import GraphicOrganizer from './t_graphic';
+import GraphicOrganizer from './t_graphic_organizer';
 import Summary from './t_summary';
 import VideoPopup from './t_video_box';
 import TStoryBook from './t_storybook';
