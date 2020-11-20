@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observable } from 'mobx';
+import { observable, _allowStateChangesInsideComputed } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { IStateCtx, IActionsCtx, SENDPROG, BTN_DISABLE } from '../t_store';
@@ -9,17 +9,27 @@ import * as felsocket from '../../../felsocket';
 import { ToggleBtn } from '@common/component/button';
 
 import * as kutil from '@common/util/kutil';
-import * as common from '../../common';
+
+import { VisualType, IData, IGraphicOrganizer, SHEETPAGE, IGraphMsg, TYPE_COM_HEADERS, IMsg, IDropDown } from '../../common';
 
 import SendUI from '../../../share/sendui_new';
 import * as style from '../../../share/style';
 
 import { PentoolSheet } from '../t_pentool_sheet';
 import { KeyboardSheet } from '../t_keyborad_sheet';
-import TableItem from '../../table-item';
+import TableItem, { ITableItemProps } from '../../table-item';
 
 import SheetPopup from './_sheet_popup';
 import TablePopup from './_table_popup';
+
+interface ITypeProps {
+	tableClass: string;
+	prog: SENDPROG;
+	inview: boolean;
+	renderCnt: number;
+	graphics: IGraphicOrganizer[];
+	clickZoom: (graphic: IGraphicOrganizer, className: string, head_color: string | null) => void;
+}
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -35,43 +45,43 @@ const m_swiper_option: SwiperOptions = {
 	scrollbar: { el: '.swiper-scrollbar', draggable: true, hide: false },
 };
 
-interface IGraphicOrganizer {
+interface IGraphicProps {
 	view: boolean;
 	inview: boolean;
 	videoPopup: boolean;
 	viewStoryBook: boolean;
-	data: common.IData;
+	data: IData;
 	state: IStateCtx;
 	actions: IActionsCtx;
 	onStudy: (studying: BTN_DISABLE) => void;
 	onSetNavi: (title: 'Compreshension' | 'SUMMARIZING', tab: 'Question' | 'Summary') => void;
 }
+
 @observer
-class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
+class GraphicOrganizer extends React.Component<IGraphicProps> {
 	@observable private _retCnt = 0;
 	@observable private _numOfStudent = 0;
-
 	@observable private _numOfStudent_sheet = 0;
 
 	private _returns: string[] = [];
 
 	@observable private _sheet = false;
-	@observable private _sheetpage: common.SHEETPAGE = '';
+	@observable private _sheetpage: SHEETPAGE = '';
 
 	@observable private _table = '';
 
 	private _table_head_color: string | null = null;
-	private _table_graphic!: common.IGraphicOrganizer;
+	private _table_graphic!: IGraphicOrganizer;
 
 	@observable private _prog = SENDPROG.READY;
-
 	@observable private _renderCnt = 0;
 
 	private m_swiper!: Swiper;
 	private _cont!: JSX.Element;
 
-	constructor(props: IGraphicOrganizer) {
+	constructor(props: IGraphicProps) {
 		super(props);
+
 		this._table_graphic = props.data.graphic[0];
 	}
 	private _refSwiper = (el: SwiperComponent) => {
@@ -96,7 +106,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		felsocket.startStudentReportProcess($ReportType.JOIN, this._returns);
 		// TO DO
 	}
-	private _onReturn = (msg: common.IGraphMsg) => {
+	private _onReturn = (msg: IGraphMsg) => {
 		if (!this.props.inview) return;
 		else if (this._prog !== SENDPROG.SENDED) return;
 
@@ -117,7 +127,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		while (this._returns.length > 0) this._returns.pop();
 
 		App.pub_playToPad();
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: 'graphic_send',
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -146,7 +156,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this._prog = SENDPROG.COMPLETE;
 		this.props.actions.setGraphFnc(null);
 		this.props.onStudy('');
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: 'graphic_end'
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -154,13 +164,13 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this.props.actions.setNavi(true, true);
 	}
 
-	private _onSendSheet = (sheetpage: common.SHEETPAGE) => {
+	private _onSendSheet = (sheetpage: SHEETPAGE) => {
 		if (!this.props.inview) return;
 		// else if(this._prog !== SENDPROG.COMPLETE) return;
 		else if (this._sheetpage !== '') return;
 
 		this.props.onStudy('');
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: sheetpage === 'keyboard' ? 'keyboard_send' : 'pentool_send',
 		};
 		felsocket.startStudentReportProcess(
@@ -192,7 +202,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this._sheetpage = '';
 		this.props.actions.setGraphFnc(null);
 		if (this._prog === SENDPROG.COMPLETE) {
-			const msg: common.IMsg = {
+			const msg: IMsg = {
 				msgtype: 'keyboard_end',
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -206,7 +216,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this.props.actions.setGraphFnc(null);
 
 		if (this._prog === SENDPROG.COMPLETE) {
-			const msg: common.IMsg = {
+			const msg: IMsg = {
 				msgtype: 'pentool_end',
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -261,7 +271,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 			this._done = '';
 
 			this.props.data.graphic.forEach((gr) => {
-				gr.app_drops.forEach((drop) => {
+				gr.app_drops.forEach(drop => {
 					drop.inputed = '';
 				});
 			});
@@ -273,13 +283,16 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this.props.actions.setGraphFnc(null);
 		felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 	}
-	public componentDidUpdate(prev: IGraphicOrganizer) {
-		if (this.props.videoPopup && !prev.videoPopup) {
-			if (this.props.state.isVideoStudied) this.props.state.isVideoStudied = false;
-		} else if (!this.props.videoPopup && prev.videoPopup) {
-			if (this.props.state.isVideoStudied && this._prog < SENDPROG.COMPLETE) this._init();
+
+	public componentDidUpdate(prev: IGraphicProps) {
+		const { inview, viewStoryBook, videoPopup, state } = this.props;
+
+		if (videoPopup && !prev.videoPopup) {
+			if (state.isVideoStudied) state.isVideoStudied = false;
+		} else if (!videoPopup && prev.videoPopup) {
+			if (state.isVideoStudied && this._prog < SENDPROG.COMPLETE) this._init();
 		}
-		if (this.props.inview && !prev.inview) {
+		if (inview && !prev.inview) {
 			this._init();
 			this._setNavi();
 		} else if (!this.props.inview && prev.inview) {
@@ -294,12 +307,13 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 			// });
 		}
 
-		if (this.props.inview && prev.inview) {
-			if (!this.props.videoPopup && prev.videoPopup) this._setNavi();
-			else if (!this.props.viewStoryBook && prev.viewStoryBook) this._setNavi();
+		if (inview && prev.inview) {
+			if (!videoPopup && prev.videoPopup) this._setNavi();
+			else if (!viewStoryBook && prev.viewStoryBook) this._setNavi();
 		}
 	}
-	private _clickZoom = (graphic: common.IGraphicOrganizer, className: string, head_color: string | null) => {
+
+	private _clickZoom = (graphic: IGraphicOrganizer, className: string, head_color: string | null) => {
 		this._table_head_color = head_color;
 		this._table_graphic = graphic;
 		this._table = className;
@@ -307,6 +321,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 		this.props.actions.setNaviView(false);
 		this._renderCnt++;
 	}
+
 	private _tableClosed = () => {
 		this._table = '';
 		this.props.actions.setNaviView(true);
@@ -316,93 +331,81 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 	private _popupChange = (value: string, idx: number) => {
 		this._renderCnt++;
 	}
-
-
+	
 
 	public render() {
-		const { view, inview, data, actions } = this.props;
+		const { inview, data, actions } = this.props;
 		const graphics = data.graphic;
 		let tableClass;
 		let jsx;
-		if (data.visualizing_type === common.VisualType.TYPE_1) {
+
+		// const { tableClass, prog, graphics, renderCnt, inview, clickZoom } = props;
+	
+		const Type1TableItemProps: ITableItemProps = {
+				className: 'type_1',
+				viewCorrect: this._prog === SENDPROG.COMPLETE,
+				disableSelect: this._prog === SENDPROG.COMPLETE,
+				inview,
+				graphic: graphics[0],
+				maxWidth: 1080,        
+				headerColor: TYPE_COM_HEADERS[0],
+				optionBoxPosition: 'bottom',
+				viewBtn: true,
+				renderCnt: this._renderCnt,
+				onClickBtn: () => this._clickZoom(graphics[0], 'purple', TYPE_COM_HEADERS[0]),
+				isStudent: false,
+				idx: 1,
+			};
+	
+		const tableItemProps = {
+			top: { ...Type1TableItemProps
+			},
+			middle_first: { ...Type1TableItemProps,
+				graphic: graphics[1],
+				maxWidth: 530,
+				headerColor: TYPE_COM_HEADERS[1],
+				onClickBtn: () => this._clickZoom(graphics[1], 'green', TYPE_COM_HEADERS[1]),
+				idx: 2
+			},
+			middle_second: { ...Type1TableItemProps,
+				graphic: graphics[2],
+				maxWidth: 530,
+				headerColor: TYPE_COM_HEADERS[1],
+				onClickBtn: () => this._clickZoom(graphics[2], 'green', TYPE_COM_HEADERS[1]),
+				idx: 3
+			},
+			bottom: { ...Type1TableItemProps,
+				graphic: graphics[3],
+				maxWidth: 1080,
+				headerColor: TYPE_COM_HEADERS[2],
+				onClickBtn: () => this._clickZoom(graphics[3], 'purple', TYPE_COM_HEADERS[2]),
+				idx: 4
+			},
+		};
+
+		if (data.visualizing_type === VisualType.TYPE_1) {
 			tableClass = 'type_1';
 			jsx = (
-				<>
-					<div className="top">
-						<TableItem
-							viewCorrect={this._prog === SENDPROG.COMPLETE}
-							disableSelect={this._prog === SENDPROG.COMPLETE}
-							inview={inview}
-							graphic={graphics[0]}
-							maxWidth={1080}
-							className="type_1"
-							headerColor={common.TYPE_COM_HEADERS[0]}
-							optionBoxPosition="bottom"
-							viewBtn={true}
-							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[0], 'purple', common.TYPE_COM_HEADERS[0])}
-							isStudent={false}
-							idx={1}
-						/>
+			<>
+				<div className="top">
+					<TableItem {...tableItemProps.top} />
+				</div>
+				<span className="link_line" />
+				<div className="middle">
+					<div>
+						<TableItem {...tableItemProps.middle_first} />
 					</div>
-					<span className="link_line" />
-					<div className="middle">
-						<div>
-							<TableItem
-								viewCorrect={this._prog === SENDPROG.COMPLETE}
-								disableSelect={this._prog === SENDPROG.COMPLETE}
-								inview={inview}
-								graphic={graphics[1]}
-								maxWidth={530}
-								className="type_1"
-								headerColor={common.TYPE_COM_HEADERS[1]}
-								optionBoxPosition="bottom"
-								viewBtn={true}
-								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[1], 'green', common.TYPE_COM_HEADERS[1])}
-								isStudent={false}
-								idx={2}
-							/>
-						</div>
-						<div>
-							<TableItem
-								viewCorrect={this._prog === SENDPROG.COMPLETE}
-								disableSelect={this._prog === SENDPROG.COMPLETE}
-								inview={inview}
-								graphic={graphics[2]}
-								maxWidth={530}
-								className="type_1"
-								headerColor={common.TYPE_COM_HEADERS[1]}
-								optionBoxPosition="bottom"
-								viewBtn={true}
-								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[2], 'green', common.TYPE_COM_HEADERS[1])}
-								isStudent={false}
-								idx={3}
-							/>
-						</div>
+					<div>
+						<TableItem {...tableItemProps.middle_first} />
 					</div>
-					<span className="link_line_down" />
-					<div className="bottom">
-						<TableItem
-							viewCorrect={this._prog === SENDPROG.COMPLETE}
-							disableSelect={this._prog === SENDPROG.COMPLETE}
-							inview={inview}
-							graphic={graphics[3]}
-							className="type_1"
-							headerColor={common.TYPE_COM_HEADERS[2]}
-							maxWidth={1080}
-							optionBoxPosition="top"
-							viewBtn={true}
-							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[3], 'purple', common.TYPE_COM_HEADERS[2])}
-							isStudent={false}
-							idx={4}
-						/>
-					</div>
-				</>
-			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_2) {
+				</div>
+				<span className="link_line_down" />
+				<div className="bottom">
+					<TableItem {...tableItemProps.bottom} />
+				</div>
+			</>);
+
+		} else if (data.visualizing_type === VisualType.TYPE_2) {
 			tableClass = 'type_2';
 			jsx = (
 				<>
@@ -414,12 +417,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[0]}
 								className="type_2"
-								headerColor={common.TYPE_COM_HEADERS[0]}
+								headerColor={TYPE_COM_HEADERS[0]}
 								maxWidth={500}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[0], 'type_2', common.TYPE_COM_HEADERS[0])}
+								onClickBtn={() => this._clickZoom(graphics[0], 'type_2', TYPE_COM_HEADERS[0])}
 								isStudent={false}
 								idx={1}
 							/>
@@ -432,12 +435,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[1]}
 								className="type_2"
-								headerColor={common.TYPE_COM_HEADERS[1]}
+								headerColor={TYPE_COM_HEADERS[1]}
 								maxWidth={500}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[1], 'type_2', common.TYPE_COM_HEADERS[1])}
+								onClickBtn={() => this._clickZoom(graphics[1], 'type_2', TYPE_COM_HEADERS[1])}
 								isStudent={false}
 								idx={2}
 							/>
@@ -452,12 +455,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[2]}
 								className="type_2"
-								headerColor={common.TYPE_COM_HEADERS[2]}
+								headerColor={TYPE_COM_HEADERS[2]}
 								maxWidth={700}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[2], 'type_2', common.TYPE_COM_HEADERS[2])}
+								onClickBtn={() => this._clickZoom(graphics[2], 'type_2', TYPE_COM_HEADERS[2])}
 								isStudent={false}
 								idx={3}
 							/>
@@ -465,7 +468,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 					</div>
 				</>
 			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_3) {
+		} else if (data.visualizing_type === VisualType.TYPE_3) {
 			tableClass = 'type_3';
 			jsx = (
 				<>
@@ -477,12 +480,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[0]}
 								className="type_3"
-								headerColor={common.TYPE_COM_HEADERS[0]}
+								headerColor={TYPE_COM_HEADERS[0]}
 								maxWidth={361}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[0], 'type_3', common.TYPE_COM_HEADERS[0])}
+								onClickBtn={() => this._clickZoom(graphics[0], 'type_3', TYPE_COM_HEADERS[0])}
 								isStudent={false}
 								idx={1}
 							/>
@@ -494,12 +497,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[1]}
 								className="type_3"
-								headerColor={common.TYPE_COM_HEADERS[1]}
+								headerColor={TYPE_COM_HEADERS[1]}
 								maxWidth={361}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[1], 'type_3', common.TYPE_COM_HEADERS[1])}
+								onClickBtn={() => this._clickZoom(graphics[1], 'type_3', TYPE_COM_HEADERS[1])}
 								isStudent={false}
 								idx={2}
 							/>
@@ -511,12 +514,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[2]}
 								className="type_3"
-								headerColor={common.TYPE_COM_HEADERS[2]}
+								headerColor={TYPE_COM_HEADERS[2]}
 								maxWidth={361}
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[2], 'type_3', common.TYPE_COM_HEADERS[2])}
+								onClickBtn={() => this._clickZoom(graphics[2], 'type_3', TYPE_COM_HEADERS[2])}
 								isStudent={false}
 								idx={3}
 							/>
@@ -524,7 +527,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 					</div>
 				</>
 			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_4) {
+		} else if (data.visualizing_type === VisualType.TYPE_4) {
 			tableClass = 'type_4';
 			jsx = (
 				<>
@@ -535,12 +538,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 							inview={inview}
 							graphic={graphics[0]}
 							className="type_4"
-							headerColor={common.TYPE_COM_HEADERS[0]}
+							headerColor={TYPE_COM_HEADERS[0]}
 							maxWidth={1109}
 							optionBoxPosition="bottom"
 							viewBtn={true}
 							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[0], 'type_4', common.TYPE_COM_HEADERS[0])}
+							onClickBtn={() => this._clickZoom(graphics[0], 'type_4', TYPE_COM_HEADERS[0])}
 							isStudent={false}
 							idx={1}
 						/>
@@ -550,19 +553,19 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 							inview={inview}
 							graphic={graphics[1]}
 							className="type_4"
-							headerColor={common.TYPE_COM_HEADERS[1]}
+							headerColor={TYPE_COM_HEADERS[1]}
 							maxWidth={1109}
 							optionBoxPosition="bottom"
 							viewBtn={true}
 							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[1], 'type_4', common.TYPE_COM_HEADERS[1])}
+							onClickBtn={() => this._clickZoom(graphics[1], 'type_4', TYPE_COM_HEADERS[1])}
 							isStudent={false}
 							idx={2}
 						/>
 					</div>
 				</>
 			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_5) {
+		} else if (data.visualizing_type === VisualType.TYPE_5) {
 			tableClass = 'type_5';
 			jsx = (
 				<>
@@ -573,12 +576,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 							inview={inview}
 							graphic={graphics[0]}
 							className="type_5"
-							headerColor={common.TYPE_COM_HEADERS[0]}
+							headerColor={TYPE_COM_HEADERS[0]}
 							maxWidth={1109}
 							optionBoxPosition="bottom"
 							viewBtn={true}
 							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[0], 'type_5', common.TYPE_COM_HEADERS[0])}
+							onClickBtn={() => this._clickZoom(graphics[0], 'type_5', TYPE_COM_HEADERS[0])}
 							isStudent={false}
 							idx={1}
 						/>
@@ -588,12 +591,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 							inview={inview}
 							graphic={graphics[1]}
 							className="type_5"
-							headerColor={common.TYPE_COM_HEADERS[1]}
+							headerColor={TYPE_COM_HEADERS[1]}
 							maxWidth={1109}
 							optionBoxPosition="bottom"
 							viewBtn={true}
 							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[1], 'type_5', common.TYPE_COM_HEADERS[1])}
+							onClickBtn={() => this._clickZoom(graphics[1], 'type_5', TYPE_COM_HEADERS[1])}
 							isStudent={false}
 							idx={2}
 						/>
@@ -603,19 +606,19 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 							inview={inview}
 							graphic={graphics[2]}
 							className="type_5"
-							headerColor={common.TYPE_COM_HEADERS[2]}
+							headerColor={TYPE_COM_HEADERS[2]}
 							maxWidth={1109}
 							optionBoxPosition="bottom"
 							viewBtn={true}
 							renderCnt={this._renderCnt}
-							onClickBtn={() => this._clickZoom(graphics[2], 'type_5', common.TYPE_COM_HEADERS[2])}
+							onClickBtn={() => this._clickZoom(graphics[2], 'type_5', TYPE_COM_HEADERS[2])}
 							isStudent={false}
 							idx={3}
 						/>
 					</div>
 				</>
 			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_6) {
+		} else if (data.visualizing_type === VisualType.TYPE_6) {
 			tableClass = 'type_6';
 			jsx = (
 				<>
@@ -631,7 +634,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								optionBoxPosition="bottom"
 								viewBtn={false}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[0], 'type_6', common.TYPE_COM_HEADERS[0])}
+								onClickBtn={() => this._clickZoom(graphics[0], 'type_6', TYPE_COM_HEADERS[0])}
 								isStudent={false}
 								idx={1}
 							/>
@@ -647,7 +650,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								optionBoxPosition="bottom"
 								viewBtn={false}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[1], 'type_6', common.TYPE_COM_HEADERS[1])}
+								onClickBtn={() => this._clickZoom(graphics[1], 'type_6', TYPE_COM_HEADERS[1])}
 								isStudent={false}
 								idx={2}
 							/>
@@ -663,7 +666,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								optionBoxPosition="bottom"
 								viewBtn={false}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[2], 'type_6', common.TYPE_COM_HEADERS[2])}
+								onClickBtn={() => this._clickZoom(graphics[2], 'type_6', TYPE_COM_HEADERS[2])}
 								isStudent={false}
 								idx={3}
 							/>
@@ -671,7 +674,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 					</div>
 				</>
 			);
-		} else if (data.visualizing_type === common.VisualType.TYPE_7) {
+		} else if (data.visualizing_type === VisualType.TYPE_7) {
 			tableClass = 'type_7';
 			jsx = (
 				<>
@@ -683,12 +686,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[0]}
 								className="type_7"
-								headerColor={common.TYPE_COM_HEADERS[0]}
+								headerColor={TYPE_COM_HEADERS[0]}
 								maxWidth={470}/* p1 수정 요청 사항 2020_06_30 성준*/
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[0], 'type_7', common.TYPE_COM_HEADERS[0])}
+								onClickBtn={() => this._clickZoom(graphics[0], 'type_7', TYPE_COM_HEADERS[0])}
 								isStudent={false}
 								idx={1}
 							/>
@@ -700,12 +703,12 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 								inview={inview}
 								graphic={graphics[1]}
 								className="type_7"
-								headerColor={common.TYPE_COM_HEADERS[1]}
+								headerColor={TYPE_COM_HEADERS[1]}
 								maxWidth={470}/* p1 수정 요청 사항 2020_06_30 성준*/
 								optionBoxPosition="bottom"
 								viewBtn={true}
 								renderCnt={this._renderCnt}
-								onClickBtn={() => this._clickZoom(graphics[1], 'type_7', common.TYPE_COM_HEADERS[1])}
+								onClickBtn={() => this._clickZoom(graphics[1], 'type_7', TYPE_COM_HEADERS[1])}
 								isStudent={false}
 								idx={2}
 							/>
@@ -780,15 +783,7 @@ class GraphicOrganizer extends React.Component<IGraphicOrganizer> {
 				</div>
 
 				<SendUI
-					view={
-						inview &&
-						this._prog <= SENDPROG.SENDING &&
-						!this.props.state.videoPopup &&
-						this._table === '' &&
-						!this._sheet &&
-						this._sheetpage === ''
-
-					}
+					view={inview &&	this._prog <= SENDPROG.SENDING && !this.props.state.videoPopup && this._table === '' &&	!this._sheet &&	this._sheetpage === ''}
 					type={'teacher'}
 					sended={false}
 					originY={0}
