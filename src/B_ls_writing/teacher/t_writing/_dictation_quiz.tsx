@@ -6,8 +6,6 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
-import * as butil from '@common/component/butil';
-
 import * as common from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 
@@ -46,12 +44,11 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: string;
-	private _jsx_question2: string;
-	private _jsx_question3: string;
-	private _jsx_question1_answers: Array<string>;
-	private _jsx_question2_answers: Array<string>;
-	private _jsx_question3_answers: Array<string>;
+	private _jsx_question: Array<string> = [];
+	private _jsx_question_answers: Array<Array<string>> = [];
+	private refTexts:Array<(el: HTMLDivElement)=>void> = [];
+
+	private boxnum :number;
 
 	private _characterImage: string;
 
@@ -62,36 +59,25 @@ class Hard extends React.Component<IQuizBox> {
 	public constructor(props: IQuizBox) {
 		super(props);
 
-		this._boxs = [null,null,null]
+		this._boxs = [null,null,null];
+		this.boxnum = 0;
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
-		this._jsx_question1= props.data[0].sentence;
-		this._jsx_question2= props.data[1].sentence;
-		this._jsx_question3= props.data[2].sentence;
-
-		this._jsx_question1_answers= [props.data[0].sentence1.answer1,props.data[0].sentence2.answer1,props.data[0].sentence3.answer1,props.data[0].sentence4.answer1];
-		this._jsx_question2_answers= [props.data[1].sentence1.answer1,props.data[1].sentence2.answer1,props.data[1].sentence3.answer1,props.data[1].sentence4.answer1];
-		this._jsx_question3_answers= [props.data[2].sentence1.answer1,props.data[2].sentence2.answer1,props.data[2].sentence3.answer1,props.data[2].sentence4.answer1];
+		props.data.forEach((data,idx) =>{
+			this._jsx_question.push(data.sentence)
+			this.refTexts.push((el: HTMLDivElement) => {
+				if(this._boxs[idx] || !el) return;
+				this._boxs[idx] = el;
+			})
+			this._jsx_question_answers.push([props.data[idx].sentence1.answer1, props.data[idx].sentence2.answer1, props.data[idx].sentence3.answer1, props.data[idx].sentence4.answer1])
+		})
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
-	}
-
-	private _refText1 = (el: HTMLDivElement) => {
-		if(this._boxs[0] || !el) return;
-		this._boxs[0] = el;
-	}
-	private _refText2 = (el: HTMLDivElement) => {
-		if(this._boxs[1] || !el) return;
-		this._boxs[1] = el;
-	}
-	private _refText3 = (el: HTMLDivElement) => {
-		if(this._boxs[3] || !el) return;
-		this._boxs[3] = el;
 	}
 	
 	// Translation 토글 기능
@@ -113,6 +99,7 @@ class Hard extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+	
 	// True / False 토글 기능
 	private _selectedValue = () => {
 		App.pub_playBtnTab();
@@ -134,7 +121,6 @@ class Hard extends React.Component<IQuizBox> {
 	}
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		console.log('viewHint')
 		this.props.onHintClick();
 		this._hint = !this._hint;
 
@@ -142,18 +128,12 @@ class Hard extends React.Component<IQuizBox> {
 
 		this._boxs.forEach((box,idx) =>{
 			var answer:Array<string>;
-			switch(idx){
-				case 0: answer = this._jsx_question1_answers; break
-				case 1: answer = this._jsx_question2_answers; break
-				case 2: answer = this._jsx_question3_answers; break
-				default : answer = this._jsx_question1_answers;
-			}
+			answer=this._jsx_question_answers[idx];
 			if(box){
 				const blocks = box.querySelectorAll('.block');
 				if(!blocks) return;
 
 				blocks.forEach((block, idx)=>{
-					console.log(block,answer[idx])
 					while(block.lastChild) block.removeChild(block.lastChild);
 					block.appendChild(document.createTextNode(answer[idx]));
 				})
@@ -239,30 +219,13 @@ class Hard extends React.Component<IQuizBox> {
 							</div>
 						</div>
 						<div className = "hard_question" >
-							<div ref = {this._refText1}>
-								<p>1. {_getJSX(this._jsx_question1)}</p>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-									</div>
+							{this.props.data.map((data,idx) =>{
+								this.boxnum = idx;
+								return <div key={idx} className="blank_sentence" ref = {this.refTexts[idx]}>
+									<p>{idx+1}.</p>
+									<p>{_getJSX(this._jsx_question[idx])}</p>
 								</div>
-							</div>
-							<div ref = {this._refText2}>
-								<p>2. {_getJSX(this._jsx_question2)}</p>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-									</div>
-								</div>
-							</div>
-							<div ref = {this._refText3}>
-								<p>3. {_getJSX(this._jsx_question3)}</p>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-									</div>
-								</div>
-							</div>
+							})}
 						</div>
 					</div>
 				</div>
