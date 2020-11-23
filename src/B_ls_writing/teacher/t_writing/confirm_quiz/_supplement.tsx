@@ -27,6 +27,8 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _trans = false;
 	@observable private _listen = false;
 	@observable private _select = true;
+	@observable private _toggle: Array<boolean|null> = [null,null,null];
+	@observable private _quiz: Array<string> = [];
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
 	
@@ -86,7 +88,35 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
+	private _onClickTrue = () =>{
 
+		this._toggle[0] = true;
+	}
+	private _onClickFalse = () =>{
+		this._toggle[0] = false;
+	}
+	private _onClickTrue1 = () =>{
+
+		this._toggle[1] = true;
+	}
+	private _onClickFalse1 = () =>{
+		this._toggle[1] = false;
+	}
+	private _onClickTrue2 = () =>{
+
+		this._toggle[2] = true;
+	}
+	private _onClickFalse2 = () =>{
+		this._toggle[2] = false;
+	}
+	private _getToggleState = (num: number) =>{
+		if(this._toggle[num] === null) return '';
+		if(this._toggle[num]){
+			return 'on_true';
+		}else{
+			return 'on_false';
+		}
+	}
 	// True / False 토글 기능
 	private _selectedValue = () => {
 		App.pub_playBtnTab();
@@ -175,6 +205,7 @@ class Supplement extends React.Component<IQuizBox> {
 	public render() {
 		const { data, } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
@@ -195,15 +226,24 @@ class Supplement extends React.Component<IQuizBox> {
 						<div className = "sup_question">
 							<div>
 								<div>1. {this._jsx_question1.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								<div className={"toggle_bundle " + this._getToggleState(0)}>
+									<div className="true" onClick={this._onClickTrue}></div>
+									<div className="false" onClick={this._onClickFalse}></div>
+								</div>
 							</div>
 							<div>
 								<div>2. {this._jsx_question2.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								<div className={"toggle_bundle " + this._getToggleState(1)}>
+									<div className="true" onClick={this._onClickTrue1}></div>
+									<div className="false" onClick={this._onClickFalse1}></div>
+								</div>
 							</div>
 							<div>
 								<div>3. {this._jsx_question3.question}</div>
-								<ToggleBtn className="true_false_btn" on={this._select} onClick={this._selectedValue}/>
+								<div className={"toggle_bundle " + this._getToggleState(2)}>
+									<div className="true" onClick={this._onClickTrue2}></div>
+									<div className="false" onClick={this._onClickFalse2}></div>
+								</div>
 							</div>
 						</div>
 					</div>

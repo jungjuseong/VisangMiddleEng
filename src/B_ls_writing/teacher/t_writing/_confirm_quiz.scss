@@ -100,11 +100,24 @@
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        .true_false_btn {
-                            @include btn_on( resolve('teacher/images/btn_true_false_down.png'), resolve('teacher/images/btn_true_false.png'), width('teacher/images/btn_true_false.png'), height('teacher/images/btn_hint.png'), );
-                            right: 20px;
-                            z-index: 2;
+                    }
+                    .toggle_bundle{
+                        width: width('teacher/images/btn_true_false.png');
+                        height: height('teacher/images/btn_true_false.png');
+                        background: resolve('teacher/images/TF.png');
+
+                        &>div{
+                            width: 50%;
+                            height: 100%;
+                            display: inline-block;
+                            z-index: 5;
                         }
+                    }
+                    .on_true{
+                        background: resolve('teacher/images/TF_T.png');
+                    }
+                    .on_false{
+                        background: resolve('teacher/images/TF_F.png');
                     }
                 }
                 /*기본*/
