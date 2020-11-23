@@ -90,7 +90,11 @@
                     font-size: 28px;
                     padding: 0px 25px;
                     .block {
+                        color: rgb(0, 0, 255);
+                        width: 230px;
                         border-bottom: 2px solid #000;
+                        display: inline-block;
+                        text-align: center;
                     }
                     .answer_box {
                         display: inline-block;
