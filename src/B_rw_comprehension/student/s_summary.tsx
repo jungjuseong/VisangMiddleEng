@@ -143,18 +143,18 @@ class SummaryItem extends React.Component<ISummaryItem> {
 					<img src={App.data_url + summary.image} />
 					{/* <div ref={this._refText}>{this._jsx}</div> */}
 					<div ref={this._refText}>
-                    <SwiperComponent
-                        ref={this._refSwiper}
-                        direction="vertical"
-                        scrollbar={{ el: '.swiper-scrollbar', draggable: true,}}
-                        observer={true}
-                        slidesPerView="auto"
-                        freeMode={true}						
-                    >
-                        <div className="txt_box">
-                            {this._jsx}
-                        </div>
-                    </SwiperComponent>
+						<SwiperComponent
+							ref={this._refSwiper}
+							direction="vertical"
+							scrollbar={{ el: '.swiper-scrollbar', draggable: true,}}
+							observer={true}
+							slidesPerView="auto"
+							freeMode={true}						
+						>
+							<div className="txt_box">
+								{this._jsx}
+							</div>
+						</SwiperComponent>
 					</div>
 				</div>	
 				<div className="choice_box">

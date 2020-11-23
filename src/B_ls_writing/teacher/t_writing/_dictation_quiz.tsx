@@ -49,19 +49,20 @@ class Hard extends React.Component<IQuizBox> {
 	private _jsx_question1: string;
 	private _jsx_question2: string;
 	private _jsx_question3: string;
-	private _jsx_question1_answer1: string;
-	private _jsx_question1_answer2: string;
-	private _jsx_question2_answer1: string;
-	private _jsx_question2_answer2: string;
-	private _jsx_question3_answer1: string;
-	private _jsx_question3_answer2: string;
+	private _jsx_question1_answers: Array<string>;
+	private _jsx_question2_answers: Array<string>;
+	private _jsx_question3_answers: Array<string>;
+
 	private _characterImage: string;
+
+	private _boxs: Array<HTMLDivElement|null>;
 
 	private _btnAudio?: BtnAudio;
 	
 	public constructor(props: IQuizBox) {
 		super(props);
-		
+
+		this._boxs = [null,null,null]
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
@@ -69,13 +70,9 @@ class Hard extends React.Component<IQuizBox> {
 		this._jsx_question2= props.data[1].sentence;
 		this._jsx_question3= props.data[2].sentence;
 
-		this._jsx_question1_answer1= props.data[0].sentence1.answer1;
-		this._jsx_question1_answer2= props.data[0].sentence2.answer1;
-		this._jsx_question2_answer1= props.data[1].sentence1.answer1;
-		this._jsx_question2_answer2= props.data[1].sentence2.answer1;
-		this._jsx_question3_answer1= props.data[2].sentence1.answer1;
-		this._jsx_question3_answer2= props.data[2].sentence2.answer1;
-	
+		this._jsx_question1_answers= [props.data[0].sentence1.answer1,props.data[0].sentence2.answer1,props.data[0].sentence3.answer1,props.data[0].sentence4.answer1];
+		this._jsx_question2_answers= [props.data[1].sentence1.answer1,props.data[1].sentence2.answer1,props.data[1].sentence3.answer1,props.data[1].sentence4.answer1];
+		this._jsx_question3_answers= [props.data[2].sentence1.answer1,props.data[2].sentence2.answer1,props.data[2].sentence3.answer1,props.data[2].sentence4.answer1];
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -83,6 +80,20 @@ class Hard extends React.Component<IQuizBox> {
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
+
+	private _refText1 = (el: HTMLDivElement) => {
+		if(this._boxs[0] || !el) return;
+		this._boxs[0] = el;
+	}
+	private _refText2 = (el: HTMLDivElement) => {
+		if(this._boxs[1] || !el) return;
+		this._boxs[1] = el;
+	}
+	private _refText3 = (el: HTMLDivElement) => {
+		if(this._boxs[3] || !el) return;
+		this._boxs[3] = el;
+	}
+	
 	// Translation 토글 기능
 	private _viewTrans = () => {
 		App.pub_playBtnTab();
@@ -127,18 +138,39 @@ class Hard extends React.Component<IQuizBox> {
 		this.props.onHintClick();
 		this._hint = !this._hint;
 
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
+		if(!this._boxs) return;
+
+		this._boxs.forEach((box,idx) =>{
+			var answer:Array<string>;
+			switch(idx){
+				case 0: answer = this._jsx_question1_answers; break
+				case 1: answer = this._jsx_question2_answers; break
+				case 2: answer = this._jsx_question3_answers; break
+				default : answer = this._jsx_question1_answers;
+			}
+			if(box){
+				const blocks = box.querySelectorAll('.block');
+				if(!blocks) return;
+
+				blocks.forEach((block, idx)=>{
+					console.log(block,answer[idx])
+					while(block.lastChild) block.removeChild(block.lastChild);
+					block.appendChild(document.createTextNode(answer[idx]));
+				})
+			}
+		})
+		// if(this._swiper) {
+		// 	this._swiper.slideTo(0, 0);
+		// 	this._swiper.update();
+		// 	if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		// }
+		// _.delay(() => {
+		// 	if(this._swiper) {
+		// 		this._swiper.slideTo(0, 0);
+		// 		this._swiper.update();
+		// 		if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		// 	}				
+		// }, 300);
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -206,31 +238,28 @@ class Hard extends React.Component<IQuizBox> {
 								</div>
 							</div>
 						</div>
-						<div className = "hard_question">
-							<div>
+						<div className = "hard_question" >
+							<div ref = {this._refText1}>
 								<p>1. {_getJSX(this._jsx_question1)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question1_answer1},{this._jsx_question1_answer2}
 									</div>
 								</div>
 							</div>
-							<div>
+							<div ref = {this._refText2}>
 								<p>2. {_getJSX(this._jsx_question2)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question2_answer1},{this._jsx_question2_answer2}
 									</div>
 								</div>
 							</div>
-							<div>
+							<div ref = {this._refText3}>
 								<p>3. {_getJSX(this._jsx_question3)}</p>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
 									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question3_answer1},{this._jsx_question3_answer2}
 									</div>
 								</div>
 							</div>
