@@ -6,12 +6,12 @@ import { observable, observe } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 
-import { App } from '../../../../App';
+import { App } from '../../../App';
 
-import { CoverPopup } from '../../../../share/CoverPopup';
-import * as common from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
-import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
+import { CoverPopup } from '../../../share/CoverPopup';
+import * as common from '../../common';
+import { BtnAudio } from '../../../share/BtnAudio';
+import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 interface IQuizBoxProps {
 	view: boolean;

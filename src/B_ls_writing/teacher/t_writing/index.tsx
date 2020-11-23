@@ -21,7 +21,8 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import DictationQuiz from './_dictation_quiz';
-import ScriptQuiz from './script_quiz';
+import PopTrans from './_pop_trans';
+
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -68,6 +69,7 @@ class Writing extends React.Component<IWriting> {
 	@observable private _viewTrans = false;
 	@observable private _viewScript = true;
 	@observable private _letstalk = false;
+	@observable private _popTrans = false;
 	@observable private _viewQuiz = true;
 
 	@observable private _roll: ''|'A'|'B' = '';
@@ -408,8 +410,17 @@ class Writing extends React.Component<IWriting> {
 	// 	};
     //     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         
-	// }
-
+    // }
+    
+    private _onPopTrans = () => {
+		App.pub_playBtnTab();
+		this._popTrans = true;
+		this.props.actions.setNaviView(false);
+	}
+	private _PopTransClosed = () => {
+		this._popTrans = false;
+		this.props.actions.setNaviView(true);
+	}
 	private _letstalkClosed = () => {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
@@ -546,6 +557,7 @@ class Writing extends React.Component<IWriting> {
             this._view = true;
             this._setNavi();
             this._letstalk = false;
+            this._popTrans = false;
         } else if (!view && prev.view) {
             this.c_popup = 'off';
             this._lastFocusIdx = -1;
@@ -606,7 +618,13 @@ class Writing extends React.Component<IWriting> {
                     <div className="return_cnt_box white" style={{display: isViewReturn ? '' : 'none'}} onClick={this._clickReturn}>
                         <div>{retCnt}/{numOfStudent}</div>
                     </div>            
-                </div>	
+                </div>
+                <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
+                <PopTrans 
+                    view={this._popTrans} 
+                    data={this.m_data.script} 
+                    onClosed={this._PopTransClosed}
+                />
                 <div className="writing_content_box">
                     {/* index */}
                     <div className="btn_page_box">
@@ -663,17 +681,6 @@ class Writing extends React.Component<IWriting> {
                             </div>
                             );
                         })}
-                    </div>
-                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
-                        <div key={1} >
-                            <ScriptQuiz 
-                                view={view}
-                                index ={this._curQidx}
-                                mdata={this.m_data} 
-                                onClosed={this._letstalkClosed}
-                                onHintClick={this._clickAnswer}
-                            />                          
-                        </div>              
                     </div>
                 </div>
             </div>
