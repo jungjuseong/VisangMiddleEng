@@ -86,8 +86,6 @@ class Basic extends React.Component<IQuizBoxProps> {
 
 	@action
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		console.log('viewHint')
-
 		this.props.onHintClick();
 		this._hint = !this._hint;
 

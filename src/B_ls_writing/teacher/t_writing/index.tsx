@@ -21,6 +21,7 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import DictationQuiz from './_dictation_quiz';
+import ScriptQuiz from './script_quiz';
 import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -662,6 +663,17 @@ class Writing extends React.Component<IWriting> {
                             </div>
                             );
                         })}
+                    </div>
+                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
+                        <div key={1} >
+                            <ScriptQuiz 
+                                view={view}
+                                index ={this._curQidx}
+                                mdata={this.m_data} 
+                                onClosed={this._letstalkClosed}
+                                onHintClick={this._clickAnswer}
+                            />                          
+                        </div>              
                     </div>
                 </div>
             </div>

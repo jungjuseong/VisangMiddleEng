@@ -39,16 +39,6 @@ export interface IQnaReturn {
 	users: string[];
 }
 
-interface IMultiLang {
-	ko: string;
-	ja: string; 
-	'zh-Hans': string;
-	'zh-Hant': string;
-	vi: string;
-	id: string;
-	es: string;
-}
-
 interface ISpeaker {
 	name: string; 
 	image_s: string;
@@ -66,7 +56,7 @@ export interface IScript {
 	readonly dms_start: number;
 	readonly dms_end: number;
 	readonly dms_eng: string;
-	readonly dms_kor: IMultiLang;
+	readonly dms_kor: string;
 	readonly _sort_idx: number; 
 	readonly dms_seq: number;
 	qnums: number[]|undefined;
@@ -225,6 +215,7 @@ export interface IData {
 	dictation_sup: IDictation[];
 	dictation_basic: IDictation[];
 	dictation_hard: IDictation[];
+	script: IScript[];
 }
 
 function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: string) {
