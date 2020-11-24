@@ -1,18 +1,11 @@
-@import '../../../share/sendui.scss';
-@import '../../../share/Progress_bar.scss';
-@import '../../script_container/index.scss';
-@import '../t_video_box/index.scss';
-@import '../../../share/QuizMCBtn.scss';
 @mixin intro_quiz {
     .intro_question_bg {
-        padding-top: 10px;
-        margin: 0 auto;
         position: relative;
+        margin: 0 auto;
+        padding-top: 10px;
         width: 1150px;
         height: 600px;
-        .closed_hint {
-            display: none;
-        }
+        
         .btn_example {
             @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
             position: absolute;
@@ -29,7 +22,8 @@
             left: 0px;
             right: 0px;
             letter-spacing: -0.6px;
-            padding: 5px 20px;
+            padding: 5px 0px;
+            
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -43,27 +37,22 @@
                 width: 600px;
                 height: 330px;
                 padding: 10px;
+
                 .image_box {
-                    position: relative;
                     margin-top: 5px;
-                    height: 300px;
                     display: inline-block;
+
                     &>img {
-                        float: left;
-                        top: 0px;
-                        left: 0px;
                         width: auto;
                         height: 300px;
-                        margin: 0px 25px;
                     }
                 }
             }
             .sentence_box {
                 height: 100px;
-                position: relative;
                 font-size: 40px;
-                text-align: center;
                 color: #fff;
+
                 &>div {
                     display: inline-block;
                     transform: translateY(-50%);
@@ -83,7 +72,6 @@
                 }
             }
             .speechbubble_box {
-                position: relative;
                 margin: 10px 0px;
                 &>div {
                     display: inline-table;
@@ -101,6 +89,7 @@
                     }
                     .sample {
                         min-height: 55px;
+                        
                         span.block {
                             color: transparent;
                             border-bottom: 2px solid #fff;
@@ -111,9 +100,9 @@
                     }
                     .hint {
                         text-align: left;
+                        font-size: 40px;
                         min-height: 55px;
                         padding-bottom: 5px;
-                        font-size: 40px;
                     }
                 }
             }

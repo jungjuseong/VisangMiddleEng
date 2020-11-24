@@ -93,6 +93,7 @@ export interface IConfirmSup extends IInClassStudyProps{
 	readonly problem1: IProblemSup;
 	readonly problem2: IProblemSup;
 	readonly problem3: IProblemSup;
+	readonly problem4: IProblemSup;
 }
 
 export interface IConfirmHard extends IInClassStudyProps{
@@ -197,6 +198,8 @@ export interface IProblemSup extends IProblem{
 	readonly answer: number;
 	readonly choice1 : string;
 	readonly choice2 : string;
+	readonly choice3 : string;
+	readonly choice4 : string;
 }
 
 export interface IProblemHard extends IProblem{
