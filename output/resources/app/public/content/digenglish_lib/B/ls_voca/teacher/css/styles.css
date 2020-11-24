@@ -762,8 +762,8 @@ body {
     display: inline-block;
     vertical-align: top;
     background: url("/content/digenglish_lib/B/ls_voca/teacher/images/topic_reading.png") no-repeat;
-    width: 74px;
-    height: 18px;
+    width: 72px;
+    height: 15px;
 }
 
 #wrap .t_voca_list > .swiper-container .box .voca_box > .topic_reading > .quiz_progress {
