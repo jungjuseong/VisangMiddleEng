@@ -1,8 +1,6 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/Progress_bar.scss';
-@import '../../script_container/index.scss';
-@import '../t_video_box/index.scss';
-@import '../../../share/QuizMCBtn.scss';
+
 @mixin confirm_quiz {
     .confirm_question_bg {
         padding-top: 10px;
