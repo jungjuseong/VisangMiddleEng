@@ -181,11 +181,10 @@
 
 #wrap .s_content .s_question .question .q-item .quiz {
     position: relative;
-    top: 100px;
-    height: 180px;
-    width: 100%;
     text-align: center;
-    /* background-color: rgba(0, 0, 0, 0.2); */
+    top: 100px;
+    height: 120px;
+    width: 100%;
     padding: 0px 30px;
 }
 
@@ -198,211 +197,72 @@
     white-space: normal;
     word-break: normal;
     line-height: 120%;
-    font-size: 55px;
+    font-size: 32px;
     color: black;
-    /* background-color: rgba(255, 0, 0, 0.2); */
 }
 
-#wrap .s_content .s_question .question .q-item .choice {
-    position: absolute;
-    top: 315px;
-    text-align: center;
-    white-space: normal;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .image {
+#wrap .s_content .s_question .question .q-item .quiz_box {
     position: relative;
-    background-color: gray;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#wrap .s_content .s_question .question .q-item .quiz_box .choice {
+    white-space: normal;
+    display: inline-block;
+    /* 
+                        .btn_choice {
+                            @include btn_on( resolve('student/images/box_select_s.png'), resolve('student/images/box_select_down_s.png'), width('student/images/box_select_s.png'), height('student/images/box_select_s.png'));
+                            position: relative;
+                            @include quiz-btn-mc;
+                            font-size: 40px;
+                            font-family: NotoSans;
+                            text-align: left;
+                            padding: 0px 70px;
+                            color: rgb(0, 0, 0);
+                            margin-bottom: 11px;
+                            &.correct {
+                                background-image: resolve('student/images/box_select_correct_s.png');
+                            }
+                            &.wrong {
+                                background-image: resolve('student/images/box_select_wrong_s.png');
+                            }
+                            &.on {
+                                &::after {
+                                    top: 4px;
+                                }
+                            }
+                        }
+                        */
+}
+
+#wrap .s_content .s_question .question .q-item .quiz_box .choice .image {
     float: left;
     width: 218px;
     height: 249px;
-    margin: 104px;
-    bottom: 210px;
+    margin: 30px;
 }
 
-#wrap .s_content .s_question .question .q-item .choice .btn_choice {
-    touch-action: none;
-    padding: 0px;
-    border: none;
-    background-color: transparent;
-    outline: none;
-    background-image: url("/content/digenglish_lib/B/ls_writing/student/images/box_select_s.png");
-    background-repeat: no-repeat;
-    width: 1114px;
-    height: 132px;
-    cursor: pointer;
-    pointer-events: unset;
+#wrap .s_content .s_question .question .q-item .quiz_box .capsule {
+    display: inline-block;
     position: relative;
-    font-size: 40px;
-    font-family: NotoSans;
-    text-align: left;
-    padding: 0px 70px;
-    color: black;
-    margin-bottom: 11px;
+    width: 40px;
+    height: 40px;
 }
 
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.on {
-    background-image: url("/content/digenglish_lib/B/ls_writing/student/images/box_select_down_s.png");
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice:before {
+#wrap .s_content .s_question .question .q-item .quiz_box .place {
+    width: 100%;
+    height: 675px;
     position: absolute;
-    pointer-events: none;
-    width: 0px;
-    height: 0px;
-    visibility: hidden;
-    overflow: hidden;
-    z-index: -1;
-    content: url("/content/digenglish_lib/B/ls_writing/student/images/box_select_s.png") url("/content/digenglish_lib/B/ls_writing/student/images/box_select_down_s.png");
 }
 
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-1::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "A";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-1.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-2::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "B";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-2.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-3::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "C";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-3.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-4::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "D";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-4.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-5::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "E";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-5.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-6::after {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    text-align: left;
-    content: "F";
-    font-size: 24px;
-    padding-top: 10px;
-    padding-left: 10px;
-    line-height: 100%;
-    background-image: url("/content/digenglish_lib/images/mc_num_bg.png");
-    width: 70px;
-    height: 70px;
-    background-repeat: no-repeat;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.btn-mc-6.correct::after {
-    color: #fff;
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.correct {
-    background-image: url("/content/digenglish_lib/B/ls_writing/student/images/box_select_correct_s.png");
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.wrong {
-    background-image: url("/content/digenglish_lib/B/ls_writing/student/images/box_select_wrong_s.png");
-}
-
-#wrap .s_content .s_question .question .q-item .choice .btn_choice.on::after {
-    top: 4px;
-}
-
-#wrap .s_content .s_question .question .box {
-    position: absolute;
-    top: 500px;
-    text-align: center;
-    white-space: normal;
-    left: 320px;
-}
-
-#wrap .s_content .s_question .question .box .num {
+#wrap .s_content .s_question .question .q-item .quiz_box .place .box {
     position: relative;
     background-color: white;
     width: 40px;
     height: 40px;
     border: 2px solid #000;
-    margin: 20px;
     float: left;
     font-size: 24px;
 }
