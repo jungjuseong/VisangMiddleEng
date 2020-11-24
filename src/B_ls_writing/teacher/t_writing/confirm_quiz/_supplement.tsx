@@ -50,6 +50,11 @@ class Supplement extends React.Component<IQuizBox> {
 	private _jsx_question1: common.IProblemSup;
 	private _jsx_question2: common.IProblemSup;
 	private _jsx_question3: common.IProblemSup;
+	private _jsx_question1_answer: number;
+	private _jsx_question2_answer: number;
+	private _jsx_question3_answer: number;
+	private	_answer_dic: {};
+	private _disable_toggle: boolean
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -62,6 +67,11 @@ class Supplement extends React.Component<IQuizBox> {
 		this._jsx_question1= props.data.problem1;
 		this._jsx_question2= props.data.problem2;
 		this._jsx_question3= props.data.problem3;
+		this._jsx_question1_answer= props.data.problem1.answer;
+		this._jsx_question2_answer= props.data.problem2.answer;
+		this._jsx_question3_answer= props.data.problem3.answer;
+		this._answer_dic = {1:true, 2:false};
+		this._disable_toggle = false;
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -88,59 +98,34 @@ class Supplement extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
-	private _onClickTrue = () =>{
 
-		this._toggle[0] = true;
+	private _onClickTrue = (param: 0 | 1 | 2) =>{
+		if (this._disable_toggle) return;
+		if(this._btnAudio) this._btnAudio.toggle();
+		this._toggle[param] = true;
 	}
-	private _onClickFalse = () =>{
-		this._toggle[0] = false;
-	}
-	private _onClickTrue1 = () =>{
-
-		this._toggle[1] = true;
-	}
-	private _onClickFalse1 = () =>{
-		this._toggle[1] = false;
-	}
-	private _onClickTrue2 = () =>{
-
-		this._toggle[2] = true;
-	}
-	private _onClickFalse2 = () =>{
-		this._toggle[2] = false;
+	private _onClickFalse = (param: 0 | 1 | 2) =>{
+		if (this._disable_toggle) return;
+		if(this._btnAudio) this._btnAudio.toggle();
+		this._toggle[param] = false;
 	}
 	private _getToggleState = (num: number) =>{
 		if(this._toggle[num] === null) return '';
-		if(this._toggle[num]){
+		if(this._toggle[num])
 			return 'on_true';
-		}else{
+		else
 			return 'on_false';
-		}
 	}
-	// True / False 토글 기능
-	private _selectedValue = () => {
-		App.pub_playBtnTab();
-		this._select = !this._select;
-		if(this._select) this._select = true;
 
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
-	}
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		console.log('viewHint')
 		this.props.onHintClick();
-		this._hint = !this._hint;
+		if (this._disable_toggle === false){
+			this._toggle[0] = this._answer_dic[`${this._jsx_question1_answer}`];
+			this._toggle[1] = this._answer_dic[`${this._jsx_question2_answer}`];
+			this._toggle[2] = this._answer_dic[`${this._jsx_question3_answer}`];
+			this._disable_toggle = true;
+		}
 
 		if(this._swiper) {
 			this._swiper.slideTo(0, 0);
@@ -227,22 +212,22 @@ class Supplement extends React.Component<IQuizBox> {
 							<div>
 								<div>1. {this._jsx_question1.question}</div>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
-									<div className="true" onClick={this._onClickTrue}></div>
-									<div className="false" onClick={this._onClickFalse}></div>
+									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
+									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div>
 								<div>2. {this._jsx_question2.question}</div>
 								<div className={"toggle_bundle " + this._getToggleState(1)}>
-									<div className="true" onClick={this._onClickTrue1}></div>
-									<div className="false" onClick={this._onClickFalse1}></div>
+									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
+									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
 								</div>
 							</div>
 							<div>
 								<div>3. {this._jsx_question3.question}</div>
 								<div className={"toggle_bundle " + this._getToggleState(2)}>
-									<div className="true" onClick={this._onClickTrue2}></div>
-									<div className="false" onClick={this._onClickFalse2}></div>
+									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
+									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
 								</div>
 							</div>
 						</div>
