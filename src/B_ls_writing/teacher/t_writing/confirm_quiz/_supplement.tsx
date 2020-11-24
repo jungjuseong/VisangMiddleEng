@@ -210,21 +210,21 @@ class Supplement extends React.Component<IQuizBox> {
 						</div>
 						<div className = "sup_question">
 							<div>
-								<div>1. {this._jsx_question1.question}</div>
+								<p>1. {this._jsx_question1.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div>
-								<div>2. {this._jsx_question2.question}</div>
+								<p>2. {this._jsx_question2.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(1)}>
 									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
 								</div>
 							</div>
 							<div>
-								<div>3. {this._jsx_question3.question}</div>
+								<p>3. {this._jsx_question3.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(2)}>
 									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
