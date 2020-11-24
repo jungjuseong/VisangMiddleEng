@@ -60,7 +60,7 @@
                 height: 460px;
                 padding-left: 25px;
                 .btn_trans {
-                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
                     left: 20px;
                     top: 15px;
@@ -101,22 +101,21 @@
                         align-items: flex-start;
                         justify-content: space-between;
                     }
-                    .toggle_bundle{
+                    .toggle_bundle {
                         width: width('teacher/images/btn_true_false.png');
                         height: height('teacher/images/btn_true_false.png');
                         background: resolve('teacher/images/TF.png');
-
-                        &>div{
+                        &>div {
                             width: 50%;
                             height: 100%;
                             display: inline-block;
                             z-index: 5;
                         }
                     }
-                    .on_true{
+                    .on_true {
                         background: resolve('teacher/images/TF_T.png');
                     }
-                    .on_false{
+                    .on_false {
                         background: resolve('teacher/images/TF_F.png');
                     }
                 }

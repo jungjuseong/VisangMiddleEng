@@ -13,13 +13,21 @@
         .closed_hint {
             display: none;
         }
-        .sub_rate {
+        .subject_rate {
             position: absolute;
             width: 87px;
             height: 26px;
             top: -80px;
             left: 4px;
             background-image: resolve('teacher/images/sub_rate.png');
+        }
+        .correct_answer_rate {
+            position: absolute;
+            width: 118px;
+            height: 26px;
+            left: 97px;
+            top: -80px;
+            background-image: resolve('teacher/images/correct_answer_rate.png')
         }
         .correct_answer {
             @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
@@ -53,7 +61,7 @@
                 padding-left: 25px;
                 overflow: hidden;
                 .btn_trans {
-                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_korean_english.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
                     left: 20px;
                     top: 15px;
@@ -92,7 +100,7 @@
                     .blank_sentence {
                         display: flex;
                         margin-bottom: 100px;
-                        :last-child{
+                         :last-child {
                             margin-bottom: 0px;
                         }
                     }
