@@ -100,7 +100,6 @@ class SScript extends React.Component<ISScriptProps> {
 						roll={state.roll}
 						shadowing={state.shadowing}
 						noSwiping={state.scriptMode === 'DIALOGUE' && state.isPlay}
-						compDiv={scriptMode}
 						viewClue={state.viewClue}
 						viewScript={true}
 						viewTrans={false}

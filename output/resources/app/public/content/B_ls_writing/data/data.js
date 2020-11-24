@@ -1,4 +1,48 @@
 ﻿var _data = {
+    "seq": 1,
+    "image": "main.jpg",
+    "activity_code": {
+        "num1": "A",
+        "num2": "B",
+        "num3": "C",
+        "num4": "D",
+        "num5": "",
+        "num6": "",
+        "num7": "",
+        "num8": "",
+        "num9": "",
+        "num10": ""
+    },
+    "role_play": {
+        "activity_code": "A",
+        "video": "",
+        "video_start": 0.1,
+        "speakerA": {
+            "name": "Woman",
+            "image_s": "woman_small.png",
+            "image_l": "woman.png"
+        },
+        "speakerB": {
+            "name": "Man",
+            "image_s": "man_small.png",
+            "image_l": "man.png"
+        },
+        "speakerC": {
+            "name": "",
+            "image_s": "",
+            "image_l": ""
+        },
+        "speakerD": {
+            "name": "",
+            "image_s": "",
+            "image_l": ""
+        },
+        "speakerE": {
+            "name": "",
+            "image_s": "",
+            "image_l": ""
+        }
+    },
     "introduction": [{
         "activity_code": "A",
         "seq": 1,
@@ -222,8 +266,8 @@
         "table_title": 2,
         "main_sound": "main.mp3",
         "sentence": "▪ W: A long weekend is coming up.<br>\n▪ M: Yeah. {Where} are you going to do, Jessie?<br>\n▪ W: I’m going to visit a water park with my friend.<br>",
-        "sentence_answer1": "Where",
-        "sentence_answer2": "",
+        "sentence_answer1": "",
+        "sentence_answer2": "What",
         "sentence_answer3": "",
         "sentence_answer4": "",
         "kor_eng": true,
@@ -533,7 +577,7 @@
         "table_title": 1,
         "main_sound": "main.mp3",
         "sentence": "▪ W: What are you going to do {a}, Steve?<br>\n▪ M: {b} go on a ski trip to Switzerland.<br>     \n▪ W: Wow! That {c} a cool summer.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",
@@ -578,7 +622,7 @@
         "table_title": 2,
         "main_sound": "main.mp3",
         "sentence": "▪ W: A {a} is coming up.<br>\n▪ M: Yeah. What are you {b} to do, Jessie?<br>\n▪ W: I’m going to visit a water {c} with my friend.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",
@@ -623,7 +667,7 @@
         "table_title": 3,
         "main_sound": "main.mp3",
         "sentence": "▪ M: Summer vacation starts {a}.<br>\n▪ W: So, what are you going to do, Brett?<br>\n▪ M: I’m going to visit Jejudo and {b} horse riding.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",
@@ -669,7 +713,7 @@
         "table_title": 1,
         "main_sound": "main.mp3",
         "sentence": "▪ W: What are you {a} to do this summer, Steve?<br>\n▪ M: I’m {b} to go on a ski trip to Switzerland.<br>\n▪ W: Wow! That {c} like a cool summer.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",
@@ -714,7 +758,7 @@
         "table_title": 2,
         "main_sound": "main.mp3",
         "sentence": "▪ W: A long {a} is coming up.<br>\n▪ M: Yeah. What are you going to {b}, Jessie?<br>\n▪ W: I’m going to visit a water park with my {c}.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",
@@ -759,7 +803,7 @@
         "table_title": 3,
         "main_sound": "main.mp3",
         "sentence": "▪ M: Summer vacation starts {a} week.<br>\n▪ W: So, what are you going to do, Brett?<br>\n▪ M: I’m going to {b} Jejudo and try horse riding.<br>",
-        "kor_eng": true,
+        "kor_eng": false,
         "directive": {
             "kor": "대화를 잘 듣고, 다음 빈칸을 채워 봅시다.",
             "eng": "",

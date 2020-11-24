@@ -481,8 +481,10 @@ var b_rw_comprehension = {
 var ls_writing ={
 	_type:obj_e.TYPE_OBJECT,
 	_excelSheets:"Activity 선택 화면",
-	_startRow:2,
-	_activity_code: {
+	_startRow:3,
+	seq: {_type:obj_e.TYPE_INT, _excel:"A"},
+	image: {_type:obj_e.TYPE_IMAGE, _excel:"B"},
+	activity_code: {
 		_type:obj_e.TYPE_OBJECT,
 		num1: {_type:obj_e.TYPE_TEXT, _excel:"C"},
 		num2: {_type:obj_e.TYPE_TEXT, _excel:"D"},
@@ -1047,6 +1049,44 @@ var ls_writing ={
 			speaker: {_type:obj_e.TYPE_TEXT, _excel:"J"},
 			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"K"},
 			dms_kor: {_type:obj_e.TYPE_TEXT, _excel:"L"},
+		}
+	},
+	role_play:{
+		_type:obj_e.TYPE_OBJECT,
+		_excelSheets:"Role Play",
+		_startRow:3,
+		activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+		video: {_type:obj_e.TYPE_MOVIE, _excel:"B",_default: ""},
+		video_start: {_type:obj_e.TYPE_SECOND, _excel:"R", _default: 0},
+		speakerA: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"C"},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"D"},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"E"},
+		},
+		speakerB: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"G"},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"H"},
+		},
+		speakerC: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"I", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"J", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"K", _default: ""},
+		},
+		speakerD: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"L", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"M", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"N", _default: ""},
+		},
+		speakerE: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"O", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"P", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"Q", _default: ""},
 		}
 	}
 }

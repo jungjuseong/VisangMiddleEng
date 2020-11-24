@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import * as common from '../common';
+import ScriptBox from './_script_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -17,7 +18,6 @@ interface IScriptContainer {
 	roll: ''|'A'|'B';
 	shadowing: boolean;
 	noSwiping: boolean;
-	compDiv: 'COMPREHENSION'|'DIALOGUE';
 	viewClue: boolean;
 	viewScript: boolean;
 	viewTrans: boolean;
@@ -53,7 +53,7 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 	}
 	public componentDidUpdate(prev: IScriptContainer) {
 		// console.log(this.props.selected);
-		const { focusIdx, view, compDiv, viewTrans, roll, shadowing, noSwiping } = this.props;
+		const { focusIdx, view, viewTrans, roll, shadowing, noSwiping } = this.props;
 
 		if(!this.m_swiper) return;
 		
@@ -65,10 +65,6 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 			this.m_swiper.slideTo(fidx);
 		}
 		if(view !== prev.view) {
-			bUpdate = true;
-			this.m_swiper.slideTo(0, 0);
-		}
-		if(compDiv !== prev.compDiv) {
 			bUpdate = true;
 			this.m_swiper.slideTo(0, 0);
 		}

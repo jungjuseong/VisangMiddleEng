@@ -4,7 +4,7 @@ export interface IMsg {
 	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
 				'dictation_send'|'dictation_end'|'dictation_return'|
-				'script_send'|'script_end'|'script_return';
+				'script_send'|'script_end'|'script_return'|'playing'|'paused';
 }
 
 export interface IQuizReturn {
@@ -204,6 +204,11 @@ export interface IProblemHard extends IProblem{
 	readonly hint : string;
 }
 
+export interface IRolePlay{
+	readonly video: string;
+	readonly video_start : number;
+}
+
 export interface IData {
 	introduction: IIntroduction[];
 	confirm_nomal: IConfirmNomal[];
@@ -216,6 +221,7 @@ export interface IData {
 	dictation_basic: IDictation[];
 	dictation_hard: IDictation[];
 	script: IScript[];
+	role_play: IRolePlay;
 }
 
 function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: string) {

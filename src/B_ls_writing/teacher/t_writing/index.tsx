@@ -9,7 +9,7 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
 
-
+import * as common from '../../common';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg } from '../../common';
@@ -55,7 +55,10 @@ interface IWriting {
 
 @observer
 class Writing extends React.Component<IWriting> {
-	private m_data: IData;
+    private m_data: IData;
+    
+    private m_player = new MPlayer(new MConfig(true));
+    private m_player_inittime = 0; // 비디오 시작시간 
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
@@ -89,6 +92,25 @@ class Writing extends React.Component<IWriting> {
 	public constructor(props: IWriting) {
         super(props);
         this.m_data = props.actions.getData();
+        this.m_player_inittime = 0;
+
+        this.m_player.addOnPlayEnd(() => {
+            this._lastFocusIdx = -1;
+            this._focusIdx = -1;
+            this.m_player.setMutedTemp(false);
+            this._sendDialogueEnd();
+            if (this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
+            else if(this._shadowing) this._isShadowPlay = false;
+        });
+        this.m_player.addOnState((newState, oldState) => {
+            let msgtype: 'playing'|'paused';
+            if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
+            else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
+            const msg: common.IMsg = {
+                msgtype,
+            };
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        });
     }
     
 	public componentDidMount() {
@@ -355,6 +377,41 @@ class Writing extends React.Component<IWriting> {
 
         else felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsers());
 
+    }
+    //SCRIPT
+    private _refScriptContainer = (el: ScriptContainer) => {
+		if(this._scontainer || !el) return;
+		this._scontainer = el;
+    }
+    
+    private _qnaReturnsClick = (idx: number) => {
+		if(this._tab !== 'SCRIPT') return;
+		else if(this.props.state.qnaProg < SENDPROG.SENDED) return;
+
+		const returns = this.props.actions.getQnaReturns();
+		if(idx >= returns.length || returns[idx].users.length <= 0) return;
+		
+		App.pub_playBtnTab();
+		felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);	
+    }
+    private _clickItem = (idx: number, script: common.IScript) => {
+		if(this._roll !== '' || this._shadowing) {
+			/*
+			if(!this._countdown.isRunning) {
+				this.m_player.seek(script.dms_start * 1000);
+				if(!this.m_player.bPlay) this.m_player.play();
+			}
+			*/
+		} else {
+			this.m_player.gotoAndPlay(script.dms_start * 1000, script.dms_end * 1000, 1);
+		}
+    }
+
+    private _sendDialogueEnd() {
+		const msg: common.IMsg = {
+			msgtype: 'script_end',
+		};
+		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 	}
 
 	/* 누른 학생만 보이게 하는 런쳐결과  수정안됨*/
@@ -681,6 +738,25 @@ class Writing extends React.Component<IWriting> {
                             </div>
                             );
                         })}
+                    </div>
+                    <div className={'script_container' + (this._tab === 'SCRIPT' ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
+                        <ScriptContainer
+                            ref={this._refScriptContainer}
+                            view={this.props.view}
+                            data={this.m_data}
+                            focusIdx={this._focusIdx}
+                            selected={this._selected}
+                            qnaReturns={this.props.actions.getQnaReturns()}
+                            qnaReturnsClick={this._qnaReturnsClick}
+                            roll={this._roll}
+                            shadowing={this._shadowing}
+                            clickThumb={this._clickItem}
+                            noSwiping={((this._shadowing && this._isShadowPlay) || (!this._shadowing && this.m_player.bPlay))}
+                            viewClue={this._viewClue}
+                            viewScript={this._viewScript}
+                            viewTrans={this._viewTrans}
+                            numRender={state.retCnt}
+                        />
                     </div>
                 </div>
             </div>
