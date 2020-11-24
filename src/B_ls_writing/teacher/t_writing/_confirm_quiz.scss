@@ -1,6 +1,5 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/Progress_bar.scss';
-
 @mixin confirm_quiz {
     .confirm_question_bg {
         padding-top: 10px;
@@ -27,8 +26,8 @@
             top: -80px;
             background-image: resolve('teacher/images/correct_answer_rate.png')
         }
-        .correct_answer {
-            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+        .btn_answer {
+            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
             position: absolute;
             right: 15px;
             top: 15px;
