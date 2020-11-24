@@ -25,25 +25,25 @@ if(p_base_template_t) {
 } else if(p_base_template_s) {
 	_require =  require('./p_base_template/student');
 	_isTeacher = false;
-} else if(b_ls_writing_t) {
-	_require =  require('./B_ls_writing/teacher/index');
-} else if(b_ls_writing_s) {
-	_require =  require('./B_ls_writing/student/index');
+} else if(d_audio_english_t) {
+	_require =  require('./d_audio_english/teacher/index');
+} else if(d_audio_english_s) {
+	_require =  require('./d_audio_english/student/index');
 	_isTeacher = false;
-} else if(b_rw_comprehension_t) {
-	_require =  require('./b_rw_comprehension/teacher/index');
-} else if(b_rw_comprehension_s) {
-	_require =  require('./b_rw_comprehension/student');
+} else if(d_reading_english_t) {
+	_require =  require('./d_reading_english/teacher/index');
+} else if(d_reading_english_s) {
+	_require =  require('./d_reading_english/student');
 	_isTeacher = false;
-} else if(b_ls_comprehension_t) {
-	_require =  require('./b_ls_comprehension/teacher/index');
-} else if(b_ls_comprehension_s) {
-	_require =  require('./b_ls_comprehension/student');
+} else if(d_video_english_t) {
+	_require =  require('./d_video_english/teacher/index');
+} else if(d_video_english_s) {
+	_require =  require('./d_video_english/student');
 	_isTeacher = false;
-} else if(b_ls_voca_t) {
-	_require =  require('./b_ls_voca/teacher');
-} else if(b_ls_voca_s) {	
-	_require =  require('./b_ls_voca/student');
+} else if(d_word_english_t) {
+	_require =  require('./d_word_english/teacher');
+} else if(d_word_english_s) {	
+	_require =  require('./d_word_english/student');
 	_isTeacher = false;
 }
 
@@ -113,7 +113,7 @@ if(_isTeacher) { // *********************** 전자칠판 ***********************
 	// tslint:disable-next-line:no-string-literal
 	app_o['init'] = (student: IStudent, book: string, lesson: string, nextBook: boolean, prevBook: boolean) => {
 		// console.log(_isTeacher, 'app_o.init', student);
-		if(b_ls_voca_s || b_rw_comprehension_s ) {
+		if(d_word_english_s || d_reading_english_s ) {
 			felsocket.disableSoftwareKeyboard();
 		}
 		App.pub_load(null, student, book, lesson, nextBook, prevBook);
