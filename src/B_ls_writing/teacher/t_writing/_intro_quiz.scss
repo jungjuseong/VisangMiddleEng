@@ -5,10 +5,7 @@
         padding-top: 10px;
         width: 1150px;
         height: 600px;
-
-        .closed_hint {
-            display: none;
-        }
+        
         .btn_example {
             @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
             position: absolute;

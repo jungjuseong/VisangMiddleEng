@@ -180,7 +180,7 @@ class Hard extends React.Component<IQuizBox> {
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className="subject_rate"></div>
 				<div className="correct_answer_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

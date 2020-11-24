@@ -196,7 +196,7 @@ class Supplement extends React.Component<IQuizBox> {
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className="subject_rate"></div>
 				<div className="correct_answer_rate"></div>
-				<ToggleBtn className="correct_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
@@ -210,21 +210,21 @@ class Supplement extends React.Component<IQuizBox> {
 						</div>
 						<div className = "sup_question">
 							<div>
-								<div>1. {this._jsx_question1.question}</div>
+								<p>1. {this._jsx_question1.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div>
-								<div>2. {this._jsx_question2.question}</div>
+								<p>2. {this._jsx_question2.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(1)}>
 									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
 								</div>
 							</div>
 							<div>
-								<div>3. {this._jsx_question3.question}</div>
+								<p>3. {this._jsx_question3.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(2)}>
 									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
