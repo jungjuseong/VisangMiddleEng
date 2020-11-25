@@ -23,7 +23,6 @@ import AdditionalQuiz from './additional_quiz';
 import DictationQuiz from './_dictation_quiz';
 import PopTrans from './_pop_trans';
 
-import ComprePopup from './_compre_popup';
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
 /* 페이지 관련 class */
@@ -70,7 +69,7 @@ class Writing extends React.Component<IWriting> {
 	@observable private _curQidx = 0;
 	@observable private _viewClue = false;
 	@observable private _viewTrans = false;
-	@observable private _viewScript = true;
+	@observable private _viewScript = false;
 	@observable private _letstalk = false;
 	@observable private _popTrans = false;
 	@observable private _viewQuiz = true;
@@ -265,7 +264,7 @@ class Writing extends React.Component<IWriting> {
         this.c_popup = 'off';
         this._viewClue = false;
         this._viewTrans = false;
-        this._viewScript = true;
+        this._viewScript = false;
         this._roll = '';
         this._isShadowPlay = false;
         this._shadowing = false;
@@ -279,20 +278,6 @@ class Writing extends React.Component<IWriting> {
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 
 	}
-    
-	// private _clickDial = (ev: React.MouseEvent<HTMLElement>) => {
-    //     const {confirmProg,qnaProg} = this.props.state;
-
-    //     if(this._title === 'DIALOGUE') return;
-    //     if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-		
-    //     App.pub_playBtnTab();
-    //     this._clearAll();
-    //     this._title = 'DIALOGUE';
-    //     this._tab_save = this._tab;
-    //     this._tab = 'SCRIPT';
-    //     this._viewScript = false;
-    // }
     
 	private _clickIntroduction = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions,state } = this.props;

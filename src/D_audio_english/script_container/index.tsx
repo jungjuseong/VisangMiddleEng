@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 
 import * as common from '../common';
 import ScriptBox from './_script_box';
+import { App } from '../../App';
+import { BtnAudio } from '../../share/BtnAudio';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -112,17 +114,11 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		const thumbE = data.role_play.speakerE.image_s;
 
 		const arr: string[] = ['script_box'];
-
-		// if(d_video_english_s) {
-		// 	arr.push('student');
-		// 	arr.push('DIALOGUE');
-		// } else {
-		// 	arr.push(this.props.compDiv);
-		// }
 		
 		const boxClass = arr.join(' ');
 		return (
 			<>
+			<BtnAudio className={'btn_audio'} url={App.data_url + "direction_001.mp3"}/>	
 			<SwiperComponent {...this.m_soption} ref={this._refSwiper}>
 				{data.script.map((script, idx) => {
 					let thumb;

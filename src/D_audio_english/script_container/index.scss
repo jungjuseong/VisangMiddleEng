@@ -21,7 +21,7 @@
 
 	$focus: #ff0;
 
-	width: 454px; height: auto;
+	width: 1150px; height: auto;
 	vertical-align: middle;
 	position: relative; top: 0px; left: 0px;
 	
@@ -146,11 +146,11 @@
 	}
 	.ballon{
 		touch-action: none;
-		display: inline-block; 
-		vertical-align: top;
-		/* width: 437px; */
-		width: 378px;
+		display: inline-flex; 
+		align-items: center;
+		width: 950px;
 		height: auto;
+		min-height: 120px;
 		position: relative;
 		word-spacing: 2px;
 		
