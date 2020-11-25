@@ -192,7 +192,10 @@ class Basic extends React.Component<IQuizBox> {
 						</div>
 						<div className = "basic_question">
 							<div>
-								<p>1.{_getJSX(this._jsx_question1)}</p>
+								<div>
+									<p className="number">1.</p>
+									<p>{_getJSX(this._jsx_question1)}</p>
+								</div>
 								<div>
 									<div className="answer_box" style={{ borderBottom: this._jsx_question1_answer1 != '' ? '' : 'none',  }}>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -215,7 +218,10 @@ class Basic extends React.Component<IQuizBox> {
 								</div>
 							</div>
 							<div>
-								<p>2.{_getJSX(this._jsx_question2)}</p>
+								<div>
+									<p className="number">2.</p>
+									<p>{_getJSX(this._jsx_question2)}</p>
+								</div>
 								<div>
 									<div className="answer_box" style={{ borderBottom: this._jsx_question2_answer1 != '' ? '' : 'none' }}>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -238,7 +244,10 @@ class Basic extends React.Component<IQuizBox> {
 								</div>
 							</div>
 							<div>
-								<p>3. {_getJSX(this._jsx_question3)}</p>
+								<div>
+									<p className="number">3.</p>
+									<p>{_getJSX(this._jsx_question3)}</p>
+								</div>
 								<div>
 									<div className="answer_box" style={{ borderBottom: this._jsx_question3_answer1 != '' ? '' : 'none' }}>
 										<div className={'sample' + (this._hint ? ' hide' : '')}/>

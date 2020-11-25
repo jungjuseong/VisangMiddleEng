@@ -90,13 +90,15 @@
                         }
                     }
                 }
-                .hard_question {
+                .dict_question {
                     overflow: auto;
                     height: 385px;
                     position: relative;
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
+                    
+
                     .blank_sentence {
                         display: flex;
                         margin-bottom: 100px;
@@ -132,6 +134,16 @@
                             }
                         }
                     }
+                }
+                .dict_question::-webkit-scrollbar {
+                    width: 7px;
+                }
+                .dict_question::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                .dict_question::-webkit-scrollbar-track {
+                    background-color: transparent;
                 }
             }
         }

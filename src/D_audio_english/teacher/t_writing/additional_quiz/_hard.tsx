@@ -206,7 +206,8 @@ class Hard extends React.Component<IQuizBox> {
 							</div>
 						</div>
 						<div className = "hard_question">
-							<p>1. {_getJSX(this._jsx_question1)}</p>
+							<p className="number">1.</p>
+							<p>{_getJSX(this._jsx_question1)}</p>
 							<div>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -222,7 +223,8 @@ class Hard extends React.Component<IQuizBox> {
 									</div>
 								</div>
 							</div>
-							<p>2. {_getJSX(this._jsx_question2)}</p>
+							<p className="number">2.</p>
+							<p>{_getJSX(this._jsx_question2)}</p>
 							<div>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>
@@ -238,7 +240,8 @@ class Hard extends React.Component<IQuizBox> {
 									</div>
 								</div>
 							</div>
-							<p>3. {_getJSX(this._jsx_question3)}</p>
+							<p className="number">3.</p>
+							<p>{_getJSX(this._jsx_question3)}</p>
 							<div>
 								<div className="answer_box">
 									<div className={'sample' + (this._hint ? ' hide' : '')}/>

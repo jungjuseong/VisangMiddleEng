@@ -673,7 +673,7 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
-                    padding-bottom: 5px;
+                    padding: 0px 25px;
                     .block {
                         text-decoration: underline;
                     }
@@ -681,13 +681,19 @@
                         margin-bottom: 40px;
                         display: flex;
                         justify-content: space-between;
+                        p{
+                            display: inline-block;
+                        }
+                        .number{
+                            vertical-align: top;
+                        }
                     }
                     &>div:last-child {
                         margin-bottom: 0px;
                     }
                     .answer_box {
                         border-bottom: 2px solid #000;
-                        width: 180px;
+                        width: 160px;
                         .sample {
                             min-height: 41px;
                         }
@@ -712,7 +718,11 @@
                     padding: 0px 25px;
                     height: 385px;
                     &>p {
+                        display: inline-block;
                         margin-bottom: 40px;
+                    }
+                    .number{
+                        vertical-align: top;
                     }
                     &>div {
                         display: flex;
@@ -741,6 +751,36 @@
                             }
                         }
                     }
+                }
+                .table_box::-webkit-scrollbar {
+                    width: 7px;
+                }
+                .table_box::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                .table_box::-webkit-scrollbar-track {
+                    background-color: transparent;
+                }
+                .basic_question::-webkit-scrollbar {
+                    width: 7px;
+                }
+                .basic_question::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                .basic_question::-webkit-scrollbar-track {
+                    background-color: transparent;
+                }
+                .hard_question::-webkit-scrollbar {
+                    width: 7px;
+                }
+                .hard_question::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                .hard_question::-webkit-scrollbar-track {
+                    background-color: transparent;
                 }
             }
         }
