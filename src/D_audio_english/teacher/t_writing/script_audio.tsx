@@ -33,7 +33,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
     private m_player = new MPlayer(new MConfig(true));
     private m_player_inittime = 0; // 비디오 시작시간 
 	
-	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
+	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'SCRIPT';
 
 	@observable private _answer = false;
 	@observable private _view = false;
@@ -188,7 +188,9 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         if (view && !prev.view) {
             this._view = true;
             this._setNavi();
+            if(this.m_player.bPlay) this.m_player.pause();
         } else if (!view && prev.view) {
+            if(this.m_player.bPlay) this.m_player.pause();
             this._lastFocusIdx = -1;
             this._focusIdx = -1;
             this._roll = '';
