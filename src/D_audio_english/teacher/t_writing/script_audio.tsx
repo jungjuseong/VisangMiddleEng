@@ -16,6 +16,7 @@ import { TimerState } from '../../../share/Timer';
 
 import ScriptContainer from '../../script_container';
 import VideoBox from '../t_video_box';
+import { ToggleBtn } from '@common/component/button';
 
 interface IScriptAudio {
 	view: boolean;
@@ -34,6 +35,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 	
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
 
+	@observable private _answer = false;
 	@observable private _view = false;
 	@observable private _curQidx = 0;
 	@observable private _viewClue = false;
@@ -174,7 +176,11 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         else if(confirmBasicProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
 		else actions.setNavi(true, true);
 		
-	}
+    }
+    private _toggleScript = () => {
+		App.pub_playBtnTab();
+		this._viewScript = !this._viewScript;
+    }
 
 	public componentDidUpdate(prev: IScriptAudio) {
         const { view } = this.props;
@@ -205,6 +211,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
     
         return (
             <>
+            <ToggleBtn className={'btn_script_show' + (this._viewScript ? ' on' : '')} on={this._viewScript} onClick={this._toggleScript} />
             <div className="video_container">
 				<VideoBox 
 					player={this.m_player} 
