@@ -21,9 +21,9 @@ function _getCurrentIdx(scripts: common.IScript[], time: number) {
     let timeRound = Math.round(time / 0.01) * 0.01;
     for (let i = 0, len = scripts.length; i < len; i++) {
         const s = scripts[i];
-        if (timeRound >= s.dms_start && timeRound <= s.dms_end) {
+        if (timeRound >= s.audio_start && timeRound <= s.audio_end) {
             return i;
-        } else if (timeRound < s.dms_start) {
+        } else if (timeRound < s.audio_start) {
             break;
         }
     }

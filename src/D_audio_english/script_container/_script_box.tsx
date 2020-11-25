@@ -246,7 +246,6 @@ interface IScriptBox {
 	clickThumb: (idx: number, script: common.IScript) => void;
 	clickText?: (idx: number, script: common.IScript) => void;
 	qnaReturnsClick?: (idx: number) => void;
-
 	compDiv: 'COMPREHENSION'|'DIALOGUE';
 	viewClue: boolean;
 	viewScript: boolean;
@@ -293,7 +292,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 			</>
 		);
 
-		sScript = props.script.dms_kor[App.lang];
+		sScript = props.script.dms_kor;
 		sScript = sScript.replace(/<\s*br\s*\/*\s*>/ig, '<br>');
 		arrLine = sScript.split('<br>');
 
@@ -313,14 +312,8 @@ class ScriptBox  extends React.Component<IScriptBox> {
 			</>
 		);
 
-		if(props.script.qnums && props.script.qnums.length > 0) {
-			this.m_clue = (
-				<div className="clue_qnum">{
-				}</div>
-			);
-		} else {
-			this.m_clue = <></>;
-		}
+		this.m_clue = <></>;
+	
 		// this.m_prog = <StandBar percent={this.props.script.app_preview} />;
 		// else this.m_prog = <></>;
 		this.m_prog = <></>;
@@ -496,10 +489,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 		
 		let isViewClue;
 		
-		if(viewClue && script.qnums && script.qnums.length > 0) {
-			arr.push('clue qnum' + script.qnums[0]);
-			isViewClue = true;
-		} else isViewClue = false;
+		isViewClue = false;
 
 		if(!this.m_viewScript) arr.push('hide-script');	
 		if(sroll !== '' && sroll === roll) {

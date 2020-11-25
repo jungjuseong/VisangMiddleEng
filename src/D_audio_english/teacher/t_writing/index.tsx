@@ -403,7 +403,7 @@ class Writing extends React.Component<IWriting> {
 			}
 			*/
 		} else {
-			this.m_player.gotoAndPlay(script.dms_start * 1000, script.dms_end * 1000, 1);
+			this.m_player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
 		}
     }
 
@@ -744,7 +744,7 @@ class Writing extends React.Component<IWriting> {
                             ref={this._refScriptContainer}
                             view={this.props.view}
                             data={this.m_data}
-                            focusIdx={this._focusIdx}
+                            focusIdx={this._curQidx}
                             selected={this._selected}
                             qnaReturns={this.props.actions.getQnaReturns()}
                             qnaReturnsClick={this._qnaReturnsClick}

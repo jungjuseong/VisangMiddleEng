@@ -199,7 +199,43 @@ class TeacherContext extends TeacherContextBase {
 				val_arr[idx].txt = txt;			
 			}
 		}
+
+		const scripts = this._data.script;
+		const speakerA = this._data.role_play.speakerA.name;
+		const speakerB = this._data.role_play.speakerB.name;
+		const speakerC = this._data.role_play.speakerC.name;
+
+		if(!this._data.role_play.speakerD) {
+			this._data.role_play.speakerD = {
+				name: '',
+				image_s: '',
+				image_l: '',
+			};
+		}
+		if(!this._data.role_play.speakerE) {
+			this._data.role_play.speakerE = {
+				name: '',
+				image_s: '',
+				image_l: '',
+			};
+		}
+		const speakerD = this._data.role_play.speakerD.name;
+		const speakerE = this._data.role_play.speakerE.name;
+
+		
 		const previewMsg: IPreviewClassMsg[] = [];
+
+		for(let i = 0; i < scripts.length; i++) {
+			const script = scripts[i];
+			
+			if(script.speaker === speakerA) script.roll = 'A';
+			else if (script.speaker === speakerB) script.roll = 'B';
+			else if (script.speaker === speakerC) script.roll = 'C';
+			else if (script.speaker === speakerD) script.roll = 'D';
+			else script.roll = 'E';
+
+			this._qnaReturns[i] = {num: 0, users: []};
+		}
 	
 		console.log('preview Msg~~~', previewMsg.length, previewMsg);
 
@@ -220,12 +256,6 @@ class TeacherContext extends TeacherContextBase {
 			
 				_initAvgPercent(text_arr_meaning,val_arr_meaning,meaning_result);
 				console.log('text_arr', text_arr_meaning, 'val_arr', val_arr_meaning);
-				// console.log("previewResult~~",previewResult)
-				let resultScript: IScript[] = [];
-
-				for(let i = 0; i < resultScript.length; i++) {
-					resultScript[i].app_preview = val_arr_meaning[i].avg;
-				}
 			}// 서버에서 받아온 1view 사전 학습 결과값이 없으면 -1로 셋팅 
 		
 		}// 런처가 아닌 웹 용일 경우 임의 데이터

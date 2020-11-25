@@ -52,17 +52,17 @@ interface IScCod {
 
 export interface IScript {
 	readonly seq: number;
-	readonly dms_speaker: string;
-	readonly dms_start: number;
-	readonly dms_end: number;
+	readonly script_group: number;
+	readonly coordinate_num: number;
+	readonly start: number;
+	readonly end: number;
+	readonly audio_start: number;
+	readonly audio_end: number;
+	readonly speaker: string; 
 	readonly dms_eng: string;
 	readonly dms_kor: string;
-	readonly _sort_idx: number; 
 	readonly dms_seq: number;
-	qnums: number[]|undefined;
 	roll: 'A' | 'B' | 'C' | 'D' |'E';
-	app_preview: number;
-	sc_COD: IScCod[];
 }
 export interface IIntroduction {
 	readonly seq: number;
@@ -210,6 +210,17 @@ export interface IProblemHard extends IProblem{
 export interface IRolePlay{
 	readonly video: string;
 	readonly video_start : number;
+	speakerA: ISpeaker;
+	speakerB: ISpeaker;
+	speakerC: ISpeaker;
+	speakerD: ISpeaker;
+	speakerE: ISpeaker;
+}
+
+interface ISpeaker {
+	name: string; 
+	image_s: string;
+	image_l: string;
 }
 
 export interface IData {
