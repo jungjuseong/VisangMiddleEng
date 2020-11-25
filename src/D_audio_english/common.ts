@@ -4,7 +4,7 @@ export interface IMsg {
 	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
 				'dictation_send'|'dictation_end'|'dictation_return'|
-				'script_send'|'script_end'|'script_return'|'playing'|'paused';
+				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx';
 }
 
 export interface IQuizReturn {

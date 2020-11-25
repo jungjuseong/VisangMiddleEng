@@ -120,7 +120,6 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		const boxClass = arr.join(' ');
 		return (
 			<>
-			<BtnAudio className={'btn_audio'} url={App.data_url + role.main_sound}/>	
 			<div className='swiper-container'>
 				{this.props.script.map((script, idx) => {
 					let thumb;

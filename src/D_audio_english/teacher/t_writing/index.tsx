@@ -15,7 +15,6 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg } from '../../common';
 
 import ScriptContainer from '../../script_container';
-import { TimerState } from '../../../share/Timer';
 
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
@@ -88,7 +87,6 @@ class Writing extends React.Component<IWriting> {
         this.m_player_inittime = 0;
 
         this.m_player.addOnPlayEnd(() => {
-            this._lastFocusIdx = -1;
             this._focusIdx = -1;
             this.m_player.setMutedTemp(false);
             this._sendDialogueEnd();
@@ -693,9 +691,8 @@ class Writing extends React.Component<IWriting> {
                     </div>
                     {this.m_data.scripts.map((script, idx) => {
                         return (
-                            <div className={'script_container' + (this._tab === 'SCRIPT'&&idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
+                            <div key = {idx} className={'script_container' + (this._tab === 'SCRIPT'&&idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
                                 <ScriptAudio
-                                    key = {idx}
                                     view={view}
                                     state={state}
                                     actions={actions}

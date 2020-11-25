@@ -12,8 +12,10 @@ import * as common from '../../common';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg } from '../../common';
+import { TimerState } from '../../../share/Timer';
 
 import ScriptContainer from '../../script_container';
+import VideoBox from '../t_video_box';
 
 interface IScriptAudio {
 	view: boolean;
@@ -106,6 +108,57 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 		}
     }
 
+    private _stopClick = () => {
+        this._sendFocusIdx(-1);
+        this._lastFocusIdx = -1;
+        this._focusIdx = -1;
+
+        this.m_player.setMutedTemp(false);
+
+        this._sendDialogueEnd();
+        
+        const isOnStudy = this._roll === 'A' || this._roll === 'B' || this._shadowing;
+        
+        this._isShadowPlay = false;
+        if(!isOnStudy) this._setNavi();
+    
+	}
+
+    private _onChangeScript = (idx: number) => {
+        const scripts = this.m_data.scripts[this.props.idx];
+        if(idx >= 0 && idx < scripts.length) {
+            if(this._roll !== '' || this._shadowing) {
+                const script = scripts[idx];
+                if(this._roll !== '') {
+                    this.m_player.setMutedTemp(this._roll === script.roll);
+                }
+            }
+            this._lastFocusIdx = idx;
+            this._focusIdx = idx;
+        } else {
+            this._focusIdx = -1;
+            if(this._roll !== '') this.m_player.setMutedTemp(false);
+        }
+		//this._sendFocusIdx(idx);
+    }
+    private _sendFocusIdx(idx: number) {
+		const msg: common.IFocusMsg = {
+			msgtype: 'focusidx',
+			idx,
+		};
+		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    }
+    
+    private _setShadowPlay = (val: boolean) => {
+		if(this._shadowing) {
+			this._isShadowPlay = val;
+			const msg: common.IMsg = {
+				msgtype: val ? 'playing' : 'paused',
+			};
+			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+		} else this._isShadowPlay = val;
+    }
+
     private _sendDialogueEnd() {
 		const msg: common.IMsg = {
 			msgtype: 'script_end',
@@ -151,6 +204,21 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         }
     
         return (
+            <>
+            <div className="video_container">
+				<VideoBox 
+					player={this.m_player} 
+					playerInitTime={this.m_player_inittime} 
+                    data={this.m_data}
+                    idx={idx}
+					roll={this._roll}
+					shadowing={this._shadowing}
+					onChangeScript={this._onChangeScript}
+					stopClick={this._stopClick}
+					isShadowPlay={this._isShadowPlay}
+					setShadowPlay={this._setShadowPlay}
+				/>
+			</div>
             <ScriptContainer
                 ref={this._refScriptContainer}
                 view={view}
@@ -170,6 +238,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
                 viewTrans={this._viewTrans}
                 numRender={state.retCnt}
             />
+            </>
         );
     }
 }
