@@ -15,7 +15,7 @@
     },
     "role_play": {
         "activity_code": "A",
-        "video": "",
+        "main_sound": "main.mp3",
         "video_start": 0.1,
         "speakerA": {
             "name": "Woman",

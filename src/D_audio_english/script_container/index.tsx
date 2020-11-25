@@ -9,9 +9,11 @@ import { BtnAudio } from '../../share/BtnAudio';
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IScriptContainer {
-	data: common.IData;
+	role: common.IRolePlay;
+	script: common.IScript[];
 	focusIdx: number;
 	selected: number[];
+	idx : number;
 	qnaReturns: common.IQnaReturn[];
 	clickThumb: (idx: number, script: common.IScript) => void;
 	clickText?: (idx: number, script: common.IScript) => void;
@@ -106,21 +108,21 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		}
 	}
 	public render() {
-		const { data, selected, qnaReturns } = this.props;
-		const thumbA = data.role_play.speakerA.image_s;
-		const thumbB = data.role_play.speakerB.image_s;
-		const thumbC = data.role_play.speakerC.image_s;
-		const thumbD = data.role_play.speakerD.image_s;
-		const thumbE = data.role_play.speakerE.image_s;
+		const { role, selected, qnaReturns } = this.props;
+		const thumbA = role.speakerA.image_s;
+		const thumbB = role.speakerB.image_s;
+		const thumbC = role.speakerC.image_s;
+		const thumbD = role.speakerD.image_s;
+		const thumbE = role.speakerE.image_s;
 
 		const arr: string[] = ['script_box'];
 		
 		const boxClass = arr.join(' ');
 		return (
 			<>
-			<BtnAudio className={'btn_audio'} url={App.data_url + "direction_001.mp3"}/>	
-			<SwiperComponent {...this.m_soption} ref={this._refSwiper}>
-				{data.script.map((script, idx) => {
+			<BtnAudio className={'btn_audio'} url={App.data_url + role.main_sound}/>	
+			<div className='swiper-container'>
+				{this.props.script.map((script, idx) => {
 					let thumb;
 					if (script.roll === 'E')  thumb = thumbE;
 					else if (script.roll === 'D')  thumb = thumbD;
@@ -155,7 +157,7 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 						</div>
 					);
 				})}
-			</SwiperComponent>
+			</div>
 			<div style={{display: 'none'}}>{this.props.numRender}</div>
 			</>
 		);

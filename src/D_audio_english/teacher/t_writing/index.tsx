@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
@@ -22,6 +22,7 @@ import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import DictationQuiz from './_dictation_quiz';
 import PopTrans from './_pop_trans';
+import ScriptAudio from './script_audio';
 
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
@@ -80,13 +81,6 @@ class Writing extends React.Component<IWriting> {
 	@observable private _isShadowPlay = false;
 
 	@observable private _qselected: number[] = [];
-
-	private _selected: number[] = [];
-	private _lastFocusIdx = -1;
-	private _countdown = new TimerState(3);
-
-	// private _rollProg: SENDPROG = SENDPROG.READY;
-	private _scontainer?: ScriptContainer;
 	
 	public constructor(props: IWriting) {
         super(props);
@@ -268,8 +262,6 @@ class Writing extends React.Component<IWriting> {
         this._roll = '';
         this._isShadowPlay = false;
         this._shadowing = false;
-
-        this._lastFocusIdx = -1;
         this._focusIdx = -1;
 
         actions.setNavi(true, true);
@@ -287,6 +279,7 @@ class Writing extends React.Component<IWriting> {
         if(confirmBasicProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
         
         App.pub_playBtnTab();
+        this._curQidx = 0;
         this._hint = false;
         this._tab = 'INTRODUCTION';
         if(state.scriptProg > SENDPROG.READY) {
@@ -307,6 +300,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        this._curQidx = 0;
         this._hint = false;
         this._tab = 'CONFIRM';
         actions.setNavi(true, true);
@@ -320,6 +314,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        this._curQidx = 0;
         this._hint = false;
         this._tab = 'ADDITIONAL';
         actions.setNavi(true, true);
@@ -333,6 +328,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        this._curQidx = 0;
         this._hint = false;
         this._tab = 'DICTATION';
         actions.setNavi(true, true);
@@ -346,6 +342,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        this._curQidx = 0;
         this._hint = false;
         this._tab = 'SCRIPT';
         actions.setNavi(true, true);
@@ -363,35 +360,6 @@ class Writing extends React.Component<IWriting> {
         else felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsers());
 
     }
-    //SCRIPT
-    private _refScriptContainer = (el: ScriptContainer) => {
-		if(this._scontainer || !el) return;
-		this._scontainer = el;
-    }
-    
-    private _qnaReturnsClick = (idx: number) => {
-		if(this._tab !== 'SCRIPT') return;
-		else if(this.props.state.qnaProg < SENDPROG.SENDED) return;
-
-		const returns = this.props.actions.getQnaReturns();
-		if(idx >= returns.length || returns[idx].users.length <= 0) return;
-		
-		App.pub_playBtnTab();
-		felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);	
-    }
-    private _clickItem = (idx: number, script: common.IScript) => {
-		if(this._roll !== '' || this._shadowing) {
-			/*
-			if(!this._countdown.isRunning) {
-				this.m_player.seek(script.dms_start * 1000);
-				if(!this.m_player.bPlay) this.m_player.play();
-			}
-			*/
-		} else {
-			this.m_player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
-		}
-    }
-
     private _sendDialogueEnd() {
 		const msg: common.IMsg = {
 			msgtype: 'script_end',
@@ -602,7 +570,6 @@ class Writing extends React.Component<IWriting> {
             this._popTrans = false;
         } else if (!view && prev.view) {
             this.c_popup = 'off';
-            this._lastFocusIdx = -1;
             this._focusIdx = -1;
             this._roll = '';
             this._isShadowPlay = false;
@@ -724,25 +691,20 @@ class Writing extends React.Component<IWriting> {
                             );
                         })}
                     </div>
-                    <div className={'script_container' + (this._tab === 'SCRIPT' ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
-                        <ScriptContainer
-                            ref={this._refScriptContainer}
-                            view={this.props.view}
-                            data={this.m_data}
-                            focusIdx={this._curQidx}
-                            selected={this._selected}
-                            qnaReturns={this.props.actions.getQnaReturns()}
-                            qnaReturnsClick={this._qnaReturnsClick}
-                            roll={this._roll}
-                            shadowing={this._shadowing}
-                            clickThumb={this._clickItem}
-                            noSwiping={((this._shadowing && this._isShadowPlay) || (!this._shadowing && this.m_player.bPlay))}
-                            viewClue={this._viewClue}
-                            viewScript={this._viewScript}
-                            viewTrans={this._viewTrans}
-                            numRender={state.retCnt}
-                        />
-                    </div>
+                    {this.m_data.scripts.map((script, idx) => {
+                        return (
+                            <div className={'script_container' + (this._tab === 'SCRIPT'&&idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
+                                <ScriptAudio
+                                    key = {idx}
+                                    view={view}
+                                    state={state}
+                                    actions={actions}
+                                    idx={idx}
+                                    script={script}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );

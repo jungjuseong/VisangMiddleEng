@@ -265,7 +265,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 	private m_clue: JSX.Element;
 	private m_prog: JSX.Element;
 
-	@observable private m_viewScript = true;
+	@observable private m_viewScript = false;
 
 	constructor(props: IScriptBox) {
 		super(props);
@@ -430,7 +430,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 
 			this._draw();
 		}
-		if(d_audio_english_s) this.m_viewScript = true;
+		if(d_audio_english_s) this.m_viewScript = false;
 		else {
 			if(this.props.viewScript !== prev.viewScript) {
 				this.m_viewScript = this.props.viewScript;

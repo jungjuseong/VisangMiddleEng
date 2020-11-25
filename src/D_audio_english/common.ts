@@ -208,7 +208,7 @@ export interface IProblemHard extends IProblem{
 }
 
 export interface IRolePlay{
-	readonly video: string;
+	readonly main_sound: string;
 	readonly video_start : number;
 	speakerA: ISpeaker;
 	speakerB: ISpeaker;
@@ -235,6 +235,7 @@ export interface IData {
 	dictation_basic: IDictation[];
 	dictation_hard: IDictation[];
 	script: IScript[];
+	scripts: IScript[][];
 	role_play: IRolePlay;
 }
 
@@ -270,6 +271,21 @@ function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: strin
 	return ret;
 }
 export function initData(data: IData) {
+	let cnum = -1
+	let arr: IScript[] = [];
+	data.scripts = [];
+	for(let i = 0; i < data.script.length; i++){
+		const grap = data.script[i];
+		if(grap.script_group != cnum){
+			if(cnum != -1){
+				data.scripts.push(arr);
+			}
+			cnum = grap.script_group;
+			arr = [];
+		}
+		arr.push(grap)
+	}
+	data.scripts.push(arr);
 
 	for(let i = 0; i < data.additional_sup.length; i++) {
 		const grap = data.additional_sup[i];

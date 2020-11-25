@@ -18,7 +18,6 @@ interface IQuizBox {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IDictation[];
-	
 }
 @observer
 class Hard extends React.Component<IQuizBox> {
@@ -46,7 +45,6 @@ class Hard extends React.Component<IQuizBox> {
 	private _jsx_eng_sentence: JSX.Element;
 	private _jsx_question: Array<string> = [];
 	private _jsx_question_answers: Array<Array<string>> = [];
-	private refTexts:Array<(el: HTMLDivElement)=>void> = [];
 
 	private boxnum :number;
 
@@ -66,10 +64,6 @@ class Hard extends React.Component<IQuizBox> {
 
 		props.data.forEach((data,idx) =>{
 			this._jsx_question.push(data.sentence)
-			this.refTexts.push((el: HTMLDivElement) => {
-				if(this._boxs[idx] || !el) return;
-				this._boxs[idx] = el;
-			})
 			this._jsx_question_answers.push([props.data[idx].sentence1.answer1, props.data[idx].sentence2.answer1, props.data[idx].sentence3.answer1, props.data[idx].sentence4.answer1])
 		})
 		
@@ -78,6 +72,11 @@ class Hard extends React.Component<IQuizBox> {
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
+	}
+
+	private refText = (el: HTMLDivElement, idx : number) => {
+		if(this._boxs[idx] || !el) return;
+		this._boxs[idx] = el;
 	}
 	
 	// Translation 토글 기능
@@ -221,7 +220,7 @@ class Hard extends React.Component<IQuizBox> {
 						<div className = "hard_question" >
 							{this.props.data.map((data,idx) =>{
 								this.boxnum = idx;
-								return <div key={idx} className="blank_sentence" ref = {this.refTexts[idx]}>
+								return <div key={idx} className="blank_sentence" ref = {(el : HTMLDivElement) => {this.refText(el,idx)}}>
 									<p>{idx+1}.</p>
 									<p>{_getJSX(this._jsx_question[idx])}</p>
 								</div>
