@@ -217,7 +217,7 @@ class Hard extends React.Component<IQuizBox> {
 								</div>
 							</div>
 						</div>
-						<div className = "hard_question" >
+						<div className = "dict_question" >
 							{this.props.data.map((data,idx) =>{
 								this.boxnum = idx;
 								return <div key={idx} className="blank_sentence" ref = {(el : HTMLDivElement) => {this.refText(el,idx)}}>
