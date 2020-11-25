@@ -207,7 +207,9 @@ class VideoBox extends React.Component<IVideoBox> {
 		const player = this.props.player;
 		player.setMuted(!player.muted);
 	}
+
 	private _togglePlay = () => {
+		const scripts = this.props.data.scripts[this.props.idx];
 		if(this.m_viewCountDown) return;
 		App.pub_playBtnTab();
 		const player = this.props.player;
@@ -227,7 +229,7 @@ class VideoBox extends React.Component<IVideoBox> {
 			if (player.bPlay) player.pause();
 			else {
                 // if(player.currentTime >= player.duration || player.currentTime < this.props.playerInitTime) player.seek(this.props.playerInitTime * 1000);
-                player.play();
+                player.gotoAndPlay(scripts[0].audio_start * 1000, scripts[scripts.length-1].audio_end * 1000, 1);
             }
 		}
 	}

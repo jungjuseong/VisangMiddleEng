@@ -693,7 +693,7 @@ class Writing extends React.Component<IWriting> {
                         return (
                             <div key = {idx} className={'script_container' + (this._tab === 'SCRIPT'&&idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
                                 <ScriptAudio
-                                    view={view}
+                                    view={view && idx == this._curQidx}
                                     state={state}
                                     actions={actions}
                                     idx={idx}
