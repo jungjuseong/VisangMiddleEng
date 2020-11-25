@@ -87,25 +87,6 @@ class Hard extends React.Component<IQuizBox> {
 			}				
 		}, 300);
 	}
-	// True / False 토글 기능
-	private _selectedValue = () => {
-		App.pub_playBtnTab();
-		this._select = !this._select;
-		if(this._select) this._select = true;
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
-	}
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')

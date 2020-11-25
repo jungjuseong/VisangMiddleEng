@@ -45,15 +45,6 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: string;
-	private _jsx_question2: string;
-	private _jsx_question3: string;
-	private _jsx_question1_answer1: string;
-	private _jsx_question1_answer2: string;
-	private _jsx_question2_answer1: string;
-	private _jsx_question2_answer2: string;
-	private _jsx_question3_answer1: string;
-	private _jsx_question3_answer2: string;
 	
 	private _characterImage: string;
 
@@ -65,15 +56,6 @@ class Hard extends React.Component<IQuizBox> {
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
-		this._jsx_question1= props.data[0].sentence;
-		this._jsx_question2= props.data[1].sentence;
-		this._jsx_question3= props.data[2].sentence;
-		this._jsx_question1_answer1= props.data[0].sentence1.answer1;
-		this._jsx_question1_answer2= props.data[0].sentence1.answer2;
-		this._jsx_question2_answer1= props.data[1].sentence1.answer1;
-		this._jsx_question2_answer2= props.data[1].sentence1.answer2;
-		this._jsx_question3_answer1= props.data[2].sentence1.answer1;
-		this._jsx_question3_answer2= props.data[2].sentence1.answer2;
 		
 		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
@@ -101,25 +83,6 @@ class Hard extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	// True / False 토글 기능
-	private _selectedValue = () => {
-		App.pub_playBtnTab();
-		this._select = !this._select;
-		if(this._select) this._select = true;
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
-	}
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		console.log('viewHint')
@@ -206,57 +169,27 @@ class Hard extends React.Component<IQuizBox> {
 							</div>
 						</div>
 						<div className = "hard_question">
-							<p className="number">1.</p>
-							<p>{_getJSX(this._jsx_question1)}</p>
-							<div>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question1_answer1}
+							{data.map((question, idx) =>{
+								return <div key={idx}>
+									<p className="number">{idx + 1}.</p>
+									<p>{_getJSX(question.sentence)}</p>
+									<div className="answer_bundle">
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{question.sentence1.answer1}
+											</div>
+										</div>
+										{' → '}
+										<div className="answer_box">
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{question.sentence1.answer2}
+											</div>
+										</div>
 									</div>
 								</div>
-								{' → '}
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question1_answer2}
-									</div>
-								</div>
-							</div>
-							<p className="number">2.</p>
-							<p>{_getJSX(this._jsx_question2)}</p>
-							<div>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question2_answer1}
-									</div>
-								</div>
-								{' → '}
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question2_answer2}
-									</div>
-								</div>
-							</div>
-							<p className="number">3.</p>
-							<p>{_getJSX(this._jsx_question3)}</p>
-							<div>
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question3_answer1}
-									</div>
-								</div>
-								{' → '}
-								<div className="answer_box">
-									<div className={'sample' + (this._hint ? ' hide' : '')}/>
-									<div className={'hint' + (this._hint ? '' : ' hide')}>
-										{this._jsx_question3_answer2}
-									</div>
-								</div>
-							</div>
+							})}
 						</div>
 					</div>
 				</div>

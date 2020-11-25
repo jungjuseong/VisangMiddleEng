@@ -88,7 +88,6 @@ class Writing extends React.Component<IWriting> {
         this.m_player_inittime = 0;
 
         this.m_player.addOnPlayEnd(() => {
-            this._lastFocusIdx = -1;
             this._focusIdx = -1;
             this.m_player.setMutedTemp(false);
             this._sendDialogueEnd();
