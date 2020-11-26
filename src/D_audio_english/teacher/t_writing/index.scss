@@ -328,7 +328,6 @@
                 top: 0px;
                 bottom: 38px;
                 padding: 0px 10px;
-                overflow: hidden;
                 .btn_script_show{
                     position: absolute; 
                     top: 10px; 
@@ -379,9 +378,10 @@
         .bottom {
             .btn_QA {
                 position: absolute;
-                bottom: 6px;
-                left: 50%;
+                bottom: -142px;
+                left: 30%;
                 transform: translateX(-50%);
+                z-index: 1000;
                 @include btn_on_dis( resolve('teacher/images/btn_QA.png'), resolve('teacher/images/btn_QA_on.png'), resolve('teacher/images/btn_QA_dis.png'), width('teacher/images/btn_QA.png'), height('teacher/images/btn_QA.png'));
                 &.down {
                     background-image: resolve('teacher/images/btn_QA_down.png');
@@ -389,14 +389,18 @@
             }
             .btn_role {
                 position: absolute;
-                bottom: 6px;
-                left: 444px;
+                bottom: -142px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
                 @include btn_on_dis( resolve('teacher/images/btn_role.png'), resolve('teacher/images/btn_role_on.png'), resolve('teacher/images/btn_role_dis.png'), width('teacher/images/btn_role.png'), height('teacher/images/btn_role.png'));
             }
             .btn_shadowing {
                 position: absolute;
-                bottom: 6px;
-                right: 444px;
+                bottom: -142px;
+                left: 70%;
+                transform: translateX(-50%);
+                z-index: 1000;
                 @include btn_on_dis( resolve('teacher/images/btn_shadowing.png'), resolve('teacher/images/btn_shadowing_on.png'), resolve('teacher/images/btn_shadowing_dis.png'), width('teacher/images/btn_shadowing.png'), height('teacher/images/btn_shadowing.png'));
             }
         }
@@ -412,6 +416,8 @@
             background-image: resolve('teacher/images/bg_popup.png');
             width: width('teacher/images/bg_popup.png');
             height: height('teacher/images/bg_popup.png');
+            left: -66px;
+            top: -140px;
             &>span {
                 display: inline-block;
                 position: absolute;

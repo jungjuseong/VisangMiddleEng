@@ -14,6 +14,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg } from '../../common';
 import { TimerState } from '../../../share/Timer';
 
+import ComprehensionPopup from './_comprehension_popup';
 import ScriptContainer from '../../script_container';
 import VideoBox from '../t_video_box';
 import { ToggleBtn } from '@common/component/button';
@@ -31,13 +32,13 @@ class ScriptAudio extends React.Component<IScriptAudio> {
     private m_data: IData;
     
     private m_player = new MPlayer(new MConfig(true));
-    private m_player_inittime = 0; // 비디오 시작시간 
+    private m_player_inittime = this.props.script[0].audio_start; // 비디오 시작시간 
 	
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'SCRIPT';
-
+    @observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
 	@observable private _answer = false;
 	@observable private _view = false;
-	@observable private _curQidx = 0;
+	@observable private _curQidx = -1;
 	@observable private _viewClue = false;
 	@observable private _viewTrans = false;
 	@observable private _viewScript = false;
@@ -56,7 +57,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 	public constructor(props: IScriptAudio) {
         super(props);
         this.m_data = props.actions.getData();
-        this.m_player_inittime = 0;
+        this.m_player_inittime = this.props.script[0].audio_start;
 
         this.m_player.addOnPlayEnd(() => {
             this._lastFocusIdx = -1;
@@ -182,6 +183,140 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 		this._viewScript = !this._viewScript;
     }
 
+    private _onQAClick = () => {
+        const {state,actions} = this.props;
+
+        // if(this.c_popup !== 'off') return;
+        // else if(state.scriptProg < SENDPROG.SENDED) return;
+        console.log('onQAcilck')
+
+        if(state.qnaProg === SENDPROG.READY) {
+            App.pub_playBtnTab();
+            this.c_popup = 'Q&A';
+            this.props.actions.setNavi(false, false);
+        } else if(state.qnaProg >= SENDPROG.SENDING) {
+            
+            App.pub_playBtnTab();
+            const msg: common.IMsg = {
+                msgtype: 'qna_end',
+            };
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
+            state.qnaProg = SENDPROG.READY;	
+            
+            actions.clearQnaReturns();
+            actions.setNavi(true, true);
+        }
+    }
+    private _onRollClick = () => {
+        const {state,actions} = this.props;
+        if(state.dialogueProg >= SENDPROG.SENDED && !this._shadowing) {		
+            App.pub_playBtnTab();
+            if(this._roll === '') {
+                this.c_popup = 'ROLE PLAY';
+                this.m_player.pause();
+                actions.setNavi(false, false);
+            } else {
+                this._lastFocusIdx = -1;
+                this._focusIdx = -1;
+                this.m_player.setMutedTemp(false);
+                this._roll = '';
+                this._sendDialogueEnd();
+                actions.setNavi(true, true);
+            }
+        }
+    }
+
+    private _onShadowClick = () => {
+        const {state,actions} = this.props;
+        // if(
+        //     state.dialogueProg >= SENDPROG.SENDED && 
+        //     this._roll === ''
+        // ) {
+            App.pub_playBtnTab();
+            if(this._shadowing) {
+                this._isShadowPlay = false;
+                this._shadowing = false;
+                actions.setNavi(true, true);
+            } else {
+                this._lastFocusIdx = -1;
+                this._focusIdx = -1;
+                this._sendFocusIdx(-1);
+                this.c_popup = 'SHADOWING';
+                this.m_player.pause();	
+                this._sendDialogueEnd();
+                actions.setNavi(false, false);		
+            // }
+        }
+    }
+    
+    private _onPopupSend = (roll: ''|'A'|'B') => {
+        const {state, actions} = this.props;
+        if(this.c_popup === 'Q&A') {
+            if(state.qnaProg > SENDPROG.READY) return;
+
+            state.qnaProg = SENDPROG.SENDING;
+            App.pub_playToPad();
+
+            let msg: common.IMsg = {msgtype: 'qna_send',};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
+            // this._viewClue = false;
+            _.delay(() => {
+                if(state.qnaProg !== SENDPROG.SENDING) return;
+
+                state.qnaProg = SENDPROG.SENDED;
+            }, 300);
+            
+            
+        } else if(this.c_popup === 'ROLE PLAY') {
+            if(state.dialogueProg !== SENDPROG.SENDED) return;
+            else if(this._roll !== '' || roll === '') return;
+
+            if(this.m_player.currentTime !== this.m_player_inittime
+                || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
+            App.pub_playToPad();
+
+            this._lastFocusIdx = 0;
+            this._focusIdx = -1;
+            this.m_player.setMuted(false);
+            this.m_player.setMutedTemp(false);
+
+            let msg: common.IRollMsg = {msgtype: 'roll_send', roll};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+            _.delay(() => {
+                if(state.dialogueProg !== SENDPROG.SENDED) return;
+                this._roll = roll;
+            }, 300);
+
+        } else if(this.c_popup === 'SHADOWING') {
+            // if(state.dialogueProg !== SENDPROG.SENDED) return;
+            // if(this._shadowing) return;
+
+            if(this.m_player.currentTime !== this.m_player_inittime
+                || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
+            App.pub_playToPad();
+
+            this._lastFocusIdx = 0;
+            this._focusIdx = -1;
+            this.m_player.setMuted(false);
+            this.m_player.setMutedTemp(false);
+
+            let msg: common.IMsg = {msgtype: 'shadowing_send'};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+            _.delay(() => {
+                // if(state.dialogueProg !== SENDPROG.SENDED) return;
+                this._shadowing = true;
+            }, 300);
+        }
+        this.props.actions.setNavi(false, false);
+    }
+
+    private _onPopupClosed = () => {
+        if(this._tab === 'SCRIPT' && this.props.state.qnaProg === SENDPROG.READY) this.props.actions.setNavi(true, true);
+        else if (this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
+        this.c_popup = 'off';
+    }
+
 	public componentDidUpdate(prev: IScriptAudio) {
         const { view } = this.props;
 
@@ -234,7 +369,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
                 role={this.m_data.role_play}
                 script={script}
                 idx = {idx}
-                focusIdx={this._curQidx}
+                focusIdx={this._focusIdx}
                 selected={this._selected}
                 qnaReturns={this.props.actions.getQnaReturns()}
                 qnaReturnsClick={this._qnaReturnsClick}
@@ -246,6 +381,19 @@ class ScriptAudio extends React.Component<IScriptAudio> {
                 viewScript={this._viewScript}
                 viewTrans={this._viewTrans}
                 numRender={state.retCnt}
+            />
+            <div className="bottom">
+                <ToggleBtn className="btn_QA"  view={view} on={state.qnaProg >= SENDPROG.SENDING} onClick={this._onQAClick} />
+                <ToggleBtn className="btn_role" view={view} on={this._roll === 'A' || this._roll === 'B'} onClick={this._onRollClick} />
+                <ToggleBtn className="btn_shadowing" view={view} on={this._shadowing} onClick={this._onShadowClick} />
+            </div>
+            <ComprehensionPopup 
+                type={this.c_popup}
+                view={this.c_popup === 'Q&A' || this.c_popup === 'ROLE PLAY' || this.c_popup === 'SHADOWING'} 
+                imgA={this.m_data.role_play.speakerA.image_l}
+                imgB={this.m_data.role_play.speakerB.image_l}
+                onSend={this._onPopupSend}
+                onClosed={this._onPopupClosed}
             />
             </>
         );

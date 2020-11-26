@@ -4,13 +4,17 @@ export interface IMsg {
 	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
 				'dictation_send'|'dictation_end'|'dictation_return'|
-				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx';
+				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx'|'qna_send'|'qna_end'|'shadowing_send'|'roll_send';
 }
 
 export interface IQuizReturn {
 	answer: boolean;
 	stime: number;
 	etime: number;
+}
+
+export interface IRollMsg extends IMsg {
+	roll: 'A'|'B';
 }
 
 export interface IQuizReturnMsg extends IMsg {

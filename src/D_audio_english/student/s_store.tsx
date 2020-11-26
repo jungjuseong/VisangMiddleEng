@@ -122,7 +122,7 @@ class StudentContext extends StudentContextBase {
 
 	public setData(data: any) {
 		// console.log(data);
-		this._data = data as common.IData;
+		this._data = common.initData(data);
 	}
 }
 

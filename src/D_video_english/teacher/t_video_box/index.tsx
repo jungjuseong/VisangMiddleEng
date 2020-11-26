@@ -18,7 +18,7 @@ import CaptionBox from './_caption_box';
 
 
 function _getCurrentIdx(scripts: common.IScript[], time: number) {
-    let timeRound = Math.round(time / 0.01) * 0.01;
+    let timeRound = Math.round(time / 0.001) * 0.001;
     for (let i = 0, len = scripts.length; i < len; i++) {
         const s = scripts[i];
         if (timeRound >= s.dms_start && timeRound <= s.dms_end) {
@@ -68,8 +68,10 @@ class VideoBox extends React.Component<IVideoBox> {
 		player.addOnTime((time: number) => {
 			time = time / 1000;
 			const curIdx = _getCurrentIdx(scripts, time);
+			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
 				if(this.props.shadowing) {
+					console.log('yourt',this.m_yourturn);
 					if(this.m_yourturn < 0) {
 						if(this.m_curIdx >= 0) {
                             this.m_ytNext = curIdx;
@@ -79,7 +81,8 @@ class VideoBox extends React.Component<IVideoBox> {
                             this.m_yourturn = _.delay(() => {
                                 if(this.m_yourturn >= 0 && this.props.isShadowPlay) {
                                     this.m_curIdx = this.m_ytNext;
-                                    this.m_yourturn = -1;
+									this.m_yourturn = -1;
+									this.props.onChangeScript(curIdx);
                                     player.play();
                                 }
                             }, delay); 
@@ -88,7 +91,6 @@ class VideoBox extends React.Component<IVideoBox> {
 					} else {
 						return;
 					}
-
 				}	
 				this.m_curIdx = curIdx;
 				this.props.onChangeScript(curIdx);
