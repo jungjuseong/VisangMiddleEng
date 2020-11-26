@@ -42,23 +42,29 @@ class QuizItem extends React.Component<IQuizItem> {
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		return (
 			<>
-				<div className="quiz"><div>
-					<WrapTextNew 
-						view={view}
-					>
-						{confirm_normal.directive.kor}
-					</WrapTextNew>
-				</div></div>
-				<div className="quiz_box">
-					<div className="choice">
-						<img className="image" src={App.data_url + confirm_normal.item1.img}/>
-						<img className="image" src={App.data_url + confirm_normal.item2.img}/>
-						<img className="image" src={App.data_url + confirm_normal.item3.img}/>
-					</div>
+			<div className="quiz_box">
 					<div className="place">
-						<Draggable bounds="parent" {...dragHandlers}>
-							<div className="box">1</div>
-						</Draggable>
+						<div className="quiz">
+							<WrapTextNew view={view}>
+								{confirm_normal.directive.kor}
+							</WrapTextNew>
+						</div>
+						<div className="box">
+							<div className="img_bundle">
+								<img className="image" src={App.data_url + confirm_normal.item2.img}/>
+								<img className="image" src={App.data_url + confirm_normal.item3.img}/>
+								<img className="image" src={App.data_url + confirm_normal.item1.img}/>
+							</div>
+							<Draggable bounds="parent" {...dragHandlers}>
+								<div className="box">1</div>
+							</Draggable>
+							<Draggable bounds="parent" {...dragHandlers}>
+								<div className="box">2</div>
+							</Draggable>
+							<Draggable bounds="parent" {...dragHandlers}>
+								<div className="box">3</div>
+							</Draggable>
+						</div>
 					</div>
 				</div>
 			</>		

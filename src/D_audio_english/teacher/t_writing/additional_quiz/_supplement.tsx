@@ -9,6 +9,7 @@ import SendUINew from '../../../../share/sendui_new';
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 import TableItem from './table-item';
+import * as felsocket from '../../../../felsocket';
 
 import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 
@@ -123,6 +124,7 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private onSend = () =>{
 		this._prog = SENDPROG.SENDING
+		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'confirm_send',});
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {

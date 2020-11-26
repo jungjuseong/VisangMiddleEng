@@ -134,16 +134,16 @@
                             }
                         }
                     }
-                }
-                .dict_question::-webkit-scrollbar {
-                    width: 7px;
-                }
-                .dict_question::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.3);
-                    border-radius: 10px;
-                }
-                .dict_question::-webkit-scrollbar-track {
-                    background-color: transparent;
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
                 }
             }
         }
