@@ -646,6 +646,16 @@
                         &.type_4,
                         &.type_5 {}
                     }
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
                 }
                 &.done {
                     .select-box {
@@ -709,6 +719,16 @@
                             }
                         }
                     }
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
                 }
                 .hard_question {
                     overflow: auto;
@@ -752,36 +772,16 @@
                             }
                         }
                     }
-                }
-                .table_box::-webkit-scrollbar {
-                    width: 7px;
-                }
-                .table_box::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.3);
-                    border-radius: 10px;
-                }
-                .table_box::-webkit-scrollbar-track {
-                    background-color: transparent;
-                }
-                .basic_question::-webkit-scrollbar {
-                    width: 7px;
-                }
-                .basic_question::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.3);
-                    border-radius: 10px;
-                }
-                .basic_question::-webkit-scrollbar-track {
-                    background-color: transparent;
-                }
-                .hard_question::-webkit-scrollbar {
-                    width: 7px;
-                }
-                .hard_question::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.3);
-                    border-radius: 10px;
-                }
-                .hard_question::-webkit-scrollbar-track {
-                    background-color: transparent;
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
                 }
             }
         }
