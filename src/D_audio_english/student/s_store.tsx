@@ -116,7 +116,7 @@ class StudentContext extends StudentContextBase {
 				const qProg = this.state.confirmProg;
 				if(this.state.viewDiv !== 'content') return;
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-				this.state.confirmProg = QPROG.COMPLETE;
+				this.state.confirmProg = QPROG.READYA;
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 

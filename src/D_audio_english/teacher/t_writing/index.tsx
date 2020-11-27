@@ -240,7 +240,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
-        
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = idx;
         actions.setNavi((this._tab !== 'INTRODUCTION' || this._curQidx !== 0), true);
         // if(this._tab === 'QUESTION' && this._curQidx === 0) actions.setNavi(false, true);
