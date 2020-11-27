@@ -98,21 +98,21 @@ class QuizItem extends React.Component<IQuizItem> {
 						</div>
 						<div className="draggable_place">
 							<div>
-								<p>1. </p>
+								<p>1.  {this._jsx_question1.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div>
-								<p>2. </p>
+								<p>2.  {this._jsx_question2.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div>
-								<p>3. </p>
+								<p>3.  {this._jsx_question3.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
