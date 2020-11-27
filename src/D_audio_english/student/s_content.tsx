@@ -12,7 +12,7 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from './s_store';
 import * as felsocket from '../../felsocket';
 import {IQNAMsg} from '../common';
 
-import SQuestion from './s_question';
+import SConfirm from './s_confirm';
 import SScript from './s_script';
 
 interface ISContentProps {
@@ -97,7 +97,7 @@ class SContent extends React.Component<ISContentProps> {
 					state={state}
 					actions={actions}
 				/>
-				<SQuestion 
+				<SConfirm 
 					view={this.props.view && this.props.questionView} 
 					questionView={this.props.questionView}
 					confirmProg={confirmProg}
