@@ -5,16 +5,14 @@ import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
-import SendUINew from '../../../../share/sendui_new';
+
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 import TableItem from './table-item';
-import * as felsocket from '../../../../felsocket';
 
 import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
-import ProgBox from 'src/D_reading_english/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -122,11 +120,6 @@ class Supplement extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
-	private onSend = () =>{
-		this._prog = SENDPROG.SENDING
-		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'confirm_send',});
-	}
-
  	public componentDidUpdate(prev: IQuizBox) {
 		const { view } = this.props;
 		if(view && !prev.view) {
@@ -199,13 +192,6 @@ class Supplement extends React.Component<IQuizBox> {
 					</div>
 				</div>
 			</div>
-			<SendUINew
-					view={view}
-					type={'teacher'}
-					sended={false}
-					originY={0}
-					onSend={this.onSend}
-				/>
 			</>
 		);
 	}

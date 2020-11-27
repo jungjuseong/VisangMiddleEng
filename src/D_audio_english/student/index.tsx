@@ -46,7 +46,6 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 					<SContent 
 						view={state.viewDiv === 'content'} 
 						qsMode={state.qsMode}
-						scriptMode={state.scriptMode}
 						questionView={state.questionView}
 						confirmProg={state.confirmProg}
 						scriptProg={state.scriptProg}

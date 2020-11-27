@@ -25,8 +25,8 @@ const enum SPROG {
 interface IStateCtx extends IStateBase {
 	questionView: boolean;
 	confirmProg: QPROG;
+	idx: number;
 	scriptProg: SPROG;
-	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	roll: ''|'A'|'B';
 	shadowing: boolean;
 	qsMode: ''|'question'|'script';
@@ -48,8 +48,8 @@ class StudentContext extends StudentContextBase {
 
 		this.state.questionView = false;
 		this.state.confirmProg = QPROG.UNINIT;
+		this.state.idx = -1;
 		this.state.scriptProg = SPROG.UNMOUNT;
-		this.state.scriptMode = 'COMPREHENSION';
 		this.state.qsMode  = '';
 		this.state.roll = '';
 		this.state.viewClue = false;
@@ -79,17 +79,39 @@ class StudentContext extends StudentContextBase {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IMsg;
+			const msg = data.data as  common.IFocusMsg;
 			if(msg.msgtype === 'confirm_send') {
-				// if(this.state.confirmProg > QPROG.UNINIT) return;
-				this.state.scriptProg = SPROG.UNMOUNT;
-				this.state.questionView = true;
-				this.state.confirmProg = QPROG.ON;
-				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
-				this.state.qsMode  = 'question';
-				this.state.roll = '';
-				this.state.shadowing = false;
+				if(msg.idx === 0){
+					if(this.state.confirmProg > QPROG.UNINIT) return;
+					this.state.scriptProg = SPROG.UNMOUNT;
+					this.state.questionView = true;
+					this.state.confirmProg = QPROG.ON;
+					this.state.idx = 0;
+					this.state.viewDiv = 'content';
+					this.state.qsMode  = 'question';
+					this.state.roll = '';
+					this.state.shadowing = false;
+				}else if(msg.idx === 1){
+					if(this.state.confirmProg > QPROG.UNINIT) return;
+					this.state.scriptProg = SPROG.UNMOUNT;
+					this.state.questionView = true;
+					this.state.confirmProg = QPROG.ON;
+					this.state.idx = 1;
+					this.state.viewDiv = 'content';
+					this.state.qsMode  = 'question';
+					this.state.roll = '';
+					this.state.shadowing = false;
+				}else{
+					if(this.state.confirmProg > QPROG.UNINIT) return;
+					this.state.scriptProg = SPROG.UNMOUNT;
+					this.state.questionView = true;
+					this.state.confirmProg = QPROG.ON;
+					this.state.idx = 2;
+					this.state.viewDiv = 'content';
+					this.state.qsMode  = 'question';
+					this.state.roll = '';
+					this.state.shadowing = false;
+				}
 			} else if(msg.msgtype === 'confirm_end') {
 				const qProg = this.state.confirmProg;
 				if(this.state.viewDiv !== 'content') return;
@@ -103,7 +125,6 @@ class StudentContext extends StudentContextBase {
 
 				this.state.scriptProg = SPROG.MOUNTED;
 				this.state.viewDiv = 'content';
-				this.state.scriptMode  = 'COMPREHENSION';
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;

@@ -20,7 +20,6 @@ interface ISContentProps {
 	questionView: boolean;
 	confirmProg: QPROG;
 	scriptProg: SPROG;
-	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
 	actions: IActionsCtx;
@@ -37,7 +36,7 @@ class SContent extends React.Component<ISContentProps> {
 
 		const {state} = this.props;
 		if(state.scriptProg !== SPROG.YESORNO) return;
-		else if(state.scriptMode !== 'COMPREHENSION') return;
+		
 
 		App.pub_playBtnTab();
 		state.qsMode = 'script';
@@ -54,7 +53,7 @@ class SContent extends React.Component<ISContentProps> {
 
 		if(this._stime === 0) this._stime = Date.now();
 
-		if(state.scriptProg !== SPROG.YESORNO || state.scriptMode !== 'COMPREHENSION') return;
+		if(state.scriptProg !== SPROG.YESORNO) return;
 		App.pub_playBtnTab();
 		state.scriptProg = SPROG.SENDED;
 		if(!App.student) return;
@@ -78,7 +77,7 @@ class SContent extends React.Component<ISContentProps> {
 	}
 
 	public render() {
-		const {view, state, actions, confirmProg, scriptProg, scriptMode, qsMode} = this.props;
+		const {view, state, actions, confirmProg, scriptProg, qsMode} = this.props;
 		let style: React.CSSProperties = {};
 		if(!view) {
 			style = {
@@ -94,7 +93,6 @@ class SContent extends React.Component<ISContentProps> {
 					view={this.props.view && scriptProg > SPROG.UNMOUNT}
 					confirmProg={confirmProg}
 					scriptProg={scriptProg}
-					scriptMode={scriptMode}
 					qsMode={qsMode}
 					state={state}
 					actions={actions}
@@ -104,7 +102,6 @@ class SContent extends React.Component<ISContentProps> {
 					questionView={this.props.questionView}
 					confirmProg={confirmProg}
 					scriptProg={scriptProg}
-					scriptMode={scriptMode}
 					qsMode={qsMode}
 					state={state}
 					actions={actions}

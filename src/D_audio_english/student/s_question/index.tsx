@@ -38,7 +38,6 @@ interface ISQuestion {
 	questionView: boolean;
 	confirmProg: QPROG;
 	scriptProg: SPROG;
-	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
 	actions: IActionsCtx;
@@ -49,7 +48,7 @@ class SQuestion extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choice: common.IQuizReturn = {
-		answer: true,
+		answer: 0,
 		stime: 0,
 		etime: 0,
 	};
@@ -82,7 +81,7 @@ class SQuestion extends React.Component<ISQuestion> {
 		App.pub_playToPad();
 		this.props.state.confirmProg = QPROG.SENDING;
 		const choice: common.IQuizReturn = {
-			answer:true ,
+			answer:0 ,
 			stime: 0,
 			etime: 0,
 		};
@@ -123,14 +122,12 @@ class SQuestion extends React.Component<ISQuestion> {
 	}
 	private _setStyle(props: ISQuestion) {
 		if(
-			props.scriptMode === 'COMPREHENSION' &&
 			props.questionView &&
 			props.scriptProg > SPROG.UNMOUNT
 		) this._style.transition = 'left 0.3s';
 		else this._style.transition = '';
 		
 		if(
-			props.scriptMode === 'COMPREHENSION' && 
 			props.questionView && 
 			props.qsMode === 'question'
 		) this._style.left = '0px';
@@ -145,7 +142,6 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(
 			next.confirmProg !== this.props.confirmProg ||
 			next.scriptProg !== this.props.scriptProg ||
-			next.scriptMode !== this.props.scriptMode ||
 			next.qsMode !== this.props.qsMode
 		) {
 			this._setStyle(next);		

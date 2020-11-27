@@ -8,7 +8,7 @@ export interface IMsg {
 }
 
 export interface IQuizReturn {
-	answer: boolean;
+	answer: number;
 	stime: number;
 	etime: number;
 }
