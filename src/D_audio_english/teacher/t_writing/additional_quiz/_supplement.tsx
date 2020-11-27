@@ -10,7 +10,7 @@ import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 import TableItem from './table-item';
 import * as felsocket from '../../../../felsocket';
-import { CoverPopup } from '../../../../share/CoverPopup';
+
 
 import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 
@@ -124,16 +124,6 @@ class Supplement extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
-	private onSend = () =>{
-		this._prog = SENDPROG.SENDING
-		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'confirm_send',});
-		this._viewpop = true;
-	}
-	private _onClosepop = () => {
-		App.pub_playBtnTab();
-		this._view = false;
-	}
-
  	public componentDidUpdate(prev: IQuizBox) {
 		const { view } = this.props;
 		if(view && !prev.view) {
@@ -171,16 +161,6 @@ class Supplement extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-			<CoverPopup className="pop_trans" view={this._viewpop}  onClosed={()=>console.log('123123')}>
-				<div className="pop_bg">
-					<ToggleBtn className="btn_close" onClick={this._onClosepop}/>
-					<ToggleBtn className="btn_yes"/>
-					<ToggleBtn className="btn_no"/>
-					<div className="pop_msg"/>
-					
-					{/* </SwiperComponent> */}
-				</div>
-			</CoverPopup>
 				<div className="subject_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="correct_answer_rate"></div>
@@ -216,13 +196,6 @@ class Supplement extends React.Component<IQuizBox> {
 					</div>
 				</div>
 			</div>
-			<SendUINew
-					view={view}
-					type={'teacher'}
-					sended={false}
-					originY={0}
-					onSend={this.onSend}
-				/>
 			</>
 		);
 	}

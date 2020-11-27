@@ -94,7 +94,7 @@ class SScript extends React.Component<ISScriptProps> {
 						view={state.viewDiv === 'content'}
 						role = {actions.getData().role_play}
 						script={actions.getData().scripts[0]}
-						idx={0}
+						idx={state.idx}
 						focusIdx={state.focusIdx}
 						selected={this._selected}
 						qnaReturns={[]}

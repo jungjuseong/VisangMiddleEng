@@ -142,12 +142,13 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             this._focusIdx = -1;
             if(this._roll !== '') this.m_player.setMutedTemp(false);
         }
-		//this._sendFocusIdx(idx);
+		this._sendFocusIdx(idx);
     }
     private _sendFocusIdx(idx: number) {
 		const msg: common.IFocusMsg = {
 			msgtype: 'focusidx',
-			idx,
+            idx : this.props.idx,
+            fidx : idx
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
     }

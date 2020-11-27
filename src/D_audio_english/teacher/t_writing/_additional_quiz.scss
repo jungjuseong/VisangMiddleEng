@@ -11,53 +11,6 @@
         position: relative;
         width: 1150px;
         height: 600px;
-        .pop_trans {
-            @include CoverPopup(10001);
-            overflow: hidden;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding-top: 60px;
-            .closed_hint {
-                display: none;
-            }
-            .pop_bg {
-                background-image: resolve('teacher/images/pop_bg.png');
-                width: width('teacher/images/pop_bg.png');
-                height: height('teacher/images/pop_bg.png');
-                margin: 0 auto;
-                position: relative;
-                .btn_close {
-                    @include btn_on_dis( resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), width('teacher/images/pop_close.png'), height('teacher/images/pop_close.png'), );
-                    position: absolute;
-                    right: 10px;
-                    top: 13px;
-                    z-index: 2;
-                }
-                .btn_yes {
-                    @include btn_on( resolve('teacher/images/btn_yes.png'), resolve('teacher/images/btn_yes.png'), width('teacher/images/btn_yes.png'), height('teacher/images/btn_yes.png'), );
-                    position: absolute;
-                    right: 20px;
-                    width: 356px;
-                    top: 200px;
-                    z-index: 2;
-                }
-                .btn_no {
-                    @include btn_on( resolve('teacher/images/btn_no.png'), resolve('teacher/images/btn_no.png'), width('teacher/images/btn_no.png'), height('teacher/images/btn_no.png'), );
-                    position: absolute;
-                    right: 20px;
-                    width: 210px;
-                    top: 200px;
-                    z-index: 2;
-                }
-                .pop_msg {
-                    @include btn_on( resolve('teacher/images/pop_msg.png'), resolve('teacher/images/pop_msg.png'), width('teacher/images/pop_msg.png'), height('teacher/images/pop_msg.png'), );
-                    position: absolute;
-                    right: 20px;
-                    width: 320px;
-                    top: 140px;
-                    z-index: 2;
-                }
-            }
-        }
         .closed_hint {
             display: none;
         }
