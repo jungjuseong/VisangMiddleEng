@@ -13,6 +13,7 @@ import SendUINew from '../../../share/sendui_new';
 
 import SBasic from './s_basic';
 import SSup from './s_supplement';
+import SHard from './s_hard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -212,6 +213,14 @@ class SQuestion extends React.Component<ISQuestion> {
 							idx={this._curIdx}
 							choice={0}
 							confirm_normal={confirm_nomals[0]}
+							confirmProg={confirmProg}
+							onChoice={this._onChoice}
+						/>
+						<SHard
+							view={view && state.idx === 2}
+							idx={this._curIdx}
+							choice={0}
+							data={c_data.confirm_hard[0]}
 							confirmProg={confirmProg}
 							onChoice={this._onChoice}
 						/>

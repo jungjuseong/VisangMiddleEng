@@ -42,7 +42,7 @@ class QuizItem extends React.Component<IQuizItem> {
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		return (
 			<>
-			<div className="quiz_box">
+			<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
 					<div className="basic_place">
 						<div className="quiz">
 							<WrapTextNew view={view}>
