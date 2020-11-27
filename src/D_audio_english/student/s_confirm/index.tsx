@@ -11,7 +11,8 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import * as common from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import QuizItem from './_quiz_item';
+import SBasic from './s_basic';
+import SSup from './s_supplement';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -201,22 +202,24 @@ class SQuestion extends React.Component<ISQuestion> {
 			<div className="s_question" style={{...this._style}}>
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
-					<SwiperComponent ref={this._refSwiper}>
-						{confirm_nomals.map((confirm_nomal, idx) => {
-							return (
-								<div key={idx} className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
-									<QuizItem
-										view={view} 
-										idx={idx}
-										choice={0}
-										confirm_normal={confirm_nomal}
-										confirmProg={confirmProg}
-										onChoice={this._onChoice}
-									/>
-								</div>
-							);
-						})}
-					</SwiperComponent>
+					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
+						<SSup
+							view={view} 
+							idx={this._curIdx}
+							choice={0}
+							data={c_data.confirm_sup[0]}
+							confirmProg={confirmProg}
+							onChoice={this._onChoice}
+						/>
+						{/* <SBasic
+							view={view} 
+							idx={this._curIdx}
+							choice={0}
+							confirm_normal={confirm_nomals[0]}
+							confirmProg={confirmProg}
+							onChoice={this._onChoice}
+						/> */}
+					</div>
 				</div>
 				<SendUINew
 					view={true}

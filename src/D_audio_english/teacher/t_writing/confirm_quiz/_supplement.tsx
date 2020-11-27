@@ -54,7 +54,7 @@ class Supplement extends React.Component<IQuizBox> {
 	private _jsx_question2_answer: number;
 	private _jsx_question3_answer: number;
 	private	_answer_dic: {};
-	private _disable_toggle: boolean
+	private _disable_toggle: boolean;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -101,12 +101,10 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _onClickTrue = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		if(this._btnAudio) this._btnAudio.toggle();
 		this._toggle[param] = true;
 	}
 	private _onClickFalse = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		if(this._btnAudio) this._btnAudio.toggle();
 		this._toggle[param] = false;
 	}
 	private _getToggleState = (num: number) =>{

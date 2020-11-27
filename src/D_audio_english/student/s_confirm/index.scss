@@ -30,28 +30,33 @@
                     width: 100%;
                     height: 100%;
                     
-                    .quiz {
-                        position: relative;
-                        top: 100px;
-                        height: 120px;
-                        width: 100%;
-                        padding: 0px 30px;
-                        font-size: 32px;
-                        word-break: normal;
-                        color: rgb(0, 0, 0);
-                        white-space: normal;
-                        
-                    }
                     .place {
-                        position: absolute;
+                        position: relative;
                         width: 1200px;
-                        height: 675px;
-                        border-radius: 25px;
+                        height: 620px;
+                        top: 100px;
+                        border-radius: 20px;
                         background: #fff;
                         
-                        .box{
+                        .quiz {
+                            position: relative;
+                            height: 120px;
+                            width: 100%;
+                            padding: 0px 30px;
+                            font-size: 29px;
+                            font-weight: bold;
+                            word-break: normal;
+                            color: rgb(0, 0, 0);
+                            white-space: normal;
+                            &>div{
+                                position: absolute;
+                                top: 64px
+                            }                            
+                        }
+                        .draggable_place{
+                            position: relative;
                             width: 1200px;
-                            height: 600px;
+                            height: 495px;
                             display: inline-flex;
                             justify-content: center;
 
@@ -62,19 +67,25 @@
         
                                 .image {
                                     float: left;
-                                    width: 218px;
-                                    height: 249px;
+                                    width: 324px;
+                                    height: 350px;
                                     margin: 30px;
                                 }
                             }
                             .box {
                                 position: relative;
                                 background-color: white;
-                                width: 40px;
-                                height: 40px;
-                                border: 2px solid #000;
+                                text-align: center;
+                                color: orangered;
+                                top: 410px;
                                 float: left;
-                                font-size: 24px;
+                                width: 65px;
+                                height: 65px;
+                                line-height: 55px;
+                                border: 3px solid #000;
+                                border-radius: 10px;
+                                font-size: 42px;
+                                margin: 10px;
                             }
                         }
                     }
