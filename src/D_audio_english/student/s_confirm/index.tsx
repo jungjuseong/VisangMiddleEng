@@ -200,21 +200,21 @@ class SQuestion extends React.Component<ISQuestion> {
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						<SSup
-							view={view} 
+							view={view && state.idx === 0} 
 							idx={this._curIdx}
 							choice={0}
 							data={c_data.confirm_sup[0]}
 							confirmProg={confirmProg}
 							onChoice={this._onChoice}
 						/>
-						{/* <SBasic
-							view={view} 
+						<SBasic
+							view={view && state.idx === 1} 
 							idx={this._curIdx}
 							choice={0}
 							confirm_normal={confirm_nomals[0]}
 							confirmProg={confirmProg}
 							onChoice={this._onChoice}
-						/> */}
+						/>
 					</div>
 				</div>
 				<SendUINew

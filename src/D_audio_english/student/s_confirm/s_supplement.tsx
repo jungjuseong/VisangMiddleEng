@@ -8,6 +8,7 @@ import { observable } from 'mobx';
 
 import { _getJSX } from '../../../get_jsx';
 import { App } from '../../../App';
+import { NONE } from 'src/share/style';
 
 interface IQuizItem {
 	view: boolean;
@@ -88,7 +89,7 @@ class QuizItem extends React.Component<IQuizItem> {
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		return (
 			<>
-			<div className="quiz_box">
+			<div className="quiz_box" style={{display : view ? '' : 'none' }}>
 					<div className="place">
 						<div className="quiz">
 							<WrapTextNew view={view}>

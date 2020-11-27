@@ -309,6 +309,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'CONFIRM';
@@ -323,6 +324,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'ADDITIONAL';
@@ -337,6 +339,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'DICTATION';
@@ -351,6 +354,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'SCRIPT';
@@ -474,6 +478,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                     // if(state.scriptProg > SENDPROG.READY) {
                     //     state.scriptProg = SENDPROG.READY;
                     //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -490,6 +495,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 } else if(this._tab === 'DICTATION') {
                     if(this._curQidx === 0) {
                         this._hint = false;
@@ -500,6 +506,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 } else if(this._tab === 'SCRIPT') {
                     if(this._curQidx === 0) {
                         this._hint = false;
@@ -510,6 +517,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 }
             },
             () => {
