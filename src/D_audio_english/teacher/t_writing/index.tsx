@@ -16,6 +16,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg, IIndexMsg } from '../../common';
 
 import ScriptContainer from '../../script_container';
+import { CoverPopup } from '../../../share/CoverPopup';
 
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
@@ -73,7 +74,8 @@ class Writing extends React.Component<IWriting> {
 	@observable private _viewScript = false;
 	@observable private _letstalk = false;
 	@observable private _popTrans = false;
-	@observable private _viewQuiz = true;
+    @observable private _viewQuiz = true;
+    @observable private _viewpop = false;
 
 	@observable private _roll: ''|'A'|'B' = '';
 	@observable private _shadowing = false;
@@ -109,6 +111,37 @@ class Writing extends React.Component<IWriting> {
 		this.m_data = this.props.actions.getData();
     }
     
+    private _onClosepop = (hintyon : true | false | null) => {
+        const { actions, state } = this.props;
+        App.pub_playBtnTab();     
+        App.pub_reloadStudents(() => {
+            if(hintyon === null) {
+                this._viewpop = false;
+                state.confirmHardProg = SENDPROG.READY; 
+                console.log('null')
+                return;
+            };
+    
+            if(hintyon){
+                console.log('true')
+            }else{
+                console.log('false')
+            }
+            let msg: IFocusMsg;
+            actions.clearReturnUsers();
+            actions.setRetCnt(0);
+            actions.setNumOfStudent(App.students.length);
+            state.confirmHardProg = SENDPROG.SENDING;
+            if(state.confirmHardProg !==  SENDPROG.SENDING) return;
+            state.confirmHardProg = SENDPROG.SENDED;
+            msg = {msgtype: 'confirm_send', idx : 2};                
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
+            this._setNavi();
+            this._viewpop = false;
+        });     
+	}
+
 	private onSend = () => {
         const { actions, state } = this.props;
 
@@ -120,7 +153,7 @@ class Writing extends React.Component<IWriting> {
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
         else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'CONFIRM' && this._curQidx === 2) state.confirmHardProg = SENDPROG.SENDING;
+        else if(this._tab === 'CONFIRM' && this._curQidx === 2) {state.confirmHardProg = SENDPROG.SENDED; this._viewpop = true; return;} 
         else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
@@ -149,10 +182,7 @@ class Writing extends React.Component<IWriting> {
                         break;
                     } 
                     case 2 : {
-                        if(state.confirmHardProg !==  SENDPROG.SENDING) return;
-                        state.confirmHardProg = SENDPROG.SENDED;
-                        msg = {msgtype: 'confirm_send', idx : 2};
-                        break;
+                        return;
                     } 
                     default : {
                         return
@@ -731,6 +761,16 @@ class Writing extends React.Component<IWriting> {
 					originY={0}
 					onSend={this.onSend}
 				/>
+                <CoverPopup className="pop_hint" view={this._viewpop}  onClosed={() =>{}}>
+					<div className="pop_bg">
+						<ToggleBtn className="btn_close" onClick={() => {this._onClosepop(null)}}/>
+						<ToggleBtn className="btn_no" onClick={() => {this._onClosepop(true)}}/>
+						<ToggleBtn className="btn_yes"onClick={() => {this._onClosepop(false)}}/>
+						<div className="pop_msg"/>
+					
+					{/* </SwiperComponent> */}
+				</div>
+			</CoverPopup>
             </div>
         );
     }
