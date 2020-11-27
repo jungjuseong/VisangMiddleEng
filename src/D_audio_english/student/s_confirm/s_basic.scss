@@ -1,0 +1,73 @@
+@import '../../../share/sendui.scss';
+@import '../../../share/QuizMCBtn.scss';
+@mixin s_basic {
+    .quiz_box{
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        
+        .basic_place {
+            position: relative;
+            width: 1200px;
+            height: 620px;
+            top: 100px;
+            border-radius: 20px;
+            background: #fff;
+            
+            .quiz {
+                position: relative;
+                height: 120px;
+                width: 100%;
+                padding: 0px 30px;
+                font-size: 29px;
+                font-weight: bold;
+                word-break: normal;
+                color: rgb(0, 0, 0);
+                white-space: normal;
+                &>div{
+                    position: absolute;
+                    top: 64px
+                }                            
+            }
+
+            .draggable_place{
+                position: relative;
+                width: 1200px;
+                height: 495px;
+                display: inline-flex;
+                justify-content: center;
+
+                .img_bundle {
+                    white-space: normal;
+                    display: inline-block;
+                    position: absolute;
+
+                    .image {
+                        float: left;
+                        width: 324px;
+                        height: 350px;
+                        margin: 30px;
+                    }
+                }
+                .box {
+                    position: relative;
+                    background-color: white;
+                    text-align: center;
+                    color: orangered;
+                    top: 410px;
+                    float: left;
+                    width: 65px;
+                    height: 65px;
+                    line-height: 55px;
+                    border: 3px solid #000;
+                    border-radius: 10px;
+                    font-size: 42px;
+                    margin: 10px;
+                }
+            }
+        }
+    }
+}
