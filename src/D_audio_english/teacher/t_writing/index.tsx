@@ -13,7 +13,7 @@ import * as common from '../../common';
 
 import SendUINew from '../../../share/sendui_new';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
-import { IMsg,IData,IFocusMsg } from '../../common';
+import { IMsg,IData,IFocusMsg, IIndexMsg } from '../../common';
 
 import ScriptContainer from '../../script_container';
 
@@ -123,12 +123,12 @@ class Writing extends React.Component<IWriting> {
         else if(this._tab === 'CONFIRM' && this._curQidx === 2) state.confirmHardProg = SENDPROG.SENDING;
         else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'SCRIPT') state.additionalBasicProg = SENDPROG.SENDING;
+        else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
         else return;
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
-            let msg: IFocusMsg;
+            let msg: IIndexMsg;
             
             actions.clearReturnUsers();
             actions.setRetCnt(0);
@@ -407,7 +407,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_playBtnTab();
        
-        const msg: IFocusMsg = {
+        const msg: IIndexMsg = {
             msgtype: 'confirm_end',
             idx:1
         };

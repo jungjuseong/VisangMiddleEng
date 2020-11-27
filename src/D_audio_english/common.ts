@@ -7,6 +7,10 @@ export interface IMsg {
 				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx'|'qna_send'|'qna_end'|'shadowing_send'|'roll_send';
 }
 
+export interface IIndexMsg extends IMsg{
+	idx: number;
+}
+
 export interface IQuizReturn {
 	answer: number;
 	stime: number;
@@ -29,8 +33,8 @@ export interface IQNAMsg extends IMsg {
 	etime: number;
 }
 
-export interface IFocusMsg extends IMsg {
-	idx: number;
+export interface IFocusMsg extends IIndexMsg {
+	fidx: number;
 }
 
 export interface IReturn {

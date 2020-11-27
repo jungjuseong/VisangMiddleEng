@@ -79,7 +79,7 @@ class StudentContext extends StudentContextBase {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IFocusMsg;
+			const msg = data.data as  common.IIndexMsg;
 			if(msg.msgtype === 'confirm_send') {
 				if(msg.idx === 0){
 					if(this.state.confirmProg > QPROG.UNINIT) return;
@@ -128,6 +128,19 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
+			}else if(msg.msgtype === 'shadowing_send') {
+				if(this.state.viewDiv !== 'content') return;
+				else if(this.state.qsMode !== 'script') return;	
+				this.state.roll = '';
+				this.state.shadowing = true;
+				this.state.focusIdx = -1;
+			} else if(msg.msgtype === 'playing' || msg.msgtype === 'paused') {
+				if(this.state.viewDiv !== 'content') return;
+				this.state.isPlay = (msg.msgtype === 'playing');
+			} else if(msg.msgtype === 'focusidx') {
+				if(this.state.viewDiv !== 'content') return;
+				const fmsg = msg as common.IFocusMsg;
+				this.state.focusIdx = fmsg.fidx;
 			}
 		}
 	}
@@ -144,6 +157,37 @@ class StudentContext extends StudentContextBase {
 	public setData(data: any) {
 		// console.log(data);
 		this._data = common.initData(data);
+		const scripts = this._data.script;
+		const speakerA = this._data.role_play.speakerA.name;
+		const speakerB = this._data.role_play.speakerB.name;
+		const speakerC = this._data.role_play.speakerC.name;
+
+		if(!this._data.role_play.speakerD) {
+			this._data.role_play.speakerD = {
+				name: '',
+				image_s: '',
+				image_l: '',
+			};
+		}
+		if(!this._data.role_play.speakerE) {
+			this._data.role_play.speakerE = {
+				name: '',
+				image_s: '',
+				image_l: '',
+			};
+		}
+		const speakerD = this._data.role_play.speakerD.name;
+		const speakerE = this._data.role_play.speakerE.name;
+
+		for(let i = 0; i < scripts.length; i++) {
+			const script = scripts[i];
+			
+			if(script.speaker === speakerA) script.roll = 'A';
+			else if (script.speaker === speakerB) script.roll = 'B';
+			else if (script.speaker === speakerC) script.roll = 'C';
+			else if (script.speaker === speakerD) script.roll = 'D';
+			else script.roll = 'E';
+		}
 	}
 }
 

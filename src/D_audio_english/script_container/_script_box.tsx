@@ -430,7 +430,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 
 			this._draw();
 		}
-		if(d_audio_english_s) this.m_viewScript = false;
+		if(d_audio_english_s) this.m_viewScript = true;
 		else {
 			if(this.props.viewScript !== prev.viewScript) {
 				this.m_viewScript = this.props.viewScript;
