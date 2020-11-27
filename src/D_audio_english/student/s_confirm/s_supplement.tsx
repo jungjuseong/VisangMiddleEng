@@ -4,6 +4,7 @@ import Draggable from 'react-draggable';
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
+import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { _getJSX } from '../../../get_jsx';
@@ -18,7 +19,7 @@ interface IQuizItem {
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number) => void;
 }
-
+@observer
 class QuizItem extends React.Component<IQuizItem> {
 	@observable private _toggle: Array<boolean|null> = [null,null,null];
 
@@ -89,33 +90,33 @@ class QuizItem extends React.Component<IQuizItem> {
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		return (
 			<>
-			<div className="quiz_box" style={{display : view ? '' : 'none' }}>
-					<div className="place">
+				<div className="quiz_box" style={{display : view ? '' : 'none' }}>
+					<div className="sup_question">
 						<div className="quiz">
 							<WrapTextNew view={view}>
 								{this._jsx_sentence}
 							</WrapTextNew>
 						</div>
-						<div className="draggable_place">
-							<div>
+						<div>
+							<div className="white_box">
 								<p>1.  {this._jsx_question1.question}</p>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
-							<div>
+							<div className="white_box">
 								<p>2.  {this._jsx_question2.question}</p>
-								<div className={"toggle_bundle " + this._getToggleState(0)}>
-									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
-									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
+								<div className={"toggle_bundle " + this._getToggleState(1)}>
+									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
+									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
 								</div>
 							</div>
-							<div>
+							<div className="white_box">
 								<p>3.  {this._jsx_question3.question}</p>
-								<div className={"toggle_bundle " + this._getToggleState(0)}>
-									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
-									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
+								<div className={"toggle_bundle " + this._getToggleState(2)}>
+									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
+									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
 								</div>
 							</div>
 						</div>

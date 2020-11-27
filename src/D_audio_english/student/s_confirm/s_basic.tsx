@@ -43,7 +43,7 @@ class QuizItem extends React.Component<IQuizItem> {
 		return (
 			<>
 			<div className="quiz_box">
-					<div className="place">
+					<div className="basic_place">
 						<div className="quiz">
 							<WrapTextNew view={view}>
 								{confirm_normal.directive.kor}
