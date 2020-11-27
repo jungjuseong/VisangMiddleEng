@@ -17,7 +17,6 @@ interface ISScriptProps {
 	view: boolean;
 	confirmProg: QPROG;
 	scriptProg: SPROG;
-	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
 
 	state: IStateCtx;
@@ -66,7 +65,7 @@ class SScript extends React.Component<ISScriptProps> {
 
 	private _gotoQuestion = () => {
 		const { state } = this.props;
-		if(state.scriptMode !== 'COMPREHENSION' || state.qsMode === 'question') return;
+		if(state.qsMode === 'question') return;
 		// if(state.qsMode === 'question') return;
 		App.pub_playBtnTab();
 		state.qsMode = 'question';		
@@ -82,12 +81,12 @@ class SScript extends React.Component<ISScriptProps> {
 	}
 
 	public render() {
-		const { view,scriptProg, actions, scriptMode, state, confirmProg} = this.props;
+		const { view,scriptProg, actions , state, confirmProg} = this.props;
 		return (
-			<div className={'s_script ' + state.scriptMode}>
+			<div className={'s_script '}>
                 <ToggleBtn 
                     className="btn_QUESTION" 
-                    view={state.scriptMode === 'COMPREHENSION' && confirmProg === QPROG.COMPLETE} 
+                    view={confirmProg === QPROG.COMPLETE} 
                     onClick={this._gotoQuestion}
                 />
 				<div className="script_container">
@@ -101,7 +100,7 @@ class SScript extends React.Component<ISScriptProps> {
 						qnaReturns={[]}
 						roll={state.roll}
 						shadowing={state.shadowing}
-						noSwiping={state.scriptMode === 'DIALOGUE' && state.isPlay}
+						noSwiping={state.isPlay}
 						viewClue={state.viewClue}
 						viewScript={true}
 						viewTrans={false}

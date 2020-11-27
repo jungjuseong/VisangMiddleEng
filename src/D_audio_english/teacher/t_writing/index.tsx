@@ -11,6 +11,7 @@ import * as felsocket from '../../../felsocket';
 
 import * as common from '../../common';
 
+import SendUINew from '../../../share/sendui_new';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IMsg,IData,IFocusMsg } from '../../common';
 
@@ -112,13 +113,14 @@ class Writing extends React.Component<IWriting> {
         const { actions, state } = this.props;
 
         if(this._tab === 'INTRODUCTION') return;
-        if(this._tab === 'CONFIRM' && state.confirmBasicProg !==  SENDPROG.READY) return;
+        if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'ADDITIONAL' && state.additionalBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
-
         
-        if(this._tab === 'CONFIRM') state.confirmBasicProg = SENDPROG.SENDING;
+        if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
+        else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
+        else if(this._tab === 'CONFIRM' && this._curQidx === 2) state.confirmHardProg = SENDPROG.SENDING;
         else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.additionalBasicProg = SENDPROG.SENDING;
@@ -126,7 +128,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
-            let msg: IMsg;
+            let msg: IFocusMsg;
             
             actions.clearReturnUsers();
             actions.setRetCnt(0);
@@ -134,23 +136,32 @@ class Writing extends React.Component<IWriting> {
             
             if(this._tab === 'CONFIRM') {
                 switch(this._curQidx){
+                    case 0 : {
+                        if(state.confirmSupProg !==  SENDPROG.SENDING) return;
+                        state.confirmSupProg = SENDPROG.SENDED;
+                        msg = {msgtype: 'confirm_send', idx : 0};
+                        break;
+                    }
                     case 1 : {
                         if(state.confirmBasicProg !==  SENDPROG.SENDING) return;
                         state.confirmBasicProg = SENDPROG.SENDED;
-                        msg = {msgtype: 'confirm_send',};
+                        msg = {msgtype: 'confirm_send', idx : 1};
+                        break;
+                    } 
+                    case 2 : {
+                        if(state.confirmHardProg !==  SENDPROG.SENDING) return;
+                        state.confirmHardProg = SENDPROG.SENDED;
+                        msg = {msgtype: 'confirm_send', idx : 2};
                         break;
                     } 
                     default : {
-                        if(state.confirmBasicProg !==  SENDPROG.SENDING) return;
-                        state.confirmBasicProg = SENDPROG.SENDED;
-                        msg = {msgtype: 'confirm_send',};
-                        break;
+                        return
                     }
                 }
             } else {
                 if(state.scriptProg !==  SENDPROG.SENDING) return;
                 state.scriptProg = SENDPROG.SENDED;
-                msg = {msgtype: 'script_send',};
+                msg = {msgtype: 'script_send', idx : 0};
             } 
             
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -229,7 +240,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
-        
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = idx;
         actions.setNavi((this._tab !== 'INTRODUCTION' || this._curQidx !== 0), true);
         // if(this._tab === 'QUESTION' && this._curQidx === 0) actions.setNavi(false, true);
@@ -298,6 +309,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'CONFIRM';
@@ -312,6 +324,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'ADDITIONAL';
@@ -326,6 +339,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'DICTATION';
@@ -340,6 +354,7 @@ class Writing extends React.Component<IWriting> {
 
         App.pub_stop();
         App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'SCRIPT';
@@ -385,7 +400,7 @@ class Writing extends React.Component<IWriting> {
         const confirmBasicProg = state.confirmBasicProg;
         const additionalSupProg = state.additionalSupProg
 
-        if(	this._tab !== 'CONFIRM' || 
+        if(	(this._tab !== 'CONFIRM' && this._curQidx !== 1) || 
             confirmBasicProg !== SENDPROG.SENDED
         ) return;
 
@@ -398,10 +413,10 @@ class Writing extends React.Component<IWriting> {
         };
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-        //this.props.state.confirmBasicProg = SENDPROG.COMPLETE;
+        this.props.state.confirmBasicProg = SENDPROG.COMPLETE;
         actions.quizComplete();
         console.log(this.props.state.confirmBasicProg);
-        // this.props.actions.setNavi(true,true);
+        this.props.actions.setNavi(true,true);
 	}
 
 	// private _sendFocusIdx(idx: number) {
@@ -463,6 +478,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                     // if(state.scriptProg > SENDPROG.READY) {
                     //     state.scriptProg = SENDPROG.READY;
                     //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -479,6 +495,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 } else if(this._tab === 'DICTATION') {
                     if(this._curQidx === 0) {
                         this._hint = false;
@@ -489,6 +506,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 } else if(this._tab === 'SCRIPT') {
                     if(this._curQidx === 0) {
                         this._hint = false;
@@ -499,6 +517,7 @@ class Writing extends React.Component<IWriting> {
                         this._curQidx = this._curQidx - 1;
                         this._setNavi();
                     }
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 }
             },
             () => {
@@ -599,7 +618,9 @@ class Writing extends React.Component<IWriting> {
         const isCompD = (this._tab === 'DICTATION');
         const isCompS = (this._tab === 'SCRIPT');
         const isViewSend = (!isCompI) &&
-                            (isCompC && state.confirmBasicProg < SENDPROG.SENDED) ||
+                            (isCompC && this._curQidx ===0 && state.confirmSupProg < SENDPROG.SENDED) ||
+                            (isCompC && this._curQidx ===1 && state.confirmBasicProg < SENDPROG.SENDED) ||
+                            (isCompC && this._curQidx ===2 && state.confirmHardProg < SENDPROG.SENDED) ||
                             (isCompA && state.additionalBasicProg < SENDPROG.SENDED) ||
                             (isCompD && state.dictationProg < SENDPROG.SENDED) ||
                             (isCompS && state.scriptProg < SENDPROG.SENDED);
@@ -703,6 +724,13 @@ class Writing extends React.Component<IWriting> {
                         );
                     })}
                 </div>
+                <SendUINew
+					view={isViewSend}
+					type={'teacher'}
+					sended={false}
+					originY={0}
+					onSend={this.onSend}
+				/>
             </div>
         );
     }

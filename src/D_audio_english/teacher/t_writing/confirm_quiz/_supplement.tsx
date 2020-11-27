@@ -10,7 +10,6 @@ import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
-import ProgBox from 'src/D_reading_english/teacher/t_video_box/_prog_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -31,7 +30,7 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _quiz: Array<string> = [];
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
-	
+
 	private _swiper?: Swiper;
 
 	private readonly _soption: SwiperOptions = {
@@ -54,7 +53,7 @@ class Supplement extends React.Component<IQuizBox> {
 	private _jsx_question2_answer: number;
 	private _jsx_question3_answer: number;
 	private	_answer_dic: {};
-	private _disable_toggle: boolean
+	private _disable_toggle: boolean;
 	private _characterImage: string;
 
 	private _btnAudio?: BtnAudio;
@@ -101,12 +100,10 @@ class Supplement extends React.Component<IQuizBox> {
 
 	private _onClickTrue = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		if(this._btnAudio) this._btnAudio.toggle();
 		this._toggle[param] = true;
 	}
 	private _onClickFalse = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		if(this._btnAudio) this._btnAudio.toggle();
 		this._toggle[param] = false;
 	}
 	private _getToggleState = (num: number) =>{
@@ -116,7 +113,6 @@ class Supplement extends React.Component<IQuizBox> {
 		else
 			return 'on_false';
 	}
-
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		this.props.onHintClick();
@@ -188,7 +184,7 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { data,view } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		this._quiz.push("")
 		return (
