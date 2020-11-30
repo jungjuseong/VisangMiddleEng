@@ -85,8 +85,8 @@ class QuizItem extends React.Component<IQuizItem> {
 	};
 	
 	public render() {
-		// const {view, idx, choice, confirm_normal, confirmProg} = this.props;
-		const {view} = this.props;
+		const {view,confirmProg} = this.props;
+		console.log(confirmProg)
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		return (
 			<>

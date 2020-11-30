@@ -15,7 +15,6 @@ import * as felsocket from '../../felsocket';
 
 interface ISScriptProps {
 	view: boolean;
-	confirmProg: QPROG;
 	scriptProg: SPROG;
 	qsMode: ''|'question'|'script';
 
@@ -81,14 +80,9 @@ class SScript extends React.Component<ISScriptProps> {
 	}
 
 	public render() {
-		const { view,scriptProg, actions , state, confirmProg} = this.props;
+		const { view,scriptProg, actions , state} = this.props;
 		return (
 			<div className={'s_script '}>
-                <ToggleBtn 
-                    className="btn_QUESTION" 
-                    view={confirmProg === QPROG.COMPLETE} 
-                    onClick={this._gotoQuestion}
-                />
 				<div className="script_container">
 					<ScriptContainer
 						view={state.viewDiv === 'content'}

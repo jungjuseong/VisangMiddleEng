@@ -117,7 +117,7 @@ class TeacherContext extends TeacherContextBase {
 			quizComplete : () => 
 				this.state = {
 					...this.state,
-					confirmBasicProg: SENDPROG.COMPLETE,
+					confirmSupProg: SENDPROG.COMPLETE,
 				},
 			clearQnaReturns: () => {			
 				this._returnUsers = [];

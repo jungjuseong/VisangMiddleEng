@@ -18,7 +18,6 @@ import SScript from './s_script';
 interface ISContentProps {
 	view: boolean;
 	questionView: boolean;
-	confirmProg: QPROG;
 	scriptProg: SPROG;
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
@@ -77,7 +76,7 @@ class SContent extends React.Component<ISContentProps> {
 	}
 
 	public render() {
-		const {view, state, actions, confirmProg, scriptProg, qsMode} = this.props;
+		const {view, state, actions, scriptProg, qsMode} = this.props;
 		let style: React.CSSProperties = {};
 		if(!view) {
 			style = {
@@ -91,7 +90,6 @@ class SContent extends React.Component<ISContentProps> {
 			<div className="s_content" style={style}>
 				<SScript
 					view={this.props.view && scriptProg > SPROG.UNMOUNT}
-					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
@@ -100,7 +98,6 @@ class SContent extends React.Component<ISContentProps> {
 				<SConfirm 
 					view={this.props.view && this.props.questionView} 
 					questionView={this.props.questionView}
-					confirmProg={confirmProg}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}

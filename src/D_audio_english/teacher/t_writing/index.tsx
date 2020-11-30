@@ -127,7 +127,7 @@ class Writing extends React.Component<IWriting> {
             }else{
                 console.log('false')
             }
-            let msg: IFocusMsg;
+            let msg: IIndexMsg;
             actions.clearReturnUsers();
             actions.setRetCnt(0);
             actions.setNumOfStudent(App.students.length);
@@ -146,7 +146,9 @@ class Writing extends React.Component<IWriting> {
         const { actions, state } = this.props;
 
         if(this._tab === 'INTRODUCTION') return;
+        if(this._tab === 'CONFIRM' && this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.READY) return;
         if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.READY) return;
+        if(this._tab === 'CONFIRM' && this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.READY) return;
         if(this._tab === 'ADDITIONAL' && state.additionalBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
@@ -198,6 +200,26 @@ class Writing extends React.Component<IWriting> {
 
             this._setNavi();
         });
+    }
+    
+    private _clickAnswer = () => {
+        const {state, actions} = this.props;
+        if(this._tab === 'CONFIRM' && this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.SENDED) return;
+        if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.SENDED) return;
+        if(this._tab === 'CONFIRM' && this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.SENDED) return;
+
+        App.pub_playBtnTab();
+       
+        const msg: IIndexMsg = {
+            msgtype: 'confirm_end',
+            idx:0
+        };
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+
+        this.props.state.confirmSupProg = SENDPROG.COMPLETE;
+        actions.quizComplete();
+        console.log(this.props.state.confirmSupProg);
+        this.props.actions.setNavi(true,true);
 	}
 
 	// private _onPopupSend = (roll: ''|'A'|'B') => {
@@ -423,30 +445,6 @@ class Writing extends React.Component<IWriting> {
         
         else if(idx === 3) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u3);
         
-	}
-
-	private _clickAnswer = () => {
-        const {state, actions} = this.props;
-        const confirmBasicProg = state.confirmBasicProg;
-        const additionalSupProg = state.additionalSupProg
-
-        if(	(this._tab !== 'CONFIRM' && this._curQidx !== 1) || 
-            confirmBasicProg !== SENDPROG.SENDED
-        ) return;
-
-
-        App.pub_playBtnTab();
-       
-        const msg: IIndexMsg = {
-            msgtype: 'confirm_end',
-            idx:1
-        };
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-        this.props.state.confirmBasicProg = SENDPROG.COMPLETE;
-        actions.quizComplete();
-        console.log(this.props.state.confirmBasicProg);
-        this.props.actions.setNavi(true,true);
 	}
 
 	// private _sendFocusIdx(idx: number) {

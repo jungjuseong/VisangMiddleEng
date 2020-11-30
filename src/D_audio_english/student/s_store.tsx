@@ -24,7 +24,13 @@ const enum SPROG {
 
 interface IStateCtx extends IStateBase {
 	questionView: boolean;
-	confirmProg: QPROG;
+	confirmBasicProg: QPROG;
+	confirmSupProg: QPROG;
+	confirmHardProg: QPROG;
+	additionalBasicProg: QPROG;
+	additionalSupProg: QPROG;
+	additionalHardProg: QPROG;
+	dictationProg: QPROG;
 	idx: number;
 	scriptProg: SPROG;
 	roll: ''|'A'|'B';
@@ -47,7 +53,13 @@ class StudentContext extends StudentContextBase {
 		super();
 
 		this.state.questionView = false;
-		this.state.confirmProg = QPROG.UNINIT;
+		this.state.confirmBasicProg = QPROG.UNINIT;
+		this.state.confirmSupProg = QPROG.UNINIT;
+		this.state.confirmHardProg = QPROG.UNINIT;
+		this.state.additionalBasicProg = QPROG.UNINIT;
+		this.state.additionalSupProg = QPROG.UNINIT;
+		this.state.additionalHardProg = QPROG.UNINIT;
+		this.state.dictationProg = QPROG.UNINIT;
 		this.state.idx = -1;
 		this.state.scriptProg = SPROG.UNMOUNT;
 		this.state.qsMode  = '';
@@ -63,7 +75,7 @@ class StudentContext extends StudentContextBase {
 		const state = this.state;
 		if(state.viewDiv !== viewDiv) {
 			this.state.questionView = false;
-			if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.UNINIT;
+			if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.UNINIT;
 			
 			this.state.scriptProg = SPROG.UNMOUNT;
 			this.state.qsMode  = '';
@@ -82,30 +94,30 @@ class StudentContext extends StudentContextBase {
 			const msg = data.data as  common.IIndexMsg;
 			if(msg.msgtype === 'confirm_send') {
 				if(msg.idx === 0){
-					if(this.state.confirmProg > QPROG.UNINIT) return;
+					if(this.state.confirmSupProg > QPROG.UNINIT) return;
 					this.state.scriptProg = SPROG.UNMOUNT;
 					this.state.questionView = true;
-					this.state.confirmProg = QPROG.ON;
+					this.state.confirmSupProg = QPROG.ON;
 					this.state.idx = 0;
 					this.state.viewDiv = 'content';
 					this.state.qsMode  = 'question';
 					this.state.roll = '';
 					this.state.shadowing = false;
 				}else if(msg.idx === 1){
-					if(this.state.confirmProg > QPROG.UNINIT) return;
+					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
 					this.state.scriptProg = SPROG.UNMOUNT;
 					this.state.questionView = true;
-					this.state.confirmProg = QPROG.ON;
+					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
 					this.state.viewDiv = 'content';
 					this.state.qsMode  = 'question';
 					this.state.roll = '';
 					this.state.shadowing = false;
 				}else{
-					if(this.state.confirmProg > QPROG.UNINIT) return;
+					if(this.state.confirmHardProg > QPROG.UNINIT) return;
 					this.state.scriptProg = SPROG.UNMOUNT;
 					this.state.questionView = true;
-					this.state.confirmProg = QPROG.ON;
+					this.state.confirmHardProg = QPROG.ON;
 					this.state.idx = 2;
 					this.state.viewDiv = 'content';
 					this.state.qsMode  = 'question';
@@ -113,14 +125,26 @@ class StudentContext extends StudentContextBase {
 					this.state.shadowing = false;
 				}
 			} else if(msg.msgtype === 'confirm_end') {
-				const qProg = this.state.confirmProg;
-				if(this.state.viewDiv !== 'content') return;
-				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-				this.state.confirmProg = QPROG.READYA;
+				if(msg.idx === 0){
+					const qProg = this.state.confirmSupProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.confirmSupProg = QPROG.READYA;
+				}else if(msg.idx === 1){
+					const qProg = this.state.confirmBasicProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.confirmBasicProg = QPROG.READYA;
+				}else{
+					const qProg = this.state.confirmHardProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.confirmHardProg = QPROG.READYA;
+				}
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
-				if(this.state.confirmProg < QPROG.COMPLETE) this.state.confirmProg = QPROG.READYA;
+				if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.READYA;
 				this.state.questionView = true;
 
 				this.state.scriptProg = SPROG.MOUNTED;
