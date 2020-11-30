@@ -21,7 +21,7 @@ interface IQuizItem {
 }
 @observer
 class QuizItem extends React.Component<IQuizItem> {
-	@observable private _toggle: Array<boolean|null> = [null,null,null];
+	@observable private _toggle: Array<0|1|2> = [0,0,0];
 
 	private _disable_toggle: boolean
 	private	_answer_dic: {};
@@ -53,15 +53,15 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 	private _onClickTrue = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		this._toggle[param] = true;
+		this._toggle[param] = 1;
 	}
 	private _onClickFalse = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
-		this._toggle[param] = false;
+		this._toggle[param] = 2;
 	}
 	private _getToggleState = (num: number) =>{
-		if(this._toggle[num] === null) return '';
-		if(this._toggle[num])
+		if(this._toggle[num] === 0) return '';
+		if(this._toggle[num]=== 1)
 			return 'on_true';
 		else
 			return 'on_false';
@@ -85,9 +85,21 @@ class QuizItem extends React.Component<IQuizItem> {
 	};
 	
 	public render() {
-		const {view,confirmProg} = this.props;
+		const {view, confirmProg, data} = this.props;
 		console.log(confirmProg)
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		const answers = [data.problem1.answer,data.problem2.answer,data.problem3.answer]
+		if(confirmProg == QPROG.COMPLETE){
+			OXs.map((OX,idx) =>{
+				if(answers[idx] === this._toggle[idx]){
+					OXs[idx] = 'O';
+				}else{
+					OXs[idx] = 'X';
+				}
+			})
+		}
+
 		return (
 			<>
 				<div className="quiz_box" style={{display : view ? '' : 'none' }}>
@@ -99,21 +111,24 @@ class QuizItem extends React.Component<IQuizItem> {
 						</div>
 						<div>
 							<div className="white_box">
-								<p>1.  {this._jsx_question1.question}</p>
+								<p>1. {this._jsx_question1.question}</p>
+								<span className={OXs[0]} ></span>
 								<div className={"toggle_bundle " + this._getToggleState(0)}>
 									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
 								</div>
 							</div>
 							<div className="white_box">
-								<p>2.  {this._jsx_question2.question}</p>
+								<p>2. {this._jsx_question2.question}</p>
+								<span className={OXs[1]}></span>
 								<div className={"toggle_bundle " + this._getToggleState(1)}>
 									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
 								</div>
 							</div>
 							<div className="white_box">
-								<p>3.  {this._jsx_question3.question}</p>
+								<p>3. {this._jsx_question3.question}</p>
+								<span className={OXs[2]}></span>
 								<div className={"toggle_bundle " + this._getToggleState(2)}>
 									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
 									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
