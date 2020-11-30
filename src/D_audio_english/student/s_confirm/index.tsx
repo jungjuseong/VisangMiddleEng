@@ -48,17 +48,20 @@ interface ISQuestion {
 class SQuestion extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choice: common.IQuizReturn = {
-		answer: 0,
-		stime: 0,
-		etime: 0,
-	};
+	@observable private _choices: common.IQuizReturn[] = [];
 
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
 
 	constructor(props: ISQuestion) {
 		super(props);
+		for(let i = 0; i < 3; i++) {
+			this._choices[i] = {
+				answer: 0,
+				stime: 0,
+				etime: 0,
+			};
+		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -82,18 +85,21 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 		App.pub_playToPad();
-		const choice: common.IQuizReturn = {
-			answer:0 ,
-			stime: 0,
-			etime: 0,
-		};
+		const choices: common.IQuizReturn[] = [];
+			this._choices.forEach((choice, idx) => {
+				choices.push({
+					answer: choice.answer,
+					stime: choice.stime,
+					etime: choice.etime,				
+				});
+			});
 		if(this.props.state.idx === 0){
 			this.props.state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					id: App.student.id,
-					return: choice
+					returns: choices
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -112,7 +118,7 @@ class SQuestion extends React.Component<ISQuestion> {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					id: App.student.id,
-					return: choice
+					returns: choices
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -131,7 +137,7 @@ class SQuestion extends React.Component<ISQuestion> {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					id: App.student.id,
-					return: choice
+					returns: choices
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -154,11 +160,11 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
 		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
-		else if(idx !== this._curIdx) return;
 
 		App.pub_playBtnTab();
-		if(this._choice) {
-			this._choice.etime = Date.now();
+		if(this._choices[idx]) {
+			this._choices[idx].answer = choice;
+			this._choices[idx].etime = Date.now();
 		}
 	}
 	private _gotoScript = () => {
@@ -209,15 +215,21 @@ class SQuestion extends React.Component<ISQuestion> {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 				(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 				(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-				this._choice.stime = Date.now();
-				this._choice.etime = 0;
+				for(let i = 0; i < this._choices.length; i++) {
+					this._choices[i].answer = 0;
+					this._choices[i].stime = Date.now();
+					this._choices[i].etime = 0;
+				}
 			}
 		} else if (!this.props.view && prev.view) {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 			(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 			(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-				this._choice.stime = Date.now();
-				this._choice.etime = 0;
+				for(let i = 0; i < this._choices.length; i++) {
+					this._choices[i].answer = 0;
+					this._choices[i].stime = Date.now();
+					this._choices[i].etime = 0;
+				}
 			}
 		}
 
@@ -231,13 +243,8 @@ class SQuestion extends React.Component<ISQuestion> {
 	public render() {
 		const {view, state, actions} = this.props;
 		const c_data = actions.getData();
-		const introductions = c_data.introduction;
 		const confirm_nomals = c_data.confirm_nomal;
 		const noSwiping = state.confirmSupProg === QPROG.ON;
-
-		const curChoice = this._curIdx >= 0 ? this._choice : undefined;
-		const curAnswer = curChoice ? curChoice.answer : 0;
-		const isLast = this._curIdx === introductions.length - 1;
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
@@ -246,15 +253,14 @@ class SQuestion extends React.Component<ISQuestion> {
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						<SSup
 							view={view && state.idx === 0} 
-							idx={this._curIdx}
-							choice={0}
+							idx={0}
 							data={c_data.confirm_sup[0]}
 							confirmProg={state.confirmSupProg}
 							onChoice={this._onChoice}
 						/>
 						<SBasic
 							view={view && state.idx === 1} 
-							idx={this._curIdx}
+							idx={1}
 							choice={0}
 							confirm_normal={confirm_nomals[0]}
 							confirmProg={state.confirmBasicProg}
@@ -262,7 +268,7 @@ class SQuestion extends React.Component<ISQuestion> {
 						/>
 						<SHard
 							view={view && state.idx === 2}
-							idx={this._curIdx}
+							idx={2}
 							choice={0}
 							data={c_data.confirm_hard[0]}
 							confirmProg={state.confirmHardProg}

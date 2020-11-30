@@ -23,7 +23,7 @@ export interface IRollMsg extends IMsg {
 
 export interface IQuizReturnMsg extends IMsg {
 	id: string;
-	return : IQuizReturn;
+	returns : IQuizReturn[];
 }
 
 export interface IQNAMsg extends IMsg {

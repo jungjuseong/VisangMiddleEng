@@ -129,17 +129,17 @@ class StudentContext extends StudentContextBase {
 					const qProg = this.state.confirmSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmSupProg = QPROG.READYA;
+					this.state.confirmSupProg = QPROG.COMPLETE;
 				}else if(msg.idx === 1){
 					const qProg = this.state.confirmBasicProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmBasicProg = QPROG.READYA;
+					this.state.confirmBasicProg = QPROG.COMPLETE;
 				}else{
 					const qProg = this.state.confirmHardProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmHardProg = QPROG.READYA;
+					this.state.confirmHardProg = QPROG.COMPLETE;
 				}
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;

@@ -14,7 +14,6 @@ import { NONE } from 'src/share/style';
 interface IQuizItem {
 	view: boolean;
 	idx: number;
-	choice: number;
 	data: common.IConfirmSup;
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number) => void;
@@ -54,10 +53,12 @@ class QuizItem extends React.Component<IQuizItem> {
 	private _onClickTrue = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
 		this._toggle[param] = true;
+		this.props.onChoice(param, 1);
 	}
 	private _onClickFalse = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
 		this._toggle[param] = false;
+		this.props.onChoice(param, 2);
 	}
 	private _getToggleState = (num: number) =>{
 		if(this._toggle[num] === null) return '';

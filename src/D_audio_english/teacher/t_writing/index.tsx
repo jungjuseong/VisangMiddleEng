@@ -443,8 +443,6 @@ class Writing extends React.Component<IWriting> {
         
         else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u2);
         
-        else if(idx === 3) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u3);
-        
 	}
 
 	// private _sendFocusIdx(idx: number) {

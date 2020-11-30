@@ -28,8 +28,6 @@ interface IQuizResult {
 	u1: string[];
 	c2: number;
 	u2: string[];
-	c3: number;
-	u3: string[];
 } 
 
 interface IStateCtx extends IStateBase {
@@ -67,7 +65,7 @@ class TeacherContext extends TeacherContextBase {
 	public actions!: IActionsCtx;
 	private _data!: IData;
 
-	private _result: IQuizResult[] = [];
+	private _resultConfirmSup: IQuizResult[] = [];
 	private _returnUsers: string[] = [];
 
 	private _returnUsersForQuiz: string[] = [];
@@ -106,7 +104,7 @@ class TeacherContext extends TeacherContextBase {
 		this.actions = {
 			...this.actions,
 			getData: () => this._data,
-			getResult: () => this._result,
+			getResult: () => this._resultConfirmSup,
 			gotoDirection: () => this._setViewDiv('direction'),
 			gotoNextBook: () => felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null),
 			getReturnUsers: () => this._returnUsers,
@@ -149,24 +147,40 @@ class TeacherContext extends TeacherContextBase {
 		super.receive(messageFromPad);
 		// console.log('receive', data);
 		if(messageFromPad.type === $SocketType.MSGTOTEACHER && messageFromPad.data) {
-			const messageType = (messageFromPad.data as  IMsg).msgtype;
-			switch(messageType) {
+			const msg = (messageFromPad.data as  IMsg);
+			switch(msg.msgtype) {
 			case 'confirm_return':
-				if(this.state.confirmBasicProg === SENDPROG.SENDED) {
-					const quizReturnMsg = (messageFromPad.data as IQuizReturnMsg);
+				if(this.state.confirmSupProg === SENDPROG.SENDED) {
+					const qmsg = msg as IQuizReturnMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
-						if(App.students[i].id === quizReturnMsg.id) {
+						if(App.students[i].id === qmsg.id) {
 							sidx = i;
 							break;
 						}
 					}
-					const ridx = this._returnUsersForQuiz.indexOf(quizReturnMsg.id);
+					const ridx = this._returnUsersForQuiz.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
-						this._returnUsersForQuiz.push(quizReturnMsg.id);
-						felsocket.addStudentForStudentReportType6(quizReturnMsg.id);
+						this._returnUsersForQuiz.push(qmsg.id);
+						felsocket.addStudentForStudentReportType6(qmsg.id);
 						this.actions.setRetCnt(this._returnUsersForQuiz.length);
-						this._uploadInclassReport(quizReturnMsg);
+						const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
+						for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
+							if(i < this._resultConfirmSup.length) {
+								const ret = qmsg.returns[i];						// 사용자가 선택한 번호
+								const result = this._resultConfirmSup[i];					// 결과 저장 	
+
+								if(ret.answer === answers[i]) result.numOfCorrect++;
+								if(ret.answer === 1) {
+									result.c1++;
+									result.u1.push(qmsg.id);
+								} else if(ret.answer === 2) {
+									result.c2++;
+									result.u2.push(qmsg.id);
+								}
+							}
+						}
+						this._uploadInclassReport(qmsg);
 					}
 				}
 				break;
