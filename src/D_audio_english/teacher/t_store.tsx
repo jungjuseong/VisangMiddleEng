@@ -98,6 +98,9 @@ class TeacherContext extends TeacherContextBase {
 			if(this.state.confirmBasicProg < SENDPROG.COMPLETE) {
 				this.state.confirmBasicProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
+				for(let i = 0; i < 3; i++) {
+					this._resultConfirmSup[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: []};
+				}
 			}
 		};
 
@@ -162,8 +165,6 @@ class TeacherContext extends TeacherContextBase {
 					const ridx = this._returnUsersForQuiz.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
 						this._returnUsersForQuiz.push(qmsg.id);
-						felsocket.addStudentForStudentReportType6(qmsg.id);
-						this.actions.setRetCnt(this._returnUsersForQuiz.length);
 						const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
 						for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
 							if(i < this._resultConfirmSup.length) {

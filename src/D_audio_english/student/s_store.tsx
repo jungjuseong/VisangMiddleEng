@@ -96,34 +96,24 @@ class StudentContext extends StudentContextBase {
 				if(msg.idx === 0){
 					if(this.state.confirmSupProg > QPROG.UNINIT) return;
 					this.state.scriptProg = SPROG.UNMOUNT;
-					this.state.questionView = true;
 					this.state.confirmSupProg = QPROG.ON;
 					this.state.idx = 0;
-					this.state.viewDiv = 'content';
-					this.state.qsMode  = 'question';
-					this.state.roll = '';
-					this.state.shadowing = false;
 				}else if(msg.idx === 1){
 					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
 					this.state.scriptProg = SPROG.UNMOUNT;
-					this.state.questionView = true;
 					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
-					this.state.viewDiv = 'content';
-					this.state.qsMode  = 'question';
-					this.state.roll = '';
-					this.state.shadowing = false;
 				}else{
 					if(this.state.confirmHardProg > QPROG.UNINIT) return;
-					this.state.scriptProg = SPROG.UNMOUNT;
-					this.state.questionView = true;
 					this.state.confirmHardProg = QPROG.ON;
 					this.state.idx = 2;
-					this.state.viewDiv = 'content';
-					this.state.qsMode  = 'question';
-					this.state.roll = '';
-					this.state.shadowing = false;
 				}
+				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.questionView = true;
+				this.state.viewDiv = 'content';
+				this.state.qsMode  = 'question';
+				this.state.roll = '';
+				this.state.shadowing = false;
 			} else if(msg.msgtype === 'confirm_end') {
 				if(msg.idx === 0){
 					const qProg = this.state.confirmSupProg;
