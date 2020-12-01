@@ -20,7 +20,7 @@ interface IQuizItem {
 }
 @observer
 class QuizItem extends React.Component<IQuizItem> {
-	@observable private _toggle: Array<0|1|2> = [0,0,0];
+	@observable private _toggle: Array<number> = [0,0,0];
 
 	private _disable_toggle: boolean
 	private	_answer_dic: {};
@@ -62,7 +62,7 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 	private _getToggleState = (num: number) =>{
 		if(this._toggle[num] === 0) return '';
-		if(this._toggle[num]=== 1)
+		if(this._toggle[num] === 1)
 			return 'on_true';
 		else
 			return 'on_false';
@@ -84,10 +84,13 @@ class QuizItem extends React.Component<IQuizItem> {
 	onStop = () => {
 		this.setState({activeDrags: --this.state.activeDrags});
 	};
-	
+	test = () =>{
+		this._toggle[0] = this.props.data.problem1.answer;
+		this._toggle[1] = this.props.data.problem2.answer;
+		this._toggle[2] = this.props.data.problem3.answer;
+	}
 	public render() {
 		const {view, confirmProg, data} = this.props;
-		console.log(confirmProg)
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		let OXs: Array<''|'O'|'X'> = ['','',''];
 		const answers = [data.problem1.answer,data.problem2.answer,data.problem3.answer]
@@ -95,9 +98,9 @@ class QuizItem extends React.Component<IQuizItem> {
 			console.log('complete')
 			OXs.map((OX,idx) =>{
 				if(answers[idx] === this._toggle[idx]){
-					OXs[idx] = 'O';
+					OX = 'O';
 				}else{
-					OXs[idx] = 'X';
+					OX = 'X';
 				}
 			})
 		}

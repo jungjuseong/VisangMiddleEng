@@ -37,8 +37,6 @@
                 position: relative;
                 width: 1200px;
                 height: 495px;
-                display: inline-flex;
-                justify-content: center;
 
                 .img_bundle {
                     white-space: normal;
@@ -53,11 +51,10 @@
                     }
                 }
                 .box {
-                    position: relative;
+                    position: absolute;
                     background-color: white;
                     text-align: center;
                     color: orangered;
-                    top: 410px;
                     float: left;
                     width: 65px;
                     height: 65px;
@@ -65,7 +62,6 @@
                     border: 3px solid #000;
                     border-radius: 10px;
                     font-size: 42px;
-                    margin: 10px;
                 }
             }
         }

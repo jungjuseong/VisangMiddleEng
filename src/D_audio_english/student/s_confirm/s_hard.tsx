@@ -41,28 +41,10 @@ class QuizItem extends React.Component<IQuizItem> {
 	private _onChoice = (choice: number) => {
 		this.props.onChoice(this.props.idx, choice);
 	}
-	state = {
-		activeDrags: 0,
-		deltaPosition: {
-			x: 0, y: 0
-		},
-		controlledPosition: {
-			x: -400, y: 200
-		}
-	};
-
-	onStart = () => {
-		this.setState({ activeDrags: ++this.state.activeDrags });
-	};
-
-	onStop = () => {
-		this.setState({ activeDrags: --this.state.activeDrags });
-	};
 
 	public render() {
 		// const {view, idx, choice, confirm_normal, confirmProg} = this.props;
 		const { view } = this.props;
-		const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
