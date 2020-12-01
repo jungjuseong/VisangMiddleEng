@@ -14,6 +14,7 @@
         background: resolve('teacher/images/bg_write.png') no-repeat;
         width: width('teacher/images/bg_write.png');
         height: height('teacher/images/bg_write.png');
+        margin: 117px 66px 47px 69px;
         @include intro_quiz;
         @include confirm_quiz;
         @include additional_quiz;
@@ -80,22 +81,27 @@
         }
         .btn_tabs {
             position: absolute;
-            top: 100px;
-            left: 87px;
+            top: 75px;
+            left: 88px;
             .btn_tab_introduction {
                 @include btn_on( resolve('teacher/images/btn_tab_introduction_down.png'), resolve('teacher/images/btn_tab_introduction.png'), width('teacher/images/btn_tab_introduction.png'), height('teacher/images/btn_tab_introduction.png'));
+                margin-right: 11px;
             }
             .btn_tab_confirm {
                 @include btn_on( resolve('teacher/images/btn_tab_confirm_down.png'), resolve('teacher/images/btn_tab_confirm.png'), width('teacher/images/btn_tab_confirm.png'), height('teacher/images/btn_tab_confirm.png'));
+                margin-right: 11px;
             }
             .btn_tab_additional {
                 @include btn_on( resolve('teacher/images/btn_tab_additional_down.png'), resolve('teacher/images/btn_tab_additional.png'), width('teacher/images/btn_tab_additional.png'), height('teacher/images/btn_tab_additional.png'));
+                margin-right: 11px;
             }
             .btn_tab_dictation {
                 @include btn_on( resolve('teacher/images/btn_tab_dictation_down.png'), resolve('teacher/images/btn_tab_dictation.png'), width('teacher/images/btn_tab_dictation.png'), height('teacher/images/btn_tab_dictation.png'));
+                margin-right: 11px;
             }
             .btn_tab_script {
                 @include btn_on( resolve('teacher/images/btn_tab_script_down.png'), resolve('teacher/images/btn_tab_script.png'), width('teacher/images/btn_tab_script.png'), height('teacher/images/btn_tab_script.png'));
+                margin-right: 11px;
             }
         }
         /* 제출수*/
@@ -151,7 +157,7 @@
             width: 1150px;
             height: 600px;
             position: absolute;
-            top: 140px;
+            //top: 130px;
             right: 65px;
             .btn_page_box {
                 position: absolute;
@@ -163,8 +169,8 @@
                 z-index: 2;
                 cursor: pointer;
                 &>span {
-                    margin: 0px 11px;
-                    font-size: 17px;
+                    margin: 0px 12px;
+                    font-size: 18px;
                     color: rgba(255, 255, 255, 1);
                     &.on {
                         color: rgb(248, 246, 77);
