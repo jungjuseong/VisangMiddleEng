@@ -39,15 +39,27 @@
                 height: 495px;
 
                 .img_bundle {
-                    white-space: normal;
-                    display: inline-block;
                     position: absolute;
-
+                    display: inline-block;
+                    white-space: normal;
+                    &>div{
+                        position: relative;
+                        display: inline-block;
+                    }
                     .image {
                         float: left;
                         width: 324px;
                         height: 350px;
                         margin: 30px;
+                    }
+                    .number_box{
+                        position: absolute;
+                        display: inline-block;
+                        top: 53px;
+                        left: 55px;
+                        font-size: 24px;
+                        width: 25px;
+                        height: 25px;
                     }
                 }
                 .box {
