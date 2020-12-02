@@ -756,6 +756,7 @@ class Comprehension extends React.Component<IComprehension> {
 
 	public render() {
         const {state} = this.props;
+        console.log('컴프리헨션렌더')
 
         const quizs = this.m_data.quizs;
         const isQComplete = state.questionProg >= SENDPROG.COMPLETE;

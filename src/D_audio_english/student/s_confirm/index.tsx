@@ -48,20 +48,19 @@ interface ISQuestion {
 class SQuestion extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizReturn[] = [];
+	@observable private _choices: common.IQuizReturn = {
+		answer1: 0,
+		answer2: 0,
+		answer3: 0,
+		stime: 0,
+		etime: 0,
+	};
 
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
 
 	constructor(props: ISQuestion) {
 		super(props);
-		for(let i = 0; i < 3; i++) {
-			this._choices[i] = {
-				answer: 0,
-				stime: 0,
-				etime: 0,
-			};
-		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -85,19 +84,14 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 		App.pub_playToPad();
-		const choices: common.IQuizReturn[] = [];
-			this._choices.forEach((choice, idx) => {
-				choices.push({
-					answer: choice.answer,
-					stime: choice.stime,
-					etime: choice.etime,				
-				});
-			});
+		let choices: common.IQuizReturn;
+		choices = this._choices;
 		if(this.props.state.idx === 0){
 			this.props.state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
+					idx: 0,
 					id: App.student.id,
 					returns: choices
 				};
@@ -117,6 +111,7 @@ class SQuestion extends React.Component<ISQuestion> {
 			if(App.student) {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
+					idx:1,
 					id: App.student.id,
 					returns: choices
 				};
@@ -136,6 +131,7 @@ class SQuestion extends React.Component<ISQuestion> {
 			if(App.student) {
 				const msg: common.IQuizReturnMsg = {
 					msgtype: 'confirm_return',
+					idx:2,
 					id: App.student.id,
 					returns: choices
 				};
@@ -162,9 +158,23 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 
 		App.pub_playBtnTab();
-		if(this._choices[idx]) {
-			this._choices[idx].answer = choice;
-			this._choices[idx].etime = Date.now();
+		switch(idx){
+			case 0 :{
+				this._choices.answer1 = choice;
+				this._choices.etime = Date.now();
+				break;
+			}
+			case 1 :{
+				this._choices.answer2 = choice;
+				this._choices.etime = Date.now();
+				break;
+			}
+			case 2 :{
+				this._choices.answer3 = choice;
+				this._choices.etime = Date.now();
+				break;
+			}
+			default : return;
 		}
 	}
 	private _gotoScript = () => {
@@ -215,21 +225,21 @@ class SQuestion extends React.Component<ISQuestion> {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 				(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 				(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-				for(let i = 0; i < this._choices.length; i++) {
-					this._choices[i].answer = 0;
-					this._choices[i].stime = Date.now();
-					this._choices[i].etime = 0;
-				}
+					this._choices.answer1 = 0;
+					this._choices.answer2 = 0;
+					this._choices.answer3 = 0;
+					this._choices.stime = Date.now();
+					this._choices.etime = 0;
 			}
 		} else if (!this.props.view && prev.view) {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 			(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 			(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-				for(let i = 0; i < this._choices.length; i++) {
-					this._choices[i].answer = 0;
-					this._choices[i].stime = Date.now();
-					this._choices[i].etime = 0;
-				}
+				this._choices.answer1 = 0;
+				this._choices.answer2 = 0;
+				this._choices.answer3 = 0;
+				this._choices.stime = Date.now();
+				this._choices.etime = 0;
 			}
 		}
 

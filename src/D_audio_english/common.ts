@@ -12,7 +12,9 @@ export interface IIndexMsg extends IMsg{
 }
 
 export interface IQuizReturn {
-	answer: number;
+	answer1: number;
+	answer2: number;
+	answer3: number;
 	stime: number;
 	etime: number;
 }
@@ -21,9 +23,9 @@ export interface IRollMsg extends IMsg {
 	roll: 'A'|'B';
 }
 
-export interface IQuizReturnMsg extends IMsg {
+export interface IQuizReturnMsg extends IIndexMsg {
 	id: string;
-	returns : IQuizReturn[];
+	returns : IQuizReturn;
 }
 
 export interface IQNAMsg extends IMsg {

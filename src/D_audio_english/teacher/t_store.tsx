@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData } from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 
 const enum SENDPROG {
@@ -22,12 +22,12 @@ interface IValArr {
 	txt: string;
 }
 
-interface IQuizResult {
+interface IConfirmSupResult {
 	numOfCorrect: number;
-	c1: number;
-	u1: string[];
-	c2: number;
-	u2: string[];
+	c1: number[];
+	c2: number[];
+	c3: number[];
+	uid: string[];
 } 
 
 interface IStateCtx extends IStateBase {
@@ -47,7 +47,7 @@ interface IStateCtx extends IStateBase {
 
 interface IActionsCtx extends IActionsBase {
 	getData: () => IData;
-	getResult: () => IQuizResult[];
+	getResult: () => IConfirmSupResult;
 	gotoDirection: () => void;
 	gotoNextBook: () => void;
 	getReturnUsers: () => string[];
@@ -65,7 +65,13 @@ class TeacherContext extends TeacherContextBase {
 	public actions!: IActionsCtx;
 	private _data!: IData;
 
-	private _resultConfirmSup: IQuizResult[] = [];
+	private _resultConfirmSup: IConfirmSupResult = {
+		numOfCorrect: 0,
+		c1: [],
+		c2: [],
+		c3: [],
+		uid: []
+	}
 	private _returnUsers: string[] = [];
 
 	private _returnUsersForQuiz: string[] = [];
@@ -86,44 +92,34 @@ class TeacherContext extends TeacherContextBase {
 		this.state.qnaProg = SENDPROG.READY,
 		this.state.dialogueProg = SENDPROG.READY
 
-		this.actions.init = () => {	
-			this.state = {
-				...this.state,
-				scriptProg: SENDPROG.READY,
-				qnaProg: SENDPROG.READY,
-				dialogueProg: SENDPROG.READY
-			};
+		this.actions.init = () => {
+			this.state.scriptProg= SENDPROG.READY;
+			this.state.qnaProg= SENDPROG.READY;
+			this.state.dialogueProg= SENDPROG.READY;
 			this._returnUsers = [];
 
 			if(this.state.confirmBasicProg < SENDPROG.COMPLETE) {
 				this.state.confirmBasicProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
-				for(let i = 0; i < 3; i++) {
-					this._resultConfirmSup[i] = {numOfCorrect: 0, c1: 0, u1: [], c2: 0, u2: []};
-				}
+				this._resultConfirmSup = {numOfCorrect: 0, c1: [], c2: [], c3: [], uid:[]};
 			}
-		};
+		}
 
-		this.actions = {
-			...this.actions,
-			getData: () => this._data,
-			getResult: () => this._resultConfirmSup,
-			gotoDirection: () => this._setViewDiv('direction'),
-			gotoNextBook: () => felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null),
-			getReturnUsers: () => this._returnUsers,
-			clearReturnUsers: () => this._returnUsers = [],
-			getReturnUsersForQuiz: () => this._returnUsersForQuiz,
-			clearReturnUsersForQuiz: () => this._returnUsersForQuiz = [],
-			getQnaReturns: () => this._qnaReturns,
-			quizComplete : () => 
-				this.state = {
-					...this.state,
-					confirmSupProg: SENDPROG.COMPLETE,
-				},
-			clearQnaReturns: () => {			
-				this._returnUsers = [];
-				this.actions.setRetCnt(0);
-			},
+		this.actions.getData = () => this._data;
+		this.actions.getResult = () => this._resultConfirmSup;
+		this.actions.gotoDirection =  () => this._setViewDiv('direction');
+		this.actions.gotoNextBook = () => felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null);
+		this.actions.getReturnUsers = () => this._returnUsers;
+		this.actions.clearReturnUsers = () => this._returnUsers = [];
+		this.actions.getReturnUsersForQuiz = () => this._returnUsersForQuiz;
+		this.actions.clearReturnUsersForQuiz = () => this._returnUsersForQuiz = [];
+		this.actions.getQnaReturns = () => this._qnaReturns;
+		this.actions.quizComplete  = () => {
+			this.state.confirmSupProg = SENDPROG.COMPLETE;
+		};
+		this.actions.clearQnaReturns = () => {
+			this._returnUsers = [];
+			this.actions.setRetCnt(0);
 		};
 	}
 
@@ -150,10 +146,12 @@ class TeacherContext extends TeacherContextBase {
 		super.receive(messageFromPad);
 		// console.log('receive', data);
 		if(messageFromPad.type === $SocketType.MSGTOTEACHER && messageFromPad.data) {
-			const msg = (messageFromPad.data as  IMsg);
+			const msg = (messageFromPad.data as  IIndexMsg);
 			switch(msg.msgtype) {
 			case 'confirm_return':
-				if(this.state.confirmSupProg === SENDPROG.SENDED) {
+				console.log(msg.msgtype + msg.idx + this.state.confirmSupProg)
+				if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
+					console.log('receive confirm return 0')
 					const qmsg = msg as IQuizReturnMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
@@ -162,25 +160,18 @@ class TeacherContext extends TeacherContextBase {
 							break;
 						}
 					}
-					const ridx = this._returnUsersForQuiz.indexOf(qmsg.id);
+					const ridx = this._resultConfirmSup.uid.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
-						this._returnUsersForQuiz.push(qmsg.id);
 						const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
-						for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
-							if(i < this._resultConfirmSup.length) {
-								const ret = qmsg.returns[i];						// 사용자가 선택한 번호
-								const result = this._resultConfirmSup[i];					// 결과 저장 	
+						const ret = qmsg.returns;						// 사용자가 선택한 번호
+						const result = this._resultConfirmSup;					// 결과 저장 	
 
-								if(ret.answer === answers[i]) result.numOfCorrect++;
-								if(ret.answer === 1) {
-									result.c1++;
-									result.u1.push(qmsg.id);
-								} else if(ret.answer === 2) {
-									result.c2++;
-									result.u2.push(qmsg.id);
-								}
-							}
-						}
+						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+						result.c1.push(ret.answer1);
+						result.c2.push(ret.answer1);
+						result.c3.push(ret.answer1);
+						result.uid.push(qmsg.id);
+		
 						this._uploadInclassReport(qmsg);
 					}
 				}
@@ -313,5 +304,5 @@ export {
 	IActionsCtx,
 	VIEWDIV,
 	SENDPROG,
-	IQuizResult,
+	IConfirmSupResult,
 };

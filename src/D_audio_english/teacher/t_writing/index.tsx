@@ -173,7 +173,9 @@ class Writing extends React.Component<IWriting> {
                 switch(this._curQidx){
                     case 0 : {
                         if(state.confirmSupProg !==  SENDPROG.SENDING) return;
-                        state.confirmSupProg = SENDPROG.SENDED;
+                        console.log('onsend')
+                        state.confirmSupProg = SENDPROG.SENDED
+                        // actions.setSupProg(SENDPROG.SENDED);
                         msg = {msgtype: 'confirm_send', idx : 0};
                         break;
                     }
@@ -728,6 +730,7 @@ class Writing extends React.Component<IWriting> {
                         <div key={1} >
                             <ConfirmQuiz 
                                 view={view}
+                                actions={actions}
                                 index ={this._curQidx}
                                 mdata={this.m_data} 
                                 onClosed={this._letstalkClosed}

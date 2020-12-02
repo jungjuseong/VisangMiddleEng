@@ -214,9 +214,7 @@ class TeacherContext extends TeacherContextBase {
 								}
 							}
 						}
-
 						this._uploadInclassReport(qmsg);
-
 					}
 				}
 			} else if(msg.msgtype === 'qna_return') {

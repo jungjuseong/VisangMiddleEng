@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer, PropTypes } from 'mobx-react';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
+
+import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
@@ -15,6 +17,7 @@ const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBox {
 	view: boolean;
+	actions: IActionsCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IConfirmSup;
@@ -30,6 +33,8 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _quiz: Array<string> = [];
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
+	@observable private _numOfStudent = 0;
+	@observable private _retCnt = 0;
 
 	private _swiper?: Swiper;
 
@@ -152,7 +157,7 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
-		const { view } = this.props;
+		const { view ,actions} = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
@@ -181,16 +186,18 @@ class Supplement extends React.Component<IQuizBox> {
 			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
+		this._retCnt = actions.getResult().uid.length
+	
 	}
 	
 	public render() {
-		const { data,view } = this.props;
+		const { data,view,actions } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate"></div>
+				<div className="subject_rate">{this._retCnt}/{App.students.length}</div>
 				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
