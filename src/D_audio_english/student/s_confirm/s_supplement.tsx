@@ -47,9 +47,6 @@ class QuizItem extends React.Component<IQuizItem> {
 		this._disable_toggle = false;
 	}
 
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
 	private _onClickTrue = (param: 0 | 1 | 2) =>{
 		if (this._disable_toggle) return;
 		this._toggle[param] = 1;
@@ -62,11 +59,9 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 	private _getToggleState = (num: number) =>{
 		if(this.props.confirmProg === QPROG.COMPLETE){
-			console.log('emfdjdjkjlk')
 			switch(num){
 				case 0 :{
 					if(this._jsx_question1_answer === 1){
-						console.log('emfdjdjkjlk')
 						return 'on_true'
 					}else return 'on_false'
 				}

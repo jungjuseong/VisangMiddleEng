@@ -22,7 +22,7 @@ interface IValArr {
 	txt: string;
 }
 
-interface IConfirmSupResult {
+interface IConfirmResult {
 	numOfCorrect: number;
 	c1: number[];
 	c2: number[];
@@ -43,12 +43,13 @@ interface IStateCtx extends IStateBase {
 	qnaProg: SENDPROG;
 	dialogueProg: SENDPROG;
 	scriptResult: number[];
-	resultConfirmSup: IConfirmSupResult;
+	resultConfirmSup: IConfirmResult;
+	resultConfirmBasic: IConfirmResult;
 }
 
 interface IActionsCtx extends IActionsBase {
 	getData: () => IData;
-	getResult: () => IConfirmSupResult;
+	getResult: () => IConfirmResult;
 	gotoDirection: () => void;
 	gotoNextBook: () => void;
 	getReturnUsers: () => string[];
@@ -86,6 +87,13 @@ class TeacherContext extends TeacherContextBase {
 		this.state.qnaProg = SENDPROG.READY,
 		this.state.dialogueProg = SENDPROG.READY
 		this.state.resultConfirmSup = {
+			numOfCorrect: 0,
+			c1: [],
+			c2: [],
+			c3: [],
+			uid: []
+		}
+		this.state.resultConfirmBasic = {
 			numOfCorrect: 0,
 			c1: [],
 			c2: [],
@@ -133,15 +141,6 @@ class TeacherContext extends TeacherContextBase {
 		super._setViewDiv(newViewDiv);
 	}
 
-	private _uploadInclassReport = (quizMessage: IQuizReturnMsg) => {
-		const userReports: IInClassReport[] = [];
-
-		if(userReports.length > 0) {
-			console.log('inclassReport(LogFromContentTeacher): ', userReports); // 비상요청 사항                        
-			felsocket.uploadInclassReport(userReports);
-		}
-	}
-
 	public receive(messageFromPad: ISocketData) {
 		super.receive(messageFromPad);
 		// console.log('receive', data);
@@ -149,9 +148,8 @@ class TeacherContext extends TeacherContextBase {
 			const msg = (messageFromPad.data as  IIndexMsg);
 			switch(msg.msgtype) {
 			case 'confirm_return':
-				console.log(msg.msgtype + msg.idx + this.state.confirmSupProg)
+				console.log('ansjdnasjdk' +  this.state.confirmBasicProg + msg.idx)
 				if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
-					console.log('receive confirm return 0')
 					const qmsg = msg as IQuizReturnMsg;
 					let sidx = -1;
 					for(let i = 0; i < App.students.length; i++) {
@@ -171,8 +169,27 @@ class TeacherContext extends TeacherContextBase {
 						result.c2.push(ret.answer1);
 						result.c3.push(ret.answer1);
 						result.uid.push(qmsg.id);
-		
-						this._uploadInclassReport(qmsg);
+					}
+				}else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+					const qmsg = msg as IQuizReturnMsg;
+					let sidx = -1;
+					for(let i = 0; i < App.students.length; i++) {
+						if(App.students[i].id === qmsg.id) {
+							sidx = i;
+							break;
+						}
+					}
+					const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+					if(sidx >= 0 && ridx < 0) {
+						const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
+						const ret = qmsg.returns;						// 사용자가 선택한 번호
+						const result = this.state.resultConfirmBasic;					// 결과 저장 	
+
+						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+						result.c1.push(ret.answer1);
+						result.c2.push(ret.answer1);
+						result.c3.push(ret.answer1);
+						result.uid.push(qmsg.id);
 					}
 				}
 				break;
@@ -304,5 +321,5 @@ export {
 	IActionsCtx,
 	VIEWDIV,
 	SENDPROG,
-	IConfirmSupResult,
+	IConfirmResult,
 };

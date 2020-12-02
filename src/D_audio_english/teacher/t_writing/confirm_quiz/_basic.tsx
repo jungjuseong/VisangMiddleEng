@@ -6,6 +6,7 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
+import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
 
@@ -15,6 +16,8 @@ const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBoxProps {
 	view: boolean;
+	actions: IActionsCtx;
+	state: IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IConfirmNomal;
@@ -148,7 +151,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate"></div>
+				<div className="subject_rate">{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}</div>
 				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
