@@ -61,6 +61,27 @@ class QuizItem extends React.Component<IQuizItem> {
 		this.props.onChoice(param, 2);
 	}
 	private _getToggleState = (num: number) =>{
+		if(this.props.confirmProg === QPROG.COMPLETE){
+			console.log('emfdjdjkjlk')
+			switch(num){
+				case 0 :{
+					if(this._jsx_question1_answer === 1){
+						console.log('emfdjdjkjlk')
+						return 'on_true'
+					}else return 'on_false'
+				}
+				case 1 :{
+					if(this._jsx_question2_answer === 1){
+						return 'on_true'
+					}else return 'on_false'
+				}
+				case 2 :{
+					if(this._jsx_question3_answer === 1){
+						return 'on_true'
+					}else return 'on_false'
+				}
+			}
+		}
 		if(this._toggle[num] === 0) return '';
 		if(this._toggle[num] === 1)
 			return 'on_true';
@@ -84,11 +105,6 @@ class QuizItem extends React.Component<IQuizItem> {
 	onStop = () => {
 		this.setState({activeDrags: --this.state.activeDrags});
 	};
-	test = () =>{
-		this._toggle[0] = this.props.data.problem1.answer;
-		this._toggle[1] = this.props.data.problem2.answer;
-		this._toggle[2] = this.props.data.problem3.answer;
-	}
 	public render() {
 		const {view, confirmProg, data} = this.props;
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
@@ -98,11 +114,12 @@ class QuizItem extends React.Component<IQuizItem> {
 			console.log('complete')
 			OXs.map((OX,idx) =>{
 				if(answers[idx] === this._toggle[idx]){
-					OX = 'O';
+					OXs[idx] = 'O';
 				}else{
-					OX = 'X';
+					OXs[idx] = 'X';
 				}
 			})
+			this._disable_toggle = true;
 		}
 
 		return (

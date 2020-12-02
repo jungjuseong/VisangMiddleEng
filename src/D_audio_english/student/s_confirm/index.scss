@@ -117,6 +117,59 @@
                         }
                     }
                 }
+                .hard_question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    height: 800px;
+
+                    &>div{
+                        position: relative;
+                    }
+                    .quiz {
+                        position: relative;
+                        height: 120px;
+                        width: 100%;
+                        padding: 0px 30px;
+                        font-size: 29px;
+                        font-weight: bold;
+                        word-break: normal;
+                        color: rgb(0, 0, 0);
+                        white-space: normal;
+                        margin-bottom: 55px;
+                        &>div{
+                            position: absolute;
+                            top: 64px
+                        }
+                    }
+                    
+                    .hard_question_box{
+                        position: relative;
+                        width: 1150px;
+                        height: 300px;
+                        border-radius: 15px;
+                        canvas{
+                            top: 0;
+                            left: 0;
+                            width: inherit;
+                            height: inherit;
+                            border-radius: 35px;
+                            position: absolute;
+                            background: #000;
+                            opacity: 0.3;
+                        }
+                        .black_sentence{
+                            top: 0;
+                            left: 0;
+                            position: absolute;
+                            font-size: 38px;
+                            &>p{
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
