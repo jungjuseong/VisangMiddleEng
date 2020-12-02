@@ -43,6 +43,7 @@ interface IStateCtx extends IStateBase {
 	qnaProg: SENDPROG;
 	dialogueProg: SENDPROG;
 	scriptResult: number[];
+	resultConfirmSup: IConfirmSupResult;
 }
 
 interface IActionsCtx extends IActionsBase {
@@ -65,13 +66,6 @@ class TeacherContext extends TeacherContextBase {
 	public actions!: IActionsCtx;
 	private _data!: IData;
 
-	private _resultConfirmSup: IConfirmSupResult = {
-		numOfCorrect: 0,
-		c1: [],
-		c2: [],
-		c3: [],
-		uid: []
-	}
 	private _returnUsers: string[] = [];
 
 	private _returnUsersForQuiz: string[] = [];
@@ -91,6 +85,13 @@ class TeacherContext extends TeacherContextBase {
 		this.state.scriptProg = SENDPROG.READY,
 		this.state.qnaProg = SENDPROG.READY,
 		this.state.dialogueProg = SENDPROG.READY
+		this.state.resultConfirmSup = {
+			numOfCorrect: 0,
+			c1: [],
+			c2: [],
+			c3: [],
+			uid: []
+		}
 
 		this.actions.init = () => {
 			this.state.scriptProg= SENDPROG.READY;
@@ -101,12 +102,11 @@ class TeacherContext extends TeacherContextBase {
 			if(this.state.confirmBasicProg < SENDPROG.COMPLETE) {
 				this.state.confirmBasicProg = SENDPROG.READY;
 				this._returnUsersForQuiz = [];
-				this._resultConfirmSup = {numOfCorrect: 0, c1: [], c2: [], c3: [], uid:[]};
 			}
 		}
 
 		this.actions.getData = () => this._data;
-		this.actions.getResult = () => this._resultConfirmSup;
+		this.actions.getResult = () => this.state.resultConfirmSup;
 		this.actions.gotoDirection =  () => this._setViewDiv('direction');
 		this.actions.gotoNextBook = () => felsocket.sendLauncher($SocketType.GOTO_NEXT_BOOK, null);
 		this.actions.getReturnUsers = () => this._returnUsers;
@@ -160,11 +160,11 @@ class TeacherContext extends TeacherContextBase {
 							break;
 						}
 					}
-					const ridx = this._resultConfirmSup.uid.indexOf(qmsg.id);
+					const ridx = this.state.resultConfirmSup.uid.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
 						const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
 						const ret = qmsg.returns;						// 사용자가 선택한 번호
-						const result = this._resultConfirmSup;					// 결과 저장 	
+						const result = this.state.resultConfirmSup;					// 결과 저장 	
 
 						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
 						result.c1.push(ret.answer1);

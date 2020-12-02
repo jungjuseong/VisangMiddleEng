@@ -14,12 +14,14 @@ import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import Supplement from './_supplement';
 import Basic from './_basic';
 import Hard from './_hard';
+import { state } from '@common/component/Keyboard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBox {
 	view: boolean;
 	actions: IActionsCtx;
+	state:IStateCtx;
 	index: number;
 	onClosed: () => void;
 	onHintClick: () => void;
@@ -77,10 +79,10 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick ,actions} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,actions,state} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} actions={actions} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Supplement view={view && index === 0} actions={actions} state={state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 				<Basic view={view && index === 1} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 				<Hard view={view && index === 2} data={mdata.confirm_hard[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
 			</>

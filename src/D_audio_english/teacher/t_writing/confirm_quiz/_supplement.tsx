@@ -18,6 +18,7 @@ const SwiperComponent = require('react-id-swiper').default;
 interface IQuizBox {
 	view: boolean;
 	actions: IActionsCtx;
+	state: IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IConfirmSup;
@@ -191,13 +192,13 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { data,view,actions } = this.props;
+		const { data,view,actions, state } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate">{this._retCnt}/{App.students.length}</div>
+				<div className="subject_rate">{state.resultConfirmSup.uid.length}/{App.students.length}</div>
 				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
