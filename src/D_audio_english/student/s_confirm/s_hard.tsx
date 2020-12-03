@@ -26,6 +26,7 @@ class QuizItem extends React.Component<IQuizItem> {
 	@observable private _toggle: Array<boolean | null> = [null, null, null];
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
+	@observable private _answer;
 	private _swiper: Swiper|null = null;
 
 	private _jsx_sentence: JSX.Element;
@@ -41,6 +42,8 @@ class QuizItem extends React.Component<IQuizItem> {
 		this._jsx_question1 = props.data.problem1;
 		this._jsx_question2 = props.data.problem2;
 		this._jsx_question3 = props.data.problem3;
+
+		this._answer = true;
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -71,20 +74,28 @@ class QuizItem extends React.Component<IQuizItem> {
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
 					<div className="hard_question">
-						<div className="quiz">
-							<WrapTextNew view={view}>
-								{this._jsx_sentence}
-							</WrapTextNew>
-						</div>
 						<SwiperComponent>
 							{quizs.map((quiz, idx) => {
 								return (
-									<div key={idx}>
-										<div className="hard_question_box">
+									<div key={idx} className= "q-item">
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
+										<div className="sentence_box">
 											<canvas></canvas>
-											<div className="blank_sentence">
-												<p>{idx+1}.{quizs[idx].question}</p>
+											<div className="question_box">
+												<p>{idx + 1}.{quizs[idx].question}</p>
 												<p>{_getBlockJSX(quiz.hint)}</p>
+											</div>
+										</div>
+										<div className="speechbubble_box" >
+											<div className={(this._answer ? ' view-answer' : '')}>
+												<div className={'sample' + (this._answer ? ' hide' : '')}/>
+												<div className={'answer' + (this._answer ? '' : ' hide')}>
+													{_getBlockJSX(quiz.answer)}
+												</div>
 											</div>
 										</div>
 									</div>

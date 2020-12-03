@@ -119,53 +119,105 @@
                 }
                 .hard_question {
                     position: relative;
-                    text-align: left;
+                    text-align: center;
                     font-size: 28px;
                     padding: 0px 25px;
+                    left: 0px;
+                    top: 0px;
                     height: 800px;
+                    width: 100%;
 
-                    &>div{
-                        position: relative;
+                    .swiper-container{
+                        @include page;
                     }
-                    .quiz {
-                        position: relative;
-                        height: 120px;
-                        width: 100%;
-                        padding: 0px 30px;
-                        font-size: 29px;
-                        font-weight: bold;
-                        word-break: normal;
-                        color: rgb(0, 0, 0);
-                        white-space: normal;
-                        margin-bottom: 55px;
-                        &>div{
-                            position: absolute;
-                            top: 64px
+                    .q-item {
+                        .quiz {
+                            position: relative;
+                            display: flex;
+                            height: 180px;
+                            width: 100%;
+                            padding: 0px 30px;
+                            font-size: 29px;
+                            font-weight: bold;
+                            word-break: normal;
+                            color: rgb(0, 0, 0);
+                            white-space: normal;
+                            margin-bottom: 55px;
+
+                            &>div{
+                                position: absolute;
+                                top: 64px
+                            }
                         }
-                    }
-                    
-                    .hard_question_box{
-                        position: relative;
-                        width: 1150px;
-                        height: 300px;
-                        border-radius: 15px;
-                        canvas{
-                            top: 0;
-                            left: 0;
-                            width: inherit;
-                            height: inherit;
-                            border-radius: 35px;
-                            position: absolute;
-                            background: #000;
-                            opacity: 0.3;
+                        
+                        .sentence_box{
+                            position: relative;
+                            display: inline-flex;
+                            align-items: center;
+                            width: 1150px;
+                            height: 300px;
+                            border-radius: 15px;
+                            padding-left: 30px;
+    
+                            canvas{
+                                top: 0;
+                                left: 0;
+                                width: inherit;
+                                height: inherit;
+                                border-radius: 35px;
+                                position: absolute;
+                                background: #000;
+                                opacity: 0.3;
+                            }
+                            .question_box{
+                                top: 0;
+                                left: 0;
+                                position: relative;
+                                font-size: 40px;
+                                line-height: 80px;
+                                &>p{
+                                    color: #fff;
+    
+                                    .block{
+                                        display: inline-block;
+                                        border-bottom: 2px solid #fff;
+                                        width: 150px;
+                                    }
+                                }
+                            }
                         }
-                        .black_sentence{
-                            top: 0;
-                            left: 0;
-                            position: absolute;
-                            font-size: 38px;
-                            &>p{
-                                color: #fff;
+                        .speechbubble_box{
+                            margin: 10px 0px;
+                            &>div {
+                                display: inline-table;
+                                vertical-align: middle;
+                                width: 530px;
+                                height: 80px;
+                                border-bottom: 4px solid #fff;
+                                max-height: 120px;
+                                &.view-answer {
+                                    color: rgb(255, 253, 138);
+                                    white-space: nowrap;
+                                    &:after {
+                                        border-right-color: rgb(13, 92, 155);
+                                    }
+                                }
+                                .sample {
+                                    min-height: 55px;
+                                    span.block {
+                                        color: transparent;
+                                        border-bottom: 2px solid #fff;
+                                    }
+                                }
+                                .answer {
+                                    text-align: left;
+                                    font-size: 40px;
+                                    min-height: 55px;
+                                    padding-bottom: 5px;
+                                }
+                                .hide {
+                                    display: none;
+                                }
                             }
                         }
                     }
