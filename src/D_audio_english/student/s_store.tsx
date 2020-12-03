@@ -95,12 +95,10 @@ class StudentContext extends StudentContextBase {
 			if(msg.msgtype === 'confirm_send') {
 				if(msg.idx === 0){
 					if(this.state.confirmSupProg > QPROG.UNINIT) return;
-					this.state.scriptProg = SPROG.UNMOUNT;
 					this.state.confirmSupProg = QPROG.ON;
 					this.state.idx = 0;
 				}else if(msg.idx === 1){
 					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
-					this.state.scriptProg = SPROG.UNMOUNT;
 					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
 				}else{
