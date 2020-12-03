@@ -4,6 +4,10 @@ import Draggable from 'react-draggable';
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
+import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
+import { KTextArea } from '@common/component/KTextArea';
+import ReactResizeDetector from 'react-resize-detector';
+import SendUI from '../../../share/sendui_new';
 import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
@@ -28,7 +32,8 @@ class QuizItem extends React.Component<IQuizItem> {
 	@observable private _curIdx_tgt = 0;
 	@observable private _answer: boolean;
 	private _swiper: Swiper|null = null;
-
+	
+	private _tarea?: KTextArea;
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	private _jsx_question1: common.IProblemHard;
@@ -44,7 +49,19 @@ class QuizItem extends React.Component<IQuizItem> {
 		this._jsx_question3 = props.data.problem3;
 
 		this._answer = true;
+		keyBoardState.state = 'on';
 	}
+
+	private _refArea = (el: KTextArea|null) => {
+		if(this._tarea || !el) return;
+		this._tarea = el;
+	}
+
+	// private _onResize = (w: number, h: number) => {
+	// 	this._bndW = w;
+	// 	this._bndH = h;
+	// 	if(this.props.view) this._draw();
+	// }
 
 	private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
@@ -68,7 +85,7 @@ class QuizItem extends React.Component<IQuizItem> {
 
 	public render() {
 		// const {view, idx, choice, confirm_normal, confirmProg} = this.props;
-		const { view } = this.props;
+		const { view, confirmProg } = this.props;
 		const quizs = [this._jsx_question1, this._jsx_question2, this._jsx_question3]
 		return (
 			<>
@@ -90,18 +107,29 @@ class QuizItem extends React.Component<IQuizItem> {
 												<p>{_getBlockJSX(quiz.hint)}</p>
 											</div>
 										</div>
-										<div className="speechbubble_box" >
-											<div className={(this._answer ? ' view-answer' : '')}>
-												<div className={'sample' + (this._answer ? ' hide' : '')}/>
-												<div className={'answer' + (this._answer ? '' : ' hide')}>
-													{_getBlockJSX(quiz.answer)}
-												</div>
-											</div>
-										</div>
 									</div>
 								);
 							})}
 						</SwiperComponent>
+						<div className="s_typing" >
+							<div className="area-bnd">
+								<canvas/>
+								<KTextArea 
+									ref={this._refArea} 
+									view={this.props.view} 
+									on={this.props.view && confirmProg === QPROG.READYA}
+									autoResize={true}
+									skipEnter={false}
+									// onChange={this._onChange}
+									// onDone={this._onDone}
+									maxLength={60}
+									maxLineNum={3}
+									rows={1}
+								/>
+								{/* <ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/> */}
+							</div>
+						</div>
+						<Keyboard />
 					</div>
 				</div>
 			</>
