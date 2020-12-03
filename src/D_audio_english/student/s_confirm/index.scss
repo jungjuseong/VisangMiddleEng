@@ -130,6 +130,7 @@
                         @include page;
                     }
                     .q-item {
+                        &.key-on { top: -300px; }
                         .quiz {
                             position: relative;
                             display: flex;
@@ -185,60 +186,60 @@
                                 }
                             }
                         }
-                    }
-                    &>.s_typing {
-                        position: relative;
-                        transition: margin-top 0.3s;
-                        margin-top: 40px;
-                        .area-bnd{
+                        &>.s_typing {
                             position: relative;
-                            display:inline-block;
-                            vertical-align: top;
-                            width: 894px;
-                            margin-right: 5px;
-                            .k-tarea{
+                            transition: margin-top 0.3s;
+                            margin-top: 40px;
+                            .area-bnd{
                                 position: relative;
-                                width: 100%;
-                                height: auto;
-                                min-height: 64px;
-                                textarea{
-                                    box-sizing: border-box;
-                                    font-size: 52px;
-                                    padding: 30px 35px 30px 30px;
-                                    color: #000;
-                                    font-family: NotoSans;
-                                    font-weight: bold;
-                                    &::disabled{
+                                display:inline-block;
+                                vertical-align: top;
+                                width: 894px;
+                                margin-right: 5px;
+                                .k-tarea{
+                                    position: relative;
+                                    width: 100%;
+                                    height: auto;
+                                    min-height: 64px;
+                                    textarea{
+                                        box-sizing: border-box;
+                                        font-size: 52px;
+                                        padding: 30px 35px 30px 30px;
                                         color: #000;
+                                        font-family: NotoSans;
+                                        font-weight: bold;
+                                        &::disabled{
+                                            color: #000;
+                                        }
                                     }
+                                    .k-tarea-bg{
+                                        height: 0px;
+                                        min-height: 100%; 
+                                    }
+                                    .k-tarea-bar{
+                                        display: none;
+                                    }				
                                 }
-                                .k-tarea-bg{
-                                    height: 0px;
-                                    min-height: 100%; 
+                                canvas{
+                                    position: absolute;
+                                    left:0px; top: 0px;
                                 }
-                                .k-tarea-bar{
-                                    display: none;
-                                }				
                             }
-                            canvas{
-                                position: absolute;
-                                left:0px; top: 0px;
+                            &>img {
+                                display:inline-block;
+                                vertical-align: top;
+                                box-sizing: border-box;
+                                width: 115px; 
+                                height: 115px;
+                                border-width: 6px;
+                                border-style: solid;
+                                border-radius: 50%;
+                                &.pink{border-color: rgb(206, 116, 225);}
+                                &.green{border-color: rgb(34,205,172);}
+                                &.orange{border-color: rgb(255,186,0);}
+                                &.purple{border-color: rgb(116,113,236);}
+            
                             }
-                        }
-                        &>img {
-                            display:inline-block;
-                            vertical-align: top;
-                            box-sizing: border-box;
-                            width: 115px; 
-                            height: 115px;
-                            border-width: 6px;
-                            border-style: solid;
-                            border-radius: 50%;
-                            &.pink{border-color: rgb(206, 116, 225);}
-                            &.green{border-color: rgb(34,205,172);}
-                            &.orange{border-color: rgb(255,186,0);}
-                            &.purple{border-color: rgb(116,113,236);}
-        
                         }
                     }
                 }

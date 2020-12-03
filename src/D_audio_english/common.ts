@@ -1,5 +1,15 @@
 import * as _ from 'lodash';
 
+
+export type COLOR = 'pink'|'green'|'orange'|'purple';
+
+interface IRGBA {
+	r: number;
+	g: number;
+	b: number;
+	a: number;
+}
+
 export interface IMsg {
 	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
@@ -19,6 +29,12 @@ export interface IQuizReturn {
 	etime: number;
 }
 
+export interface IQuizStringReturn {
+	answer1: string;
+	answer2: string;
+	answer3: string;
+}
+
 export interface IRollMsg extends IMsg {
 	roll: 'A'|'B';
 }
@@ -26,6 +42,11 @@ export interface IRollMsg extends IMsg {
 export interface IQuizReturnMsg extends IIndexMsg {
 	id: string;
 	returns : IQuizReturn;
+}
+
+export interface IQuizStringReturnMsg extends IIndexMsg {
+	id: string;
+	returns : IQuizStringReturn;
 }
 
 export interface IQNAMsg extends IMsg {
@@ -320,4 +341,131 @@ export function initData(data: IData) {
 	}
 
 	return data;
+}
+
+const _pink = _RGBA(206, 116, 225, 1);
+const _green = _RGBA(34,205,172, 1);
+const _orange = _RGBA(255, 186, 0, 1);
+const _purple = _RGBA(116,113,236, 1);
+
+function _RGBA(r: number, g: number, b: number, a: number) {
+	return {r, g, b, a};
+}
+function _rgbaToString(rgba: IRGBA) {
+	const {r, g, b, a} = rgba;
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+export function drawBalloon(
+	ctx: CanvasRenderingContext2D, 
+	x: number, 
+	y: number, 
+	w: number, 
+	h: number, 
+	px: number,
+	py: number, 
+	r: number,
+	shadowX?: number,
+	shadowY?: number,
+	shadowBlur?: number,
+	shadowColor?: IRGBA,
+) {
+	const color = 'green'
+	let vgap;
+	if(px < x) vgap = (x - px) * 1.5;
+	else vgap = (px - (x + w)) * 1.5;
+	if(!shadowX) shadowX = 0;
+	if(!shadowY) shadowY = 5;
+	if(!shadowBlur) shadowBlur = 2;
+
+	if(!shadowColor) shadowColor = _RGBA(0, 0, 0, 0.2);
+
+
+	const bShadow = ((
+			shadowX > 0 || shadowX < 0 || 
+			shadowY > 0 || shadowY < 0 || 
+			shadowBlur > 0
+		) && shadowColor.a > 0);
+
+	let bgColor;
+	if(color === 'green') bgColor = _green;
+	else if(color === 'orange') bgColor = _orange;
+	else if(color === 'purple') bgColor = _purple;
+	else bgColor = _pink;
+
+	bgColor.a = 1;
+	ctx.lineCap = 'butt';
+	ctx.lineJoin = 'miter';
+	ctx.strokeStyle = 'transparent';
+	ctx.fillStyle = _rgbaToString(bgColor);
+
+	const gradient_BG = ctx.createLinearGradient(0, 0, 0, h);
+	gradient_BG.addColorStop(0, 'rgba(255, 255, 255, 1)');
+	gradient_BG.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+	const gradient = ctx.createLinearGradient(0, 0, 0, h);
+	bgColor.a = 0.4;
+	gradient.addColorStop(0, _rgbaToString(bgColor));
+	bgColor.a = 1;
+	gradient.addColorStop(1, _rgbaToString(bgColor));
+
+
+	ctx.beginPath();
+	/* 우측 하단 라운드 */
+	ctx.moveTo(x + w, y + h - r);
+	if(r > 0) ctx.arc(x + w - r, y + h - r, r, 0, Math.PI / 2);
+	
+	/* 하단 선, 좌측 하단 라운드 */
+	ctx.lineTo(x + r, y + h);
+	if (r > 0) ctx.arc(x + r, y + h - r, r, Math.PI / 2, Math.PI);
+
+	/* 좌측 선(꼭지점), 좌측 상단 라운드 */
+	if(px < x) {
+		ctx.lineTo(x, py + vgap / 2);
+		ctx.lineTo(px, py);
+		ctx.lineTo(x, py - vgap / 2);
+	}
+	ctx.lineTo(x, y + r);
+
+	
+	if (r > 0) ctx.arc(x + r, y + r, r, Math.PI , 3 * Math.PI / 2);
+
+	/* 상단 선, 우측 상단 라운드 */
+	ctx.lineTo(x + w - r, y);
+	if (r > 0) ctx.arc(x + w - r, y + r, r, 3 * Math.PI / 2 , 2 * Math.PI);
+
+	if(px > x) {
+		ctx.lineTo(x + w, py - vgap / 2);
+		ctx.lineTo(px, py);
+		ctx.lineTo(x + w, py + vgap / 2);
+		ctx.closePath();
+	}
+	ctx.closePath();
+	if (bShadow) {
+		ctx.shadowColor = _rgbaToString(shadowColor);
+		ctx.shadowBlur = shadowBlur;
+		ctx.shadowOffsetX = shadowX;
+		ctx.shadowOffsetY = shadowY;
+		ctx.fill();
+
+		ctx.globalCompositeOperation = 'destination-out';
+		ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+		ctx.shadowBlur = 0;
+		ctx.shadowOffsetX = 0;
+		ctx.shadowOffsetY = 0;
+		ctx.fill();
+
+		ctx.globalCompositeOperation = 'source-over';
+		ctx.fillStyle = gradient_BG;
+		ctx.fill();
+
+		ctx.fillStyle = gradient;
+		ctx.fill();
+	} else {
+		ctx.globalCompositeOperation = 'source-over';
+		ctx.fillStyle = gradient_BG;
+		ctx.fill();
+		ctx.fillStyle = gradient;
+		ctx.fill();		
+	}
+	ctx.globalCompositeOperation = 'source-over';
 }

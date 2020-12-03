@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg } from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 
 const enum SENDPROG {
@@ -29,6 +29,12 @@ interface IConfirmResult {
 	c3: number[];
 	uid: string[];
 } 
+interface IConfirmHardResult {
+	c1: string[];
+	c2: string[];
+	c3: string[];
+	uid: string[];
+} 
 
 interface IStateCtx extends IStateBase {
 	hasPreview: boolean;
@@ -45,6 +51,7 @@ interface IStateCtx extends IStateBase {
 	scriptResult: number[];
 	resultConfirmSup: IConfirmResult;
 	resultConfirmBasic: IConfirmResult;
+	resultConfirmHard: IConfirmHardResult;
 }
 
 interface IActionsCtx extends IActionsBase {
@@ -95,6 +102,12 @@ class TeacherContext extends TeacherContextBase {
 		}
 		this.state.resultConfirmBasic = {
 			numOfCorrect: 0,
+			c1: [],
+			c2: [],
+			c3: [],
+			uid: []
+		}
+		this.state.resultConfirmHard = {
 			c1: [],
 			c2: [],
 			c3: [],
@@ -186,6 +199,25 @@ class TeacherContext extends TeacherContextBase {
 						const result = this.state.resultConfirmBasic;					// 결과 저장 	
 
 						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+						result.c1.push(ret.answer1);
+						result.c2.push(ret.answer1);
+						result.c3.push(ret.answer1);
+						result.uid.push(qmsg.id);
+					}
+				}else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
+					const qmsg = msg as IQuizStringReturnMsg;
+					let sidx = -1;
+					for(let i = 0; i < App.students.length; i++) {
+						if(App.students[i].id === qmsg.id) {
+							sidx = i;
+							break;
+						}
+					}
+					const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+					if(sidx >= 0 && ridx < 0) {
+						const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
+						const ret = qmsg.returns;						// 사용자가 선택한 번호
+						const result = this.state.resultConfirmHard;					// 결과 저장 	
 						result.c1.push(ret.answer1);
 						result.c2.push(ret.answer1);
 						result.c3.push(ret.answer1);

@@ -107,18 +107,21 @@ class QuizItem extends React.Component<IQuizItem> {
 				if (position[i].y >= y0 && position[i].y <= y1){
 					this._ExclusiveGroup(this.clickedNumber);
 					this.choices[0] = this.clickedNumber;
+					this.props.onChoice(0, this.clickedNumber);
 				}
 			}
 			if (position[i].x >= x2 && position[i].x <= x3){
 				if (position[i].y >= y2 && position[i].y <= y3){
 					this._ExclusiveGroup(this.clickedNumber);
 					this.choices[1] = this.clickedNumber;
+					this.props.onChoice(1, this.clickedNumber);
 				}
 			}
 			if (position[i].x >= x4 && position[i].x <= x5){
 				if (position[i].y >= y4 && position[i].y <= y5){
 					this._ExclusiveGroup(this.clickedNumber);
 					this.choices[2] = this.clickedNumber;
+					this.props.onChoice(2, this.clickedNumber);
 				}
 			}
 			position[i].y = 400;
@@ -168,15 +171,12 @@ class QuizItem extends React.Component<IQuizItem> {
 	private _putNumber = (param: 0 | 1 | 2) => {
 		console.log(this.choices[param]);
 		if (this.choices[param] === 1){
-			this.props.onChoice(param, 1);
 			return '1';
 		}	
 		else if (this.choices[param] === 2){
-			this.props.onChoice(param, 2);
 			return '2';
 		}
 		else if (this.choices[param] === 3){
-			this.props.onChoice(param, 3);
 			return '3';
 		}
 		else

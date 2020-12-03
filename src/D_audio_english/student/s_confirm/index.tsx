@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
@@ -55,6 +55,12 @@ class SQuestion extends React.Component<ISQuestion> {
 		stime: 0,
 		etime: 0,
 	};
+	@observable private _writings: common.IQuizStringReturn = {
+		answer1:'',
+		answer2:'',
+		answer3:''
+	}
+	@observable private _felView = false;
 
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
@@ -85,7 +91,15 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 		App.pub_playToPad();
 		let choices: common.IQuizReturn;
+		let writings: common.IQuizStringReturn;
 		choices = this._choices;
+		writings = this._writings;
+		//초기화 함수 만들어서 할것
+		this._writings = {
+			answer1:'',
+			answer2:'',
+			answer3:''
+		}
 		this._choices = {
 			answer1: 0,
 			answer2: 0,
@@ -136,11 +150,11 @@ class SQuestion extends React.Component<ISQuestion> {
 		}else if(this.props.state.idx === 2){
 			this.props.state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: common.IQuizStringReturnMsg = {
 					msgtype: 'confirm_return',
 					idx:2,
 					id: App.student.id,
-					returns: choices
+					returns: writings
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -159,7 +173,7 @@ class SQuestion extends React.Component<ISQuestion> {
 	}
 
 
-	private _onChoice = (idx: number, choice: number) => {
+	private _onChoice = (idx: number, choice: number|string) => {
 		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
 		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
@@ -168,17 +182,17 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.idx === 0){
 			switch(idx){
 				case 0 :{
-					this._choices.answer1 = choice;
+					this._choices.answer1 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
 				case 1 :{
-					this._choices.answer2 = choice;
+					this._choices.answer2 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
 				case 2 :{
-					this._choices.answer3 = choice;
+					this._choices.answer3 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
@@ -187,25 +201,47 @@ class SQuestion extends React.Component<ISQuestion> {
 		}else if(this.props.state.idx === 1){
 			switch(idx){
 				case 0 :{
-					this._choices.answer1 = choice;
+					this._choices.answer1 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
 				case 1 :{
-					this._choices.answer2 = choice;
+					this._choices.answer2 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
 				case 2 :{
-					this._choices.answer3 = choice;
+					this._choices.answer3 = choice as number;
 					this._choices.etime = Date.now();
 					break;
 				}
 				default : return;
 			}
 		}else if(this.props.state.idx === 2){
+			switch(idx){
+				case 0 :{
+					this._writings.answer1 = choice as string;
+					break;
+				}
+				case 1 :{
+					this._writings.answer2 = choice as string;
+					break;
+				}
+				case 2 :{
+					this._writings.answer3 = choice as string;
+					break;
+				}
+				default : return;
+			}
 		}
-		
+		if((this._choices.answer1 === 0 || this._choices.answer2 ===0 || this._choices.answer3 === 0) && (this._writings.answer1 ==='' || this._writings.answer2 ==='' || this._writings.answer3 ==='')){
+			this._felView = false;
+			console.log('choices' + this._choices.answer1 + this._choices.answer2 + this._choices.answer3)
+			console.log('chocie false')
+		}else{
+			this._felView = true;
+			console.log('chocie true')
+		}
 	}
 	private _gotoScript = () => {
 		if(this.props.state.qsMode === 'script') return;
@@ -247,6 +283,7 @@ class SQuestion extends React.Component<ISQuestion> {
 		if (this.props.view && !prev.view) {			
 			this._curIdx = 0;
 			this._curIdx_tgt = 0;
+			this._felView = false;
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -308,6 +345,8 @@ class SQuestion extends React.Component<ISQuestion> {
 						/>
 						<SHard
 							view={view && state.idx === 2}
+							state={state}
+							actions={actions}
 							idx={2}
 							choice={0}
 							data={c_data.confirm_hard[0]}
@@ -317,7 +356,7 @@ class SQuestion extends React.Component<ISQuestion> {
 					</div>
 				</div>
 				<SendUINew
-					view={view}
+					view={view && this._felView}
 					type={'pad'}
 					sended={false}
 					originY={0}
