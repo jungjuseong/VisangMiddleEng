@@ -86,6 +86,13 @@ class SQuestion extends React.Component<ISQuestion> {
 		App.pub_playToPad();
 		let choices: common.IQuizReturn;
 		choices = this._choices;
+		this._choices = {
+			answer1: 0,
+			answer2: 0,
+			answer3: 0,
+			stime: 0,
+			etime: 0,
+		}
 		if(this.props.state.idx === 0){
 			this.props.state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
@@ -158,24 +165,47 @@ class SQuestion extends React.Component<ISQuestion> {
 		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 
 		App.pub_playBtnTab();
-		switch(idx){
-			case 0 :{
-				this._choices.answer1 = choice;
-				this._choices.etime = Date.now();
-				break;
+		if(this.props.state.idx === 0){
+			switch(idx){
+				case 0 :{
+					this._choices.answer1 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				case 1 :{
+					this._choices.answer2 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				case 2 :{
+					this._choices.answer3 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				default : return;
 			}
-			case 1 :{
-				this._choices.answer2 = choice;
-				this._choices.etime = Date.now();
-				break;
+		}else if(this.props.state.idx === 1){
+			switch(idx){
+				case 0 :{
+					this._choices.answer1 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				case 1 :{
+					this._choices.answer2 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				case 2 :{
+					this._choices.answer3 = choice;
+					this._choices.etime = Date.now();
+					break;
+				}
+				default : return;
 			}
-			case 2 :{
-				this._choices.answer3 = choice;
-				this._choices.etime = Date.now();
-				break;
-			}
-			default : return;
+		}else if(this.props.state.idx === 2){
 		}
+		
 	}
 	private _gotoScript = () => {
 		if(this.props.state.qsMode === 'script') return;

@@ -218,15 +218,12 @@ class Writing extends React.Component<IWriting> {
                     if(state.confirmSupProg !==  SENDPROG.SENDED) return;
                     state.confirmSupProg = SENDPROG.COMPLETE;
                     msg = {msgtype: 'confirm_end', idx : 0};
-                    felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-                    //actions.quizComplete();
                     break;
                 }
                 case 1 : {
                     if(state.confirmBasicProg !==  SENDPROG.SENDED) return;
                     state.confirmBasicProg = SENDPROG.COMPLETE;
                     msg = {msgtype: 'confirm_end', idx : 1};
-                    felsocket.sendPAD($SocketType.MSGTOPAD, msg);
                     //actions.quizComplete();
                     break;
                 } 
@@ -234,8 +231,6 @@ class Writing extends React.Component<IWriting> {
                     if(state.confirmHardProg !==  SENDPROG.SENDED) return;
                     state.confirmHardProg = SENDPROG.COMPLETE;
                     msg = {msgtype: 'confirm_end', idx : 2};
-                    felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-                    //actions.quizComplete();
                     break;
                 } 
                 default : {
@@ -246,9 +241,9 @@ class Writing extends React.Component<IWriting> {
             if(state.scriptProg !==  SENDPROG.SENDING) return;
             state.scriptProg = SENDPROG.SENDED;
             msg = {msgtype: 'script_send', idx : 0};
-            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             this.props.state.scriptProg = SENDPROG.COMPLETE;
         } 
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         console.log(this.props.state.confirmSupProg);
         this.props.actions.setNavi(true,true);
 	}
@@ -731,6 +726,7 @@ class Writing extends React.Component<IWriting> {
                             <ConfirmQuiz 
                                 view={view}
                                 actions={actions}
+                                state={state}
                                 index ={this._curQidx}
                                 mdata={this.m_data} 
                                 onClosed={this._letstalkClosed}

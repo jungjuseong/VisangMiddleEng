@@ -18,6 +18,7 @@ const SwiperComponent = require('react-id-swiper').default;
 interface IQuizBox {
 	view: boolean;
 	actions: IActionsCtx;
+	state: IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IConfirmSup;
@@ -27,14 +28,8 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
-	@observable private _listen = false;
-	@observable private _select = true;
 	@observable private _toggle: Array<boolean|null> = [null,null,null];
 	@observable private _quiz: Array<string> = [];
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
-	@observable private _numOfStudent = 0;
-	@observable private _retCnt = 0;
 
 	private _swiper?: Swiper;
 
@@ -142,16 +137,6 @@ class Supplement extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
@@ -162,10 +147,6 @@ class Supplement extends React.Component<IQuizBox> {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
-			this._listen = false;
-			this._select = true;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -182,22 +163,18 @@ class Supplement extends React.Component<IQuizBox> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
-		this._retCnt = actions.getResult().uid.length
-	
 	}
 	
 	public render() {
-		const { data,view,actions } = this.props;
+		const { data,view,actions, state } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate">{this._retCnt}/{App.students.length}</div>
+				<div className="subject_rate">{state.resultConfirmSup.uid.length}/{App.students.length}</div>
 				<div className="correct_answer_rate"></div>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">

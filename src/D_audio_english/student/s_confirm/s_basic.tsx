@@ -28,10 +28,6 @@ class QuizItem extends React.Component<IQuizItem> {
 		this.clickedNumber = 0;
 	}
 
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
-
 	public componentDidUpdate(prev: IQuizItem) {
 		const { view } = this.props;
 		if (view && !prev.view) {
@@ -171,12 +167,18 @@ class QuizItem extends React.Component<IQuizItem> {
 
 	private _putNumber = (param: 0 | 1 | 2) => {
 		console.log(this.choices[param]);
-		if (this.choices[param] === 1)
+		if (this.choices[param] === 1){
+			this.props.onChoice(param, 1);
 			return '1';
-		else if (this.choices[param] === 2)
+		}	
+		else if (this.choices[param] === 2){
+			this.props.onChoice(param, 2);
 			return '2';
-		else if (this.choices[param] === 3)
+		}
+		else if (this.choices[param] === 3){
+			this.props.onChoice(param, 3);
 			return '3';
+		}
 		else
 			return '';
 	}

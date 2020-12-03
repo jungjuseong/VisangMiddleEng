@@ -116,6 +116,7 @@ class StudentContext extends StudentContextBase {
 				this.state.shadowing = false;
 			} else if(msg.msgtype === 'confirm_end') {
 				if(msg.idx === 0){
+					console.log('confirmend sup');
 					const qProg = this.state.confirmSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
