@@ -26,7 +26,7 @@ class QuizItem extends React.Component<IQuizItem> {
 	@observable private _toggle: Array<boolean | null> = [null, null, null];
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _answer;
+	@observable private _answer: boolean;
 	private _swiper: Swiper|null = null;
 
 	private _jsx_sentence: JSX.Element;
