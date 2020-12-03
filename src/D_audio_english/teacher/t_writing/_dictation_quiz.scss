@@ -80,6 +80,8 @@
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
                             position: absolute;
+                            bottom: -3px;
+                            right: -33px;
                             z-index: 2;
                         }
                         .question_box {
@@ -97,8 +99,6 @@
                     text-align: left;
                     font-size: 28px;
                     padding: 0px 25px;
-                    
-
                     .blank_sentence {
                         display: flex;
                         margin-bottom: 100px;

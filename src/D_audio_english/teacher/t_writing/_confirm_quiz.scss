@@ -7,7 +7,12 @@
         width: 1150px;
         height: 600px;
         .subject_rate {
-            position: absolute;
+            color: white;
+            text-align: right;
+            font-size: 12px;
+            padding-right: 25px;
+            line-height: 26px;
+            position: relative;
             width: 87px;
             height: 26px;
             top: -80px;
@@ -73,6 +78,8 @@
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
                             position: absolute;
+                            bottom: -3px;
+                            right: -33px;
                             z-index: 2;
                         }
                         .question_box {
