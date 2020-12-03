@@ -314,7 +314,16 @@ class Writing extends React.Component<IWriting> {
     }
 
 	private _onPage = (idx: number) => {
-        const { actions } = this.props;
+        const { actions , state} = this.props;
+
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -363,6 +372,14 @@ class Writing extends React.Component<IWriting> {
         const { confirmBasicProg,qnaProg} = state;
 
         if(this._tab === 'INTRODUCTION') return;
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
         
         App.pub_playBtnTab();
         this._curQidx = 0;
@@ -378,10 +395,18 @@ class Writing extends React.Component<IWriting> {
     }
     
 	private _clickConfirm = (ev: React.MouseEvent<HTMLElement>) => {
-        const { actions } = this.props;
+        const { actions ,state} = this.props;
         const { confirmBasicProg,qnaProg } = this.props.state;
 
         if (this._tab === 'CONFIRM') return;
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -392,10 +417,18 @@ class Writing extends React.Component<IWriting> {
         actions.setNavi(true, true);
     }
     private _clickAdditional = (ev: React.MouseEvent<HTMLElement>) => {
-        const { actions } = this.props;
+        const { actions ,state} = this.props;
         const { confirmBasicProg,qnaProg } = this.props.state;
 
         if (this._tab === 'ADDITIONAL') return;
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -406,10 +439,18 @@ class Writing extends React.Component<IWriting> {
         actions.setNavi(true, true);
     }
     private _clickDictation = (ev: React.MouseEvent<HTMLElement>) => {
-        const { actions } = this.props;
+        const { actions ,state} = this.props;
         const { confirmBasicProg,qnaProg } = this.props.state;
 
         if (this._tab === 'DICTATION') return;
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -420,10 +461,18 @@ class Writing extends React.Component<IWriting> {
         actions.setNavi(true, true);
     }
     private _clickScript = (ev: React.MouseEvent<HTMLElement>) => {
-        const { actions } = this.props;
+        const { actions ,state} = this.props;
         const { confirmBasicProg,qnaProg } = this.props.state;
 
         if (this._tab === 'SCRIPT') return;
+        if(state.confirmBasicProg === SENDPROG.SENDED) return;
+        else if(state.confirmSupProg === SENDPROG.SENDED) return;
+        else if(state.confirmHardProg === SENDPROG.SENDED) return;
+        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
+        else if(state.additionalSupProg === SENDPROG.SENDED) return;
+        else if(state.additionalHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -501,7 +550,14 @@ class Writing extends React.Component<IWriting> {
 
         actions.setNaviView(true);
         if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(confirmBasicProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
+        else if(state.confirmBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.confirmSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.confirmHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.additionalBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.additionalSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.additionalHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.dictationProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.scriptProg === SENDPROG.SENDED) actions.setNavi(false,false);
 		else actions.setNavi(true, true);
 		
         actions.setNaviFnc(

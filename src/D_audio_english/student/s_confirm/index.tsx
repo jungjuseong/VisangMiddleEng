@@ -317,7 +317,7 @@ class SQuestion extends React.Component<ISQuestion> {
 					</div>
 				</div>
 				<SendUINew
-					view={true}
+					view={view}
 					type={'pad'}
 					sended={false}
 					originY={0}
