@@ -130,11 +130,20 @@ class QuizItem extends React.Component<IQuizItem> {
 			
 			// if(this._tarea) this._tarea.
 			this._stime = 0;
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
+			}
 		} else if(!this.props.view && prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
+		}
+		if(this.props.confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
+			if(this._swiper) {
+				this._swiper.slideTo(0);
+			}			
 		}
 	}
 
@@ -147,16 +156,9 @@ class QuizItem extends React.Component<IQuizItem> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					{/* <div className="hard_question"> */}
-						<SwiperComponent
-						ref={this._refSwiper}
-						>
-							<div key={0} className= {"q-item" + keyon}>1
-									</div>
-									<div key={1} className= {"q-item" + keyon}>2
-										
-									</div>
-							{/* {quizs.map((quiz, idx) => {
+					<div className="hard_question">
+						<SwiperComponent ref={this._refSwiper}>
+							{quizs.map((quiz, idx) => {
 								return (
 									<div key={idx} className= {"q-item" + keyon}>
 										<div className="quiz">
@@ -177,7 +179,7 @@ class QuizItem extends React.Component<IQuizItem> {
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={this.props.view} 
-													on={this.props.view && idx ===1}
+													on={this.props.view && idx ===0}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}
@@ -191,10 +193,10 @@ class QuizItem extends React.Component<IQuizItem> {
 										</div>
 									</div>
 								);
-							})} */}
+							})}
 						</SwiperComponent>
 						<Keyboard />
-					{/* </div> */}
+					</div>
 				</div>
 			</>
 		);
