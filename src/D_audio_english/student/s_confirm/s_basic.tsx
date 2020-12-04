@@ -14,27 +14,38 @@ interface IQuizItem {
 	view: boolean;
 	idx: number;
 	choice: number;
-	confirm_normal: common.IConfirmNomal;
+	data: common.IConfirmNomal;
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number) => void;
 }
 @observer
 class QuizItem extends React.Component<IQuizItem> {
-	@observable private choices: Array<number> = [0,0,0];
-	@observable private clickedNumber: number = 0;
+	@observable private _choices: Array<number> = [0,0,0];
+	@observable private _clicked_number: number = 0;
+	@observable private _sended: boolean;
+	@observable private _view_answer: boolean;
 
 	public constructor(props: IQuizItem) {
 		super(props);
-		this.clickedNumber = 0;
+		this._clicked_number = 0;
+		this._sended = false;
+		this._view_answer = false;
 	}
 
 	public componentDidUpdate(prev: IQuizItem) {
 		const { view } = this.props;
 		if (view && !prev.view) {
-			this.clickedNumber = 0;
+			this._clicked_number = 0;
 		} else if (!this.props.view && prev.view) {
-			this.clickedNumber = 0;
+			this._clicked_number = 0;
 			App.pub_stop();
+		}
+		if(this.props.confirmProg === QPROG.SENDED) {
+			this._sended = true;
+		} 
+		if(this.props.confirmProg == QPROG.COMPLETE){
+			this._sended = true;
+			this._view_answer = true;
 		}
 	}
 
@@ -59,9 +70,9 @@ class QuizItem extends React.Component<IQuizItem> {
 	};
 
 	private _ExclusiveGroup = (num : number) =>{
-		for (let i = 0; i <this.choices.length; i ++)
-			if(this.choices[i] === num)
-				this.choices[i] = 0;
+		for (let i = 0; i <this._choices.length; i ++)
+			if(this._choices[i] === num)
+				this._choices[i] = 0;
 	}
 
 	handleStop = () => {
@@ -105,23 +116,23 @@ class QuizItem extends React.Component<IQuizItem> {
 		for (let i = 0; i < position.length; i++){
 			if (position[i].x >= x0 && position[i].x <= x1){
 				if (position[i].y >= y0 && position[i].y <= y1){
-					this._ExclusiveGroup(this.clickedNumber);
-					this.choices[0] = this.clickedNumber;
-					this.props.onChoice(0, this.clickedNumber);
+					this._ExclusiveGroup(this._clicked_number);
+					this._choices[0] = this._clicked_number;
+					this.props.onChoice(0, this._clicked_number);
 				}
 			}
 			if (position[i].x >= x2 && position[i].x <= x3){
 				if (position[i].y >= y2 && position[i].y <= y3){
-					this._ExclusiveGroup(this.clickedNumber);
-					this.choices[1] = this.clickedNumber;
-					this.props.onChoice(1, this.clickedNumber);
+					this._ExclusiveGroup(this._clicked_number);
+					this._choices[1] = this._clicked_number;
+					this.props.onChoice(1, this._clicked_number);
 				}
 			}
 			if (position[i].x >= x4 && position[i].x <= x5){
 				if (position[i].y >= y4 && position[i].y <= y5){
-					this._ExclusiveGroup(this.clickedNumber);
-					this.choices[2] = this.clickedNumber;
-					this.props.onChoice(2, this.clickedNumber);
+					this._ExclusiveGroup(this._clicked_number);
+					this._choices[2] = this._clicked_number;
+					this.props.onChoice(2, this._clicked_number);
 				}
 			}
 			position[i].y = 400;
@@ -133,7 +144,7 @@ class QuizItem extends React.Component<IQuizItem> {
 
 	handleDrag = (e: any, ui: any) => {
 		console.log(e);
-		if(this.clickedNumber === 1){
+		if(this._clicked_number === 1){
 			const { x, y } = this.state.firstPosition;
 			this.setState({
 				firstPosition: {
@@ -142,7 +153,7 @@ class QuizItem extends React.Component<IQuizItem> {
 				}
 			});
 		}
-		else if(this.clickedNumber === 2){
+		else if(this._clicked_number === 2){
 			const { x, y } = this.state.secondPosition;
 			this.setState({
 				secondPosition: {
@@ -151,7 +162,7 @@ class QuizItem extends React.Component<IQuizItem> {
 				}
 			});
 		}
-		else if(this.clickedNumber === 3){
+		else if(this._clicked_number === 3){
 			const { x, y } = this.state.thirdPosition;
 			this.setState({
 				thirdPosition: {
@@ -165,18 +176,18 @@ class QuizItem extends React.Component<IQuizItem> {
 
 	selectNumber = (num: number) => {
 		console.log("select " + num);
-		this.clickedNumber = num;
+		this._clicked_number = num;
 	}
 
 	private _putNumber = (param: 0 | 1 | 2) => {
-		console.log(this.choices[param]);
-		if (this.choices[param] === 1){
+		console.log(this._choices[param]);
+		if (this._choices[param] === 1){
 			return '1';
 		}	
-		else if (this.choices[param] === 2){
+		else if (this._choices[param] === 2){
 			return '2';
 		}
-		else if (this.choices[param] === 3){
+		else if (this._choices[param] === 3){
 			return '3';
 		}
 		else
@@ -184,32 +195,45 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 
 	public render() {
-		const { view, idx, choice, confirm_normal, confirmProg } = this.props;
+		const { view, idx, choice, data, confirmProg } = this.props;
 		const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		const answers = [data.item1.answer ,data.item2.answer,data.item3.answer]
+		if(confirmProg == QPROG.COMPLETE){
+			OXs.map((OX,idx) =>{
+				if(answers[idx] === this._choices[idx]){
+					OXs[idx] = 'O';
+				}else{
+					OXs[idx] = 'X';
+				}
+			})
+		}
 		
-		console.log('랜더', this.choices)
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
 					<div className="basic_place">
 						<div className="quiz">
 							<WrapTextNew view={view}>
-								{confirm_normal.directive.kor}
+								{data.directive.kor}
 							</WrapTextNew>
 						</div>
 						<div className="draggable_place">
 							<div className="img_bundle">
 								<div>
-									<img id="skiing" className="image" src={App.data_url + confirm_normal.item1.img} />
-									<div className="number_box">{this._putNumber(0)}</div>
+									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
+									<div className={"number_box " + OXs[0]}>{this._putNumber(0)}</div>
+									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item1.answer}</div>
 								</div>
 								<div>
-									<img id="riding" className="image" src={App.data_url + confirm_normal.item2.img} />
-									<div className="number_box">{this._putNumber(1)}</div>
+									<img id="riding" className="image" src={App.data_url + data.item2.img} />
+									<div className={"number_box " + OXs[1]}>{this._putNumber(1)}</div>
+									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item2.answer}</div>
 								</div>
 								<div>
-									<img id="waterPark" className="image" src={App.data_url + confirm_normal.item3.img} />
-									<div className="number_box">{this._putNumber(2)}</div>
+									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
+									<div className={"number_box " + OXs[2]}>{this._putNumber(2)}</div>
+									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item3.answer}</div>
 								</div>								
 							</div>
 
@@ -220,7 +244,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(1)}}>
-								<div className="box">1</div>
+								<div className={"box" + (this._sended? ' hidden': '')}>1</div>
 							</Draggable>
 							<Draggable
 								bounds="parent" {...dragHandlers}
@@ -229,7 +253,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(2)}}>
-								<div className="box">2</div>
+								<div className={"box" + (this._sended? ' hidden': '')}>2</div>
 							</Draggable>
 							<Draggable
 								bounds="parent" {...dragHandlers}
@@ -238,7 +262,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(3)}}>
-								<div className="box">3</div>
+								<div className={"box" + (this._sended? ' hidden': '')}>3</div>
 							</Draggable>
 						</div>
 					</div>

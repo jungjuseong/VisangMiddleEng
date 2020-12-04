@@ -66,6 +66,8 @@
                     height: 490px;
                     padding-left: 25px;
                     overflow: hidden;
+                    font-family: NanumGothic;
+                    font-weight: bold;
                     .btn_trans {
                         @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                         position: absolute;
@@ -76,8 +78,9 @@
                     .sentence_box {
                         height: 100px;
                         position: relative;
-                        font-size: 18px;
-                        font-weight: bold;
+                        font-size: 22px;
+                        //font-family: NanumGothic;
+                        //font-weight: bold;
                         text-align: left;
                         &>div {
                             display: inline-block;
@@ -624,7 +627,7 @@
                         $min-width: 500px;
                         $head-font-size: 23px;
                         $head-line-height: 40px;
-                        $content-font-size: 27px;
+                        $content-font-size: 28px;
                         $content-padding: 10px 15px 15px 15px;
                         $radius: 10px;
                         $normal: resolve("teacher/images/btn_dropdown_t_down.png");

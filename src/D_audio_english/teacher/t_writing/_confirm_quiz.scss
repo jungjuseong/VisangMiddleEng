@@ -49,6 +49,13 @@
             top: 15px;
             z-index: 2;
         }
+        .btn_example {
+            @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            z-index: 2;
+        }
         .quiz_box {
             position: absolute;
             text-align: center;
@@ -82,10 +89,11 @@
                 .sentence_box {
                     height: 100px;
                     position: relative;
-                    font-size: 18px;
+                    font-size: 22px;
                     font-weight: bold;
                     text-align: left;
                     margin-bottom: 25px;
+                    font-family: NanumGothic;
                     &>div {
                         display: inline-block;
                         transform: translateY(-50%);
@@ -109,7 +117,9 @@
                 .sup_question {
                     position: relative;
                     text-align: left;
-                    font-size: 28px;
+                    font-size: 34px;
+                    font-family: nanumgothic;
+                    font-weight: bold;
                     padding: 0px 25px;
                     &>div {
                         display: flex;
@@ -157,7 +167,9 @@
                 .hard_question {
                     position: relative;
                     text-align: left;
-                    font-size: 28px;
+                    font-size: 34px;
+                    font-family: nanumgothic;
+                    font-weight: bold;
                     padding: 0px 25px;
                     &>div {
                         margin-bottom: 15px;
