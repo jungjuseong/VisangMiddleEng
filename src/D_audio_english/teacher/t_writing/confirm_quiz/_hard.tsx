@@ -8,6 +8,8 @@ import { App } from '../../../../App';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
+import { CorrectBar } from '../../../../share/Progress_bar';
+
 import * as butil from '@common/component/butil';
 
 import * as common from '../../../common';
@@ -30,7 +32,6 @@ class Hard extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
-	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
 	@observable private _sended = false;
@@ -93,23 +94,26 @@ class Hard extends React.Component<IQuizBox> {
 		}, 300);
 	}
 	// 답 확인 토글 기능 answer
+	@action
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		console.log('viewHint')
-		this.props.onHintClick();
-		this._hint = !this._hint;
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
+		if(!this._hint){
+			console.log('viewHint')
+			this.props.onHintClick();
+			this._hint = true;
+	
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
+			}
+			_.delay(() => {
+				if(this._swiper) {
+					this._swiper.slideTo(0, 0);
+					this._swiper.update();
+					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+				}				
+			}, 300);
+		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -126,13 +130,13 @@ class Hard extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBox) {	 
+ 	public componentDidUpdate(prev: IQuizBox) {
 		const { view ,state} = this.props;
+		const {confirmHardProg} = this.props.state;
+		console.log('하드 didupdate', prev.state.confirmHardProg, state.confirmHardProg);
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
-			this._select = true;
 			this._zoom = false;
 			this._zoomImgUrl = '';
 
@@ -155,7 +159,7 @@ class Hard extends React.Component<IQuizBox> {
 			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
-		if(state.confirmHardProg >= SENDPROG.SENDED){
+		if(confirmHardProg >= SENDPROG.SENDED){
 			this._sended = true;
 		}
 	}
@@ -163,11 +167,14 @@ class Hard extends React.Component<IQuizBox> {
 	public render() {
 		const { data, state} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		let qResult = -1;
+        const isQComplete = state.confirmHardProg >= SENDPROG.COMPLETE;
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={"subject_rate" + (this._sended ? '' : ' hide')}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={"btn_example" + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

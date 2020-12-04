@@ -35,17 +35,6 @@ class Basic extends React.Component<IQuizBoxProps> {
 	
 	private _swiper?: Swiper;
 
-	private readonly _soption: SwiperOptions = {
-		direction: 'vertical',
-		observer: true,
-		slidesPerView: 'auto',
-		freeMode: true,
-		mousewheel: true,			
-		noSwiping: false,
-		followFinger: true,
-		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
-	};
-
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	private _jsx_hint1: number;
@@ -92,21 +81,23 @@ class Basic extends React.Component<IQuizBoxProps> {
 
 	@action
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		this.props.onHintClick();
-		this._hint = !this._hint;
+		if(!this._hint){
+			this.props.onHintClick();
+			this._hint = true;
 
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
+			}
+			_.delay(() => {
+				if(this._swiper) {
+					this._swiper.slideTo(0, 0);
+					this._swiper.update();
+					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+				}				
+			}, 300);
+		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -122,7 +113,6 @@ class Basic extends React.Component<IQuizBoxProps> {
 		const { view , state } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
 			this._zoom = false;
 			this._zoomImgUrl = '';

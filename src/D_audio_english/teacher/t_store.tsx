@@ -65,7 +65,6 @@ interface IActionsCtx extends IActionsBase {
 	clearReturnUsersForQuiz: () => void;	
 	getQnaReturns: () => IQnaReturn[];
 	clearQnaReturns: () => void;
-	quizComplete: () => void;	
 	init: () => void;
 }
 
@@ -135,9 +134,6 @@ class TeacherContext extends TeacherContextBase {
 		this.actions.getReturnUsersForQuiz = () => this._returnUsersForQuiz;
 		this.actions.clearReturnUsersForQuiz = () => this._returnUsersForQuiz = [];
 		this.actions.getQnaReturns = () => this._qnaReturns;
-		this.actions.quizComplete  = () => {
-			this.state.confirmSupProg = SENDPROG.COMPLETE;
-		};
 		this.actions.clearQnaReturns = () => {
 			this._returnUsers = [];
 			this.actions.setRetCnt(0);

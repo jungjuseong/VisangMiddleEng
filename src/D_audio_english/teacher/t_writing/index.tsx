@@ -121,7 +121,6 @@ class Writing extends React.Component<IWriting> {
                 console.log('null')
                 return;
             };
-    
             if(hintyon){
                 console.log('true')
             }else{
@@ -155,7 +154,7 @@ class Writing extends React.Component<IWriting> {
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
         else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'CONFIRM' && this._curQidx === 2) state.confirmHardProg = SENDPROG.SENDING;
+        else if(this._tab === 'CONFIRM' && this._curQidx === 2) {state.confirmHardProg = SENDPROG.SENDED; this._viewpop = true; return;} 
         else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
@@ -173,6 +172,7 @@ class Writing extends React.Component<IWriting> {
                 switch(this._curQidx){
                     case 0 : {
                         if(state.confirmSupProg !==  SENDPROG.SENDING) return;
+                        console.log('onsend')
                         state.confirmSupProg = SENDPROG.SENDED
                         msg = {msgtype: 'confirm_send', idx : 0};
                         break;
@@ -184,11 +184,7 @@ class Writing extends React.Component<IWriting> {
                         break;
                     } 
                     case 2 : {
-                        if(state.confirmHardProg !==  SENDPROG.SENDING) return;
-                        state.confirmHardProg = SENDPROG.SENDED;
-                        console.log('retrun hard')
-                        msg = {msgtype: 'confirm_send', idx : 2};
-                        break;
+                        return;
                     } 
                     default : {
                         return
@@ -746,11 +742,6 @@ class Writing extends React.Component<IWriting> {
                     <ToggleBtn className="btn_tab_additional" onClick={this._clickAdditional} on={this._tab === 'ADDITIONAL'} disabled={this._tab === 'ADDITIONAL' || isOnStudy} />
                     <ToggleBtn className="btn_tab_dictation" onClick={this._clickDictation} on={this._tab === 'DICTATION'} disabled={this._tab === 'DICTATION' || isOnStudy} />
                     <ToggleBtn className="btn_tab_script" onClick={this._clickScript} on={this._tab === 'SCRIPT'} disabled={this._tab === 'SCRIPT' || isOnStudy} />
-                </div>
-                <div className={'info_box' + (isViewInfo ? ' on' : '')}>
-                    <div className="return_cnt_box white" style={{display: isViewReturn ? '' : 'none'}} onClick={this._clickReturn}>
-                        <div>{retCnt}/{numOfStudent}</div>
-                    </div>            
                 </div>
                 <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
                 <PopTrans 

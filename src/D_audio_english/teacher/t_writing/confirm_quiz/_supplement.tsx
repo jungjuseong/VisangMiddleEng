@@ -118,26 +118,27 @@ class Supplement extends React.Component<IQuizBox> {
 	}
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		this.props.onHintClick();
 		if (this._disable_toggle === false){
+			this.props.onHintClick();
 			this._toggle[0] = this._answer_dic[`${this._jsx_question1_answer}`];
 			this._toggle[1] = this._answer_dic[`${this._jsx_question2_answer}`];
 			this._toggle[2] = this._answer_dic[`${this._jsx_question3_answer}`];
 			this._disable_toggle = true;
-		}
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
+			this._hint = true
+	
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
+			}
+			_.delay(() => {
+				if(this._swiper) {
+					this._swiper.slideTo(0, 0);
+					this._swiper.update();
+					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+				}				
+			}, 300);
+		}
 	}
 
 	private _onClick = () => {
@@ -146,9 +147,9 @@ class Supplement extends React.Component<IQuizBox> {
 
  	public componentDidUpdate(prev: IQuizBox) {
 		const { view ,actions,state} = this.props;
+		console.log('보충 didupdate',prev.state.confirmSupProg, state.confirmSupProg);
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
 
 			if(this._swiper) {
