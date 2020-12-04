@@ -223,17 +223,17 @@ class QuizItem extends React.Component<IQuizItem> {
 								<div>
 									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
 									<div className={"number_box " + OXs[0]}>{this._putNumber(0)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item1.answer}</div>
+									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item1.answer}</div>
 								</div>
 								<div>
 									<img id="riding" className="image" src={App.data_url + data.item2.img} />
 									<div className={"number_box " + OXs[1]}>{this._putNumber(1)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item2.answer}</div>
+									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item2.answer}</div>
 								</div>
 								<div>
 									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
 									<div className={"number_box " + OXs[2]}>{this._putNumber(2)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hidden')}>{data.item3.answer}</div>
+									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item3.answer}</div>
 								</div>								
 							</div>
 
@@ -244,7 +244,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(1)}}>
-								<div className={"box" + (this._sended? ' hidden': '')}>1</div>
+								<div className={"box" + (this._sended? ' hide': '')}>1</div>
 							</Draggable>
 							<Draggable
 								bounds="parent" {...dragHandlers}
@@ -253,7 +253,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(2)}}>
-								<div className={"box" + (this._sended? ' hidden': '')}>2</div>
+								<div className={"box" + (this._sended? ' hide': '')}>2</div>
 							</Draggable>
 							<Draggable
 								bounds="parent" {...dragHandlers}
@@ -262,7 +262,7 @@ class QuizItem extends React.Component<IQuizItem> {
 								onStop={this.handleStop}
 								onDrag={this.handleDrag}
 								onMouseDown={() => {this.selectNumber(3)}}>
-								<div className={"box" + (this._sended? ' hidden': '')}>3</div>
+								<div className={"box" + (this._sended? ' hide': '')}>3</div>
 							</Draggable>
 						</div>
 					</div>

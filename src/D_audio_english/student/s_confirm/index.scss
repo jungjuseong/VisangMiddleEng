@@ -70,12 +70,15 @@
                         padding: 0 25px;
                         font-size: 38px;
                         &>span {
+                            position: absolute;
                             display: inline-block;
                             vertical-align: top;
                             width: width("common/icon_o.png");
                             height:  height("common/icon_o.png");
                             background-repeat: no-repeat;
-                            background-position: 50% 50%; 
+                            background-position: 50% 50%;
+                            left: 4px;
+                            margin-top: 13px;
             
                             line-height: 5 * height("common/icon_o.png") / 6;
                             &.O{
