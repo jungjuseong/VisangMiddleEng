@@ -6,6 +6,8 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
+import { CorrectBar } from '../../../../share/Progress_bar';
+
 import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
 import * as common from '../../../common';
@@ -170,12 +172,23 @@ class Supplement extends React.Component<IQuizBox> {
 	public render() {
 		const { data,view,actions, state } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		let qResult = -1;
+        const isQComplete = state.confirmSupProg >= SENDPROG.COMPLETE;
+        if(isQComplete) {
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.numOfCorrect / state.numOfStudent);
+            else qResult = 0;
+            if(qResult > 100) qResult = 100;
+        }
 		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className="subject_rate">{state.resultConfirmSup.uid.length}/{App.students.length}</div>
-				<div className="correct_answer_rate"></div>
+				<CorrectBar 
+					className={'correct_answer_rate'} 
+					preview={-1} 
+					result={qResult}
+				/>
 				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">

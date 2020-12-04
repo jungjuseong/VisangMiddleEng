@@ -20,12 +20,27 @@
             background-image: resolve('teacher/images/sub_rate.png');
         }
         .correct_answer_rate {
-            position: absolute;
             width: 118px;
             height: 26px;
-            left: 97px;
-            top: -80px;
-            background-image: resolve('teacher/images/correct_answer_rate.png')
+            background-image: resolve('teacher/images/correct_answer_rate.png');
+			@include compre_correct(-80px, 97px); 
+            &.no-result{
+                padding-top: 7px;
+            }
+            &.hide{
+                display: none;
+            }
+
+            .title{
+                display: none;
+            }
+
+            &>.progress_bar{
+                width: 70px;
+                &>.data_percent {		
+                    left: 75px;
+                }
+            }
         }
         .btn_answer {
             @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
@@ -164,7 +179,7 @@
                     }
                     .answer_box {
                         border-bottom: 2px solid #000;
-                        width: 650px;
+                        width: 730px;
                         .sample {
                             min-height: 55px;
                             padding-bottom: 5px;
