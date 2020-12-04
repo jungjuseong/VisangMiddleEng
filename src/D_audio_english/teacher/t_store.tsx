@@ -213,11 +213,10 @@ class TeacherContext extends TeacherContextBase {
 							break;
 						}
 					}
-					const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+					const ridx = this.state.resultConfirmHard.uid.indexOf(qmsg.id);
 					if(sidx >= 0 && ridx < 0) {
-						const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
-						const ret = qmsg.returns;						// 사용자가 선택한 번호
-						const result = this.state.resultConfirmHard;					// 결과 저장 	
+						const ret = qmsg.returns;
+						const result = this.state.resultConfirmHard;
 						result.c1.push(ret.answer1);
 						result.c2.push(ret.answer1);
 						result.c3.push(ret.answer1);

@@ -18,6 +18,9 @@
             top: -80px;
             left: 4px;
             background-image: resolve('teacher/images/sub_rate.png');
+            &.hide{
+                display: none;
+            }
         }
         .correct_answer_rate {
             width: 118px;
@@ -48,6 +51,9 @@
             right: 15px;
             top: 15px;
             z-index: 2;
+            &.hide{
+                display: none;
+            }
         }
         .btn_example {
             @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
@@ -55,6 +61,9 @@
             right: 15px;
             top: 14px;
             z-index: 2;
+            &.hide{
+                display: none;
+            }
         }
         .quiz_box {
             position: absolute;

@@ -48,6 +48,7 @@ class QuizItem extends React.Component<IQuizItem> {
 	@observable private _curIdx = 0;
 	@observable private _answer: boolean;
 	@observable private _swiper: Swiper|null = null;
+	@observable private _sended: boolean = false;
  
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
@@ -145,6 +146,10 @@ class QuizItem extends React.Component<IQuizItem> {
 				this._swiper.slideTo(0);
 			}			
 		}
+		if(this.props.confirmProg >= QPROG.SENDED){
+			this._sended = true
+			keyBoardState.state = 'hide';
+		}
 	}
 
 	public render() {
@@ -179,7 +184,7 @@ class QuizItem extends React.Component<IQuizItem> {
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={this.props.view} 
-													on={this.props.view && this._curIdx === idx}
+													on={this.props.view && this._curIdx === idx && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}

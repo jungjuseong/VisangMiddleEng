@@ -31,6 +31,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 	@observable private _trans = false;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
+	@observable private _sended = false;
 	
 	private _swiper?: Swiper;
 
@@ -118,7 +119,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
-		const { view } = this.props;
+		const { view , state } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
@@ -145,6 +146,9 @@ class Basic extends React.Component<IQuizBoxProps> {
 			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
+		if(state.confirmBasicProg >= SENDPROG.SENDED){
+			this._sended = true;
+		}
 	}
 	
 	public render() {
@@ -161,13 +165,13 @@ class Basic extends React.Component<IQuizBoxProps> {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate">{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}</div>
+				<div className={"subject_rate" + (this._sended ? '' : ' hide')}>{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}</div>
 				<CorrectBar 
-					className={'correct_answer_rate'} 
+					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
-				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<ToggleBtn className={"btn_answer" + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board basic">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTranslation}/>

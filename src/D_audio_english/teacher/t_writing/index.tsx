@@ -137,8 +137,8 @@ class Writing extends React.Component<IWriting> {
             msg = {msgtype: 'confirm_send', idx : 2};                
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
-            this._setNavi();
             this._viewpop = false;
+            this._setNavi();
         });     
 	}
 
@@ -155,7 +155,7 @@ class Writing extends React.Component<IWriting> {
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
         else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'CONFIRM' && this._curQidx === 2) {state.confirmHardProg = SENDPROG.SENDED; this._viewpop = true; return;} 
+        else if(this._tab === 'CONFIRM' && this._curQidx === 2) state.confirmHardProg = SENDPROG.SENDING;
         else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
@@ -173,9 +173,7 @@ class Writing extends React.Component<IWriting> {
                 switch(this._curQidx){
                     case 0 : {
                         if(state.confirmSupProg !==  SENDPROG.SENDING) return;
-                        console.log('onsend')
                         state.confirmSupProg = SENDPROG.SENDED
-                        // actions.setSupProg(SENDPROG.SENDED);
                         msg = {msgtype: 'confirm_send', idx : 0};
                         break;
                     }
@@ -186,7 +184,11 @@ class Writing extends React.Component<IWriting> {
                         break;
                     } 
                     case 2 : {
-                        return;
+                        if(state.confirmHardProg !==  SENDPROG.SENDING) return;
+                        state.confirmHardProg = SENDPROG.SENDED;
+                        console.log('retrun hard')
+                        msg = {msgtype: 'confirm_send', idx : 2};
+                        break;
                     } 
                     default : {
                         return
@@ -839,8 +841,8 @@ class Writing extends React.Component<IWriting> {
                 <CoverPopup className="pop_hint" view={this._viewpop}  onClosed={() =>{}}>
 					<div className="pop_bg">
 						<ToggleBtn className="btn_close" onClick={() => {this._onClosepop(null)}}/>
-						<ToggleBtn className="btn_no" onClick={() => {this._onClosepop(true)}}/>
-						<ToggleBtn className="btn_yes"onClick={() => {this._onClosepop(false)}}/>
+						<ToggleBtn className="btn_no" onClick={() => {this._onClosepop(false)}}/>
+						<ToggleBtn className="btn_yes"onClick={() => {this._onClosepop(true)}}/>
 						<div className="pop_msg"/>
 					
 					{/* </SwiperComponent> */}

@@ -33,6 +33,7 @@ class Hard extends React.Component<IQuizBox> {
 	@observable private _select = true;
 	@observable private _zoom = false;
 	@observable private _zoomImgUrl = '';
+	@observable private _sended = false;
 	
 	private _swiper?: Swiper;
 
@@ -125,9 +126,8 @@ class Hard extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBox) {
-		 
-		const { view } = this.props;
+ 	public componentDidUpdate(prev: IQuizBox) {	 
+		const { view ,state} = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
@@ -155,6 +155,9 @@ class Hard extends React.Component<IQuizBox> {
 			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
+		if(state.confirmHardProg >= SENDPROG.SENDED){
+			this._sended = true;
+		}
 	}
 	
 	public render() {
@@ -163,8 +166,8 @@ class Hard extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate">{state.resultConfirmHard.uid.length}/{App.students.length}</div>
-				<ToggleBtn className="btn_example" on={this._hint} onClick={this._viewAnswer}/>
+				<div className={"subject_rate" + (this._sended ? '' : ' hide')}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={"btn_example" + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
