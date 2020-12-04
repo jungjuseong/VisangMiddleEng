@@ -19,7 +19,7 @@ interface IQuizItem {
 	onChoice: (idx: number, choice: number) => void;
 }
 @observer
-class QuizItem extends React.Component<IQuizItem> {
+class SBasic extends React.Component<IQuizItem> {
 	@observable private _choices: Array<number> = [0,0,0];
 	@observable private _clicked_number: number = 0;
 	@observable private _sended: boolean;
@@ -76,9 +76,9 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 
 	handleStop = () => {
-		console.log(`x: ${this.state.firstPosition.x.toFixed(0)} y: ${this.state.firstPosition.y.toFixed(0)}`);
-		console.log(`x: ${this.state.secondPosition.x.toFixed(0)} y: ${this.state.secondPosition.y.toFixed(0)}`);
-		console.log(`x: ${this.state.thirdPosition.x.toFixed(0)} y: ${this.state.thirdPosition.y.toFixed(0)}`);
+		// console.log(`x: ${this.state.firstPosition.x.toFixed(0)} y: ${this.state.firstPosition.y.toFixed(0)}`);
+		// console.log(`x: ${this.state.secondPosition.x.toFixed(0)} y: ${this.state.secondPosition.y.toFixed(0)}`);
+		// console.log(`x: ${this.state.thirdPosition.x.toFixed(0)} y: ${this.state.thirdPosition.y.toFixed(0)}`);
 
 		const draggable = document.querySelector(".draggable_place");
 		if (draggable === null) return;
@@ -272,4 +272,4 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 }
 
-export default QuizItem;
+export default SBasic;

@@ -45,7 +45,7 @@ interface ISQuestion {
 }
 
 @observer
-class SQuestion extends React.Component<ISQuestion> {
+class SConfirm extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: common.IQuizReturn = {
@@ -366,4 +366,4 @@ class SQuestion extends React.Component<ISQuestion> {
 		);
 	}
 }
-export default SQuestion;
+export default SConfirm;

@@ -30,7 +30,12 @@ interface IQuizItem {
 	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class QuizItem extends React.Component<IQuizItem> {
+class SHard extends React.Component<IQuizItem> {	
+	@observable private _tlen = 0;
+	@observable private _curIdx = 0;
+	@observable private _swiper: Swiper|null = null;
+	@observable private _sended: boolean = false;
+
 	private _bndW = 0;
 	private _bndH = 0;
 	private _bndW_p = 0;
@@ -39,35 +44,22 @@ class QuizItem extends React.Component<IQuizItem> {
 	private _tarea: (KTextArea|null)[] = [null,null,null];
 	private _canvas?: HTMLCanvasElement;
 	private _ctx?: CanvasRenderingContext2D;
-	
-	@observable private _tlen = 0;
-
     private _stime = 0;
-	
-	@observable private _toggle: Array<boolean | null> = [null, null, null];
-	@observable private _curIdx = 0;
-	@observable private _answer: boolean;
-	@observable private _swiper: Swiper|null = null;
-	@observable private _sended: boolean = false;
  
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblemHard;
-	private _jsx_question2: common.IProblemHard;
-	private _jsx_question3: common.IProblemHard;
 
 	public constructor(props: IQuizItem) {
 		super(props);
-		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this._jsx_question1 = props.data.problem1;
-		this._jsx_question2 = props.data.problem2;
-		this._jsx_question3 = props.data.problem3;
+		this._jsx_sentence = _getJSX(props.data.directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data.directive.eng);
 
-		this._answer = true;
 		keyBoardState.state = 'hide';
 	}
 
+	private _onChoice = (choice: number) => {
+		this.props.onChoice(this.props.idx, choice);
+	}
 	private _onChange = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();
 		
@@ -119,9 +111,6 @@ class QuizItem extends React.Component<IQuizItem> {
 		this._swiper = swiper;
 	}
 
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
 	public componentDidUpdate(prev: IQuizItem) {
 		if(this.props.view && !prev.view) {
 			this._bndH_p = 0;
@@ -153,11 +142,9 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 
 	public render() {
-		// const {view, idx, choice, confirm_normal, confirmProg} = this.props;
-		const { view, confirmProg } = this.props;
+		const { view, data } = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const quizs = [this._jsx_question1, this._jsx_question2, this._jsx_question3]
-		console.log('mdmaskdmasldk' + this._curIdx)
+		const quizs = [data.problem1, data.problem2, data.problem3]
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -183,8 +170,8 @@ class QuizItem extends React.Component<IQuizItem> {
 												<canvas ref={this._refCanvas}/>
 												<KTextArea 
 													ref={this._refArea[idx]} 
-													view={this.props.view} 
-													on={this.props.view && this._curIdx === idx && !this._sended}
+													view={view} 
+													on={view && this._curIdx === idx && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}
@@ -208,4 +195,4 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 }
 
-export default QuizItem;
+export default SHard;

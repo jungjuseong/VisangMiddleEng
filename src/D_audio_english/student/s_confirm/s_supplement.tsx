@@ -19,7 +19,7 @@ interface IQuizItem {
 	onChoice: (idx: number, choice: number) => void;
 }
 @observer
-class QuizItem extends React.Component<IQuizItem> {
+class SSupplement extends React.Component<IQuizItem> {
 	@observable private _toggle: Array<number> = [0,0,0];
 
 	private _disable_toggle: boolean
@@ -166,4 +166,4 @@ class QuizItem extends React.Component<IQuizItem> {
 	}
 }
 
-export default QuizItem;
+export default SSupplement;
