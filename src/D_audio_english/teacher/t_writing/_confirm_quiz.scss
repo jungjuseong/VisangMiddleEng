@@ -18,7 +18,7 @@
             top: -80px;
             left: 4px;
             background-image: resolve('teacher/images/sub_rate.png');
-            &.hide{
+            &.hide {
                 display: none;
             }
         }
@@ -26,21 +26,19 @@
             width: 118px;
             height: 26px;
             background-image: resolve('teacher/images/correct_answer_rate.png');
-			@include compre_correct(-80px, 97px); 
-            &.no-result{
+            @include compre_correct(-80px, 97px);
+            &.no-result {
                 padding-top: 7px;
             }
-            &.hide{
+            &.hide {
                 display: none;
             }
-
-            .title{
+            .title {
                 display: none;
             }
-
-            &>.progress_bar{
+            &>.progress_bar {
                 width: 70px;
-                &>.data_percent {		
+                &>.data_percent {
                     left: 75px;
                 }
             }
@@ -51,7 +49,7 @@
             right: 15px;
             top: 15px;
             z-index: 2;
-            &.hide{
+            &.hide {
                 display: none;
             }
         }
@@ -61,7 +59,7 @@
             right: 15px;
             top: 14px;
             z-index: 2;
-            &.hide{
+            &.hide {
                 display: none;
             }
         }
@@ -85,8 +83,8 @@
                 position: relative;
                 background-color: #fff;
                 border-radius: 10px;
-                width: 1000px;
-                height: 500px;
+                width: 1027px;
+                height: 492px;
                 padding-left: 25px;
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
@@ -101,7 +99,8 @@
                     font-size: 22px;
                     font-weight: bold;
                     text-align: left;
-                    margin-bottom: 25px;
+                    margin-bottom: 10px;
+                    margin-left: 25px;
                     font-family: NanumGothic;
                     &>div {
                         display: inline-block;
@@ -181,14 +180,15 @@
                     font-weight: bold;
                     padding: 0px 25px;
                     &>div {
-                        margin-bottom: 15px;
+                        margin-bottom: 22px;
                     }
                      :last-child {
                         border-bottom: 0px;
                     }
                     .answer_box {
-                        border-bottom: 2px solid #000;
+                        border-bottom: 4px solid #000;
                         width: 730px;
+                        margin-left: 40px;
                         .sample {
                             min-height: 55px;
                             padding-bottom: 5px;
@@ -199,6 +199,7 @@
                         .hint {
                             min-height: 55px;
                             padding-bottom: 5px;
+                            padding-top: 15px;
                             color: rgb(0, 0, 255);
                             .block {
                                 font-weight: bold;
