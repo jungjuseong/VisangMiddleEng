@@ -27,7 +27,7 @@ interface IQuizItem {
 	choice: number;
 	data: common.IConfirmHard;
 	confirmProg: QPROG;
-	onChoice: (idx: number, choice: number) => void;
+	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
 class QuizItem extends React.Component<IQuizItem> {
@@ -71,7 +71,7 @@ class QuizItem extends React.Component<IQuizItem> {
 		if(this._stime === 0) this._stime = Date.now();
 		
 		if(!this.props.view) return;
-		this.props.choice
+		this.props.onChoice(this._curIdx,text);
 		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
@@ -179,7 +179,7 @@ class QuizItem extends React.Component<IQuizItem> {
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={this.props.view} 
-													on={this.props.view && idx ===0}
+													on={this.props.view && this._curIdx === idx}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}

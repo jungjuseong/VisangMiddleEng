@@ -100,6 +100,13 @@ class QuizItem extends React.Component<IQuizItem> {
 	onStop = () => {
 		this.setState({activeDrags: --this.state.activeDrags});
 	};
+
+	public componentDidUpdate() {
+		if(this.props.confirmProg === QPROG.SENDED) {
+			this._disable_toggle = true;
+		} 
+	}
+
 	public render() {
 		const {view, confirmProg, data} = this.props;
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};

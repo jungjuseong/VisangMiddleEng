@@ -339,7 +339,7 @@ class SQuestion extends React.Component<ISQuestion> {
 							view={view && state.idx === 1} 
 							idx={1}
 							choice={0}
-							confirm_normal={confirm_nomals[0]}
+							data={confirm_nomals[0]}
 							confirmProg={state.confirmBasicProg}
 							onChoice={this._onChoice}
 						/>
