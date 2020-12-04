@@ -55,11 +55,31 @@
                     .number_box{
                         position: absolute;
                         display: inline-block;
-                        top: 53px;
-                        left: 55px;
+                        background-repeat: no-repeat;
+                        top: 37px;
+                        left: 28px;
+                        font-size: 25px;
+                        text-align: center;
+
+                        line-height: 5 * height("common/icon_o.png") / 6;
+                        width: width("common/icon_o.png");
+                        height:  height("common/icon_o.png");
+                        
+                        &.O{
+                            background-image: resolve("common/icon_o.png");
+                        }
+                        &.X{
+                            background-image: resolve("common/icon_x.png");
+                        }
+                    }
+                    .answer{
+                        text-align: center;
                         font-size: 24px;
-                        width: 25px;
-                        height: 25px;
+                        color: orangered;
+
+                        &.hidden{
+                            display: none;
+                        }
                     }
                 }
                 .box {
@@ -74,6 +94,10 @@
                     border: 3px solid #000;
                     border-radius: 10px;
                     font-size: 42px;
+
+                    &.hidden{
+                        display: none;
+                    }
                 }
             }
         }
