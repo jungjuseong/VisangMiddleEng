@@ -162,7 +162,7 @@ class SHard extends React.Component<IQuizItem> {
 											<canvas></canvas>
 											<div className="question_box">
 												<p>{idx + 1}.{quizs[idx].question}</p>
-												<p style={{minWidth : '850px',borderBottom: state.hint?'':'2px solid #FFF' }}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+												<p className={state.hint? '' : 'no_hint'}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
 											</div>
 										</div>
 										<div className="s_typing" >

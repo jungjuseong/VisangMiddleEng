@@ -179,13 +179,17 @@
                                 font-size: 40px;
                                 line-height: 80px;
                                 &>p{
-                                    color: #fff;
-    
+                                    color: #fff;    
                                     .block{
                                         display: inline-block;
                                         border-bottom: 2px solid #fff;
                                         width: 150px;
                                     }
+                                }
+                                .no_hint{
+                                    min-width : 850px;
+                                    border-bottom : 2px solid #fff;
+                                    height: 80px;
                                 }
                             }
                         }
