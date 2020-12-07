@@ -14,10 +14,10 @@ import {IQNAMsg} from '../common';
 
 import SConfirm from './s_confirm';
 import SScript from './s_script';
+import SAdditional from './s_additional';
 
 interface ISContentProps {
 	view: boolean;
-	questionView: boolean;
 	scriptProg: SPROG;
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
@@ -96,8 +96,16 @@ class SContent extends React.Component<ISContentProps> {
 					actions={actions}
 				/>
 				<SConfirm 
-					view={this.props.view && this.props.questionView} 
-					questionView={this.props.questionView}
+					view={this.props.view && this.props.state.confirmView} 
+					questionView={this.props.state.confirmView}
+					scriptProg={scriptProg}
+					qsMode={qsMode}
+					state={state}
+					actions={actions}
+				/>
+				<SAdditional
+					view={this.props.view && this.props.state.additionalView} 
+					questionView={this.props.state.additionalView}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}

@@ -143,14 +143,18 @@ class Writing extends React.Component<IWriting> {
         if(this._tab === 'CONFIRM' && this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.READY) return;
         if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'CONFIRM' && this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.READY) return;
-        if(this._tab === 'ADDITIONAL' && state.additionalBasicProg !==  SENDPROG.READY) return;
+        if(this._tab === 'ADDITIONAL' && this._curQidx === 0 && state.additionalSupProg !==  SENDPROG.READY) return;
+        if(this._tab === 'ADDITIONAL' && this._curQidx === 1 && state.additionalBasicProg !==  SENDPROG.READY) return;
+        if(this._tab === 'ADDITIONAL' && this._curQidx === 2 && state.additionalHardProg !==  SENDPROG.READY) return;
         if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
         else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'CONFIRM' && this._curQidx === 2) {state.confirmHardProg = SENDPROG.SENDED; this._viewpop = true; return;} 
-        else if(this._tab === 'ADDITIONAL') state.additionalBasicProg = SENDPROG.SENDING;
+        else if(this._tab === 'ADDITIONAL'&& this._curQidx === 0) state.additionalSupProg = SENDPROG.SENDING;
+        else if(this._tab === 'ADDITIONAL'&& this._curQidx === 1) state.additionalBasicProg = SENDPROG.SENDING;
+        else if(this._tab === 'ADDITIONAL'&& this._curQidx === 2) state.additionalHardProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
         else return;
@@ -176,6 +180,27 @@ class Writing extends React.Component<IWriting> {
                         if(state.confirmBasicProg !==  SENDPROG.SENDING) return;
                         state.confirmBasicProg = SENDPROG.SENDED;
                         msg = {msgtype: 'confirm_send', idx : 1};
+                        break;
+                    } 
+                    case 2 : {
+                        return;
+                    } 
+                    default : {
+                        return
+                    }
+                }
+            }else if(this._tab === 'ADDITIONAL'){
+                switch(this._curQidx){
+                    case 0 : {
+                        if(state.additionalSupProg !==  SENDPROG.SENDING) return;
+                        state.additionalSupProg = SENDPROG.SENDED
+                        msg = {msgtype: 'additional_send', idx : 0};
+                        break;
+                    }
+                    case 1 : {
+                        if(state.additionalBasicProg !==  SENDPROG.SENDING) return;
+                        state.additionalBasicProg = SENDPROG.SENDED;
+                        msg = {msgtype: 'additional_send', idx : 1};
                         break;
                     } 
                     case 2 : {

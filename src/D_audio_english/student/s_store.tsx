@@ -23,10 +23,11 @@ const enum SPROG {
 }
 
 interface IStateCtx extends IStateBase {
-	questionView: boolean;
+	confirmView: boolean;
 	confirmBasicProg: QPROG;
 	confirmSupProg: QPROG;
 	confirmHardProg: QPROG;
+	additionalView : boolean;
 	additionalBasicProg: QPROG;
 	additionalSupProg: QPROG;
 	additionalHardProg: QPROG;
@@ -53,7 +54,8 @@ class StudentContext extends StudentContextBase {
 	constructor() {
 		super();
 
-		this.state.questionView = false;
+		this.state.confirmView = false;
+		this.state.additionalView = false;
 		this.state.confirmBasicProg = QPROG.UNINIT;
 		this.state.confirmSupProg = QPROG.UNINIT;
 		this.state.confirmHardProg = QPROG.UNINIT;
@@ -76,7 +78,8 @@ class StudentContext extends StudentContextBase {
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		const state = this.state;
 		if(state.viewDiv !== viewDiv) {
-			this.state.questionView = false;
+			this.state.confirmView = false;
+			this.state.additionalView = false;
 			if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.UNINIT;
 			
 			this.state.scriptProg = SPROG.UNMOUNT;
@@ -112,7 +115,7 @@ class StudentContext extends StudentContextBase {
 					console.log('hardreturn'+this.state.hint)
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;
-				this.state.questionView = true;
+				this.state.confirmView = true;
 				this.state.viewDiv = 'content';
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
@@ -135,11 +138,33 @@ class StudentContext extends StudentContextBase {
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.confirmHardProg = QPROG.COMPLETE;
 				}
+			}else if(msg.msgtype === 'additional_send'){
+				if(msg.idx === 0){
+					if(this.state.additionalSupProg > QPROG.UNINIT) return;
+					this.state.additionalSupProg = QPROG.ON;
+					this.state.idx = 0;
+				}else if(msg.idx === 1){
+					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
+					this.state.confirmBasicProg = QPROG.ON;
+					this.state.idx = 1;
+				}else{
+					const hintmsg = msg as common.IConfirmHardMsg;
+					if(this.state.confirmHardProg > QPROG.UNINIT) return;
+					this.state.confirmHardProg = QPROG.ON;
+					this.state.idx = 2;
+					this.state.hint = hintmsg.hint;
+					console.log('hardreturn'+this.state.hint)
+				}
+				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.additionalView = true;
+				this.state.viewDiv = 'content';
+				this.state.qsMode  = 'question';
+				this.state.roll = '';
+				this.state.shadowing = false;
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
 				if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.READYA;
-				this.state.questionView = true;
 
 				this.state.scriptProg = SPROG.MOUNTED;
 				this.state.viewDiv = 'content';
