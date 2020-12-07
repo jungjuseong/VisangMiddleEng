@@ -4,166 +4,182 @@ import Draggable from 'react-draggable';
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
+import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
+import { KTextArea } from '@common/component/KTextArea';
+import ReactResizeDetector from 'react-resize-detector';
+import SendUI from '../../../share/sendui_new';
+import TableItem from './table-item';
+
 import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
-import { _getJSX } from '../../../get_jsx';
+import { IStateCtx, IActionsCtx, SPROG } from '../s_store';
+
+import { _getJSX, _getBlockJSX} from '../../../get_jsx';
 import { App } from '../../../App';
 import { NONE } from 'src/share/style';
 
+const SwiperComponent = require('react-id-swiper').default;
+
 interface IQuizItem {
 	view: boolean;
+	state: IStateCtx;
+	actions: IActionsCtx;
 	idx: number;
-	data: common.IConfirmSup;
-	confirmProg: QPROG;
-	onChoice: (idx: number, choice: number) => void;
+	choice: number;
+	data: common.IAdditionalSup[];
+	prog: QPROG;
+	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SSupplement extends React.Component<IQuizItem> {
-	@observable private _toggle: Array<number> = [0,0,0];
+class SHard extends React.Component<IQuizItem> {	
+	@observable private _tlen = 0;
+	@observable private _curIdx = 0;
+	@observable private _renderCnt = 0;
+	@observable private _swiper: Swiper|null = null;
+	@observable private _sended: boolean = false;
 
-	private _disable_toggle: boolean
-	private	_answer_dic: {};
+	private _bndW = 0;
+	private _bndH = 0;
+	private _bndW_p = 0;
+	private _bndH_p = 0;
+
+	private _tarea: (KTextArea|null)[] = [null,null,null];
+	private _canvas?: HTMLCanvasElement;
+	private _ctx?: CanvasRenderingContext2D;
+    private _stime = 0;
+ 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question1: common.IProblemSup;
-	private _jsx_question2: common.IProblemSup;
-	private _jsx_question3: common.IProblemSup;
-	private _jsx_question1_answer: number;
-	private _jsx_question2_answer: number;
-	private _jsx_question3_answer: number;
 
 	public constructor(props: IQuizItem) {
 		super(props);
-		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
-		this._jsx_question1= props.data.problem1;
-		this._jsx_question2= props.data.problem2;
-		this._jsx_question3= props.data.problem3;
-		this._jsx_question1_answer= props.data.problem1.answer;
-		this._jsx_question2_answer= props.data.problem2.answer;
-		this._jsx_question3_answer= props.data.problem3.answer;
-		this._answer_dic = {1:true, 2:false};
-		this._disable_toggle = false;
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
+
+		keyBoardState.state = 'hide';
 	}
 
-	private _onClickTrue = (param: 0 | 1 | 2) =>{
-		if (this._disable_toggle) return;
-		this._toggle[param] = 1;
-		this.props.onChoice(param, 1);
+	private _onChoice = (choice: number) => {
+		this.props.onChoice(this.props.idx, choice);
 	}
-	private _onClickFalse = (param: 0 | 1 | 2) =>{
-		if (this._disable_toggle) return;
-		this._toggle[param] = 2;
-		this.props.onChoice(param, 2);
+	private _onChange = (text: string) => {
+		if(this._stime === 0) this._stime = Date.now();
+		
+		if(!this.props.view) return;
+		this.props.onChoice(this._curIdx,text);
+		this._tlen = text.trim().length;
 	}
-	private _getToggleState = (num: number) =>{
-		if(this.props.confirmProg === QPROG.COMPLETE){
-			switch(num){
-				case 0 :{
-					if(this._jsx_question1_answer === 1){
-						return 'on_true'
-					}else return 'on_false'
-				}
-				case 1 :{
-					if(this._jsx_question2_answer === 1){
-						return 'on_true'
-					}else return 'on_false'
-				}
-				case 2 :{
-					if(this._jsx_question3_answer === 1){
-						return 'on_true'
-					}else return 'on_false'
-				}
+	private _onDone = (text: string) => {
+		if(this._stime === 0) this._stime = Date.now();
+		
+		if(!this.props.view) return;
+		this._tlen = text.trim().length;
+		keyBoardState.state = 'on';
+
+	}
+	private _refCanvas = (el: HTMLCanvasElement|null) => {
+		if(this._canvas || !el) return;
+		this._canvas = el;
+		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
+	}	
+	private _refArea = [(el: KTextArea|null) => {
+		if(this._tarea[0] || !el) return;
+		this._tarea[0] = el;
+	},(el: KTextArea|null) => {
+		if(this._tarea[1] || !el) return;
+		this._tarea[1] = el;
+	},(el: KTextArea|null) => {
+		if(this._tarea[2] || !el) return;
+		this._tarea[2] = el;
+	}]
+
+	private _onResize = (w: number, h: number) => {
+		this._bndW = w;
+		this._bndH = h;
+	}
+
+	private _refSwiper = (el: SwiperComponent) => {
+		if(this._swiper || !el) return;
+
+		const swiper = el.swiper;
+		swiper.on('transitionStart', () => {
+			this._curIdx = -1;
+		});
+		swiper.on('transitionEnd', () => {
+			if(this.props.view) {
+				this._curIdx = swiper.activeIndex;
 			}
-		}
-		if(this._toggle[num] === 0) return '';
-		if(this._toggle[num] === 1)
-			return 'on_true';
-		else
-			return 'on_false';
+		});
+		this._swiper = swiper;
 	}
-	state = {
-		activeDrags: 0,
-		deltaPosition: {
-		x: 0, y: 0
-		},
-		controlledPosition: {
-		x: -400, y: 200
-		}
-	};
-	
-	onStart = () => {
-		this.setState({activeDrags: ++this.state.activeDrags});
-	};
-	
-	onStop = () => {
-		this.setState({activeDrags: --this.state.activeDrags});
-	};
 
-	public componentDidUpdate() {
-		if(this.props.confirmProg === QPROG.SENDED) {
-			this._disable_toggle = true;
-		} 
+	public componentDidUpdate(prev: IQuizItem) {
+		if(this.props.view && !prev.view) {
+			this._bndH_p = 0;
+			this._bndW_p = 0;
+			this._tlen = 0;
+			keyBoardState.state = 'on';
+			
+			// if(this._tarea) this._tarea.
+			this._stime = 0;
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
+			}
+		} else if(!this.props.view && prev.view) {
+			this._bndH_p = 0;
+			this._bndW_p = 0;
+			this._tlen = 0;
+			keyBoardState.state = 'hide';
+		}
+		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
+			if(this._swiper) {
+				this._swiper.slideTo(0);
+			}			
+		}
+		if(this.props.prog >= QPROG.SENDED){
+			this._sended = true
+			keyBoardState.state = 'hide';
+		}
 	}
 
 	public render() {
-		const {view, confirmProg, data} = this.props;
-		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
-		let OXs: Array<''|'O'|'X'> = ['','',''];
-		const answers = [data.problem1.answer,data.problem2.answer,data.problem3.answer]
-		if(confirmProg == QPROG.COMPLETE){
-			console.log('complete')
-			OXs.map((OX,idx) =>{
-				if(answers[idx] === this._toggle[idx]){
-					OXs[idx] = 'O';
-				}else{
-					OXs[idx] = 'X';
-				}
-			})
-			this._disable_toggle = true;
-		}
-
+		const { view, data ,state, prog} = this.props;
 		return (
 			<>
-				<div className="quiz_box" style={{display : view ? '' : 'none' }}>
+				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
 					<div className="sup_question">
-						<div className="quiz">
-							<WrapTextNew view={view}>
-								{this._jsx_sentence}
-							</WrapTextNew>
-						</div>
-						<div>
-							<div className="white_box">
-								<p>1. {this._jsx_question1.question}</p>
-								<span className={OXs[0]} ></span>
-								<div className={"toggle_bundle " + this._getToggleState(0)}>
-									<div className="true" onClick={()=>{this._onClickTrue(0)}}></div>
-									<div className="false" onClick={()=>{this._onClickFalse(0)}}></div>
-								</div>
-							</div>
-							<div className="white_box">
-								<p>2. {this._jsx_question2.question}</p>
-								<span className={OXs[1]}></span>
-								<div className={"toggle_bundle " + this._getToggleState(1)}>
-									<div className="true" onClick={()=>{this._onClickTrue(1)}}></div>
-									<div className="false" onClick={()=>{this._onClickFalse(1)}}></div>
-								</div>
-							</div>
-							<div className="white_box">
-								<p>3. {this._jsx_question3.question}</p>
-								<span className={OXs[2]}></span>
-								<div className={"toggle_bundle " + this._getToggleState(2)}>
-									<div className="true" onClick={()=>{this._onClickTrue(2)}}></div>
-									<div className="false" onClick={()=>{this._onClickFalse(2)}}></div>
-								</div>
-							</div>
-						</div>
+						<SwiperComponent ref={this._refSwiper}>
+							{data.map((quiz, idx) => {
+								return (
+									<div key={idx} className="table_box">
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
+										<TableItem
+										viewCorrect={prog === QPROG.COMPLETE}
+										disableSelect={prog === QPROG.COMPLETE}
+										inview={view}
+										graphic={quiz}
+										className="type_3"
+										maxWidth={1000}
+										renderCnt={this._renderCnt}
+										optionBoxPosition="bottom"
+										viewBtn={false}
+										idx={idx}
+										/>
+									</div>
+								);
+							})}
+						</SwiperComponent>
 					</div>
 				</div>
-			</>		
+			</>
 		);
 	}
 }
 
-export default SSupplement;
+export default SHard;

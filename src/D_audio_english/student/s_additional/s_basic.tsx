@@ -1,270 +1,204 @@
 import * as React from 'react';
 import Draggable from 'react-draggable';
 
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
-
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
+import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
+import { KTextArea } from '@common/component/KTextArea';
+import ReactResizeDetector from 'react-resize-detector';
+import SendUI from '../../../share/sendui_new';
+import { observer, PropTypes } from 'mobx-react';
+import { observable } from 'mobx';
+
+import { IStateCtx, IActionsCtx, SPROG } from '../s_store';
+
+import { _getJSX, _getBlockJSX} from '../../../get_jsx';
 import { App } from '../../../App';
-import { timeStamp } from 'console';
+import { NONE } from 'src/share/style';
+
+const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizItem {
 	view: boolean;
+	state: IStateCtx;
+	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IConfirmNomal;
+	data: common.IAdditionalHard[];
 	confirmProg: QPROG;
-	onChoice: (idx: number, choice: number) => void;
+	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SBasic extends React.Component<IQuizItem> {
-	@observable private _choices: Array<number> = [0,0,0];
-	@observable private _clicked_number: number = 0;
-	@observable private _sended: boolean;
-	@observable private _view_answer: boolean;
+class SHard extends React.Component<IQuizItem> {	
+	@observable private _tlen = 0;
+	@observable private _curIdx = 0;
+	@observable private _swiper: Swiper|null = null;
+	@observable private _sended: boolean = false;
+
+	private _bndW = 0;
+	private _bndH = 0;
+	private _bndW_p = 0;
+	private _bndH_p = 0;
+
+	private _tarea: (KTextArea|null)[] = [null,null,null];
+	private _canvas?: HTMLCanvasElement;
+	private _ctx?: CanvasRenderingContext2D;
+    private _stime = 0;
+ 
+	private _jsx_sentence: JSX.Element;
+	private _jsx_eng_sentence: JSX.Element;
 
 	public constructor(props: IQuizItem) {
 		super(props);
-		this._clicked_number = 0;
-		this._sended = false;
-		this._view_answer = false;
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
+
+		keyBoardState.state = 'hide';
+	}
+
+	private _onChoice = (choice: number) => {
+		this.props.onChoice(this.props.idx, choice);
+	}
+	private _onChange = (text: string) => {
+		if(this._stime === 0) this._stime = Date.now();
+		
+		if(!this.props.view) return;
+		this.props.onChoice(this._curIdx,text);
+		this._tlen = text.trim().length;
+	}
+	private _onDone = (text: string) => {
+		if(this._stime === 0) this._stime = Date.now();
+		
+		if(!this.props.view) return;
+		this._tlen = text.trim().length;
+		keyBoardState.state = 'on';
+
+	}
+	private _refCanvas = (el: HTMLCanvasElement|null) => {
+		if(this._canvas || !el) return;
+		this._canvas = el;
+		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
+	}	
+	private _refArea = [(el: KTextArea|null) => {
+		if(this._tarea[0] || !el) return;
+		this._tarea[0] = el;
+	},(el: KTextArea|null) => {
+		if(this._tarea[1] || !el) return;
+		this._tarea[1] = el;
+	},(el: KTextArea|null) => {
+		if(this._tarea[2] || !el) return;
+		this._tarea[2] = el;
+	}]
+
+	private _onResize = (w: number, h: number) => {
+		this._bndW = w;
+		this._bndH = h;
+	}
+
+	private _refSwiper = (el: SwiperComponent) => {
+		if(this._swiper || !el) return;
+
+		const swiper = el.swiper;
+		swiper.on('transitionStart', () => {
+			this._curIdx = -1;
+		});
+		swiper.on('transitionEnd', () => {
+			if(this.props.view) {
+				this._curIdx = swiper.activeIndex;
+			}
+		});
+		this._swiper = swiper;
 	}
 
 	public componentDidUpdate(prev: IQuizItem) {
-		const { view } = this.props;
-		if (view && !prev.view) {
-			this._clicked_number = 0;
-		} else if (!this.props.view && prev.view) {
-			this._clicked_number = 0;
-			App.pub_stop();
-		}
-		if(this.props.confirmProg === QPROG.SENDED) {
-			this._sended = true;
-		} 
-		if(this.props.confirmProg == QPROG.COMPLETE){
-			this._sended = true;
-			this._view_answer = true;
-		}
-	}
-
-	state = {
-		activeDrags: 0,
-		firstPosition: {
-			x: 500, y: 400
-		},
-		secondPosition: {
-			x: 600, y: 400
-		},
-		thirdPosition: {
-			x: 700, y: 400
-		}
-	};
-
-	onStart = () => {
-		this.setState({ activeDrags: ++this.state.activeDrags });
-	};
-	onStop = () => {
-		this.setState({ activeDrags: --this.state.activeDrags });
-	};
-
-	private _ExclusiveGroup = (num : number) =>{
-		for (let i = 0; i <this._choices.length; i ++)
-			if(this._choices[i] === num)
-				this._choices[i] = 0;
-	}
-
-	handleStop = () => {
-		// console.log(`x: ${this.state.firstPosition.x.toFixed(0)} y: ${this.state.firstPosition.y.toFixed(0)}`);
-		// console.log(`x: ${this.state.secondPosition.x.toFixed(0)} y: ${this.state.secondPosition.y.toFixed(0)}`);
-		// console.log(`x: ${this.state.thirdPosition.x.toFixed(0)} y: ${this.state.thirdPosition.y.toFixed(0)}`);
-
-		const draggable = document.querySelector(".draggable_place");
-		if (draggable === null) return;
-		const drag_center = draggable.getBoundingClientRect();
-		const setOriginX = drag_center['x'];
-		const setOriginY = drag_center['y'];
-
-		// image 1
-		const image1 = document.querySelector("#skiing");
-		if (image1 === null) return;
-		const rect = image1.getBoundingClientRect();
-		const x0 = rect['left'] - setOriginX;
-		const x1 = rect['right'] - setOriginX;
-		const y0 = rect['top'] - setOriginY;
-		const y1 = rect['bottom'] - setOriginY;
-		// image 2
-		const image2 = document.querySelector("#riding");
-		if (image2 === null) return;
-		const rect2 = image2.getBoundingClientRect();
-		const x2 = rect2['left'] - setOriginX;
-		const x3 = rect2['right'] - setOriginX;
-		const y2 = rect2['top'] - setOriginY;
-		const y3 = rect2['bottom'] - setOriginY;
-		// image 3
-		const image3 = document.querySelector("#waterPark");
-		if (image3 === null) return;
-		const rect3 = image3.getBoundingClientRect();
-		const x4 = rect3['left'] - setOriginX;
-		const x5 = rect3['right'] - setOriginX;
-		const y4 = rect3['top'] - setOriginY;
-		const y5 = rect3['bottom'] - setOriginY;
-		
-		const position = [this.state.firstPosition, this.state.secondPosition, this.state.thirdPosition]
-		console.log(x0+"< x <"+ x1 + " " + y0 + "< y <"+ y1);
-		for (let i = 0; i < position.length; i++){
-			if (position[i].x >= x0 && position[i].x <= x1){
-				if (position[i].y >= y0 && position[i].y <= y1){
-					this._ExclusiveGroup(this._clicked_number);
-					this._choices[0] = this._clicked_number;
-					this.props.onChoice(0, this._clicked_number);
-				}
+		if(this.props.view && !prev.view) {
+			this._bndH_p = 0;
+			this._bndW_p = 0;
+			this._tlen = 0;
+			keyBoardState.state = 'on';
+			
+			// if(this._tarea) this._tarea.
+			this._stime = 0;
+			if(this._swiper) {
+				this._swiper.slideTo(0, 0);
+				this._swiper.update();
 			}
-			if (position[i].x >= x2 && position[i].x <= x3){
-				if (position[i].y >= y2 && position[i].y <= y3){
-					this._ExclusiveGroup(this._clicked_number);
-					this._choices[1] = this._clicked_number;
-					this.props.onChoice(1, this._clicked_number);
-				}
-			}
-			if (position[i].x >= x4 && position[i].x <= x5){
-				if (position[i].y >= y4 && position[i].y <= y5){
-					this._ExclusiveGroup(this._clicked_number);
-					this._choices[2] = this._clicked_number;
-					this.props.onChoice(2, this._clicked_number);
-				}
-			}
-			position[i].y = 400;
+		} else if(!this.props.view && prev.view) {
+			this._bndH_p = 0;
+			this._bndW_p = 0;
+			this._tlen = 0;
+			keyBoardState.state = 'hide';
 		}
-		this.state.firstPosition.x = 500;
-		this.state.secondPosition.x = 600;
-		this.state.thirdPosition.x = 700;
-	}
-
-	handleDrag = (e: any, ui: any) => {
-		console.log(e);
-		if(this._clicked_number === 1){
-			const { x, y } = this.state.firstPosition;
-			this.setState({
-				firstPosition: {
-					x: x + ui.deltaX,
-					y: y + ui.deltaY,
-				}
-			});
+		if(this.props.confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
+			if(this._swiper) {
+				this._swiper.slideTo(0);
+			}			
 		}
-		else if(this._clicked_number === 2){
-			const { x, y } = this.state.secondPosition;
-			this.setState({
-				secondPosition: {
-					x: x + ui.deltaX,
-					y: y + ui.deltaY,
-				}
-			});
+		if(this.props.confirmProg >= QPROG.SENDED){
+			this._sended = true
+			keyBoardState.state = 'hide';
 		}
-		else if(this._clicked_number === 3){
-			const { x, y } = this.state.thirdPosition;
-			this.setState({
-				thirdPosition: {
-					x: x + ui.deltaX,
-					y: y + ui.deltaY,
-				}
-			});
-		}
-		else return;
-	};
-
-	selectNumber = (num: number) => {
-		console.log("select " + num);
-		this._clicked_number = num;
-	}
-
-	private _putNumber = (param: 0 | 1 | 2) => {
-		console.log(this._choices[param]);
-		if (this._choices[param] === 1){
-			return '1';
-		}	
-		else if (this._choices[param] === 2){
-			return '2';
-		}
-		else if (this._choices[param] === 3){
-			return '3';
-		}
-		else
-			return '';
 	}
 
 	public render() {
-		const { view, idx, choice, data, confirmProg } = this.props;
-		const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
-		let OXs: Array<''|'O'|'X'> = ['','',''];
-		const answers = [data.item1.answer ,data.item2.answer,data.item3.answer]
-		if(confirmProg == QPROG.COMPLETE){
-			OXs.map((OX,idx) =>{
-				if(answers[idx] === this._choices[idx]){
-					OXs[idx] = 'O';
-				}else{
-					OXs[idx] = 'X';
-				}
-			})
-		}
-		
+		const { view, data ,state} = this.props;
+		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
+		const alphabet = ['a','b','c'];
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="basic_place">
-						<div className="quiz">
-							<WrapTextNew view={view}>
-								{data.directive.kor}
-							</WrapTextNew>
-						</div>
-						<div className="draggable_place">
-							<div className="img_bundle">
-								<div>
-									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
-									<div className={"number_box " + OXs[0]}>{this._putNumber(0)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item1.answer}</div>
-								</div>
-								<div>
-									<img id="riding" className="image" src={App.data_url + data.item2.img} />
-									<div className={"number_box " + OXs[1]}>{this._putNumber(1)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item2.answer}</div>
-								</div>
-								<div>
-									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
-									<div className={"number_box " + OXs[2]}>{this._putNumber(2)}</div>
-									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item3.answer}</div>
-								</div>								
-							</div>
-
-							<Draggable
-								bounds="parent" {...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 500, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => {this.selectNumber(1)}}>
-								<div className={"box" + (this._sended? ' hide': '')}>1</div>
-							</Draggable>
-							<Draggable
-								bounds="parent" {...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 600, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => {this.selectNumber(2)}}>
-								<div className={"box" + (this._sended? ' hide': '')}>2</div>
-							</Draggable>
-							<Draggable
-								bounds="parent" {...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 700, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => {this.selectNumber(3)}}>
-								<div className={"box" + (this._sended? ' hide': '')}>3</div>
-							</Draggable>
-						</div>
+					<div className="basic_question">
+						<SwiperComponent ref={this._refSwiper}>
+							{data.map((quiz, idx) => {	
+								return (
+									<div key={idx} className= {"q-item" + keyon}>
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
+										<div className="sentence_box">
+											<canvas></canvas>
+											<div className="question_box">
+												<p>{idx + 1}.{_getJSX(quiz.sentence)}</p>
+											</div>
+										</div>
+										<div className="s_typing" >
+											<div className="area-bnd">
+												<KTextArea 
+													ref={this._refArea[idx]} 
+													view={view} 
+													on={view && this._curIdx === idx && !this._sended}
+													autoResize={true}
+													skipEnter={false}
+													onChange={this._onChange}
+													onDone={this._onDone}
+													maxLength={60}
+													maxLineNum={3}
+													rows={1}
+												/>
+												{' → '}
+												<KTextArea 
+													ref={this._refArea[idx]} 
+													view={view} 
+													on={view && this._curIdx === idx && !this._sended}
+													autoResize={true}
+													skipEnter={false}
+													onChange={this._onChange}
+													onDone={this._onDone}
+													maxLength={60}
+													maxLineNum={3}
+													rows={1}
+												/>
+												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
+											</div>
+										</div>
+									</div>
+								);
+							})}
+						</SwiperComponent>
+						<Keyboard />
 					</div>
 				</div>
 			</>
@@ -272,4 +206,4 @@ class SBasic extends React.Component<IQuizItem> {
 	}
 }
 
-export default SBasic;
+export default SHard;

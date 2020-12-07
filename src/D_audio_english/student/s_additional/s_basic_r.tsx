@@ -25,7 +25,7 @@ interface IQuizItem {
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IConfirmHard;
+	data: common.IAdditionalBasic[];
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number|string) => void;
 }
@@ -51,8 +51,8 @@ class SHard extends React.Component<IQuizItem> {
 
 	public constructor(props: IQuizItem) {
 		super(props);
-		this._jsx_sentence = _getJSX(props.data.directive.kor);
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng);
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 
 		keyBoardState.state = 'hide';
 	}
@@ -144,13 +144,13 @@ class SHard extends React.Component<IQuizItem> {
 	public render() {
 		const { view, data ,state} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const quizs = [data.problem1, data.problem2, data.problem3]
+		const alphabet = ['a','b','c'];
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="hard_question">
+					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
-							{quizs.map((quiz, idx) => {
+							{data.map((quiz, idx) => {	
 								return (
 									<div key={idx} className= {"q-item" + keyon}>
 										<div className="quiz">
@@ -161,13 +161,12 @@ class SHard extends React.Component<IQuizItem> {
 										<div className="sentence_box">
 											<canvas></canvas>
 											<div className="question_box">
-												<p>{idx + 1}.{quizs[idx].question}</p>
-												<p style={{minWidth : '850px',borderBottom: state.hint?'':'2px solid #FFF' }}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+												<p>{idx + 1}.{_getJSX(quiz.sentence)}</p>
 											</div>
 										</div>
 										<div className="s_typing" >
 											<div className="area-bnd">
-												<canvas ref={this._refCanvas}/>
+												<span className="index">{alphabet[idx]}.</span>
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 

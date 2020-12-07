@@ -13,7 +13,7 @@ import SendUINew from '../../../share/sendui_new';
 
 import SBasic from './s_basic';
 import SSup from './s_supplement';
-import SHard from './s_hard';
+// import SHard from './s_hard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -324,32 +324,37 @@ class SAdditional extends React.Component<ISQuestion> {
 		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
-			<div className="s_question" style={{...this._style}}>
+			<div className="s_additional" style={{...this._style}}>
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						<SSup
-							view={view && state.idx === 0} 
-							idx={0}
-							data={c_data.confirm_sup[0]}
-							confirmProg={state.additionalSupProg}
-							onChoice={this._onChoice}
-						/>
-						<SBasic
-							view={view && state.idx === 1} 
-							idx={1}
-							choice={0}
-							data={confirm_nomals[0]}
-							confirmProg={state.additionalBasicProg}
-							onChoice={this._onChoice}
-						/>
-						<SHard
-							view={view && state.idx === 2}
+							view={view && state.idx === 0}
 							state={state}
 							actions={actions}
-							idx={2}
+							idx={0}
 							choice={0}
-							data={c_data.confirm_hard[0]}
+							data={c_data.additional_sup}
+							prog={state.additionalHardProg}
+							onChoice={this._onChoice}
+						/>
+						{/* <SBasic							
+							view={view && state.idx === 1}
+							state={state}
+							actions={actions}
+							idx={1}
+							choice={0}
+							data={c_data.additional_basic}
+							confirmProg={state.additionalHardProg}
+							onChoice={this._onChoice}
+						/> */}
+						<SBasic							
+							view={view && state.idx === 1}
+							state={state}
+							actions={actions}
+							idx={1}
+							choice={0}
+							data={c_data.additional_hard}
 							confirmProg={state.additionalHardProg}
 							onChoice={this._onChoice}
 						/>
