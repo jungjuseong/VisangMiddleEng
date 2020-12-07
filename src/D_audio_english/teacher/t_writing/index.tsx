@@ -13,7 +13,7 @@ import * as common from '../../common';
 
 import SendUINew from '../../../share/sendui_new';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
-import { IMsg,IData,IFocusMsg, IIndexMsg } from '../../common';
+import { IMsg,IData,IFocusMsg, IIndexMsg ,IConfirmHardMsg} from '../../common';
 
 import ScriptContainer from '../../script_container';
 import { CoverPopup } from '../../../share/CoverPopup';
@@ -121,19 +121,14 @@ class Writing extends React.Component<IWriting> {
                 console.log('null')
                 return;
             };
-            if(hintyon){
-                console.log('true')
-            }else{
-                console.log('false')
-            }
-            let msg: IIndexMsg;
+            let msg: IConfirmHardMsg;
             actions.clearReturnUsers();
             actions.setRetCnt(0);
             actions.setNumOfStudent(App.students.length);
             state.confirmHardProg = SENDPROG.SENDING;
             if(state.confirmHardProg !==  SENDPROG.SENDING) return;
             state.confirmHardProg = SENDPROG.SENDED;
-            msg = {msgtype: 'confirm_send', idx : 2};                
+            msg = {msgtype: 'confirm_send', idx : 2, hint : hintyon};                
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             this._viewpop = false;

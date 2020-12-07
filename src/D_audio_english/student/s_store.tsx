@@ -33,6 +33,7 @@ interface IStateCtx extends IStateBase {
 	dictationProg: QPROG;
 	idx: number;
 	scriptProg: SPROG;
+	hint: boolean;
 	roll: ''|'A'|'B';
 	shadowing: boolean;
 	qsMode: ''|'question'|'script';
@@ -63,6 +64,7 @@ class StudentContext extends StudentContextBase {
 		this.state.idx = -1;
 		this.state.scriptProg = SPROG.UNMOUNT;
 		this.state.qsMode  = '';
+		this.state.hint = false;
 		this.state.roll = '';
 		this.state.viewClue = false;
 		this.state.focusIdx = -1;
@@ -102,9 +104,12 @@ class StudentContext extends StudentContextBase {
 					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
 				}else{
+					const hintmsg = msg as common.IConfirmHardMsg;
 					if(this.state.confirmHardProg > QPROG.UNINIT) return;
 					this.state.confirmHardProg = QPROG.ON;
 					this.state.idx = 2;
+					this.state.hint = hintmsg.hint;
+					console.log('hardreturn'+this.state.hint)
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.questionView = true;

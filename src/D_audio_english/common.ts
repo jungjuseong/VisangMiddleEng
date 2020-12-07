@@ -21,6 +21,10 @@ export interface IIndexMsg extends IMsg{
 	idx: number;
 }
 
+export interface IConfirmHardMsg extends IIndexMsg{
+	hint: boolean;
+}
+
 export interface IQuizReturn {
 	answer1: number;
 	answer2: number;

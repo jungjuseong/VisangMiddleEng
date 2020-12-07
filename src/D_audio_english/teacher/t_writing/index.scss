@@ -44,16 +44,16 @@
                 .btn_yes {
                     @include btn_on( resolve('teacher/images/btn_yes.png'), resolve('teacher/images/btn_yes.png'), width('teacher/images/btn_yes.png'), height('teacher/images/btn_yes.png'), );
                     position: absolute;
-                    right: 20px;
-                    width: 356px;
+                    left: 90px;
+                    width: 140px;
                     top: 200px;
                     z-index: 2;
                 }
                 .btn_no {
                     @include btn_on( resolve('teacher/images/btn_no.png'), resolve('teacher/images/btn_no.png'), width('teacher/images/btn_no.png'), height('teacher/images/btn_no.png'), );
                     position: absolute;
-                    right: 20px;
-                    width: 210px;
+                    right: 90px;
+                    width: 140px;
                     top: 200px;
                     z-index: 2;
                 }

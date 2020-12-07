@@ -142,7 +142,7 @@ class SHard extends React.Component<IQuizItem> {
 	}
 
 	public render() {
-		const { view, data } = this.props;
+		const { view, data ,state} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const quizs = [data.problem1, data.problem2, data.problem3]
 		return (
@@ -162,7 +162,7 @@ class SHard extends React.Component<IQuizItem> {
 											<canvas></canvas>
 											<div className="question_box">
 												<p>{idx + 1}.{quizs[idx].question}</p>
-												<p>{_getBlockJSX(quiz.hint)}</p>
+												<p style={{minWidth : '850px',borderBottom: state.hint?'':'2px solid #FFF' }}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
 											</div>
 										</div>
 										<div className="s_typing" >
