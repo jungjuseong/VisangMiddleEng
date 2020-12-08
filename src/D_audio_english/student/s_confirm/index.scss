@@ -19,7 +19,6 @@
             height: 100%;
             left: 0px;
             width: 100%;
-
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -38,8 +37,7 @@
                     font-size: 28px;
                     padding: 0px 25px;
                     height: 800px;
-
-                    &>div{
+                    &>div {
                         position: relative;
                     }
                     .quiz {
@@ -53,7 +51,7 @@
                         color: rgb(0, 0, 0);
                         white-space: normal;
                         margin-bottom: 55px;
-                        &>div{
+                        &>div {
                             position: absolute;
                             top: 64px
                         }
@@ -74,28 +72,29 @@
                             display: inline-block;
                             vertical-align: top;
                             width: width("common/icon_o.png");
-                            height:  height("common/icon_o.png");
+                            height: height("common/icon_o.png");
                             background-repeat: no-repeat;
                             background-position: 50% 50%;
                             left: 4px;
                             margin-top: 13px;
-            
                             line-height: 5 * height("common/icon_o.png") / 6;
-                            &.O{
+                            &.O {
                                 background-image: resolve("common/icon_o.png");
                             }
-                            &.X{
+                            &.X {
                                 background-image: resolve("common/icon_x.png");
                             }
-                            
-                            font-size: 34px; font-weight: bold; color: rgba(255, 255, 255, 0.4);
+                            font-size: 34px;
+                            font-weight: bold;
+                            color: rgba(255, 255, 255, 0.4);
                             &.on {
                                 color: rgb(248, 246, 77);
                             }
                         }
-                        &.off{display: none;}
-                        
-                        &>p{
+                        &.off {
+                            display: none;
+                        }
+                        &>p {
                             line-height: 90px;
                         }
                         .toggle_bundle {
@@ -113,10 +112,10 @@
                             }
                         }
                         .on_true {
-                            background: resolve('teacher/images/TF_T.png');
+                            background: resolve('teacher/images/TF_T_B.png');
                         }
                         .on_false {
-                            background: resolve('teacher/images/TF_F.png');
+                            background: resolve('teacher/images/TF_F_B.png');
                         }
                     }
                 }
@@ -128,12 +127,13 @@
                     top: 0px;
                     height: 800px;
                     width: 100%;
-
-                    .swiper-container{
+                    .swiper-container {
                         @include page;
                     }
                     .q-item {
-                        &.key-on { top: -300px; }
+                        &.key-on {
+                            top: -300px;
+                        }
                         .quiz {
                             position: relative;
                             display: flex;
@@ -146,14 +146,12 @@
                             color: rgb(0, 0, 0);
                             white-space: normal;
                             margin-bottom: 55px;
-
-                            &>div{
+                            &>div {
                                 position: absolute;
                                 top: 64px
                             }
                         }
-                        
-                        .sentence_box{
+                        .sentence_box {
                             position: relative;
                             display: inline-flex;
                             align-items: center;
@@ -161,8 +159,7 @@
                             height: 300px;
                             border-radius: 15px;
                             padding-left: 30px;
-    
-                            canvas{
+                            canvas {
                                 top: 0;
                                 left: 0;
                                 width: inherit;
@@ -172,23 +169,23 @@
                                 background: #000;
                                 opacity: 0.3;
                             }
-                            .question_box{
+                            .question_box {
                                 top: 0;
                                 left: 0;
                                 position: relative;
                                 font-size: 40px;
                                 line-height: 80px;
-                                &>p{
-                                    color: #fff;    
-                                    .block{
+                                &>p {
+                                    color: #fff;
+                                    .block {
                                         display: inline-block;
                                         border-bottom: 2px solid #fff;
                                         width: 150px;
                                     }
                                 }
-                                .no_hint{
-                                    min-width : 850px;
-                                    border-bottom : 2px solid #fff;
+                                .no_hint {
+                                    min-width: 850px;
+                                    border-bottom: 2px solid #fff;
                                     height: 80px;
                                 }
                             }
@@ -197,55 +194,63 @@
                             position: relative;
                             transition: margin-top 0.3s;
                             margin-top: 40px;
-                            .area-bnd{
+                            .area-bnd {
                                 position: relative;
-                                display:inline-block;
+                                display: inline-block;
                                 vertical-align: top;
                                 width: 894px;
                                 margin-right: 5px;
-                                .k-tarea{
+                                .k-tarea {
                                     position: relative;
                                     width: 100%;
                                     height: auto;
                                     min-height: 64px;
-                                    textarea{
+                                    textarea {
                                         box-sizing: border-box;
                                         font-size: 52px;
                                         padding: 30px 35px 30px 30px;
                                         color: #000;
                                         font-family: NotoSans;
                                         font-weight: bold;
-                                        &::disabled{
+                                        &::disabled {
                                             color: #000;
                                         }
                                     }
-                                    .k-tarea-bg{
+                                    .k-tarea-bg {
                                         height: 0px;
-                                        min-height: 100%; 
+                                        min-height: 100%;
                                     }
-                                    .k-tarea-bar{
+                                    .k-tarea-bar {
                                         display: none;
-                                    }				
+                                    }
                                 }
-                                canvas{
+                                canvas {
                                     position: absolute;
-                                    left:0px; top: 0px;
+                                    left: 0px;
+                                    top: 0px;
                                 }
                             }
                             &>img {
-                                display:inline-block;
+                                display: inline-block;
                                 vertical-align: top;
                                 box-sizing: border-box;
-                                width: 115px; 
+                                width: 115px;
                                 height: 115px;
                                 border-width: 6px;
                                 border-style: solid;
                                 border-radius: 50%;
-                                &.pink{border-color: rgb(206, 116, 225);}
-                                &.green{border-color: rgb(34,205,172);}
-                                &.orange{border-color: rgb(255,186,0);}
-                                &.purple{border-color: rgb(116,113,236);}
-            
+                                &.pink {
+                                    border-color: rgb(206, 116, 225);
+                                }
+                                &.green {
+                                    border-color: rgb(34, 205, 172);
+                                }
+                                &.orange {
+                                    border-color: rgb(255, 186, 0);
+                                }
+                                &.purple {
+                                    border-color: rgb(116, 113, 236);
+                                }
                             }
                         }
                     }

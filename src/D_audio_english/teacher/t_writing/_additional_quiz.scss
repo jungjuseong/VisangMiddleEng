@@ -55,32 +55,30 @@
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
-                    padding: 0px 6px;
+                    padding: 10px 10px 15px 0px;
                 }
                 .white_board {
                     display: inline-block;
                     position: relative;
                     background-color: #fff;
                     border-radius: 10px;
-                    width: 1000px;
-                    height: 490px;
-                    padding-left: 25px;
+                    width: 1027px;
+                    height: 492px;
+                    padding-left: 31px;
                     overflow: hidden;
                     font-family: NanumGothic;
                     font-weight: bold;
                     .btn_trans {
                         @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                         position: absolute;
-                        left: 20px;
-                        top: 15px;
+                        left: 25px;
+                        top: 20px;
                         z-index: 2;
                     }
                     .sentence_box {
                         height: 100px;
                         position: relative;
                         font-size: 22px;
-                        //font-family: NanumGothic;
-                        //font-weight: bold;
                         text-align: left;
                         &>div {
                             display: inline-block;
@@ -89,8 +87,7 @@
                             .btn_audio {
                                 @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
                                 position: absolute;
-                                bottom: -3px;
-                                right: -33px;
+                                margin-top: 5px;
                                 z-index: 2;
                             }
                             .question_box {
@@ -693,9 +690,9 @@
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding: 0px 25px;
+                        padding: 30px 0 0 0;
                         .block {
-                            border-bottom: 2px solid #000;
+                            border-bottom: 4px solid #000;
                         }
                         &>div {
                             margin-bottom: 40px;
@@ -712,17 +709,19 @@
                             margin-bottom: 0px;
                         }
                         .answer_box {
-                            border-bottom: 2px solid #000;
-                            width: 160px;
+                            border-bottom: 4px solid #000;
+                            width: 216px;
+                            margin-right: 45px;
                             .sample {
-                                min-height: 34px;
+                                min-height: 50px;
                             }
                             .hide {
                                 display: none;
                             }
                             .hint {
                                 text-align: center;
-                                min-height: 34px;
+                                min-height: 50px;
+                                line-height: 50px;
                                 color: rgb(0, 0, 255);
                                 .block {
                                     font-weight: bold;
@@ -745,11 +744,11 @@
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding: 0px 25px;
+                        padding-top: 30px;
                         height: 385px;
                         p {
                             display: inline-block;
-                            margin-bottom: 40px;
+                            margin-bottom: 60px;
                         }
                         .number {
                             vertical-align: top;
@@ -758,12 +757,12 @@
                             display: flex;
                             align-items: center;
                             text-align: center;
-                            margin-bottom: 30px;
+                            margin-bottom: 90px;
                             .answer_box {
                                 display: inline-block;
-                                width: 150px;
-                                border-bottom: 2px solid #000;
-                                margin: 15px 10px;
+                                width: 151px;
+                                border-bottom: 4px solid #000;
+                                margin-left: 55px;
                                 .sample {
                                     min-height: 55px;
                                     padding-bottom: 5px;
@@ -772,8 +771,8 @@
                                     display: none;
                                 }
                                 .hint {
-                                    min-height: 55px;
-                                    padding-bottom: 5px;
+                                    min-height: 0px;
+                                    padding-bottom: 12px;
                                     color: rgb(0, 0, 255);
                                     .block {
                                         font-weight: bold;

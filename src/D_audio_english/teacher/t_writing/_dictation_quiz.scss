@@ -63,8 +63,8 @@
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
-                    left: 20px;
-                    top: 15px;
+                    left: 25px;
+                    top: 20px;
                     z-index: 2;
                 }
                 .sentence_box {
