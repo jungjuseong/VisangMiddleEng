@@ -2,9 +2,8 @@
 @import '../../script_container/index.scss';
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
-@import "./table-item/index.scss";
-@mixin s_additional {
-    .s_additional {
+@mixin s_dictation {
+    .s_dictation {
         @include page;
         z-index: 2;
         background-image: resolve("student/images/bg_ls.png");
@@ -48,7 +47,7 @@
                         .quiz {
                             position: relative;
                             display: flex;
-                            height: 180px;
+                            height: 120px;
                             width: 100%;
                             padding: 0px 30px;
                             font-size: 29px;
@@ -89,15 +88,13 @@
                                 font-size: 40px;
                                 line-height: 80px;
                                 &>p{
-                                    display: inline-block;
                                     color: #000;
                                     text-align: left;
-                                    vertical-align: top;
-    
                                     .block{
+                                        text-align: center;
                                         display: inline-block;
-                                        border-bottom: 2px solid #fff;
-                                        width: 150px;
+                                        border-bottom: 2px solid #000;
+                                        min-width: 175px;
                                     }
                                 }
                             }
@@ -108,16 +105,20 @@
                             margin-top: 40px;
                             .area-bnd{
                                 position: relative;
-                                display: flex;
+                                display: inline-block;
                                 align-items: center;
-                                vertical-align: top;
                                 width: 894px;
                                 margin: 0 auto;
                                 font-family: NotoSans;
                                 color: #fff;
                                 font-size: 52px;
                                 font-weight: bold;
-                                
+                                &>div{
+                                    display: flex;
+                                    width: 500px;
+                                    align-items: center;
+                                    margin: 0 auto;
+                                }
                                 .index{
                                     flex: 0 0 auto;
                                 }
@@ -165,150 +166,7 @@
                         }
                     }
                 }
-                .sup_question{
-                    position: relative;
-                    text-align: center;
-                    font-size: 28px;
-                    left: 0px;
-                    top: 0px;
-                    height: 800px;
-                    width: 100%;
-
-                    &>div{
-                        position: relative;
-                    }
-                    .table_box {
-                        height: 100%;
-                        text-align: left;
-                        margin: 0 auto;
-                        overflow: auto;
-                        .quiz {
-                            position: relative;
-                            height: 120px;
-                            width: 100%;
-                            padding: 0px 30px;
-                            font-size: 29px;
-                            font-weight: bold;
-                            word-break: normal;
-                            color: rgb(0, 0, 0);
-                            white-space: normal;
-                            margin-bottom: 55px;
-                            &>div{
-                                position: absolute;
-                                top: 64px
-                            }
-                        }
-                        .table-item {
-                            &.type_1,
-                            &.type_2,
-                            &.type_3,
-                            &.type_4,
-                            &.type_5,
-                            &.type_6,
-                            &.type_7 {
-                                .content-box{
-                                    color: yellow;
-                                }
-                                .content-box>div .content .select-box {
-                                    line-height: 43px;
-                                    vertical-align: middle;
-                                    text-indent: 0;
-                                    background: #fff;
-                                    &>.text-box {
-                                        height: 45px;
-                                    }
-                                    &>.btn-drop {
-                                        width: 45px;
-                                        height: 45px;
-                                        background-size: 48px;
-                                        background-position: center -2px;
-                                    }
-                                    &>.options-box.bottom {
-                                        position: absolute;
-                                        left: 0;
-                                        bottom: 1px;
-                                        overflow: hidden;
-                                        border-radius: 0 0 7px 7px;
-                                    }
-                                }
-                            }
-                        }                        
-                        .table-item {
-                            .content>li{
-                                line-height: 125px;
-                                &>div {
-                                    text-indent: -35px;
-                                    padding-left: 35px;
-                                    &>.select-box {
-                                        text-indent: 0;
-                                        &>.options-box.top {
-                                            border-radius: 7px 7px 0 0;
-                                            left: -1px;
-                                            overflow: hidden;
-                                            top: 0 !important;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        $min-height: 200px;
-                        $min-width: 500px;
-                        $head-font-size: 23px;
-                        $head-line-height: 40px;
-                        $content-font-size: 28px;
-                        $content-padding: 10px 15px 15px 15px;
-                        $radius: 10px;
-                        $normal: resolve("teacher/images/btn_dropdown_t_down.png");
-                        $on: resolve("teacher/images/btn_dropdown_t_up.png");
-                        $width: width("teacher/images/btn_dropdown_t_down.png");
-                        $height: height("teacher/images/btn_dropdown_t_down.png");
-                        $line-height: $height+5px;
-                        @include mixin_table_item( $min-height, $min-width, $head-font-size, $head-line-height, $content-font-size, $content-padding, $radius, $normal, $on, $width, $height, $line-height);
-                        .table-item {
-                            /*position: relative;*/
-                            &.type_2 {
-                                .table-item-btn {
-                                    top: 1px;
-                                    right: 2px;
-                                }
-                            }
-                            &.type_3 {
-                                .table-item-btn {
-                                    top: 12px;
-                                    right: 8px;
-                                    width: 34px;
-                                    height: 34px;
-                                    background-size: cover;
-                                }
-                            }
-                        }
-                        &::-webkit-scrollbar {
-                            width: 7px;
-                        }
-                        &::-webkit-scrollbar-thumb {
-                            background: rgba(0, 0, 0, 0.3);
-                            border-radius: 10px;
-                        }
-                        &::-webkit-scrollbar-track {
-                            background-color: transparent;
-                        }
-                    }
-                    &.done {
-                        .select-box {
-                            &>.text-box {
-                                color: #1a40e1 !important;
-                            }
-                            &>.options-box.on {
-                                background-color: #cacaca !important;
-                                color: #878787 !important;
-                                &>div.on {
-                                    background-color: #249bfa !important;
-                                    color: #fff !important;
-                                }
-                            }
-                        }
-                    }
-                }
+                
                 .hard_question {
                     position: relative;
                     text-align: center;

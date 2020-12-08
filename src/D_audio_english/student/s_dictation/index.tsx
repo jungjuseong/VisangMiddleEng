@@ -12,7 +12,7 @@ import * as common from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
 import SBasic from './s_basic';
-import SSup from './s_supplement';
+// import SSup from './s_supplement';
 // import SHard from './s_hard';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -45,7 +45,7 @@ interface ISQuestion {
 }
 
 @observer
-class SAdditional extends React.Component<ISQuestion> {
+class SDictation extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: common.IQuizReturn = {
@@ -324,37 +324,17 @@ class SAdditional extends React.Component<ISQuestion> {
 		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
-			<div className="s_additional" style={{...this._style}}>
+			<div className="s_dictation" style={{...this._style}}>
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
-						<SSup
-							view={view && state.idx === 0}
-							state={state}
-							actions={actions}
-							idx={0}
-							choice={0}
-							data={c_data.additional_sup}
-							prog={state.additionalHardProg}
-							onChoice={this._onChoice}
-						/>
-						{/* <SBasic	
-							view={view && state.idx === 1}
-							state={state}
-							actions={actions}
-							idx={1}
-							choice={0}
-							data={c_data.additional_basic}
-							confirmProg={state.additionalHardProg}
-							onChoice={this._onChoice}
-						/> */}
 						<SBasic							
 							view={view && state.idx === 1}
 							state={state}
 							actions={actions}
 							idx={1}
 							choice={0}
-							data={c_data.additional_hard}
+							data={c_data.dictation_basic}
 							confirmProg={state.additionalHardProg}
 							onChoice={this._onChoice}
 						/>
@@ -371,4 +351,4 @@ class SAdditional extends React.Component<ISQuestion> {
 		);
 	}
 }
-export default SAdditional;
+export default SDictation;

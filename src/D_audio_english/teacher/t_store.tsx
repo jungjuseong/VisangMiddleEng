@@ -44,7 +44,9 @@ interface IStateCtx extends IStateBase {
 	additionalBasicProg: SENDPROG;
 	additionalSupProg: SENDPROG;
 	additionalHardProg: SENDPROG;
-	dictationProg: SENDPROG;
+	dictationBasicProg: SENDPROG;
+	dictationSupProg: SENDPROG;
+	dictationHardProg: SENDPROG;
 	scriptProg: SENDPROG;
 	qnaProg: SENDPROG;
 	dialogueProg: SENDPROG;
@@ -88,7 +90,9 @@ class TeacherContext extends TeacherContextBase {
 		this.state.additionalBasicProg = SENDPROG.READY,
 		this.state.additionalSupProg = SENDPROG.READY,
 		this.state.additionalHardProg = SENDPROG.READY,
-		this.state.dictationProg = SENDPROG.READY,
+		this.state.dictationBasicProg = SENDPROG.READY,
+		this.state.dictationSupProg = SENDPROG.READY,
+		this.state.dictationHardProg = SENDPROG.READY,
 		this.state.scriptProg = SENDPROG.READY,
 		this.state.qnaProg = SENDPROG.READY,
 		this.state.dialogueProg = SENDPROG.READY

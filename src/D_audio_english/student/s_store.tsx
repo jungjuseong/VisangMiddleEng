@@ -31,6 +31,10 @@ interface IStateCtx extends IStateBase {
 	additionalBasicProg: QPROG;
 	additionalSupProg: QPROG;
 	additionalHardProg: QPROG;
+	dictationView : boolean;
+	dictationBasicProg: QPROG;
+	dictationSupProg: QPROG;
+	dictationHardProg: QPROG;
 	dictationProg: QPROG;
 	idx: number;
 	scriptProg: SPROG;
@@ -56,12 +60,16 @@ class StudentContext extends StudentContextBase {
 
 		this.state.confirmView = false;
 		this.state.additionalView = false;
+		this.state.dictationView = false;
 		this.state.confirmBasicProg = QPROG.UNINIT;
 		this.state.confirmSupProg = QPROG.UNINIT;
 		this.state.confirmHardProg = QPROG.UNINIT;
 		this.state.additionalBasicProg = QPROG.UNINIT;
 		this.state.additionalSupProg = QPROG.UNINIT;
 		this.state.additionalHardProg = QPROG.UNINIT;
+		this.state.dictationBasicProg = QPROG.UNINIT;
+		this.state.dictationSupProg = QPROG.UNINIT;
+		this.state.dictationHardProg = QPROG.UNINIT;
 		this.state.dictationProg = QPROG.UNINIT;
 		this.state.idx = -1;
 		this.state.scriptProg = SPROG.UNMOUNT;
@@ -80,6 +88,7 @@ class StudentContext extends StudentContextBase {
 		if(state.viewDiv !== viewDiv) {
 			this.state.confirmView = false;
 			this.state.additionalView = false;
+			this.state.dictationView = false;
 			if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.UNINIT;
 			
 			this.state.scriptProg = SPROG.UNMOUNT;
@@ -161,7 +170,28 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
-			} else if(msg.msgtype === 'script_send') {
+			} else if(msg.msgtype === 'dictation_send'){
+				if(msg.idx === 0){
+					if(this.state.dictationSupProg > QPROG.UNINIT) return;
+					this.state.dictationSupProg = QPROG.ON;
+					this.state.idx = 0;
+				}else if(msg.idx === 1){
+					if(this.state.dictationBasicProg > QPROG.UNINIT) return;
+					this.state.dictationBasicProg = QPROG.ON;
+					this.state.idx = 1;
+				}else{
+					if(this.state.dictationHardProg > QPROG.UNINIT) return;
+					this.state.dictationHardProg = QPROG.ON;
+					this.state.idx = 2;
+					console.log('hardreturn'+this.state.hint)
+				}
+				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.dictationView = true;
+				this.state.viewDiv = 'content';
+				this.state.qsMode  = 'question';
+				this.state.roll = '';
+				this.state.shadowing = false;
+			}else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
 				if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.READYA;

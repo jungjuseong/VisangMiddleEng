@@ -15,6 +15,7 @@ import {IQNAMsg} from '../common';
 import SConfirm from './s_confirm';
 import SScript from './s_script';
 import SAdditional from './s_additional';
+import SDictation from './s_dictation';
 
 interface ISContentProps {
 	view: boolean;
@@ -106,6 +107,14 @@ class SContent extends React.Component<ISContentProps> {
 				<SAdditional
 					view={this.props.view && this.props.state.additionalView} 
 					questionView={this.props.state.additionalView}
+					scriptProg={scriptProg}
+					qsMode={qsMode}
+					state={state}
+					actions={actions}
+				/>
+				<SDictation
+					view={this.props.view && this.props.state.dictationView} 
+					questionView={this.props.state.dictationView}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
