@@ -109,7 +109,6 @@ class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
 						</div>
 					</DraggableCore>
 				</div>
-				<div className="video_time" style={{ width: (player.duration >= 600000 ? 110 : 105) + 'px' }}><span>{_getTimeStr(player.viewTime, player.duration)}</span> / <span>{_getTimeStr(player.duration, player.duration)}</span></div>
 			</>
 		);
 	}

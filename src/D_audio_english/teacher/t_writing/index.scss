@@ -379,6 +379,13 @@
                 top: 0px;
                 bottom: 38px;
                 padding: 0px 10px;
+                .video_container {
+                    position: relative;
+                    margin-top: 10px; height: 400px;
+                    overflow: hidden;
+                    z-index: 0;
+                    @include t_video_box;
+                }
                 .btn_script_show {
                     position: absolute;
                     top: 10px;
