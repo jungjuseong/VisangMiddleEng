@@ -199,10 +199,11 @@ class SelectBox extends React.Component<ISelectBox> {
 		} else if (this._viewResult) {
 			if (this._value === correct) textClass = 'correct';
 			else textClass = 'wrong';
-			value = correct;
 		}
 
 		return (
+		<>
+		<div style={{display : this._viewResult ? '' : 'none'}}>{correct}</div>
 			<div className="select-box" ref={this._refBox} >
 				<div className={'text-box ' + textClass} onPointerDown={this._boxDown} >
 					<div className="size-box">{options.map((str, idx) => <div key={idx}>{str}</div>)}</div>
@@ -221,6 +222,7 @@ class SelectBox extends React.Component<ISelectBox> {
 					return <OptionBox key={idx} className={optClass} text={str} onClick={this._onSelect} />;
 				})}</div>
 			</div>
+		</>
 		);
 	}
 }

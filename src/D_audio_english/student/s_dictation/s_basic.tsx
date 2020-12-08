@@ -30,7 +30,7 @@ interface IQuizItem {
 	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SHard extends React.Component<IQuizItem> {	
+class SBasic extends React.Component<IQuizItem> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
@@ -206,4 +206,4 @@ class SHard extends React.Component<IQuizItem> {
 	}
 }
 
-export default SHard;
+export default SBasic;

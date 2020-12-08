@@ -149,7 +149,6 @@ class Writing extends React.Component<IWriting> {
         if(this._tab === 'DICTATION' && this._curQidx === 0 && state.dictationSupProg !==  SENDPROG.READY) return;
         if(this._tab === 'DICTATION' && this._curQidx === 1 && state.dictationBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'DICTATION' && this._curQidx === 2 && state.dictationHardProg !==  SENDPROG.READY) return;
-        // if(this._tab === 'DICTATION' && state.dictationProg !==  SENDPROG.READY) return;
         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
@@ -161,7 +160,6 @@ class Writing extends React.Component<IWriting> {
         else if(this._tab === 'DICTATION'&& this._curQidx === 0) state.dictationSupProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION'&& this._curQidx === 1) state.dictationBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'DICTATION'&& this._curQidx === 2) state.dictationHardProg = SENDPROG.SENDING;
-        // else if(this._tab === 'DICTATION') state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
         else return;
 
@@ -210,7 +208,10 @@ class Writing extends React.Component<IWriting> {
                         break;
                     } 
                     case 2 : {
-                        return;
+                        if(state.additionalHardProg !==  SENDPROG.SENDING) return;
+                        state.additionalHardProg = SENDPROG.SENDED;
+                        msg = {msgtype: 'additional_send', idx : 2};
+                        break;
                     } 
                     default : {
                         return
@@ -231,7 +232,10 @@ class Writing extends React.Component<IWriting> {
                         break;
                     } 
                     case 2 : {
-                        return;
+                        if(state.dictationHardProg !==  SENDPROG.SENDING) return;
+                        state.dictationHardProg = SENDPROG.SENDED;
+                        msg = {msgtype: 'dictation_send', idx : 2};
+                        break;
                     } 
                     default : {
                         return
@@ -282,6 +286,54 @@ class Writing extends React.Component<IWriting> {
                     return
                 }
             }
+        }else if(this._tab === 'ADDITIONAL'){
+            switch(this._curQidx){
+                case 0 : {
+                    if(state.additionalSupProg !==  SENDPROG.SENDED) return;
+                    state.additionalSupProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 0};
+                    break;
+                }
+                case 1 : {
+                    if(state.additionalBasicProg !==  SENDPROG.SENDED) return;
+                    state.additionalBasicProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 1};
+                    break;
+                } 
+                case 2 : {
+                    if(state.additionalHardProg !==  SENDPROG.SENDED) return;
+                    state.additionalHardProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 2};
+                    break;
+                } 
+                default : {
+                    return
+                }
+            }
+        }else if(this._tab === 'DICTATION'){
+            switch(this._curQidx){
+                case 0 : {
+                    if(state.dictationSupProg !==  SENDPROG.SENDED) return;
+                    state.dictationSupProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'dictation_end', idx : 0};
+                    break;
+                }
+                case 1 : {
+                    if(state.dictationBasicProg !==  SENDPROG.SENDED) return;
+                    state.dictationBasicProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'dictation_end', idx : 1};
+                    break;
+                } 
+                case 2 : {
+                    if(state.dictationHardProg !==  SENDPROG.SENDED) return;
+                    state.dictationHardProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'dictation_end', idx : 2};
+                    break;
+                } 
+                default : {
+                    return
+                }
+            }
         } else {
             if(state.scriptProg !==  SENDPROG.SENDING) return;
             state.scriptProg = SENDPROG.SENDED;
@@ -289,7 +341,6 @@ class Writing extends React.Component<IWriting> {
             this.props.state.scriptProg = SENDPROG.COMPLETE;
         } 
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        console.log(this.props.state.confirmSupProg);
         this.props.actions.setNavi(true,true);
 	}
 
@@ -789,8 +840,12 @@ class Writing extends React.Component<IWriting> {
                             (isCompC && this._curQidx ===0 && state.confirmSupProg < SENDPROG.SENDED) ||
                             (isCompC && this._curQidx ===1 && state.confirmBasicProg < SENDPROG.SENDED) ||
                             (isCompC && this._curQidx ===2 && state.confirmHardProg < SENDPROG.SENDED) ||
-                            (isCompA && state.additionalBasicProg < SENDPROG.SENDED) ||
-                            (isCompD && state.dictationBasicProg < SENDPROG.SENDED) ||
+                            (isCompA && this._curQidx ===0 && state.additionalSupProg < SENDPROG.SENDED) ||
+                            (isCompA && this._curQidx ===1 && state.additionalBasicProg < SENDPROG.SENDED) ||
+                            (isCompA && this._curQidx ===2 && state.additionalHardProg < SENDPROG.SENDED) ||
+                            (isCompD && this._curQidx ===0 && state.dictationSupProg < SENDPROG.SENDED) ||
+                            (isCompD && this._curQidx ===1 && state.dictationBasicProg < SENDPROG.SENDED) ||
+                            (isCompD && this._curQidx ===2 && state.dictationHardProg < SENDPROG.SENDED) ||
                             (isCompS && state.scriptProg < SENDPROG.SENDED);
         
         const isViewInfo = (isCompI && confirmBasicProg >= SENDPROG.SENDED) || isCompS;

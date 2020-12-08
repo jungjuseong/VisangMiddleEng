@@ -12,8 +12,8 @@ import * as common from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
 import SBasic from './s_basic';
-// import SSup from './s_supplement';
-// import SHard from './s_hard';
+import SSup from './s_supplement';
+import SHard from './s_hard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -328,6 +328,16 @@ class SDictation extends React.Component<ISQuestion> {
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
+						<SSup							
+							view={view && state.idx === 0}
+							state={state}
+							actions={actions}
+							idx={1}
+							choice={0}
+							data={c_data.dictation_sup}
+							confirmProg={state.dictationSupProg}
+							onChoice={this._onChoice}
+						/>
 						<SBasic							
 							view={view && state.idx === 1}
 							state={state}
@@ -335,7 +345,17 @@ class SDictation extends React.Component<ISQuestion> {
 							idx={1}
 							choice={0}
 							data={c_data.dictation_basic}
-							confirmProg={state.additionalHardProg}
+							confirmProg={state.dictationBasicProg}
+							onChoice={this._onChoice}
+						/>
+						<SHard							
+							view={view && state.idx === 2}
+							state={state}
+							actions={actions}
+							idx={1}
+							choice={0}
+							data={c_data.dictation_hard}
+							confirmProg={state.dictationHardProg}
 							onChoice={this._onChoice}
 						/>
 					</div>

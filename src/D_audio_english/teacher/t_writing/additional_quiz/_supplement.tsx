@@ -181,6 +181,7 @@ class Supplement extends React.Component<IQuizBox> {
 									<TableItem
 									viewCorrect={this._prog === SENDPROG.COMPLETE}
 									disableSelect={this._prog === SENDPROG.COMPLETE}
+									viewResult={this._prog === SENDPROG.COMPLETE}
 									inview={view}
 									graphic={datasup}
 									className="type_3"

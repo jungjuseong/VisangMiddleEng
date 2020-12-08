@@ -157,12 +157,9 @@ class StudentContext extends StudentContextBase {
 					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
 				}else{
-					const hintmsg = msg as common.IConfirmHardMsg;
 					if(this.state.confirmHardProg > QPROG.UNINIT) return;
 					this.state.confirmHardProg = QPROG.ON;
 					this.state.idx = 2;
-					this.state.hint = hintmsg.hint;
-					console.log('hardreturn'+this.state.hint)
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.additionalView = true;
@@ -170,6 +167,23 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
+			} else if(msg.msgtype === 'additional_end') {
+				if(msg.idx === 0){
+					const qProg = this.state.additionalSupProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.additionalSupProg = QPROG.COMPLETE;
+				}else if(msg.idx === 1){
+					const qProg = this.state.additionalBasicProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.additionalBasicProg = QPROG.COMPLETE;
+				}else{
+					const qProg = this.state.additionalHardProg;
+					if(this.state.viewDiv !== 'content') return;
+					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+					this.state.additionalHardProg = QPROG.COMPLETE;
+				}
 			} else if(msg.msgtype === 'dictation_send'){
 				if(msg.idx === 0){
 					if(this.state.dictationSupProg > QPROG.UNINIT) return;
@@ -183,7 +197,6 @@ class StudentContext extends StudentContextBase {
 					if(this.state.dictationHardProg > QPROG.UNINIT) return;
 					this.state.dictationHardProg = QPROG.ON;
 					this.state.idx = 2;
-					console.log('hardreturn'+this.state.hint)
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.dictationView = true;

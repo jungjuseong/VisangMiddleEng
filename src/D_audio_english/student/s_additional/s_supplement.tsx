@@ -160,8 +160,9 @@ class SHard extends React.Component<IQuizItem> {
 											</WrapTextNew>
 										</div>
 										<TableItem
-										viewCorrect={prog === QPROG.COMPLETE}
+										viewCorrect={false}
 										disableSelect={prog === QPROG.COMPLETE}
+										viewResult = {prog === QPROG.COMPLETE}
 										inview={view}
 										graphic={quiz}
 										className="type_3"

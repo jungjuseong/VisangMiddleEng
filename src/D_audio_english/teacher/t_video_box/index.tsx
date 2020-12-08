@@ -21,9 +21,9 @@ import { NONE } from 'src/share/style';
 
 function _getCurrentIdx(scripts: common.IScript[], time: number) {
 	let timeRound = Math.round(time / 0.001) * 0.001;
-	console.log('time:', time)
+	// console.log('time:', time)
     for (let i = 0, len = scripts.length; i < len; i++) {
-		console.log('timeround:',timeRound)
+		// console.log('timeround:',timeRound)
         const s = scripts[i];
         if (timeRound >= s.audio_start && timeRound <= s.audio_end) {
 			return i;		        
@@ -132,8 +132,7 @@ class VideoBox extends React.Component<IVideoBox> {
 			console.log(player.bPlay);
 			if (player.bPlay) player.pause();
 			else {
-                if(player.currentTime >= player.duration || player.currentTime < this.props.playerInitTime) {
-					console.log('seekseekseekseek')
+                if(player.currentTime >= player.duration || player.currentTime < this.props.playerInitTime*1000) {
 					player.gotoAndPlay(this.props.playerInitTime *1000, scripts[scripts.length-1].audio_end * 1000, 1);	
 				}else{
 					player.gotoAndPlay(player.currentTime, scripts[scripts.length-1].audio_end * 1000, 1);

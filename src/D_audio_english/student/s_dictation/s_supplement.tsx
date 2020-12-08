@@ -25,16 +25,17 @@ interface IQuizItem {
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IAdditionalBasic[];
+	data: common.IDictation[];
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SBasic extends React.Component<IQuizItem> {	
+class SSupplement extends React.Component<IQuizItem> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
+	@observable private _select_area: number = 0;
 
 	private _bndW = 0;
 	private _bndH = 0;
@@ -111,6 +112,11 @@ class SBasic extends React.Component<IQuizItem> {
 		this._swiper = swiper;
 	}
 
+	private _selectArea = (index : number) =>{
+		if (index !== null)
+			this._select_area = index
+	}
+
 	public componentDidUpdate(prev: IQuizItem) {
 		if(this.props.view && !prev.view) {
 			this._bndH_p = 0;
@@ -161,24 +167,30 @@ class SBasic extends React.Component<IQuizItem> {
 										<div className="sentence_box">
 											<canvas></canvas>
 											<div className="question_box">
-												<p>{idx + 1}.{_getJSX(quiz.sentence)}</p>
+												<p>{_getJSX(quiz.sentence)}</p>
 											</div>
 										</div>
 										<div className="s_typing" >
 											<div className="area-bnd">
-												<span className="index">{alphabet[idx]}.</span>
-												<KTextArea 
-													ref={this._refArea[idx]} 
-													view={view} 
-													on={view && this._curIdx === idx && !this._sended}
-													autoResize={true}
-													skipEnter={false}
-													onChange={this._onChange}
-													onDone={this._onDone}
-													maxLength={60}
-													maxLineNum={3}
-													rows={1}
-												/>
+												{data.map((content, index)=>{
+													return (
+													<div key={index} onClick={()=>{this._selectArea(index)}}>
+														<span className="index">{alphabet[index]}.</span>
+														<KTextArea 
+															ref={this._refArea[idx]} 
+															view={view} 
+															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+															autoResize={true}
+															skipEnter={false}
+															onChange={this._onChange}
+															onDone={this._onDone}
+															maxLength={60}
+															maxLineNum={3}
+															rows={1}
+														/>
+													</div>
+													);
+												})}
 												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
 											</div>
 										</div>
@@ -194,4 +206,4 @@ class SBasic extends React.Component<IQuizItem> {
 	}
 }
 
-export default SBasic;
+export default SSupplement;

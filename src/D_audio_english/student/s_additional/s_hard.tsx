@@ -25,12 +25,12 @@ interface IQuizItem {
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IAdditionalBasic[];
+	data: common.IAdditionalHard[];
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SBasic extends React.Component<IQuizItem> {	
+class SHard extends React.Component<IQuizItem> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
@@ -161,12 +161,25 @@ class SBasic extends React.Component<IQuizItem> {
 										<div className="sentence_box">
 											<canvas></canvas>
 											<div className="question_box">
-												<p>{idx + 1}.{_getJSX(quiz.sentence)}</p>
+												<p>{idx + 1}.</p>
+												<p>{_getJSX(quiz.sentence)}</p>
 											</div>
 										</div>
 										<div className="s_typing" >
 											<div className="area-bnd">
-												<span className="index">{alphabet[idx]}.</span>
+												<KTextArea 
+													ref={this._refArea[idx]} 
+													view={view} 
+													on={view && this._curIdx === idx && !this._sended}
+													autoResize={true}
+													skipEnter={false}
+													onChange={this._onChange}
+													onDone={this._onDone}
+													maxLength={60}
+													maxLineNum={3}
+													rows={1}
+												/>
+												{' → '}
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 
@@ -194,4 +207,4 @@ class SBasic extends React.Component<IQuizItem> {
 	}
 }
 
-export default SBasic;
+export default SHard;
