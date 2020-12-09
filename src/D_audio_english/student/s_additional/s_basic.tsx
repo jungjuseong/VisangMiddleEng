@@ -155,7 +155,7 @@ class SBasic extends React.Component<IQuizItem> {
 					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
-								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3,quiz.sentence_answer4]
+								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3,quiz.sentence_answer4];
 								return (
 									<div key={idx} className= {"q-item" + keyon}>
 										<div className="quiz">

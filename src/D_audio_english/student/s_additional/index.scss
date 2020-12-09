@@ -395,6 +395,11 @@
                             margin-top: 40px;
                             justify-content: center;
                             padding: 0 40px;
+                            color: #fff;
+                            font-size: 52px;
+                            font-family: NotoSans;
+                            font-weight: bold;
+                            
                             .area-bnd{
                                 position: relative;
                                 display: flex;
@@ -402,11 +407,7 @@
                                 vertical-align: top;
                                 min-width: 300px;
                                 width: 100%;
-                                margin-right: 50px;
-                                color: #fff;
-                                font-family: NotoSans;
-                                font-size: 52px;
-                                font-weight: bold;
+                                margin: 0 25px;
                                 border-bottom: 3px solid #fff;
                                 .index{
                                     flex: 0 0 auto;
@@ -434,10 +435,6 @@
                                     .k-tarea-bar{
                                         display: none;
                                     }				
-                                }
-                                
-                                &:last-child{
-                                    margin-right: 0px;
                                 }
                             }
                         }

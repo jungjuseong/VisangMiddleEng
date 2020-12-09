@@ -154,9 +154,10 @@ class SHard extends React.Component<IQuizItem> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="basic_question">
+					<div className="dict_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
+								const sentences = [quiz.sentence1, quiz.sentence2, quiz.sentence3, quiz.sentence4];
 								return (
 									<div key={idx} className= {"q-item" + keyon}>
 										<div className="quiz">
@@ -171,28 +172,29 @@ class SHard extends React.Component<IQuizItem> {
 											</div>
 										</div>
 										<div className="s_typing" >
-											<div className="area-bnd">
-												{data.map((content, index)=>{
-													return (
-													<div key={index} onClick={()=>{this._selectArea(index)}}>
-														<span className="index">{alphabet[index]}.</span>
-														<KTextArea 
-															ref={this._refArea[idx]} 
-															view={view} 
-															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
-															autoResize={true}
-															skipEnter={false}
-															onChange={this._onChange}
-															onDone={this._onDone}
-															maxLength={60}
-															maxLineNum={3}
-															rows={1}
-														/>
-													</div>
+											{sentences.map((sentence, index)=>{
+												if (sentence.answer1 ===""){
+													return;
+												}
+												else
+													return (													
+														<div className="area-bnd" key={index} onClick={()=>{this._selectArea(index)}}>											
+															<span className="index">{alphabet[index]}.</span>
+															<KTextArea 
+																ref={this._refArea[idx]} 
+																view={view} 
+																on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+																autoResize={true}
+																skipEnter={false}
+																onChange={this._onChange}
+																onDone={this._onDone}
+																maxLength={60}
+																maxLineNum={3}
+																rows={1}
+															/>
+														</div>
 													);
-												})}
-												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
-											</div>
+											})}
 										</div>
 									</div>
 								);

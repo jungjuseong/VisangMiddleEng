@@ -30,7 +30,7 @@
                 @include page;
             }
             .q-item {
-                .basic_question {
+                .dict_question {
                     position: relative;
                     text-align: center;
                     font-size: 28px;
@@ -99,26 +99,26 @@
                                 }
                             }
                         }
-                        &>.s_typing {
+                        .s_typing {
                             position: relative;
+                            display: flex;
                             transition: margin-top 0.3s;
                             margin-top: 40px;
+                            justify-content: center;
+                            padding: 0 40px;
                             .area-bnd{
                                 position: relative;
-                                display: inline-block;
+                                display: flex;
                                 align-items: center;
-                                width: 894px;
-                                margin: 0 auto;
-                                font-family: NotoSans;
+                                vertical-align: top;
+                                min-width: 300px;
+                                width: 100%;
+                                margin-right: 50px;
                                 color: #fff;
+                                font-family: NotoSans;
                                 font-size: 52px;
                                 font-weight: bold;
-                                &>div{
-                                    display: flex;
-                                    width: 500px;
-                                    align-items: center;
-                                    margin: 0 auto;
-                                }
+                                border-bottom: 3px solid #fff;
                                 .index{
                                     flex: 0 0 auto;
                                 }
@@ -127,7 +127,6 @@
                                     width: 100%;
                                     height: auto;
                                     min-height: 64px;
-                                    border-bottom: 3px solid #fff;
                                     textarea{
                                         box-sizing: border-box;
                                         font-size: 52px;
@@ -147,148 +146,10 @@
                                         display: none;
                                     }				
                                 }
-                            }
-                            &>img {
-                                display:inline-block;
-                                vertical-align: top;
-                                box-sizing: border-box;
-                                width: 115px; 
-                                height: 115px;
-                                border-width: 6px;
-                                border-style: solid;
-                                border-radius: 50%;
-                                &.pink{border-color: rgb(206, 116, 225);}
-                                &.green{border-color: rgb(34,205,172);}
-                                &.orange{border-color: rgb(255,186,0);}
-                                &.purple{border-color: rgb(116,113,236);}
-            
-                            }
-                        }
-                    }
-                }
-                
-                .hard_question {
-                    position: relative;
-                    text-align: center;
-                    font-size: 28px;
-                    left: 0px;
-                    top: 0px;
-                    height: 800px;
-                    width: 100%;
-
-                    .swiper-container{
-                        @include page;
-                    }
-                    .q-item {
-                        &.key-on { top: -300px; }
-                        .quiz {
-                            position: relative;
-                            display: flex;
-                            height: 180px;
-                            width: 100%;
-                            padding: 0px 30px;
-                            font-size: 29px;
-                            font-weight: bold;
-                            word-break: normal;
-                            color: rgb(0, 0, 0);
-                            white-space: normal;
-                            margin-bottom: 55px;
-
-                            &>div{
-                                position: absolute;
-                                top: 64px
-                            }
-                        }
-                        
-                        .sentence_box{
-                            position: relative;
-                            display: inline-flex;
-                            align-items: center;
-                            width: 1150px;
-                            height: 300px;
-                            border-radius: 15px;
-                            padding-left: 30px;
-    
-                            canvas{
-                                top: 0;
-                                left: 0;
-                                width: inherit;
-                                height: inherit;
-                                border-radius: 35px;
-                                position: absolute;
-                                background: #000;
-                                opacity: 0.3;
-                            }
-                            .question_box{
-                                top: 0;
-                                left: 0;
-                                position: relative;
-                                font-size: 40px;
-                                line-height: 80px;
-                                &>p{
-                                    color: #000;
-    
-                                    .block{
-                                        display: inline-block;
-                                        border-bottom: 2px solid #000;
-                                        width: 150px;
-                                    }
+                                
+                                &:last-child{
+                                    margin-right: 0px;
                                 }
-                            }
-                        }
-                        &>.s_typing {
-                            position: relative;
-                            transition: margin-top 0.3s;
-                            margin-top: 40px;
-                            .area-bnd{
-                                position: relative;
-                                display:inline-block;
-                                vertical-align: top;
-                                width: 894px;
-                                margin-right: 5px;
-                                .k-tarea{
-                                    position: relative;
-                                    width: 100%;
-                                    height: auto;
-                                    min-height: 64px;
-                                    textarea{
-                                        box-sizing: border-box;
-                                        font-size: 52px;
-                                        padding: 30px 35px 30px 30px;
-                                        color: #000;
-                                        font-family: NotoSans;
-                                        font-weight: bold;
-                                        &::disabled{
-                                            color: #000;
-                                        }
-                                    }
-                                    .k-tarea-bg{
-                                        height: 0px;
-                                        min-height: 100%; 
-                                    }
-                                    .k-tarea-bar{
-                                        display: none;
-                                    }				
-                                }
-                                canvas{
-                                    position: absolute;
-                                    left:0px; top: 0px;
-                                }
-                            }
-                            &>img {
-                                display:inline-block;
-                                vertical-align: top;
-                                box-sizing: border-box;
-                                width: 115px; 
-                                height: 115px;
-                                border-width: 6px;
-                                border-style: solid;
-                                border-radius: 50%;
-                                &.pink{border-color: rgb(206, 116, 225);}
-                                &.green{border-color: rgb(34,205,172);}
-                                &.orange{border-color: rgb(255,186,0);}
-                                &.purple{border-color: rgb(116,113,236);}
-            
                             }
                         }
                     }
