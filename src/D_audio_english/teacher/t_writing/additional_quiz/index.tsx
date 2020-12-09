@@ -3,6 +3,8 @@ import * as _ from 'lodash';
 import { observer, PropTypes } from 'mobx-react';
 import { observable } from 'mobx';
 
+import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
+
 import { App } from '../../../../App';
 
 import * as common from '../../../common';
@@ -18,6 +20,8 @@ const SwiperComponent = require('react-id-swiper').default;
 interface IQuizBox {
 	view: boolean;
 	index: number;
+	actions: IActionsCtx;
+	state:IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	mdata: common.IData;
@@ -74,12 +78,12 @@ class AdditionalQuiz extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,actions, state} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} data={mdata.additional_sup} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Basic view={view && index === 1} data={mdata.additional_basic} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Hard view={view && index === 2} data={mdata.additional_hard} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Supplement view={view && index === 0} actions={actions} state={state} data={mdata.additional_sup} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Basic view={view && index === 1} actions={actions} state={state} data={mdata.additional_basic} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Hard view={view && index === 2} actions={actions} state={state} data={mdata.additional_hard} onClosed={onClosed}	onHintClick={onHintClick}/>
 			</>
 		);
 	}

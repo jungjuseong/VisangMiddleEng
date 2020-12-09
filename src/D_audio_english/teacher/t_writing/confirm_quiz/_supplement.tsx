@@ -31,7 +31,6 @@ class Supplement extends React.Component<IQuizBox> {
 	@observable private _hint = false;
 	@observable private _trans = false;
 	@observable private _toggle: Array<boolean|null> = [null,null,null];
-	@observable private _quiz: Array<string> = [];
 	@observable private _sended = false;
 
 	private _swiper?: Swiper;
@@ -184,7 +183,6 @@ class Supplement extends React.Component<IQuizBox> {
             else qResult = 0;
             if(qResult > 100) qResult = 100;
         }
-		this._quiz.push("")
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>

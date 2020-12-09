@@ -51,9 +51,7 @@ class SDictation extends React.Component<ISQuestion> {
 	@observable private _choices: common.IQuizReturn = {
 		answer1: 0,
 		answer2: 0,
-		answer3: 0,
-		stime: 0,
-		etime: 0,
+		answer3: 0
 	};
 	@observable private _writings: common.IQuizStringReturn = {
 		answer1:'',
@@ -103,9 +101,7 @@ class SDictation extends React.Component<ISQuestion> {
 		this._choices = {
 			answer1: 0,
 			answer2: 0,
-			answer3: 0,
-			stime: 0,
-			etime: 0,
+			answer3: 0
 		}
 		if(this.props.state.idx === 0){
 			this.props.state.confirmSupProg = QPROG.SENDING;
@@ -183,17 +179,14 @@ class SDictation extends React.Component<ISQuestion> {
 			switch(idx){
 				case 0 :{
 					this._choices.answer1 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 1 :{
 					this._choices.answer2 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 2 :{
 					this._choices.answer3 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				default : return;
@@ -202,17 +195,14 @@ class SDictation extends React.Component<ISQuestion> {
 			switch(idx){
 				case 0 :{
 					this._choices.answer1 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 1 :{
 					this._choices.answer2 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 2 :{
 					this._choices.answer3 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				default : return;
@@ -295,8 +285,6 @@ class SDictation extends React.Component<ISQuestion> {
 					this._choices.answer1 = 0;
 					this._choices.answer2 = 0;
 					this._choices.answer3 = 0;
-					this._choices.stime = Date.now();
-					this._choices.etime = 0;
 			}
 		} else if (!this.props.view && prev.view) {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
@@ -305,8 +293,6 @@ class SDictation extends React.Component<ISQuestion> {
 				this._choices.answer1 = 0;
 				this._choices.answer2 = 0;
 				this._choices.answer3 = 0;
-				this._choices.stime = Date.now();
-				this._choices.etime = 0;
 			}
 		}
 

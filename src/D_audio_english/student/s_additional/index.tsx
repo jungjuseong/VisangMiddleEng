@@ -48,13 +48,7 @@ interface ISQuestion {
 class SAdditional extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizReturn = {
-		answer1: 0,
-		answer2: 0,
-		answer3: 0,
-		stime: 0,
-		etime: 0,
-	};
+	@observable private _choices: common.IQuizStringReturn[] = [];
 	@observable private _writings: common.IQuizStringReturn = {
 		answer1:'',
 		answer2:'',
@@ -67,6 +61,14 @@ class SAdditional extends React.Component<ISQuestion> {
 
 	constructor(props: ISQuestion) {
 		super(props);
+		const quizssup = props.actions.getData().additional_sup;
+		for(let i = 0; i < quizssup.length; i++) {
+			this._choices[i] = {
+				answer1: '',
+				answer2: '',
+				answer3: ''
+			};
+		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -86,11 +88,11 @@ class SAdditional extends React.Component<ISQuestion> {
 	}
 
 	private _onSend = async () => {
-		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
-		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
-		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
+		if(this.props.state.additionalSupProg !== QPROG.ON && this.props.state.idx === 0) return;
+		if(this.props.state.additionalBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
+		if(this.props.state.additionalHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 		App.pub_playToPad();
-		let choices: common.IQuizReturn;
+		let choices: common.IQuizStringReturn[];
 		let writings: common.IQuizStringReturn;
 		choices = this._choices;
 		writings = this._writings;
@@ -100,18 +102,12 @@ class SAdditional extends React.Component<ISQuestion> {
 			answer2:'',
 			answer3:''
 		}
-		this._choices = {
-			answer1: 0,
-			answer2: 0,
-			answer3: 0,
-			stime: 0,
-			etime: 0,
-		}
+		this._choices = [];
 		if(this.props.state.idx === 0){
-			this.props.state.confirmSupProg = QPROG.SENDING;
+			this.props.state.additionalSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
-					msgtype: 'confirm_return',
+				const msg: common.IAddSupQuizReturnMsg = {
+					msgtype: 'additional_return',
 					idx: 0,
 					id: App.student.id,
 					returns: choices
@@ -120,38 +116,38 @@ class SAdditional extends React.Component<ISQuestion> {
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmSupProg === QPROG.SENDING) {
-					this.props.state.confirmSupProg = QPROG.SENDED;
+				if(this.props.state.additionalSupProg === QPROG.SENDING) {
+					this.props.state.additionalSupProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
 					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 				}
 			}
 		}else if(this.props.state.idx === 1){
-			this.props.state.confirmBasicProg = QPROG.SENDING;
+			this.props.state.additionalBasicProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: common.IQuizReturnMsg = {
-					msgtype: 'confirm_return',
+					msgtype: 'additional_return',
 					idx:1,
 					id: App.student.id,
-					returns: choices
+					returns: writings[0]
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmBasicProg === QPROG.SENDING) {
-					this.props.state.confirmBasicProg = QPROG.SENDED;
+				if(this.props.state.additionalBasicProg === QPROG.SENDING) {
+					this.props.state.additionalBasicProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
 					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 				}
 			}
 		}else if(this.props.state.idx === 2){
-			this.props.state.confirmHardProg = QPROG.SENDING;
+			this.props.state.additionalHardProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: common.IQuizStringReturnMsg = {
-					msgtype: 'confirm_return',
+					msgtype: 'additional_return',
 					idx:2,
 					id: App.student.id,
 					returns: writings
@@ -160,8 +156,8 @@ class SAdditional extends React.Component<ISQuestion> {
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmHardProg === QPROG.SENDING) {
-					this.props.state.confirmHardProg = QPROG.SENDED;
+				if(this.props.state.additionalHardProg === QPROG.SENDING) {
+					this.props.state.additionalHardProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
 					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
@@ -173,27 +169,24 @@ class SAdditional extends React.Component<ISQuestion> {
 	}
 
 
-	private _onChoice = (idx: number, choice: number|string) => {
-		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
-		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
-		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
+	private _onChoice = (idx: number, choice: number|string, supidx: number = -1) => {
+		if(this.props.state.additionalSupProg !== QPROG.ON && this.props.state.idx === 0 && supidx === -1) return;
+		if(this.props.state.additionalBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
+		if(this.props.state.additionalHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 
 		App.pub_playBtnTab();
 		if(this.props.state.idx === 0){
-			switch(idx){
+			switch(supidx){
 				case 0 :{
-					this._choices.answer1 = choice as number;
-					this._choices.etime = Date.now();
+					this._choices[idx].answer1 = choice as string;
 					break;
 				}
 				case 1 :{
-					this._choices.answer2 = choice as number;
-					this._choices.etime = Date.now();
+					this._choices[idx].answer2 = choice as string;
 					break;
 				}
 				case 2 :{
-					this._choices.answer3 = choice as number;
-					this._choices.etime = Date.now();
+					this._choices[idx].answer3 = choice as string;
 					break;
 				}
 				default : return;
@@ -201,18 +194,12 @@ class SAdditional extends React.Component<ISQuestion> {
 		}else if(this.props.state.idx === 1){
 			switch(idx){
 				case 0 :{
-					this._choices.answer1 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 1 :{
-					this._choices.answer2 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				case 2 :{
-					this._choices.answer3 = choice as number;
-					this._choices.etime = Date.now();
 					break;
 				}
 				default : return;
@@ -234,14 +221,20 @@ class SAdditional extends React.Component<ISQuestion> {
 				default : return;
 			}
 		}
-		if((this._choices.answer1 === 0 || this._choices.answer2 ===0 || this._choices.answer3 === 0) && (this._writings.answer1 ==='' || this._writings.answer2 ==='' || this._writings.answer3 ==='')){
+		let checkchoice = false
+		for(let i = 0 ; i < this._choices.length ; i++){
+			if(this._choices[i].answer1 === '' || this._choices[i].answer2 ==='' || this._choices[i].answer3 === ''){
+				checkchoice = true;
+				break;
+			}
+		}
+		if(checkchoice && (this._writings.answer1 ==='' || this._writings.answer2 ==='' || this._writings.answer3 ==='')){
 			this._felView = false;
-			console.log('choices' + this._choices.answer1 + this._choices.answer2 + this._choices.answer3)
-			console.log('chocie false')
 		}else{
 			this._felView = true;
 			console.log('chocie true')
 		}
+		
 	}
 	private _gotoScript = () => {
 		if(this.props.state.qsMode === 'script') return;
@@ -292,21 +285,21 @@ class SAdditional extends React.Component<ISQuestion> {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 				(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 				(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-					this._choices.answer1 = 0;
-					this._choices.answer2 = 0;
-					this._choices.answer3 = 0;
-					this._choices.stime = Date.now();
-					this._choices.etime = 0;
+					for(let i = 0; i < this._choices.length; i++) {
+						this._choices[i].answer1 = '';
+						this._choices[i].answer2 = '';
+						this._choices[i].answer3 = '';
+					}
 			}
 		} else if (!this.props.view && prev.view) {
 			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
 			(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
 			(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
-				this._choices.answer1 = 0;
-				this._choices.answer2 = 0;
-				this._choices.answer3 = 0;
-				this._choices.stime = Date.now();
-				this._choices.etime = 0;
+				for(let i = 0; i < this._choices.length; i++) {
+					this._choices[i].answer1 = '';
+					this._choices[i].answer2 = '';
+					this._choices[i].answer3 = '';
+				}
 			}
 		}
 

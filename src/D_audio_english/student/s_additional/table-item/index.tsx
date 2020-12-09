@@ -21,6 +21,7 @@ interface ITableItem {
 	disableSelect?: boolean;
 	viewResult?: boolean;
 	viewCorrect?: boolean;
+	onChoice?:(idx: number, choice: number|string, supidx?: number) => void;
 	onChange?: (value: string, idx: number) => void;
 	viewBtn?: boolean;
 	renderCnt?: number;
@@ -64,6 +65,7 @@ class TableItem extends React.Component<ITableItem> {
 		if (idx < drops.length && drops[idx]) {
 			drops[idx].inputed = value;
 		}
+		if(this.props.onChoice) this.props.onChoice(this.props.idx,value,idx)
 		if (this.props.onChange) this.props.onChange(value, idx);
 	}
 

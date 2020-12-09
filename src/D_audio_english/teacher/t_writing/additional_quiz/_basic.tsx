@@ -7,6 +7,7 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
 import * as butil from '@common/component/butil';
+import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
@@ -17,6 +18,8 @@ const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBox {
 	view: boolean;
+	actions: IActionsCtx;
+	state:IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IAdditionalBasic[];

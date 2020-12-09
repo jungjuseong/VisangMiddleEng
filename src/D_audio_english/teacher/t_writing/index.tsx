@@ -909,6 +909,8 @@ class Writing extends React.Component<IWriting> {
                         <div key={1} >
                             <AdditionalQuiz 
                                 view={view}
+                                actions={actions}
+                                state={state}
                                 index ={this._curQidx}
                                 mdata={this.m_data} 
                                 onClosed={this._letstalkClosed}

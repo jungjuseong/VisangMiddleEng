@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg } from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg, IQuizStringReturn } from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 
 const enum SENDPROG {
@@ -22,19 +22,25 @@ interface IValArr {
 	txt: string;
 }
 
-interface IConfirmResult {
+interface IQuizNumResult {
 	numOfCorrect: number;
 	c1: number[];
 	c2: number[];
 	c3: number[];
 	uid: string[];
 } 
-interface IConfirmHardResult {
+interface IQuizStringResult {
 	c1: string[];
 	c2: string[];
 	c3: string[];
 	uid: string[];
 } 
+
+interface IQuizeStringArrayResult{
+	numOfCorrect: number;
+	uid:string[];
+	c0: IQuizStringResult[];
+}
 
 interface IStateCtx extends IStateBase {
 	hasPreview: boolean;
@@ -51,14 +57,17 @@ interface IStateCtx extends IStateBase {
 	qnaProg: SENDPROG;
 	dialogueProg: SENDPROG;
 	scriptResult: number[];
-	resultConfirmSup: IConfirmResult;
-	resultConfirmBasic: IConfirmResult;
-	resultConfirmHard: IConfirmHardResult;
+	resultConfirmSup: IQuizNumResult;
+	resultConfirmBasic: IQuizNumResult;
+	resultConfirmHard: IQuizStringResult;
+	resultAdditionalSup: IQuizeStringArrayResult;
+	resultAdditionalBasic: IQuizNumResult;
+	resultHard: IQuizStringResult;
 }
 
 interface IActionsCtx extends IActionsBase {
 	getData: () => IData;
-	getResult: () => IConfirmResult;
+	getResult: () => IQuizNumResult;
 	gotoDirection: () => void;
 	gotoNextBook: () => void;
 	getReturnUsers: () => string[];
@@ -116,6 +125,11 @@ class TeacherContext extends TeacherContextBase {
 			c3: [],
 			uid: []
 		}
+		this.state.resultAdditionalSup = {
+			numOfCorrect: 0,
+			c0 : [],
+			uid : []
+		}
 
 		this.actions.init = () => {
 			this.state.scriptProg= SENDPROG.READY;
@@ -160,70 +174,147 @@ class TeacherContext extends TeacherContextBase {
 		if(messageFromPad.type === $SocketType.MSGTOTEACHER && messageFromPad.data) {
 			const msg = (messageFromPad.data as  IIndexMsg);
 			switch(msg.msgtype) {
-			case 'confirm_return':
-				console.log('ansjdnasjdk' +  this.state.confirmBasicProg + msg.idx)
-				if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
-					const qmsg = msg as IQuizReturnMsg;
-					let sidx = -1;
-					for(let i = 0; i < App.students.length; i++) {
-						if(App.students[i].id === qmsg.id) {
-							sidx = i;
-							break;
+				case 'confirm_return':{
+					if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
+						const qmsg = msg as IQuizReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
 						}
-					}
-					const ridx = this.state.resultConfirmSup.uid.indexOf(qmsg.id);
-					if(sidx >= 0 && ridx < 0) {
-						const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
-						const ret = qmsg.returns;						// 사용자가 선택한 번호
-						const result = this.state.resultConfirmSup;					// 결과 저장 	
+						const ridx = this.state.resultConfirmSup.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const answers = [this._data.confirm_sup[0].problem1.answer,this._data.confirm_sup[0].problem2.answer,this._data.confirm_sup[0].problem3.answer]
+							const ret = qmsg.returns;						// 사용자가 선택한 번호
+							const result = this.state.resultConfirmSup;					// 결과 저장 	
 
-						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
-						result.c1.push(ret.answer1);
-						result.c2.push(ret.answer1);
-						result.c3.push(ret.answer1);
-						result.uid.push(qmsg.id);
-					}
-				}else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
-					const qmsg = msg as IQuizReturnMsg;
-					let sidx = -1;
-					for(let i = 0; i < App.students.length; i++) {
-						if(App.students[i].id === qmsg.id) {
-							sidx = i;
-							break;
+							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+							result.c1.push(ret.answer1);
+							result.c2.push(ret.answer2);
+							result.c3.push(ret.answer3);
+							result.uid.push(qmsg.id);
 						}
-					}
-					const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
-					if(sidx >= 0 && ridx < 0) {
-						const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
-						const ret = qmsg.returns;						// 사용자가 선택한 번호
-						const result = this.state.resultConfirmBasic;					// 결과 저장 	
+					}else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+						const qmsg = msg as IQuizReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+						const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
+							const ret = qmsg.returns;						// 사용자가 선택한 번호
+							const result = this.state.resultConfirmBasic;					// 결과 저장 	
 
-						if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
-						result.c1.push(ret.answer1);
-						result.c2.push(ret.answer1);
-						result.c3.push(ret.answer1);
-						result.uid.push(qmsg.id);
-					}
-				}else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
-					const qmsg = msg as IQuizStringReturnMsg;
-					let sidx = -1;
-					for(let i = 0; i < App.students.length; i++) {
-						if(App.students[i].id === qmsg.id) {
-							sidx = i;
-							break;
+							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+							result.c1.push(ret.answer1);
+							result.c2.push(ret.answer2);
+							result.c3.push(ret.answer3);
+							result.uid.push(qmsg.id);
+						}
+					}else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
+						const qmsg = msg as IQuizStringReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+						const ridx = this.state.resultConfirmHard.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const ret = qmsg.returns;
+							const result = this.state.resultConfirmHard;
+							result.c1.push(ret.answer1);
+							result.c2.push(ret.answer2);
+							result.c3.push(ret.answer3);
+							result.uid.push(qmsg.id);
 						}
 					}
-					const ridx = this.state.resultConfirmHard.uid.indexOf(qmsg.id);
-					if(sidx >= 0 && ridx < 0) {
-						const ret = qmsg.returns;
-						const result = this.state.resultConfirmHard;
-						result.c1.push(ret.answer1);
-						result.c2.push(ret.answer1);
-						result.c3.push(ret.answer1);
-						result.uid.push(qmsg.id);
-					}
+					break;
 				}
-				break;
+				case 'additional_return':{
+					if(this.state.additionalSupProg === SENDPROG.SENDED && msg.idx === 0) {
+						const qmsg = msg as IQuizReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+						const ridx = this.state.resultAdditionalSup.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const ret = qmsg.returns;						// 사용자가 선택한 번호
+							const result = this.state.resultAdditionalSup;					// 결과 저장 
+							
+							let resultCorrect = true;
+							for(let i = 0 ; i < this._data.additional_sup.length; i++){
+								result.c0[i] = {
+									c1:[],
+									c2:[],
+									c3:[],
+									uid:[]
+								}
+								const answers = [this._data.additional_sup[i].app_drops[0].correct,this._data.additional_sup[i].app_drops[1].correct,this._data.additional_sup[i].app_drops[2].correct]
+								if(ret[i].answer1 != answers[0] || ret[i].answer2 != answers[1] || ret[i].answer3 != answers[2]) resultCorrect = false;
+
+								result.c0[i].c1.push(ret[i].answer1);
+								result.c0[i].c2.push(ret[i].answer2);
+								result.c0[i].c3.push(ret[i].answer3);
+							}
+							if(resultCorrect){
+								result.numOfCorrect++
+							}
+							result.uid.push(qmsg.id);
+						}
+					}else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+						const qmsg = msg as IQuizReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+						const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
+							const ret = qmsg.returns;						// 사용자가 선택한 번호
+							const result = this.state.resultConfirmBasic;					// 결과 저장 	
+
+							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+							result.c1.push(ret.answer1);
+							result.c2.push(ret.answer2);
+							result.c3.push(ret.answer3);
+							result.uid.push(qmsg.id);
+						}
+					}else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
+						const qmsg = msg as IQuizStringReturnMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+						const ridx = this.state.resultConfirmHard.uid.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							const ret = qmsg.returns;
+							const result = this.state.resultConfirmHard;
+							result.c1.push(ret.answer1);
+							result.c2.push(ret.answer2);
+							result.c3.push(ret.answer3);
+							result.uid.push(qmsg.id);
+						}
+					}
+					break;
+				}
 			}
 		}
 
@@ -352,5 +443,5 @@ export {
 	IActionsCtx,
 	VIEWDIV,
 	SENDPROG,
-	IConfirmResult,
+	IQuizNumResult,
 };

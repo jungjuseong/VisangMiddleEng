@@ -29,8 +29,6 @@ export interface IQuizReturn {
 	answer1: number;
 	answer2: number;
 	answer3: number;
-	stime: number;
-	etime: number;
 }
 
 export interface IQuizStringReturn {
@@ -46,6 +44,11 @@ export interface IRollMsg extends IMsg {
 export interface IQuizReturnMsg extends IIndexMsg {
 	id: string;
 	returns : IQuizReturn;
+}
+
+export interface IAddSupQuizReturnMsg extends IIndexMsg{
+	id: string;
+	returns : IQuizStringReturn[];
 }
 
 export interface IQuizStringReturnMsg extends IIndexMsg {

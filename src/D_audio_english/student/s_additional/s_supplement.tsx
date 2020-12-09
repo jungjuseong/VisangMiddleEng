@@ -29,7 +29,7 @@ interface IQuizItem {
 	choice: number;
 	data: common.IAdditionalSup[];
 	prog: QPROG;
-	onChoice: (idx: number, choice: number|string) => void;
+	onChoice: (idx: number, choice: number|string, supidx?: number) => void;
 }
 @observer
 class SHard extends React.Component<IQuizItem> {	
@@ -60,9 +60,6 @@ class SHard extends React.Component<IQuizItem> {
 		keyBoardState.state = 'hide';
 	}
 
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
 	private _onChange = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();
 		
@@ -145,7 +142,7 @@ class SHard extends React.Component<IQuizItem> {
 	}
 
 	public render() {
-		const { view, data ,state, prog} = this.props;
+		const { view, data ,state, prog, onChoice} = this.props;
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -171,6 +168,7 @@ class SHard extends React.Component<IQuizItem> {
 										optionBoxPosition="bottom"
 										viewBtn={false}
 										idx={idx}
+										onChoice = {onChoice}
 										/>
 									</div>
 								);
