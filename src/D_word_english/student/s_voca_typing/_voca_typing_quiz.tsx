@@ -248,7 +248,7 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 								on={idx === this._focusIdx}
 								maxLength={1}
 								disabled={this._result !== ''}
-								onRef={this._onRef}
+								onRef={this._onRef} 
 								onFocus={this._onFocus}
 								onPrev={this._onPrev}
 								onNext={this._onNext}

@@ -54,7 +54,6 @@ class SBasic extends React.Component<IQuizItem> {
 		super(props);
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
-
 		keyBoardState.state = 'hide';
 	}
 
@@ -137,18 +136,37 @@ class SBasic extends React.Component<IQuizItem> {
 		if(this.props.confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
-			}			
+			}
 		}
 		if(this.props.confirmProg >= QPROG.SENDED){
 			this._sended = true
 			keyBoardState.state = 'hide';
 		}
+		if(this.props.confirmProg === QPROG.COMPLETE){
+			this._checkAnswer();
+		}
+	}
+
+	private _checkAnswer = ()=>{
+		const {data} = this.props;
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		data.map((quiz,idx) =>{
+			const answerlist = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3, quiz.sentence_answer4];
+			answerlist.map((answer,index)=>{
+				if(answer === this._tarea[index]?.value){
+					OXs[idx] = 'O';
+				}else{
+					OXs[idx] = 'X';
+				}
+				console.log(OXs[idx]);
+			})
+		})
 	}
 
 	public render() {
-		const { view, data ,state} = this.props;
+		const { view, data ,state, confirmProg} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const alphabet = ['a','b','c'];
+		const alphabet = ['a','b','c'];	
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>

@@ -234,7 +234,7 @@ class SBasic extends React.Component<IQuizItem> {
 									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
 									<div className={"number_box " + OXs[2]}>{this._putNumber(2)}</div>
 									<div className={"answer" + (this._view_answer? '': ' hide')}>{data.item3.answer}</div>
-								</div>								
+								</div>
 							</div>
 
 							<Draggable
