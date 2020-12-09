@@ -151,6 +151,7 @@ class SBasic extends React.Component<IQuizItem> {
 		const { view, data ,state} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a','b','c'];
+		const answer_arr = []
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -171,7 +172,7 @@ class SBasic extends React.Component<IQuizItem> {
 											</div>
 										</div>
 										<div className="s_typing" >
-											<div className="area-bnd">
+											<div className="area-bnd">											
 												{data.map((content, index)=>{
 													return (
 													<div key={index} onClick={()=>{this._selectArea(index)}}>

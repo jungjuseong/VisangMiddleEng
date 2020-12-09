@@ -35,6 +35,7 @@ class SHard extends React.Component<IQuizItem> {
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
+	@observable private _select_area: number = 0;
 
 	private _bndW = 0;
 	private _bndH = 0;
@@ -74,6 +75,10 @@ class SHard extends React.Component<IQuizItem> {
 		this._tlen = text.trim().length;
 		keyBoardState.state = 'on';
 
+	}
+	private _selectArea = (index : number) =>{
+		if (index !== null)
+			this._select_area = index
 	}
 	private _refCanvas = (el: HTMLCanvasElement|null) => {
 		if(this._canvas || !el) return;
@@ -148,7 +153,7 @@ class SHard extends React.Component<IQuizItem> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="basic_question">
+					<div className="hard_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
 								return (
@@ -166,11 +171,11 @@ class SHard extends React.Component<IQuizItem> {
 											</div>
 										</div>
 										<div className="s_typing" >
-											<div className="area-bnd">
+											<div className="area-bnd" onClick={()=>{this._selectArea(0)}}>
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 
-													on={view && this._curIdx === idx && !this._sended}
+													on={view && this._curIdx === idx && this._select_area === 0 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}
@@ -179,11 +184,13 @@ class SHard extends React.Component<IQuizItem> {
 													maxLineNum={3}
 													rows={1}
 												/>
-												{' → '}
+											</div>
+											{' → '}
+											<div className="area-bnd" onClick={()=>{this._selectArea(1)}}>
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 
-													on={view && this._curIdx === idx && !this._sended}
+													on={view && this._curIdx === idx && this._select_area === 1 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={this._onChange}
@@ -192,7 +199,6 @@ class SHard extends React.Component<IQuizItem> {
 													maxLineNum={3}
 													rows={1}
 												/>
-												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
 											</div>
 										</div>
 									</div>
