@@ -209,33 +209,39 @@
                                 .content-box{
                                     color: yellow;
                                 }
-                                .content-box>div .content .select-box {
-                                    line-height: 43px;
-                                    vertical-align: middle;
-                                    text-indent: 0;
-                                    background: #fff;
-                                    &>.text-box {
-                                        height: 45px;
-                                    }
-                                    &>.btn-drop {
-                                        width: 45px;
-                                        height: 45px;
-                                        background-size: 48px;
-                                        background-position: center -2px;
-                                    }
-                                    &>.options-box.bottom {
+                                .content-box>div .content {
+                                    .answer{
                                         position: absolute;
-                                        left: 0;
-                                        bottom: 1px;
-                                        overflow: hidden;
-                                        border-radius: 0 0 7px 7px;
+                                        line-height: 25px;
+                                    }
+                                    .select-box {
+                                        line-height: 43px;
+                                        vertical-align: middle;
+                                        text-indent: 0;
+                                        background: #fff;
+                                        &>.text-box {
+                                            height: 45px;
+                                        }
+                                        &>.btn-drop {
+                                            width: 45px;
+                                            height: 45px;
+                                            background-size: 48px;
+                                            background-position: center -2px;
+                                        }
+                                        &>.options-box.bottom {
+                                            position: absolute;
+                                            left: 0;
+                                            bottom: 1px;
+                                            overflow: hidden;
+                                            border-radius: 0 0 7px 7px;
+                                        }
                                     }
                                 }
+                                
                             }
                         }                        
                         .table-item {
                             .content>li{
-                                line-height: 125px;
                                 &>div {
                                     text-indent: -35px;
                                     padding-left: 35px;
@@ -262,10 +268,11 @@
                         $on: resolve("teacher/images/btn_dropdown_t_up.png");
                         $width: width("teacher/images/btn_dropdown_t_down.png");
                         $height: height("teacher/images/btn_dropdown_t_down.png");
-                        $line-height: $height+5px;
+                        $line-height: 120px;
                         @include mixin_table_item( $min-height, $min-width, $head-font-size, $head-line-height, $content-font-size, $content-padding, $radius, $normal, $on, $width, $height, $line-height);
                         .table-item {
-                            /*position: relative;*/
+                            display: block;
+                            margin: 0 auto;
                             &.type_2 {
                                 .table-item-btn {
                                     top: 1px;

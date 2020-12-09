@@ -210,7 +210,7 @@ class SelectBox extends React.Component<ISelectBox> {
 
 		return (
 		<>
-			<div style={{display : correctView ? '' : 'none'}}>{correct}</div>
+			<span className ="answer" style={{display : correctView ? '' : 'none'}}>{correct}</span>
 			<div className="select-box" ref={this._refBox} >
 				<div className={'text-box ' + textClass} onPointerDown={this._boxDown} >
 					<div className="size-box">{options.map((str, idx) => <div key={idx}>{str}</div>)}</div>
