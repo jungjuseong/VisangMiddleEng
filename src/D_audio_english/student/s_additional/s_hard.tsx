@@ -26,8 +26,8 @@ interface IQuizItem {
 	idx: number;
 	choice: number;
 	data: common.IAdditionalHard[];
-	confirmProg: QPROG;
-	onChoice: (idx: number, choice: number|string) => void;
+	prog: QPROG;
+	onChoice: (idx: number, choice: number|string,subidx:number) => void;
 }
 @observer
 class SHard extends React.Component<IQuizItem> {	
@@ -58,14 +58,11 @@ class SHard extends React.Component<IQuizItem> {
 		keyBoardState.state = 'hide';
 	}
 
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
 	private _onChange = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();
 		
 		if(!this.props.view) return;
-		this.props.onChoice(this._curIdx,text);
+		this.props.onChoice(this._curIdx,text,0);
 		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
@@ -135,12 +132,12 @@ class SHard extends React.Component<IQuizItem> {
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}
-		if(this.props.confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
+		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
 		}
-		if(this.props.confirmProg >= QPROG.SENDED){
+		if(this.props.prog >= QPROG.SENDED){
 			this._sended = true
 			keyBoardState.state = 'hide';
 		}

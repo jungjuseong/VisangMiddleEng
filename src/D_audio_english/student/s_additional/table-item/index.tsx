@@ -21,7 +21,7 @@ interface ITableItem {
 	disableSelect?: boolean;
 	viewResult?: boolean;
 	viewCorrect?: boolean;
-	onChoice?:(idx: number, choice: number|string, supidx?: number) => void;
+	onChoice?:(idx: number, choice: number|string, subidx: number) => void;
 	onChange?: (value: string, idx: number) => void;
 	viewBtn?: boolean;
 	renderCnt?: number;

@@ -61,8 +61,8 @@ interface IStateCtx extends IStateBase {
 	resultConfirmBasic: IQuizNumResult;
 	resultConfirmHard: IQuizStringResult;
 	resultAdditionalSup: IQuizeStringArrayResult;
-	resultAdditionalBasic: IQuizNumResult;
-	resultHard: IQuizStringResult;
+	resultAdditionalBasic: IQuizeStringArrayResult;
+	resultAdditionalHard: IQuizeStringArrayResult;
 }
 
 interface IActionsCtx extends IActionsBase {
@@ -126,6 +126,16 @@ class TeacherContext extends TeacherContextBase {
 			uid: []
 		}
 		this.state.resultAdditionalSup = {
+			numOfCorrect: 0,
+			c0 : [],
+			uid : []
+		}
+		this.state.resultAdditionalBasic ={
+			numOfCorrect: 0,
+			c0 : [],
+			uid : []
+		}
+		this.state.resultAdditionalHard ={
 			numOfCorrect: 0,
 			c0 : [],
 			uid : []
@@ -263,6 +273,9 @@ class TeacherContext extends TeacherContextBase {
 								const answers = [this._data.additional_sup[i].app_drops[0].correct,this._data.additional_sup[i].app_drops[1].correct,this._data.additional_sup[i].app_drops[2].correct]
 								if(ret[i].answer1 != answers[0] || ret[i].answer2 != answers[1] || ret[i].answer3 != answers[2]) resultCorrect = false;
 
+								console.log('ret' , ret[i].answer1)
+								console.log('answers' , answers)
+
 								result.c0[i].c1.push(ret[i].answer1);
 								result.c0[i].c2.push(ret[i].answer2);
 								result.c0[i].c3.push(ret[i].answer3);
@@ -272,7 +285,7 @@ class TeacherContext extends TeacherContextBase {
 							}
 							result.uid.push(qmsg.id);
 						}
-					}else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+					}else if(this.state.additionalBasicProg === SENDPROG.SENDED && msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -281,16 +294,31 @@ class TeacherContext extends TeacherContextBase {
 								break;
 							}
 						}
-						const ridx = this.state.resultConfirmBasic.uid.indexOf(qmsg.id);
+						const ridx = this.state.resultAdditionalBasic.uid.indexOf(qmsg.id);
 						if(sidx >= 0 && ridx < 0) {
-							const answers = [this._data.confirm_nomal[0].item1.answer,this._data.confirm_nomal[0].item2.answer,this._data.confirm_nomal[0].item3.answer]
 							const ret = qmsg.returns;						// 사용자가 선택한 번호
-							const result = this.state.resultConfirmBasic;					// 결과 저장 	
+							const result = this.state.resultAdditionalBasic;					// 결과 저장 
+							
+							let resultCorrect = true;
+							for(let i = 0 ; i < this._data.additional_basic.length; i++){
+								result.c0[i] = {
+									c1:[],
+									c2:[],
+									c3:[],
+									uid:[]
+								}
+								const answers = [this._data.additional_basic[i].sentence_answer1,this._data.additional_basic[i].sentence_answer2,this._data.additional_basic[i].sentence_answer3]
+								if(ret[i].answer1 != answers[0] || ret[i].answer2 != answers[1] || ret[i].answer3 != answers[2]) resultCorrect = false;
+								console.log('ret' , ret[i])
+								console.log('answers' , answers)
 
-							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
-							result.c1.push(ret.answer1);
-							result.c2.push(ret.answer2);
-							result.c3.push(ret.answer3);
+								result.c0[i].c1.push(ret[i].answer1);
+								result.c0[i].c2.push(ret[i].answer2);
+								result.c0[i].c3.push(ret[i].answer3);
+							}
+							if(resultCorrect){
+								result.numOfCorrect++
+							}
 							result.uid.push(qmsg.id);
 						}
 					}else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
@@ -324,6 +352,22 @@ class TeacherContext extends TeacherContextBase {
 		this.state.hasPreview = true;
 		for(let i = 0 ; i < this._data.additional_sup.length; i++){
 			this.state.resultAdditionalSup.c0[i] = {
+				c1:[],
+				c2:[],
+				c3:[],
+				uid:[]
+			}
+		}
+		for(let i = 0 ; i < this._data.additional_basic.length; i++){
+			this.state.resultAdditionalBasic.c0[i] = {
+				c1:[],
+				c2:[],
+				c3:[],
+				uid:[]
+			}
+		}	
+		for(let i = 0 ; i < this._data.additional_hard.length; i++){
+			this.state.resultAdditionalHard.c0[i] = {
 				c1:[],
 				c2:[],
 				c3:[],

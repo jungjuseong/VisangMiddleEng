@@ -153,12 +153,12 @@ class StudentContext extends StudentContextBase {
 					this.state.additionalSupProg = QPROG.ON;
 					this.state.idx = 0;
 				}else if(msg.idx === 1){
-					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
-					this.state.confirmBasicProg = QPROG.ON;
+					if(this.state.additionalBasicProg > QPROG.UNINIT) return;
+					this.state.additionalBasicProg = QPROG.ON;
 					this.state.idx = 1;
 				}else{
-					if(this.state.confirmHardProg > QPROG.UNINIT) return;
-					this.state.confirmHardProg = QPROG.ON;
+					if(this.state.additionalHardProg > QPROG.UNINIT) return;
+					this.state.additionalHardProg = QPROG.ON;
 					this.state.idx = 2;
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;

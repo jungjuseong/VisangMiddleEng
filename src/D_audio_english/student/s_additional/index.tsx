@@ -49,11 +49,6 @@ class SAdditional extends React.Component<ISQuestion> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: common.IQuizStringReturn[] = [];
-	@observable private _writings: common.IQuizStringReturn = {
-		answer1:'',
-		answer2:'',
-		answer3:''
-	}
 	@observable private _felView = false;
 
 	private _style: React.CSSProperties = {};
@@ -93,20 +88,13 @@ class SAdditional extends React.Component<ISQuestion> {
 		if(this.props.state.additionalHardProg !== QPROG.ON && this.props.state.idx === 2) return;
 		App.pub_playToPad();
 		let choices: common.IQuizStringReturn[];
-		let writings: common.IQuizStringReturn;
 		choices = this._choices;
-		writings = this._writings;
 		//초기화 함수 만들어서 할것
-		this._writings = {
-			answer1:'',
-			answer2:'',
-			answer3:''
-		}
-		this._choices = [];
+		const quizssup = this.props.actions.getData().additional_sup;
 		if(this.props.state.idx === 0){
 			this.props.state.additionalSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IAddSupQuizReturnMsg = {
+				const msg: common.IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx: 0,
 					id: App.student.id,
@@ -126,11 +114,11 @@ class SAdditional extends React.Component<ISQuestion> {
 		}else if(this.props.state.idx === 1){
 			this.props.state.additionalBasicProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: common.IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx:1,
 					id: App.student.id,
-					returns: writings[0]
+					returns: choices
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -146,11 +134,11 @@ class SAdditional extends React.Component<ISQuestion> {
 		}else if(this.props.state.idx === 2){
 			this.props.state.additionalHardProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizStringReturnMsg = {
+				const msg: common.IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx:2,
 					id: App.student.id,
-					returns: writings
+					returns: choices
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -166,69 +154,71 @@ class SAdditional extends React.Component<ISQuestion> {
 		}else{
 			return
 		}
+		for(let i = 0; i < quizssup.length; i++) {
+			this._choices[i] = {
+				answer1: '',
+				answer2: '',
+				answer3: ''
+			};
+		}
 	}
 
 
-	private _onChoice = (idx: number, choice: number|string, supidx: number = -1) => {
-		if(this.props.state.additionalSupProg !== QPROG.ON && this.props.state.idx === 0 && supidx === -1) return;
+	private _onChoice = (idx: number, choice: number|string, subidx: number) => {
+		if(this.props.state.additionalSupProg !== QPROG.ON && this.props.state.idx === 0 ) return;
 		if(this.props.state.additionalBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
 		if(this.props.state.additionalHardProg !== QPROG.ON && this.props.state.idx === 2) return;
-
 		App.pub_playBtnTab();
-		if(this.props.state.idx === 0){
-			switch(supidx){
-				case 0 :{
-					this._choices[idx].answer1 = choice as string;
-					break;
-				}
-				case 1 :{
-					this._choices[idx].answer2 = choice as string;
-					break;
-				}
-				case 2 :{
-					this._choices[idx].answer3 = choice as string;
-					break;
-				}
-				default : return;
-			}
-		}else if(this.props.state.idx === 1){
-			switch(idx){
-				case 0 :{
-					break;
-				}
-				case 1 :{
-					break;
-				}
-				case 2 :{
-					break;
-				}
-				default : return;
-			}
-		}else if(this.props.state.idx === 2){
-			switch(idx){
-				case 0 :{
-					this._writings.answer1 = choice as string;
-					break;
-				}
-				case 1 :{
-					this._writings.answer2 = choice as string;
-					break;
-				}
-				case 2 :{
-					this._writings.answer3 = choice as string;
-					break;
-				}
-				default : return;
-			}
-		}
-		let checkchoice = false
-		for(let i = 0 ; i < this._choices.length ; i++){
-			if(this._choices[i].answer1 === '' || this._choices[i].answer2 ==='' || this._choices[i].answer3 === ''){
-				checkchoice = true;
+		switch(subidx){
+			case 0 :{
+				this._choices[idx].answer1 = choice as string;
 				break;
 			}
+			case 1 :{
+				this._choices[idx].answer2 = choice as string;
+				break;
+			}
+			case 2 :{
+				this._choices[idx].answer3 = choice as string;
+				break;
+			}
+			default : return;
 		}
-		if(checkchoice && (this._writings.answer1 ==='' || this._writings.answer2 ==='' || this._writings.answer3 ==='')){
+		const data = this.props.actions.getData()
+		let checkchoice = false
+		switch(this.props.state.idx){
+			case 0 : {
+				for(let i = 0 ; i < this._choices.length ; i++){
+					if(this._choices[i].answer1 === '' || this._choices[i].answer2 ==='' || this._choices[i].answer3 === ''){
+						checkchoice = true;
+						break;
+					}
+				}
+				break;
+			}
+			case 1 : {
+				console.log('checkchoice case 1')
+				for(let i = 0 ; i < this._choices.length ; i++){
+					if((this._choices[i].answer1 === '' && data.additional_basic[i].sentence_answer1 !='') || (this._choices[i].answer2 ==='' && data.additional_basic[i].sentence_answer2 !='') || (this._choices[i].answer3 === '' && data.additional_basic[i].sentence_answer3 !='')){
+						checkchoice = true;
+						break;
+					}
+				}
+				break;
+			}
+			case 2 : {
+				for(let i = 0 ; i < this._choices.length ; i++){
+					if(this._choices[i].answer1 === '' || this._choices[i].answer2 ===''){
+						checkchoice = true;
+						break;
+					}
+				}
+				break;
+			}
+			default : return;
+		}
+		
+		if(checkchoice){
 			this._felView = false;
 		}else{
 			this._felView = true;
@@ -338,7 +328,7 @@ class SAdditional extends React.Component<ISQuestion> {
 							idx={1}
 							choice={0}
 							data={c_data.additional_basic}
-							confirmProg={state.additionalBasicProg}
+							prog={state.additionalBasicProg}
 							onChoice={this._onChoice}
 						/>
 						<SHard							
@@ -348,7 +338,7 @@ class SAdditional extends React.Component<ISQuestion> {
 							idx={1}
 							choice={0}
 							data={c_data.additional_hard}
-							confirmProg={state.additionalHardProg}
+							prog={state.additionalHardProg}
 							onChoice={this._onChoice}
 						/>
 					</div>

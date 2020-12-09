@@ -46,7 +46,7 @@ export interface IQuizReturnMsg extends IIndexMsg {
 	returns : IQuizReturn;
 }
 
-export interface IAddSupQuizReturnMsg extends IIndexMsg{
+export interface IAdditionalQuizReturnMsg extends IIndexMsg{
 	id: string;
 	returns : IQuizStringReturn[];
 }

@@ -29,7 +29,7 @@ interface IQuizItem {
 	choice: number;
 	data: common.IAdditionalSup[];
 	prog: QPROG;
-	onChoice: (idx: number, choice: number|string, supidx?: number) => void;
+	onChoice: (idx: number, choice: number|string, subidx: number) => void;
 }
 @observer
 class SHard extends React.Component<IQuizItem> {	
@@ -58,14 +58,6 @@ class SHard extends React.Component<IQuizItem> {
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 
 		keyBoardState.state = 'hide';
-	}
-
-	private _onChange = (text: string) => {
-		if(this._stime === 0) this._stime = Date.now();
-		
-		if(!this.props.view) return;
-		this.props.onChoice(this._curIdx,text);
-		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();

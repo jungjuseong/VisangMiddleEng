@@ -56,10 +56,6 @@ class SHard extends React.Component<IQuizItem> {
 
 		keyBoardState.state = 'hide';
 	}
-
-	private _onChoice = (choice: number) => {
-		this.props.onChoice(this.props.idx, choice);
-	}
 	private _onChange = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();
 		
