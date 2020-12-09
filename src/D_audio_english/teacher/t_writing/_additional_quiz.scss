@@ -6,7 +6,6 @@
     @import "./additional_quiz/table-item/index.scss";
     @mixin additional_quiz {
         .additional_question_bg {
-            padding-top: 10px;
             margin: 0 auto;
             position: relative;
             width: 1150px;
@@ -15,25 +14,41 @@
                 display: none;
             }
             .subject_rate {
-                position: absolute;
+                color: white;
+                text-align: right;
+                font-size: 12px;
+                padding-right: 25px;
+                line-height: 26px;
+                position: relative;
                 width: 87px;
                 height: 26px;
                 top: -80px;
                 left: 4px;
                 background-image: resolve('teacher/images/sub_rate.png');
-                #text {
-                    text-align: center;
-                    size: 12px;
-                    text-decoration: white;
+                &.hide {
+                    display: none;
                 }
             }
             .correct_answer_rate {
-                position: absolute;
                 width: 118px;
                 height: 26px;
-                left: 97px;
-                top: -80px;
-                background-image: resolve('teacher/images/correct_answer_rate.png')
+                background-image: resolve('teacher/images/correct_answer_rate.png');
+                @include compre_correct(-80px, 97px);
+                &.no-result {
+                    padding-top: 7px;
+                }
+                &.hide {
+                    display: none;
+                }
+                .title {
+                    display: none;
+                }
+                &>.progress_bar {
+                    width: 70px;
+                    &>.data_percent {
+                        left: 75px;
+                    }
+                }
             }
             .btn_answer {
                 @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
@@ -41,6 +56,9 @@
                 right: 15px;
                 top: 15px;
                 z-index: 2;
+                &.hide {
+                    display: none;
+                }
             }
             .quiz_box {
                 position: absolute;

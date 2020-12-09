@@ -166,8 +166,8 @@ class Supplement extends React.Component<IQuizBox> {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate">{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
-				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
+				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
 					preview={-1} 

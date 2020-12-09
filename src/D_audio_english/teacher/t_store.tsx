@@ -130,7 +130,6 @@ class TeacherContext extends TeacherContextBase {
 			c0 : [],
 			uid : []
 		}
-
 		this.actions.init = () => {
 			this.state.scriptProg= SENDPROG.READY;
 			this.state.qnaProg= SENDPROG.READY;
@@ -323,7 +322,14 @@ class TeacherContext extends TeacherContextBase {
 	public async setData(data: any) {
 		this._data = initData(data);
 		this.state.hasPreview = true;
-			
+		for(let i = 0 ; i < this._data.additional_sup.length; i++){
+			this.state.resultAdditionalSup.c0[i] = {
+				c1:[],
+				c2:[],
+				c3:[],
+				uid:[]
+			}
+		}	
 		function _initAvgPercent(text_arr: string[], val_arr: any[], preview_data: IPreviewResultClassMember[]) {
 		
 			for(let i = 0; i < preview_data.length;i++) {

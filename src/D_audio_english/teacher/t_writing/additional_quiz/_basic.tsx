@@ -8,6 +8,7 @@ import { App } from '../../../../App';
 
 import * as butil from '@common/component/butil';
 import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
+import { CorrectBar } from '../../../../share/Progress_bar';
 
 import * as common from '../../../common';
 import { BtnAudio } from '../../../../share/BtnAudio';
@@ -29,9 +30,7 @@ class Basic extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
-	@observable private _select = true;
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
+	@observable private _sended = false;
 	
 	private _swiper?: Swiper;
 
@@ -98,14 +97,11 @@ class Basic extends React.Component<IQuizBox> {
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
-		const { view } = this.props;
+		const { view ,state } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
-			this._select = true;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -122,21 +118,34 @@ class Basic extends React.Component<IQuizBox> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
+		}
+
+		if(state.additionalHardProg >= SENDPROG.SENDED){
+			this._sended = true;
 		}
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { data, state} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		let qResult = -1;
+        const isQComplete = state.additionalSupProg >= SENDPROG.COMPLETE;
+        if(isQComplete) {
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalSup.numOfCorrect / state.numOfStudent);
+            else qResult = 0;
+            if(qResult > 100) qResult = 100;
+        }
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate"></div>
-				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
-				<div className="correct_answer_rate"></div>
+				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<CorrectBar 
+					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
+					preview={-1} 
+					result={qResult}
+				/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
