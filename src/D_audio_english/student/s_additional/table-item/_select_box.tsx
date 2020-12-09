@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
+import { CorrectBar } from 'src/share/Progress_bar';
 
 interface IOptionBox {
 	text: string;
@@ -200,10 +201,16 @@ class SelectBox extends React.Component<ISelectBox> {
 			if (this._value === correct) textClass = 'correct';
 			else textClass = 'wrong';
 		}
+		let correctView = false
+		if(textClass === 'wrong'){
+			correctView = true
+		}else{
+			correctView = false
+		}
 
 		return (
 		<>
-		<div style={{display : this._viewResult ? '' : 'none'}}>{correct}</div>
+			<div style={{display : correctView ? '' : 'none'}}>{correct}</div>
 			<div className="select-box" ref={this._refBox} >
 				<div className={'text-box ' + textClass} onPointerDown={this._boxDown} >
 					<div className="size-box">{options.map((str, idx) => <div key={idx}>{str}</div>)}</div>
