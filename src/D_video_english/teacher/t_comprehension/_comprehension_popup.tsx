@@ -58,10 +58,11 @@ class ComprehensionPopup extends React.Component<IComprehensionPopup> {
 		}
 	}
 	public render() {
-		const { view, onClosed, imgA, imgB } = this.props;
+		const { view, type, onClosed, imgA, imgB } = this.props;
 		return (
-			<CoverPopup className={'compre_popup ' + this.props.type} view={view && this.m_view} onClosed={this.props.onClosed} >
-				<span>{this.props.type === 'SHADOWING' ? 'LISTEN & REPEAT' : this.props.type}</span><ToggleBtn className="btn_close" onClick={this._onClose} />
+			<CoverPopup className={'compre_popup ' + this.props.type} view={view && this.m_view} onClosed={onClosed} >
+				<span>{type === 'SHADOWING' ? 'LISTEN & REPEAT' : type}</span>
+				<ToggleBtn className="btn_close" onClick={this._onClose} />
 				<div className="popup_content">
 					<span>Do you have any questions?</span>
 					<span>Choose the role.</span>

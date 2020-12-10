@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import * as common from '../common';
+import { IData, IScript,IQnaReturn} from '../common';
 import ScriptBox from './_script_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IScriptContainer {
-	data: common.IData;
+	data: IData;
 	focusIdx: number;
 	selected: number[];
-	qnaReturns: common.IQnaReturn[];
-	clickThumb: (idx: number, script: common.IScript) => void;
-	clickText?: (idx: number, script: common.IScript) => void;
+	qnaReturns: IQnaReturn[];
+	clickThumb: (idx: number, script: IScript) => void;
+	clickText?: (idx: number, script: IScript) => void;
 	qnaReturnsClick?: (idx: number) => void;
 	view: boolean;
 	roll: ''|'A'|'B';

@@ -154,14 +154,12 @@
         }
         /* 화면에 따라 내용이 바뀌는 가운데*/
         .writing_content_box {
-            width: 1150px;
-            height: 600px;
+            width: 1145px;
+            height: 642px;
             position: absolute;
-            //top: 130px;
-            right: 65px;
             .btn_page_box {
                 position: absolute;
-                top: 8px;
+                margin-top: 25px;
                 width: 100%;
                 height: 0px;
                 overflow: visible;
@@ -381,7 +379,8 @@
                 padding: 0px 10px;
                 .video_container {
                     position: relative;
-                    margin-top: 10px; height: 400px;
+                    margin-top: 10px;
+                    height: 400px;
                     overflow: hidden;
                     z-index: 0;
                     @include t_video_box;

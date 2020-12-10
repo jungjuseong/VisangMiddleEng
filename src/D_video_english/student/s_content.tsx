@@ -10,39 +10,39 @@ import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from './s_store';
 import * as felsocket from '../../felsocket';
-import { IQNAMsg } from '../common';
 
 import SQuestion from './s_question';
 import SScript from './s_script';
 
-interface ISContent {
+interface ISContentProps {
 	view: boolean;
 	questionView: boolean;
 	questionProg: QPROG;
 	scriptProg: SPROG;
 	scriptMode: 'COMPREHENSION'|'DIALOGUE';
 	qsMode: ''|'question'|'script';
-
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class SContent extends React.Component<ISContent> {
+class SContent extends React.Component<ISContentProps> {
 	@observable private _img_pop_on = false;
 
 	private _stime = 0;
 	
 	private _clickYes = () => {
-		const { state } = this.props;
+		const { scriptMode, scriptProg } = this.props.state;
 		if(this._stime === 0) this._stime = Date.now();
 
-		if(state.scriptProg !== SPROG.YESORNO) return;
-		else if(state.scriptMode !== 'COMPREHENSION') return;
+		if(scriptProg !== SPROG.YESORNO || scriptMode !== 'COMPREHENSION') return;
 
 		App.pub_playBtnTab();
-		state.qsMode = 'script';
-		state.scriptProg = SPROG.SELECTING;
+		this.state = {
+			...this.state,
+			qsMode: 'script',
+			scriptProg: SPROG.SELECTING,
+		};
 
 		this._img_pop_on = true;
 		_.delay(() => {
@@ -54,20 +54,19 @@ class SContent extends React.Component<ISContent> {
 		const { state,actions } = this.props;
 		if(this._stime === 0) this._stime = Date.now();
 
-		if(state.scriptProg !== SPROG.YESORNO) return;
-		else if(state.scriptMode !== 'COMPREHENSION') return;
+		if(state.scriptProg !== SPROG.YESORNO || state.scriptMode !== 'COMPREHENSION') return;
+
 		App.pub_playBtnTab();
 		state.scriptProg = SPROG.SENDED;
 		if(!App.student) return;
-		const script = actions.getData().scripts[state.focusIdx];
-		const msg: IQNAMsg = {
+
+		felsocket.sendTeacher($SocketType.MSGTOTEACHER, {
 			msgtype: 'qna_return',
 			id: App.student.id,
 			returns: [],
 			stime: this._stime,
             etime: Date.now(),
-		};
-		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
+		});
 
 		await kutil.wait(300);
 		App.pub_playGoodjob();
@@ -75,34 +74,20 @@ class SContent extends React.Component<ISContent> {
 	}
 
 	public render() {
-		const {view, state, actions, questionProg, scriptProg, scriptMode, qsMode} = this.props;
-		const style: React.CSSProperties = {};
-		if(!view) {
-			style.opacity = 0;
-			style.zIndex = -1;
-			style.pointerEvents = 'none';				
-		}
+		const {view, state, actions, questionView, questionProg, scriptProg, scriptMode, qsMode} = this.props;
+		const style: React.CSSProperties = (view) ? {} : {
+			opacity: 0,
+			zIndex: -1,
+			pointerEvents: 'none',
+		};
+
+		const scriptModeProps = {
+			questionView, questionProg, scriptProg,	scriptMode,	qsMode,	state,	actions
+		};
 		return (
 			<div className="s_content" style={style}>
-				<SScript
-					view={this.props.view && scriptProg > SPROG.UNMOUNT}
-					questionProg={questionProg}
-					scriptProg={scriptProg}
-					scriptMode={scriptMode}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
-				<SQuestion 
-					view={this.props.view && this.props.questionView} 
-					questionView={this.props.questionView}
-					questionProg={questionProg}
-					scriptProg={scriptProg}
-					scriptMode={scriptMode}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
+				<SScript view={view && scriptProg > SPROG.UNMOUNT} {...scriptModeProps}/>
+				<SQuestion view={view && questionView} {...scriptModeProps} />
 
 				<div className={'img_pop' + (this._img_pop_on ? ' on' : '')} />
 				<div className={'btn_box' + (scriptProg === SPROG.YESORNO ? ' on' : '')}>

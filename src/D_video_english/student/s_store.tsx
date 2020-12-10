@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observable, action } from 'mobx';
 
 import * as _ from 'lodash';
-import * as common from '../common';
+import { IData,IMsg,IFocusMsg,IRollMsg } from '../common';
 import { StudentContextBase, IActionsBase, IStateBase, VIEWDIV } from '../../share/scontext';
 
 const enum QPROG {
@@ -34,14 +34,15 @@ interface IStateCtx extends IStateBase {
 	isPlay: boolean;
 	focusIdx: number;
 }
+
 interface IActionsCtx extends IActionsBase {
-	getData: () => common.IData;
+	getData: () => IData;
 }
 
 class StudentContext extends StudentContextBase {
 	@observable public state!: IStateCtx;
 	public actions!: IActionsCtx;
-	private _data!: common.IData;
+	private _data!: IData;
 
 	constructor() {
 		super();
@@ -60,8 +61,7 @@ class StudentContext extends StudentContextBase {
 	}
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
-		const state = this.state;
-		if(state.viewDiv !== viewDiv) {
+		if(this.state.viewDiv !== viewDiv) {
 			this.state.questionView = false;
 			if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
 			
@@ -79,7 +79,7 @@ class StudentContext extends StudentContextBase {
 		super.receive(data);
 		// console.log('receive', data);
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
-			const msg = data.data as  common.IMsg;
+			const msg = data.data as  IMsg;
 			if(msg.msgtype === 'quiz_send') {
 				// if(this.state.questionProg > QPROG.UNINIT) return;
 				this.state.scriptProg = SPROG.UNMOUNT;
@@ -155,7 +155,7 @@ class StudentContext extends StudentContextBase {
 				else if(this.state.scriptMode !== 'DIALOGUE') return;
 				else if(this.state.qsMode !== 'script') return;
 
-				const rmsg = msg as common.IRollMsg;
+				const rmsg = msg as IRollMsg;
 				this.state.roll = rmsg.roll;
 				this.state.shadowing = false;
 				this.state.focusIdx = -1;
@@ -172,7 +172,7 @@ class StudentContext extends StudentContextBase {
 			} else if(msg.msgtype === 'focusidx') {
 				if(this.state.viewDiv !== 'content') return;
 				else if(this.state.scriptMode === 'COMPREHENSION') return;
-				const fmsg = msg as common.IFocusMsg;
+				const fmsg = msg as IFocusMsg;
 				this.state.focusIdx = fmsg.idx;
 			}
 		}
@@ -189,7 +189,7 @@ class StudentContext extends StudentContextBase {
 
 	public setData(data: any) {
 		// console.log(data);
-		this._data = data as common.IData;
+		this._data = data as IData;
 
 		const scripts = this._data.scripts;
 		const speakerA = this._data.speakerA.name;

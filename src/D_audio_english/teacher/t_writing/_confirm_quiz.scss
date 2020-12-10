@@ -67,7 +67,6 @@
             position: absolute;
             text-align: center;
             white-space: normal;
-            top: 50px;
             bottom: 0px;
             left: 0px;
             right: 0px;
@@ -85,12 +84,11 @@
                 border-radius: 10px;
                 width: 1027px;
                 height: 492px;
-                padding-left: 25px;
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
-                    left: 20px;
-                    top: 15px;
+                    left: 25px;
+                    top: 20px;
                     z-index: 2;
                 }
                 .sentence_box {
@@ -128,7 +126,7 @@
                     font-size: 34px;
                     font-family: nanumgothic;
                     font-weight: bold;
-                    padding: 0px 25px;
+                    padding: 100px 32px 0px 27px;
                     &>div {
                         display: flex;
                         justify-content: space-between;

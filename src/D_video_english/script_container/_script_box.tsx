@@ -5,9 +5,8 @@ import { observer } from 'mobx-react';
 import ReactResizeDetector from 'react-resize-detector';
 
 import { App } from '../../App';
-import { StandBar } from '../../share/Progress_bar';
 
-import * as common from '../common';
+import { IScript } from '../common';
 import { ToggleBtn } from '@common/component/button';
 
 interface IRGBA {
@@ -234,7 +233,7 @@ let _downY = Number.MIN_VALUE;
 
 interface IScriptBox {
 	view: boolean;
-	script: common.IScript;
+	script: IScript;
 	image_s: string;
 	idx: number;
 	focus: boolean;
@@ -243,8 +242,8 @@ interface IScriptBox {
 	roll: 'A' | 'B' | 'C' | 'D' | 'E';
 	sroll: ''|'A'|'B';				// 현재 학습 roll
 	shadowing: boolean;
-	clickThumb: (idx: number, script: common.IScript) => void;
-	clickText?: (idx: number, script: common.IScript) => void;
+	clickThumb: (idx: number, script: IScript) => void;
+	clickText?: (idx: number, script: IScript) => void;
 	qnaReturnsClick?: (idx: number) => void;
 
 	compDiv: 'COMPREHENSION'|'DIALOGUE';
