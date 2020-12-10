@@ -4,14 +4,14 @@ import { exec } from 'child_process';
 const PROJECTS = [ 
 	'p_base_template_t',
 	'p_base_template_s',
-	'b_ls_voca_t',
-	'b_ls_voca_s',
-	'b_ls_comprehension_t',
-	'b_ls_comprehension_s',
-	'b_rw_comprehension_t',
-	'b_rw_comprehension_s',
-	'b_ls_writing_t',
-	'b_ls_writing_s',
+	'd_word_english_t',
+	'd_word_english_s',
+	'd_video_english_t',
+	'd_video_english_s',
+	'd_reading_english_t',
+	'd_reading_english_s',
+	'd_audio_english_t',
+	'd_audio_english_s',
 ];
 
 async function _exec(cmd: string) {

@@ -1,0 +1,173 @@
+@import '../../../share/Progress_bar.scss';
+@import '../../script_container/index.scss';
+@import '../../../share/sendui.scss';
+@import '../../../share/QuizMCBtn.scss';
+@mixin s_dictation {
+    .s_dictation {
+        @include page;
+        z-index: 2;
+        background-image: resolve("student/images/bg_ls.png");
+        .btn_SCRIPT {
+            position: absolute;
+            top: 19px;
+            left: 26px;
+            z-index: 2;
+            @include btn_down_dis( resolve('student/images/btn_script.png'), resolve('student/images/btn_script_down.png'), resolve('student/images/btn_script.png'), width('student/images/btn_script.png'), height('student/images/btn_script.png'));
+        }
+        .question {
+            position: absolute;
+            top: 0px;
+            height: 100%;
+            left: 0px;
+            width: 100%;
+
+            span.word {
+                display: inline-block;
+                white-space: nowrap;
+                padding: 0px 6px;
+            }
+            .swiper-container {
+                @include page;
+            }
+            .q-item {
+                .dict_question {
+                    position: relative;
+                    text-align: center;
+                    font-size: 28px;
+                    left: 0px;
+                    top: 0px;
+                    height: 800px;
+                    width: 100%;
+
+                    .swiper-container{
+                        @include page;
+                    }
+                    .q-item {
+                        &.key-on { top: -300px; }
+                        .quiz {
+                            position: relative;
+                            display: flex;
+                            height: 120px;
+                            width: 100%;
+                            padding: 0px 30px;
+                            font-size: 29px;
+                            font-weight: bold;
+                            word-break: normal;
+                            color: rgb(0, 0, 0);
+                            white-space: normal;
+                            margin-bottom: 55px;
+
+                            &>div{
+                                position: absolute;
+                                top: 64px
+                            }
+                        }
+                        
+                        .sentence_box{
+                            position: relative;
+                            display: inline-flex;
+                            align-items: center;
+                            width: 1150px;
+                            height: 300px;
+                            border-radius: 15px;
+                            padding-left: 30px;
+    
+                            canvas{
+                                top: 0;
+                                left: 0;
+                                width: inherit;
+                                height: inherit;
+                                border-radius: 35px;
+                                position: absolute;
+                                background: #fff;
+                            }
+                            .question_box{
+                                top: 0;
+                                left: 0;
+                                position: relative;
+                                font-size: 40px;
+                                line-height: 80px;
+                                &>p{
+                                    color: #000;
+                                    text-align: left;
+                                    .block{
+                                        text-align: center;
+                                        display: inline-block;
+                                        border-bottom: 2px solid #000;
+                                        min-width: 175px;
+                                    }
+                                }
+                            }
+                        }
+                        .s_typing {
+                            position: relative;
+                            display: flex;
+                            transition: margin-top 0.3s;
+                            margin-top: 40px;
+                            justify-content: center;
+                            padding: 0 40px;
+                            .area-bnd{
+                                position: relative;
+                                display: flex;
+                                align-items: center;
+                                vertical-align: top;
+                                min-width: 300px;
+                                width: 100%;
+                                margin-right: 50px;
+                                color: #fff;
+                                font-family: NotoSans;
+                                font-size: 52px;
+                                font-weight: bold;
+                                border-bottom: 3px solid #fff;
+                                .index{
+                                    flex: 0 0 auto;
+                                }
+                                .k-tarea{
+                                    position: relative;
+                                    width: 100%;
+                                    height: auto;
+                                    min-height: 64px;
+                                    textarea{
+                                        box-sizing: border-box;
+                                        font-size: 52px;
+                                        padding: 30px 35px 30px 30px;
+                                        color: #fff;
+                                        font-family: NotoSans;
+                                        font-weight: bold;
+                                        &::disabled{
+                                            color: #fff;
+                                        }
+                                    }
+                                    .k-tarea-bg{
+                                        height: 0px;
+                                        min-height: 100%; 
+                                    }
+                                    .k-tarea-bar{
+                                        display: none;
+                                    }				
+                                }
+                                
+                                &:last-child{
+                                    margin-right: 0px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn_next {
+        position: absolute;
+        @include btn_down_dis( resolve('student/images/btn_next.png'), resolve('student/images/btn_next_down.png'), resolve('student/images/btn_next.png'), width('student/images/btn_next.png'), height('student/images/btn_next.png'));
+        top: 355px;
+        right: 12px;
+        z-index: 2;
+    }
+    .fel_toteacher {
+        position: absolute;
+        @include fel_toteacher;
+        bottom: 7px;
+        right: 7px;
+    }
+}

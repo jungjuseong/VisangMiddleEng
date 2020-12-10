@@ -254,7 +254,7 @@ class TeamSpindle extends React.Component<ITeamSpindle> {
 
 			const msg: IMsgQuizIdx = {
 				msgtype: 'next_quiz',
-				quizIndex: this._qidx,
+				qidx: this._qidx,
 				point: 0,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -299,7 +299,7 @@ class TeamSpindle extends React.Component<ITeamSpindle> {
 
 			const msg2: IMsgQuizIdx = {
 				msgtype: 'start_quiz',
-				quizIndex: this._qidx,
+				qidx: this._qidx,
 				point: questions[this._qidx].point,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg2);
@@ -323,7 +323,7 @@ class TeamSpindle extends React.Component<ITeamSpindle> {
 			this._setNavi();
 			const msg1: IMsgQuizIdx = {
 				msgtype: 'send_point',
-				quizIndex: this._qidx,
+				qidx: this._qidx,
 				point: questions[this._qidx].point,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg1);
@@ -533,7 +533,7 @@ class TeamSpindle extends React.Component<ITeamSpindle> {
 				this._qidx = 0;
 				this._setNaviAll();
 				const result = this.props.getGroupInfo();
-				this._timerState.setMax(result.quizTime);
+				this._timerState.setMax(result.qtime);
 				this._timerState.reset();
 				// this._curtain_view = true;
 				// this._curtain_start = false;

@@ -80,6 +80,7 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 	private _stime: string = '';
 	private _etime: string = '';
 	private _input: string = '';
+
 	
 	private _swiper: Swiper|null = null;
 	private _refSwiper = (el: SwiperComponent|null) => {
@@ -136,7 +137,7 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 				word.app_result = false;
 				this._quizs[i] = word;
 			}
-			this._quiztype = info.qtype;
+			this._qtype = info.qtype;
 			*/
 			this._timerState.setPlaySound(false);
 			this._timerState.setMax(next.qtime);

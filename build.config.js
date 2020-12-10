@@ -3,10 +3,10 @@ const WWWROOT = 'output/resources/app/public';
 
 const PROJECTS = [
 	{value: "p_base_template", isNew: true},	// template
-	{value: "b_ls_voca", isNew: true},
-	{value: "b_ls_comprehension", isNew: true},
-	{value: "b_rw_comprehension", isNew: true},
-	{value: "b_ls_writing", isNew: true},
+	{value: "d_word_english", isNew: true},
+	{value: "d_video_english", isNew: true},
+	{value: "d_reading_english", isNew: true},
+	{value: "d_audio_english", isNew: true},
 ];
 console.log(PROJECT, process.argv, process.argv0);
 

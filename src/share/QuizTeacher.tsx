@@ -32,14 +32,13 @@ const _soption: SwiperOptions = {
 	noSwiping: true,
 	followFinger: false,
 };
-
 interface IQuizTeacher<T> {
 	view: boolean;
 	className: string;
 	quizProg: TypeQuizProg;
 	numOfReturn: number;
 	isGroup: boolean;
-	quizTime: number;
+	qtime: number;
 
 	numOfGa: number;
 	numOfNa: number;
@@ -47,7 +46,7 @@ interface IQuizTeacher<T> {
 	quizs: T[];
 
 	ItemComponent?: React.ComponentClass<IQuizPageProps<T>>;
-	quizType: string;
+	qtype: string;
 
 	getSingleInfo: () => IQuizSingleResult;
 	getGroupInfo: () => IQuizGroupResult;
@@ -59,7 +58,6 @@ interface IQuizTeacher<T> {
 	setNavi: (left: boolean, right: boolean) => void;
 	waitResult: () => void;
 }
-
 @observer
 class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher<T>> {
 	private _timerState = new TimerState(60);
@@ -147,7 +145,7 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 
 	public componentWillUpdate(next: IQuizTeacher<T>) {
 		if(next.view && !this.props.view) {
-			this._timerState.setMax(next.quizTime);
+			this._timerState.setMax(next.qtime);
 			this._timerState.reset();
 		}
 	}
@@ -259,7 +257,7 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 
 			const msg2: IMsgQuizIdx = {
 				msgtype: 'start_quiz',
-				quizIndex: idx,
+				qidx: idx,
 				point: 0,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg2);
@@ -304,7 +302,7 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 		this._resultDiv = viewDiv;
 	}
 	public render() {
-		const {view, quizProg, quizs, isGroup, ItemComponent, quizType: qtype} = this.props;
+		const {view, quizProg, quizs, isGroup, ItemComponent, qtype} = this.props;
 
 		const curIdx = this._curIdx;
 		const curIdx_tgt = this._curIdx_tgt;

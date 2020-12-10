@@ -1,0 +1,152 @@
+@import '../../../share/sendui.scss';
+@import '../../../share/Progress_bar.scss';
+@import '../../script_container/index.scss';
+@import '../t_video_box/index.scss';
+@import '../../../share/QuizMCBtn.scss';
+@mixin dictation_quiz {
+    .dict_question_bg {
+        padding-top: 10px;
+        margin: 0 auto;
+        position: relative;
+        width: 1150px;
+        height: 600px;
+        .closed_hint {
+            display: none;
+        }
+        .subject_rate {
+            position: absolute;
+            width: 87px;
+            height: 26px;
+            top: -80px;
+            left: 4px;
+            background-image: resolve('teacher/images/sub_rate.png');
+        }
+        .correct_answer_rate {
+            position: absolute;
+            width: 118px;
+            height: 26px;
+            left: 97px;
+            top: -80px;
+            background-image: resolve('teacher/images/correct_answer_rate.png')
+        }
+        .btn_answer {
+            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 2;
+        }
+        .quiz_box {
+            position: absolute;
+            text-align: center;
+            white-space: normal;
+            top: 50px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            letter-spacing: -0.6px;
+            padding: 20px;
+            span.word {
+                display: inline-block;
+                white-space: nowrap;
+                padding: 0px 6px;
+            }
+            .white_board {
+                display: inline-block;
+                position: relative;
+                background-color: #fff;
+                border-radius: 10px;
+                width: 1000px;
+                height: 490px;
+                padding-left: 25px;
+                overflow: hidden;
+                .btn_trans {
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                    position: absolute;
+                    left: 25px;
+                    top: 20px;
+                    z-index: 2;
+                }
+                .sentence_box {
+                    height: 100px;
+                    position: relative;
+                    font-size: 22px;
+                    font-family: NanumGothic;
+                    font-weight: bold;
+                    text-align: left;
+                    &>div {
+                        display: inline-block;
+                        transform: translateY(-50%);
+                        margin-top: 75px;
+                        .btn_audio {
+                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                            position: absolute;
+                            bottom: -3px;
+                            right: -33px;
+                            z-index: 2;
+                        }
+                        .question_box {
+                            text-align: left;
+                            display: inline-block;
+                            vertical-align: top;
+                            max-width: 1000px;
+                        }
+                    }
+                }
+                .dict_question {
+                    overflow: auto;
+                    height: 385px;
+                    position: relative;
+                    text-align: left;
+                    font-size: 28px;
+                    padding: 0px 25px;
+                    .blank_sentence {
+                        display: flex;
+                        margin-bottom: 100px;
+                         :last-child {
+                            margin-bottom: 0px;
+                        }
+                    }
+                    .block {
+                        color: rgb(0, 0, 255);
+                        min-width: 230px;
+                        border-bottom: 2px solid #000;
+                        display: inline-block;
+                        text-align: center;
+                    }
+                    .answer_box {
+                        display: inline-block;
+                        border-bottom: 2px solid #000;
+                        margin-bottom: 25px;
+                        .sample {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                        }
+                        .hide {
+                            display: none;
+                        }
+                        .hint {
+                            vertical-align: center;
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            color: rgb(0, 0, 255);
+                            .block {
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(0, 0, 0, 0.3);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+    }
+}

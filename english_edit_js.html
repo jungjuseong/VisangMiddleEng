@@ -33,7 +33,7 @@ obj_e.TYPE_SELECT = "select";
 obj_e.TYPE_MULTI_LANG = "multi_lang";
 obj_e.TYPE_FOLDER = 'folder';
 
-var ls_voca = {
+var word_english = {
 	_type:obj_e.TYPE_OBJECT,
 	page1: {
 		_type:obj_e.TYPE_OBJECT,
@@ -478,11 +478,13 @@ var b_rw_comprehension = {
 	}
 }
 
-var ls_writing ={
+var audio_english ={
 	_type:obj_e.TYPE_OBJECT,
 	_excelSheets:"Activity 선택 화면",
-	_startRow:2,
-	_activity_code: {
+	_startRow:3,
+	seq: {_type:obj_e.TYPE_INT, _excel:"A"},
+	image: {_type:obj_e.TYPE_IMAGE, _excel:"B"},
+	activity_code: {
 		_type:obj_e.TYPE_OBJECT,
 		num1: {_type:obj_e.TYPE_TEXT, _excel:"C"},
 		num2: {_type:obj_e.TYPE_TEXT, _excel:"D"},
@@ -1028,15 +1030,74 @@ var ls_writing ={
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"AH"}
 		}
 	},
+	script:{
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"메인음원_스크립트",
+		_startRow:2,
+		_key:"seq",
+		_item: {
+			_type: obj_e.TYPE_OBJECT,
+			activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+			seq: {_type:obj_e.TYPE_INT, _excel:"B"},	
+			dms_seq: {_type:obj_e.TYPE_INT, _excel:"C"},
+			script_group: {_type:obj_e.TYPE_INT, _excel:"D"},
+			coordinate_num: {_type:obj_e.TYPE_INT, _excel:"E"},
+			start: {_type:obj_e.TYPE_SECOND, _excel:"F"},
+			end: {_type:obj_e.TYPE_SECOND, _excel:"G"},
+			audio_start: {_type:obj_e.TYPE_SECOND, _excel:"H"},
+			audio_end: {_type:obj_e.TYPE_SECOND, _excel:"I"},
+			speaker: {_type:obj_e.TYPE_TEXT, _excel:"J"},
+			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"K"},
+			dms_kor: {_type:obj_e.TYPE_TEXT, _excel:"L"},
+		}
+	},
+	role_play:{
+		_type:obj_e.TYPE_OBJECT,
+		_excelSheets:"Role Play",
+		_startRow:3,
+		activity_code:{_type:obj_e.TYPE_TEXT, _excel:"A"},
+		main_sound: {_type:obj_e.TYPE_SOUND, _excel:"B",_default: ""},
+		video_start: {_type:obj_e.TYPE_SECOND, _excel:"R", _default: 0},
+		speakerA: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"C"},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"D"},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"E"},
+		},
+		speakerB: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"F"},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"G"},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"H"},
+		},
+		speakerC: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"I", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"J", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"K", _default: ""},
+		},
+		speakerD: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"L", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"M", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"N", _default: ""},
+		},
+		speakerE: {
+			_type:obj_e.TYPE_OBJECT,
+			name: {_type:obj_e.TYPE_TEXT, _excel:"O", _default: ""},
+			image_s: {_type:obj_e.TYPE_IMAGE, _excel:"P", _default: ""},
+			image_l: {_type:obj_e.TYPE_IMAGE, _excel:"Q", _default: ""},
+		}
+	}
 }
 
 
 
 var area = document.getElementById('area');
-alert('ls_writing');
-area.value = JSON.stringify(ls_writing);
+alert('audio_english');
+area.value = JSON.stringify(audio_english);
 // document.write(JSON.stringify(korea_speak_quiz ))
-console.log(JSON.stringify(ls_writing));
+console.log(JSON.stringify(audio_english));
 	</script>
  </body>
 </html>

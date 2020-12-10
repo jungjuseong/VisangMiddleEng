@@ -1,0 +1,255 @@
+@import '../../../share/sendui.scss';
+@import '../../../share/Progress_bar.scss';
+@mixin confirm_quiz {
+    .confirm_question_bg {
+        margin: 0 auto;
+        position: relative;
+        width: 1150px;
+        height: 600px;
+        .subject_rate {
+            color: white;
+            text-align: right;
+            font-size: 12px;
+            padding-right: 25px;
+            line-height: 26px;
+            position: relative;
+            width: 87px;
+            height: 26px;
+            top: -80px;
+            left: 4px;
+            background-image: resolve('teacher/images/sub_rate.png');
+            &.hide {
+                display: none;
+            }
+        }
+        .correct_answer_rate {
+            width: 118px;
+            height: 26px;
+            background-image: resolve('teacher/images/correct_answer_rate.png');
+            @include compre_correct(-80px, 97px);
+            &.no-result {
+                padding-top: 7px;
+            }
+            &.hide {
+                display: none;
+            }
+            .title {
+                display: none;
+            }
+            &>.progress_bar {
+                width: 70px;
+                &>.data_percent {
+                    left: 75px;
+                }
+            }
+        }
+        .btn_answer {
+            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 2;
+            &.hide {
+                display: none;
+            }
+        }
+        .btn_example {
+            @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            z-index: 2;
+            &.hide {
+                display: none;
+            }
+        }
+        .quiz_box {
+            position: absolute;
+            text-align: center;
+            white-space: normal;
+            top: 50px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            letter-spacing: -0.6px;
+            padding: 20px;
+            span.word {
+                display: inline-block;
+                white-space: nowrap;
+                padding: 0px 6px;
+            }
+            .white_board {
+                display: inline-block;
+                position: relative;
+                background-color: #fff;
+                border-radius: 10px;
+                width: 1027px;
+                height: 492px;
+                padding-left: 25px;
+                .btn_trans {
+                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                    position: absolute;
+                    left: 20px;
+                    top: 15px;
+                    z-index: 2;
+                }
+                .sentence_box {
+                    height: 100px;
+                    position: relative;
+                    font-size: 22px;
+                    font-weight: bold;
+                    text-align: left;
+                    margin-bottom: 10px;
+                    margin-left: 25px;
+                    font-family: NanumGothic;
+                    &>div {
+                        display: inline-block;
+                        transform: translateY(-50%);
+                        margin-top: 75px;
+                        .btn_audio {
+                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                            position: absolute;
+                            bottom: -3px;
+                            right: -33px;
+                            z-index: 2;
+                        }
+                        .question_box {
+                            text-align: left;
+                            display: inline-block;
+                            vertical-align: top;
+                            max-width: 1000px;
+                        }
+                    }
+                }
+                /*보충*/
+                .sup_question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 34px;
+                    font-family: nanumgothic;
+                    font-weight: bold;
+                    padding: 0px 25px;
+                    &>div {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 25px;
+                    }
+                     :last-child {
+                        margin-bottom: 0px;
+                    }
+                    .toggle_bundle {
+                        width: width('teacher/images/btn_true_false.png');
+                        height: height('teacher/images/btn_true_false.png');
+                        background: resolve('teacher/images/TF.png');
+                        padding: 0 5px 7px 5px;
+                        cursor: pointer;
+                        &>div {
+                            display: inline-block;
+                            width: 50%;
+                            height: 100%;
+                            z-index: 5;
+                        }
+                    }
+                    .on_true {
+                        background: resolve('teacher/images/TF_T_B.png');
+                    }
+                    .on_false {
+                        background: resolve('teacher/images/TF_F_B.png');
+                    }
+                    .on_true_t {
+                        background: resolve('teacher/images/TF_T_T.png');
+                    }
+                    .on_false_t {
+                        background: resolve('teacher/images/TF_F_T.png');
+                    }
+                }
+                /*기본*/
+                .image_box {
+                    position: relative;
+                    margin-top: 5px;
+                    height: 260px;
+                    display: inline-block;
+                    &>img {
+                        top: 0px;
+                        left: 0px;
+                        width: 218px;
+                        height: auto;
+                        margin: 0px 25px;
+                    }
+                }
+                /*심화*/
+                .hard_question {
+                    position: relative;
+                    text-align: left;
+                    font-size: 34px;
+                    font-family: nanumgothic;
+                    font-weight: bold;
+                    padding: 0px 25px;
+                    &>div {
+                        margin-bottom: 22px;
+                    }
+                     :last-child {
+                        border-bottom: 0px;
+                    }
+                    .answer_box {
+                        border-bottom: 4px solid #000;
+                        width: 730px;
+                        margin-left: 40px;
+                        .sample {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                        }
+                        .hide {
+                            display: none;
+                        }
+                        .hint {
+                            min-height: 55px;
+                            padding-bottom: 5px;
+                            padding-top: 15px;
+                            color: rgb(0, 0, 255);
+                            .block {
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+            }
+            .basic {
+                height: 400px;
+            }
+            .speechbubble_box {
+                position: relative;
+                margin: 10px 0px;
+                &>div {
+                    display: inline-table;
+                    vertical-align: middle;
+                    width: 590px;
+                    height: 80px;
+                    border-bottom: 4px solid #fff;
+                    max-height: 120px;
+                    &.view-hint {
+                        color: rgb(255, 253, 138);
+                        &:after {
+                            border-right-color: rgb(13, 92, 155);
+                        }
+                    }
+                    .sample {
+                        min-height: 55px;
+                        span.block {
+                            color: transparent;
+                            border-bottom: 2px solid #fff;
+                        }
+                    }
+                    .hide {
+                        display: none;
+                    }
+                    .hint {
+                        min-height: 55px;
+                        padding-bottom: 5px;
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
