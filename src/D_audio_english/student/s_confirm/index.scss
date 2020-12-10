@@ -117,6 +117,18 @@
                         .on_false {
                             background: resolve('teacher/images/TF_F_B.png');
                         }
+                        .on_true_t {
+                            background: resolve('teacher/images/TF_T_T.png');
+                        }
+                        .on_false_t {
+                            background: resolve('teacher/images/TF_F_T.png');
+                        }
+                        .on_true_f {
+                            background: resolve('teacher/images/TF_F_F.png');
+                        }
+                        .on_false_f {
+                            background: resolve('teacher/images/TF_T_F.png');
+                        }
                     }
                 }
                 .hard_question {

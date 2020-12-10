@@ -156,6 +156,12 @@
                     .on_false {
                         background: resolve('teacher/images/TF_F_B.png');
                     }
+                    .on_true_t {
+                        background: resolve('teacher/images/TF_T_T.png');
+                    }
+                    .on_false_t {
+                        background: resolve('teacher/images/TF_F_T.png');
+                    }
                 }
                 /*기본*/
                 .image_box {

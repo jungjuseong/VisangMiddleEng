@@ -109,6 +109,13 @@ class Supplement extends React.Component<IQuizBox> {
 		this._toggle[param] = false;
 	}
 	private _getToggleState = (num: number) =>{
+		if(this._hint){
+			if(this._toggle[num] === null) return '';
+			if(this._toggle[num])
+				return 'on_true_t';
+			else
+				return 'on_false_t';
+		}
 		if(this._toggle[num] === null) return '';
 		if(this._toggle[num])
 			return 'on_true';
