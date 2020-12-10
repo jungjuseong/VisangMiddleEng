@@ -17,46 +17,52 @@ import VideoDirection from '../../share/video-direction';
 
 const _WIDTH = 1280;
 
-interface IContentBox {
+interface IContentBoxProps {
 	prog: TProg;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class ContentBox extends React.Component<IContentBox> {
+class ContentBox extends React.Component<IContentBoxProps> {
 	@observable private _idx = 0;
 	@observable private _idx_sub = 0;
 
 	private _bRapid_sub = false;
-	private _grouping: React.CSSProperties = {};
-	private _timer: React.CSSProperties = {};
-	private _board: React.CSSProperties = {};
+	private _groupingStyle: React.CSSProperties = {};
+	private _timerStyle: React.CSSProperties = {};
+	private _boardStyle: React.CSSProperties = {};
 	
 	private _goToIntro = () => {
         alert('go to Intro page');
         return;
     }
 
-	public componentWillUpdate(next: IContentBox) {
+	public componentWillUpdate(next: IContentBoxProps) {
 		const { state,prog } = this.props;
 		
 		if(state.prog !== next.state.prog) {
 			if(state.isGroup) {
-				this._grouping.display = '';
-				this._board.display = '';
-				this._grouping.opacity = (next.prog === 'grouping' || prog === 'grouping') ? 1 : 0;
-				this._timer.opacity = (next.prog === 'timer' || prog === 'timer') ? 1 : 0;
-				this._board.opacity = (next.prog === 'board' || prog === 'board') ? 1 : 0;
+				this._groupingStyle = {
+					...this._groupingStyle,
+					display: '',
+					opacity: (next.prog === 'grouping' || prog === 'grouping') ? 1 : 0,
+				};
+				this._timerStyle.opacity = (next.prog === 'timer' || prog === 'timer') ? 1 : 0;
+				this._boardStyle = {
+					...this._boardStyle,
+					display: '',
+					opacity: (next.prog === 'board' || prog === 'board') ? 1 : 0,
+				};
 			} else {
-				this._grouping.display = 'none';
-				this._board.display = 'none';
-				this._timer.opacity = (next.prog === 'timer' || prog === 'timer') ? 1 : 0;
+				this._groupingStyle.display = 'none';
+				this._boardStyle.display = 'none';
+				this._timerStyle.opacity = (next.prog === 'timer' || prog === 'timer') ? 1 : 0;
 			}
 		}
 	}
 
-	public componentDidUpdate(prev: IContentBox) {
+	public componentDidUpdate(prev: IContentBoxProps) {
 		const { state,prog } = this.props;
 
 		if(prog !== prev.prog) {
@@ -141,9 +147,15 @@ class ContentBox extends React.Component<IContentBox> {
 					</div>
 					<div className="sub-container">
 						<div className="sub-wrapper" style={style_sub}>
-							<div style={{...this._grouping}}><Grouping view={prog === 'grouping'} state={state} actions={actions}/></div>
-							<div style={{...this._timer}}><Timer view={prog === 'timer'} state={state} actions={actions}/></div>
-							<div style={{...this._board}}><Board view={prog === 'board'} numOfReturn={state.numOfReturn} state={state} actions={actions}/></div>
+							<div style={{...this._groupingStyle}}>
+								<Grouping view={prog === 'grouping'} state={state} actions={actions}/>
+							</div>
+							<div style={{...this._timerStyle}}>
+								<Timer view={prog === 'timer'} state={state} actions={actions}/>
+							</div>
+							<div style={{...this._boardStyle}}>
+								<Board view={prog === 'board'} numOfReturn={state.numOfReturn} state={state} actions={actions}/>
+							</div>
 							<div><TQuiz view={prog === 'quiz'} quizProg={state.quizProg} numOfReturn={state.numOfReturn} state={state} actions={actions}/></div>
 						</div>
 					</div>

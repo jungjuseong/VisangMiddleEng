@@ -34,6 +34,7 @@ interface IStateCtx extends IStateBase {
 	isPlay: boolean;
 	focusIdx: number;
 }
+
 interface IActionsCtx extends IActionsBase {
 	getData: () => common.IData;
 }

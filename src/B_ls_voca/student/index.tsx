@@ -21,29 +21,25 @@ import '../../font.scss';
 @observer
 class StudentComponent extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 	public render() {
+		const { actions } = this.props;
 		const { viewDiv,svg_bg,directionON,loading,goodjob } = this.props.state;
-		const leftPos = viewDiv === 'direction' ? 0 : -1280;
-
+		const leftOffset = viewDiv === 'direction' ? 0 : -1280;
+		const videoDirectionProps = {
+			view: viewDiv === 'direction',
+			on: directionON,
+			isTeacher: false,
+			video_url: _digenglish_lib_ + 'direction/ls_rw_voca.webp',
+			video_frame: 125 
+		};
 		return (
 			<>
 			<div id="preload_hidden">
 				<span>가나다라</span><span style={{fontWeight: 'bold'}}>가나다라</span>
 			</div>
-			<SVGBg 
-				className="bg_svg" 
-				data="/content/digenglish_lib/images/theme0_bg.svg" 
-				{...svg_bg}
-			/>
-			<div className="content-container"><div className="content-wrapper" style={{left: leftPos + 'px',}}>
+			<SVGBg className="bg_svg" data="/content/digenglish_lib/images/theme0_bg.svg" {...svg_bg} />
+			<div className="content-container"><div className="content-wrapper" style={{left: leftOffset + 'px',}}>
 				<div>
-					<VideoDirection 
-							className="video-direction" 
-							view={viewDiv === 'direction'} 
-							on={directionON} 
-							isTeacher={false}
-							video_url={_digenglish_lib_ + 'direction/ls_rw_voca.webp'}
-							video_frame={125} 
-					/>
+					<VideoDirection className="video-direction" {...videoDirectionProps} />
 				</div>
 				<div>
 					<Quiz/>
@@ -51,19 +47,8 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 					<SSpeakRecord />
 
 					<Loading view={loading}/>
-					<SVGAni 
-						className="goodjob-svg" 
-						view={goodjob} 
-						delay={2000}
-						data={`${_digenglish_lib_}images/goodjob_ls.svg`}
-						onComplete={this.props.actions.goodjobComplete}
-					/>
-					<SVGEmbed 
-						className="eyeon_svg" 
-						data={`${_digenglish_lib_}images/eyeon_ls.svg`}
-						view={viewDiv === 'eyeon' || viewDiv === 'direction'}
-						bPlay={false}
-					/>
+					<SVGAni className="goodjob-svg" view={goodjob} delay={2000}	data={`${_digenglish_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete} />
+					<SVGEmbed className="eyeon_svg" data={`${_digenglish_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}	/>
 				</div>
 			</div></div>
 
