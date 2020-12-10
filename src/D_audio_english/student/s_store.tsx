@@ -32,10 +32,7 @@ interface IStateCtx extends IStateBase {
 	additionalSupProg: QPROG;
 	additionalHardProg: QPROG;
 	dictationView : boolean;
-	dictationBasicProg: QPROG;
-	dictationSupProg: QPROG;
-	dictationHardProg: QPROG;
-	dictationProg: QPROG;
+	dictationProg: QPROG[];
 	idx: number;
 	scriptProg: SPROG;
 	hint: boolean;
@@ -67,10 +64,7 @@ class StudentContext extends StudentContextBase {
 		this.state.additionalBasicProg = QPROG.UNINIT;
 		this.state.additionalSupProg = QPROG.UNINIT;
 		this.state.additionalHardProg = QPROG.UNINIT;
-		this.state.dictationBasicProg = QPROG.UNINIT;
-		this.state.dictationSupProg = QPROG.UNINIT;
-		this.state.dictationHardProg = QPROG.UNINIT;
-		this.state.dictationProg = QPROG.UNINIT;
+		this.state.dictationProg = [QPROG.UNINIT,QPROG.UNINIT,QPROG.UNINIT];
 		this.state.idx = -1;
 		this.state.scriptProg = SPROG.UNMOUNT;
 		this.state.qsMode  = '';
@@ -185,19 +179,10 @@ class StudentContext extends StudentContextBase {
 					this.state.additionalHardProg = QPROG.COMPLETE;
 				}
 			} else if(msg.msgtype === 'dictation_send'){
-				if(msg.idx === 0){
-					if(this.state.dictationSupProg > QPROG.UNINIT) return;
-					this.state.dictationSupProg = QPROG.ON;
-					this.state.idx = 0;
-				}else if(msg.idx === 1){
-					if(this.state.dictationBasicProg > QPROG.UNINIT) return;
-					this.state.dictationBasicProg = QPROG.ON;
-					this.state.idx = 1;
-				}else{
-					if(this.state.dictationHardProg > QPROG.UNINIT) return;
-					this.state.dictationHardProg = QPROG.ON;
-					this.state.idx = 2;
-				}
+				console.log('dictation_send',msg.idx)
+				if(this.state.dictationProg[msg.idx] > QPROG.UNINIT) return;
+				this.state.dictationProg[msg.idx] = QPROG.ON;
+				this.state.idx = msg.idx;
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.dictationView = true;
 				this.state.viewDiv = 'content';

@@ -197,7 +197,6 @@ class SAdditional extends React.Component<ISQuestion> {
 				break;
 			}
 			case 1 : {
-				console.log('checkchoice case 1')
 				for(let i = 0 ; i < this._choices.length ; i++){
 					if((this._choices[i].answer1 === '' && data.additional_basic[i].sentence_answer1 !='') || (this._choices[i].answer2 ==='' && data.additional_basic[i].sentence_answer2 !='') || (this._choices[i].answer3 === '' && data.additional_basic[i].sentence_answer3 !='')){
 						checkchoice = true;

@@ -146,9 +146,9 @@ class Writing extends React.Component<IWriting> {
         if(this._tab === 'ADDITIONAL' && this._curQidx === 0 && state.additionalSupProg !==  SENDPROG.READY) return;
         if(this._tab === 'ADDITIONAL' && this._curQidx === 1 && state.additionalBasicProg !==  SENDPROG.READY) return;
         if(this._tab === 'ADDITIONAL' && this._curQidx === 2 && state.additionalHardProg !==  SENDPROG.READY) return;
-        if(this._tab === 'DICTATION' && this._curQidx === 0 && state.dictationSupProg !==  SENDPROG.READY) return;
-        if(this._tab === 'DICTATION' && this._curQidx === 1 && state.dictationBasicProg !==  SENDPROG.READY) return;
-        if(this._tab === 'DICTATION' && this._curQidx === 2 && state.dictationHardProg !==  SENDPROG.READY) return;
+        for(let i = 0 ; i <3 ; i++){
+            if(this._tab === 'DICTATION' && this._curQidx === i && state.dictationProg[i] !==  SENDPROG.READY) return;
+        }
         if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
         
         if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
@@ -157,9 +157,7 @@ class Writing extends React.Component<IWriting> {
         else if(this._tab === 'ADDITIONAL'&& this._curQidx === 0) state.additionalSupProg = SENDPROG.SENDING;
         else if(this._tab === 'ADDITIONAL'&& this._curQidx === 1) state.additionalBasicProg = SENDPROG.SENDING;
         else if(this._tab === 'ADDITIONAL'&& this._curQidx === 2) state.additionalHardProg = SENDPROG.SENDING;
-        else if(this._tab === 'DICTATION'&& this._curQidx === 0) state.dictationSupProg = SENDPROG.SENDING;
-        else if(this._tab === 'DICTATION'&& this._curQidx === 1) state.dictationBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'DICTATION'&& this._curQidx === 2) state.dictationHardProg = SENDPROG.SENDING;
+        else if(this._tab === 'DICTATION') state.dictationProg[this._curQidx] = SENDPROG.SENDING;
         else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
         else return;
 
@@ -218,29 +216,9 @@ class Writing extends React.Component<IWriting> {
                     }
                 }
             } else if(this._tab === 'DICTATION'){
-                switch(this._curQidx){
-                    case 0 : {
-                        if(state.dictationSupProg !==  SENDPROG.SENDING) return;
-                        state.dictationSupProg = SENDPROG.SENDED
-                        msg = {msgtype: 'dictation_send', idx : 0};
-                        break;
-                    }
-                    case 1 : {
-                        if(state.dictationBasicProg !==  SENDPROG.SENDING) return;
-                        state.dictationBasicProg = SENDPROG.SENDED;
-                        msg = {msgtype: 'dictation_send', idx : 1};
-                        break;
-                    } 
-                    case 2 : {
-                        if(state.dictationHardProg !==  SENDPROG.SENDING) return;
-                        state.dictationHardProg = SENDPROG.SENDED;
-                        msg = {msgtype: 'dictation_send', idx : 2};
-                        break;
-                    } 
-                    default : {
-                        return
-                    }
-                }
+                if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDING) return;
+                state.dictationProg[this._curQidx] = SENDPROG.SENDED
+                msg = {msgtype: 'dictation_send', idx : this._curQidx};
             }else {
                 if(state.scriptProg !==  SENDPROG.SENDING) return;
                 state.scriptProg = SENDPROG.SENDED;
@@ -311,29 +289,9 @@ class Writing extends React.Component<IWriting> {
                 }
             }
         }else if(this._tab === 'DICTATION'){
-            switch(this._curQidx){
-                case 0 : {
-                    if(state.dictationSupProg !==  SENDPROG.SENDED) return;
-                    state.dictationSupProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'dictation_end', idx : 0};
-                    break;
-                }
-                case 1 : {
-                    if(state.dictationBasicProg !==  SENDPROG.SENDED) return;
-                    state.dictationBasicProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'dictation_end', idx : 1};
-                    break;
-                } 
-                case 2 : {
-                    if(state.dictationHardProg !==  SENDPROG.SENDED) return;
-                    state.dictationHardProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'dictation_end', idx : 2};
-                    break;
-                } 
-                default : {
-                    return
-                }
-            }
+            if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDED) return;
+            state.dictationProg[this._curQidx] = SENDPROG.COMPLETE;
+            msg = {msgtype: 'dictation_end', idx : 0};
         } else {
             if(state.scriptProg !==  SENDPROG.SENDING) return;
             state.scriptProg = SENDPROG.SENDED;
@@ -418,10 +376,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
-        // else if(state.dictationProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
@@ -477,9 +432,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
         
@@ -507,9 +460,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
@@ -532,9 +483,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
@@ -557,9 +506,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
@@ -582,9 +529,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) return;
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationBasicProg === SENDPROG.SENDED) return;
-        else if(state.dictationSupProg === SENDPROG.SENDED) return;
-        else if(state.dictationHardProg === SENDPROG.SENDED) return;
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
@@ -670,9 +615,7 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
         else if(state.additionalSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
         else if(state.additionalHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.dictationBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.dictationSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.dictationHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
+        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) actions.setNavi(false,false);
         else if(state.scriptProg === SENDPROG.SENDED) actions.setNavi(false,false);
 		else actions.setNavi(true, true);
 		
@@ -843,9 +786,7 @@ class Writing extends React.Component<IWriting> {
                             (isCompA && this._curQidx ===0 && state.additionalSupProg < SENDPROG.SENDED) ||
                             (isCompA && this._curQidx ===1 && state.additionalBasicProg < SENDPROG.SENDED) ||
                             (isCompA && this._curQidx ===2 && state.additionalHardProg < SENDPROG.SENDED) ||
-                            (isCompD && this._curQidx ===0 && state.dictationSupProg < SENDPROG.SENDED) ||
-                            (isCompD && this._curQidx ===1 && state.dictationBasicProg < SENDPROG.SENDED) ||
-                            (isCompD && this._curQidx ===2 && state.dictationHardProg < SENDPROG.SENDED) ||
+                            (isCompD && state.dictationProg[this._curQidx] < SENDPROG.SENDED) ||
                             (isCompS && state.scriptProg < SENDPROG.SENDED);
         
         const isViewInfo = (isCompI && confirmBasicProg >= SENDPROG.SENDED) || isCompS;
@@ -924,6 +865,9 @@ class Writing extends React.Component<IWriting> {
                             <div key={idx}>
                                 <DictationQuiz 
                                     view={view && idx === this._curQidx}
+                                    actions={actions}
+                                    state={state}
+                                    index ={this._curQidx}
                                     data={dictation}
                                     onClosed={this._letstalkClosed}
                                     onHintClick={this._clickAnswer}

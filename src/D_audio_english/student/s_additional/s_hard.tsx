@@ -58,11 +58,9 @@ class SHard extends React.Component<IQuizItem> {
 		keyBoardState.state = 'hide';
 	}
 
-	private _onChange = (text: string) => {
-		if(this._stime === 0) this._stime = Date.now();
-		
+	private _onChange = (text: string , index:number) => {
 		if(!this.props.view) return;
-		this.props.onChoice(this._curIdx,text,0);
+		this.props.onChoice(this._curIdx,text,index);
 		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
@@ -175,7 +173,8 @@ class SHard extends React.Component<IQuizItem> {
 													on={view && this._curIdx === idx && this._select_area === 0 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
-													onChange={this._onChange}
+													onChange={(text:string)=>{
+														this._onChange(text,0)}}
 													onDone={this._onDone}
 													maxLength={60}
 													maxLineNum={3}
@@ -190,7 +189,8 @@ class SHard extends React.Component<IQuizItem> {
 													on={view && this._curIdx === idx && this._select_area === 1 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
-													onChange={this._onChange}
+													onChange={(text:string)=>{
+														this._onChange(text,1)}}
 													onDone={this._onDone}
 													maxLength={60}
 													maxLineNum={3}

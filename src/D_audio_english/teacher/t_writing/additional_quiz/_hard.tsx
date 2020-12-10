@@ -34,17 +34,6 @@ class Hard extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private readonly _soption: SwiperOptions = {
-		direction: 'vertical',
-		observer: true,
-		slidesPerView: 'auto',
-		freeMode: true,
-		mousewheel: true,			
-		noSwiping: false,
-		followFinger: true,
-		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
-	};
-
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	
@@ -105,16 +94,6 @@ class Hard extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
@@ -153,16 +132,16 @@ class Hard extends React.Component<IQuizBox> {
 		const { data, state} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
-        const isQComplete = state.additionalSupProg >= SENDPROG.COMPLETE;
+        const isQComplete = state.additionalHardProg >= SENDPROG.COMPLETE;
         if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalSup.arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalHard.arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
             else qResult = 0;
             if(qResult > 100) qResult = 100;
         }
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
