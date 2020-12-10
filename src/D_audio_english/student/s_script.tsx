@@ -2,22 +2,18 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import { observable } from 'mobx';
-import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
-import { IStateCtx, IActionsCtx, QPROG, SPROG } from './s_store';
+import { IStateCtx, IActionsCtx, SPROG } from './s_store';
 import SendUINew from '../../share/sendui_new';
 import ScriptContainer from '../script_container';
-import { IQNAMsg,IScript } from '../common';
+import { IScript } from '../common';
 import { App } from '../../App';
-
-import * as felsocket from '../../felsocket';
 
 interface ISScriptProps {
 	view: boolean;
 	scriptProg: SPROG;
 	qsMode: ''|'question'|'script';
-
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
@@ -86,7 +82,7 @@ class SScript extends React.Component<ISScriptProps> {
 				<div className="script_container">
 					<ScriptContainer
 						view={state.viewDiv === 'content'}
-						role = {actions.getData().role_play}
+						role={actions.getData().role_play}
 						script={actions.getData().scripts[0]}
 						idx={state.idx}
 						focusIdx={state.focusIdx}

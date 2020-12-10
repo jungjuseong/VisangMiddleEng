@@ -9,8 +9,6 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from './s_store';
-import * as felsocket from '../../felsocket';
-import {IQNAMsg} from '../common';
 
 import SConfirm from './s_confirm';
 import SScript from './s_script';
@@ -85,36 +83,36 @@ class SContent extends React.Component<ISContentProps> {
 				opacity: 0,
 				zIndex: -1,
 				pointerEvents: 'none'
-			}			
+			};	
 		}
 		return (
 			<div className="s_content" style={style}>
 				<SScript
-					view={this.props.view && scriptProg > SPROG.UNMOUNT}
+					view={view && scriptProg > SPROG.UNMOUNT}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
 					actions={actions}
 				/>
 				<SConfirm 
-					view={this.props.view && this.props.state.confirmView} 
-					questionView={this.props.state.confirmView}
+					view={view && state.confirmView} 
+					questionView={state.confirmView}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
 					actions={actions}
 				/>
 				<SAdditional
-					view={this.props.view && this.props.state.additionalView} 
-					questionView={this.props.state.additionalView}
+					view={view && state.additionalView} 
+					questionView={state.additionalView}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
 					actions={actions}
 				/>
 				<SDictation
-					view={this.props.view && this.props.state.dictationView} 
-					questionView={this.props.state.dictationView}
+					view={view && state.dictationView} 
+					questionView={state.dictationView}
 					scriptProg={scriptProg}
 					qsMode={qsMode}
 					state={state}
