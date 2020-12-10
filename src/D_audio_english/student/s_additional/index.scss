@@ -198,6 +198,25 @@
                                 top: 64px
                             }
                         }
+                        .OX_box{
+                            position: absolute;
+                            display: inline-block;
+                            background-repeat: no-repeat;
+                            top: 210px;
+                            left: 123px;
+                            font-size: 25px;
+                            text-align: center;
+                            z-index: 101;
+                            line-height: 5 * height("common/icon_o.png") / 6;
+                            width: width("common/icon_o.png");
+                            height:  height("common/icon_o.png");
+                            &.O{
+                                background-image: resolve("common/icon_o.png");
+                            }
+                            &.X{
+                                background-image: resolve("common/icon_x.png");
+                            }
+                        }
                         .table-item {
                             &.type_1,
                             &.type_2,
@@ -206,13 +225,16 @@
                             &.type_5,
                             &.type_6,
                             &.type_7 {
-                                .content-box{
-                                    color: yellow;
+                                .content-box>p {
+                                    line-height: 120px;
+                                    padding: 10px 0 0 10px;
                                 }
                                 .content-box>div .content {
                                     .answer{
                                         position: absolute;
                                         line-height: 25px;
+                                        padding-left: 45px;
+                                        color: red;
                                     }
                                     .select-box {
                                         line-height: 43px;

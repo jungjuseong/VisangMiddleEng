@@ -133,8 +133,35 @@ class SHard extends React.Component<IQuizItem> {
 		}
 	}
 
+	// private _checkAnswer= () =>{
+	// 	const { view, data ,state, prog, onChoice} = this.props;
+	// 	{data.map((quiz, idx) => {
+	// 		if(quiz.app_drops[idx].correct === "summer"){
+	// 			console.log(quiz.app_drops[idx].correct);
+	// 			console.log("correct");
+	// 		}
+	// 	})}
+	// }
+
 	public render() {
 		const { view, data ,state, prog, onChoice} = this.props;
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		if(this.props.prog === QPROG.COMPLETE){
+			{data.map((quiz, idx) => {
+				let correct_num :number = 0;
+				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]]
+				{answer_arr.map((answer, index)=>{
+					if(answer.correct === answer.inputed){
+						correct_num +=1;
+					}
+				})}
+				if(correct_num === 3){
+					OXs[idx] = 'O';
+				}else{
+					OXs[idx] = 'X';
+				}
+			})}
+		}
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -148,6 +175,7 @@ class SHard extends React.Component<IQuizItem> {
 												{this._jsx_sentence}
 											</WrapTextNew>
 										</div>
+										<div className={"OX_box " + OXs[idx]}></div>
 										<TableItem
 										viewCorrect={false}
 										disableSelect={prog === QPROG.COMPLETE}
