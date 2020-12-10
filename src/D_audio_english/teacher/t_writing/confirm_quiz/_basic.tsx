@@ -148,7 +148,7 @@ class Basic extends React.Component<IQuizBoxProps> {
 		let qResult = -1;
         const isQComplete = state.confirmBasicProg >= SENDPROG.COMPLETE;
         if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmBasic.numOfCorrect / state.numOfStudent);
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmBasic.arrayOfCorrect.filter(it=>it === true).length / state.numOfStudent);
             else qResult = 0;
             if(qResult > 100) qResult = 100;
         }

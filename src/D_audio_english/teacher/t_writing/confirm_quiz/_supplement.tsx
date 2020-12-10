@@ -179,7 +179,7 @@ class Supplement extends React.Component<IQuizBox> {
 		let qResult = -1;
         const isQComplete = state.confirmSupProg >= SENDPROG.COMPLETE;
         if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.numOfCorrect / state.numOfStudent);
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
             else qResult = 0;
             if(qResult > 100) qResult = 100;
         }
