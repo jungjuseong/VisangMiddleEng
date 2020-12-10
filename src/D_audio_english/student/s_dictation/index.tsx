@@ -218,8 +218,7 @@ class SDictation extends React.Component<ISQuestion> {
 		const {view, state, actions} = this.props;
 		const c_data = actions.getData();
 		const data_array = [c_data.dictation_sup,c_data.dictation_basic,c_data.dictation_hard]
-		const noSwiping = state.dictationProg[this.props.state.idx] === QPROG.ON;
-		console.log(state.idx)
+		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
 			<div className="s_dictation" style={{...this._style}}>
