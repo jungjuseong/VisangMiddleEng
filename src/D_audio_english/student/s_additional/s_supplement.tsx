@@ -69,16 +69,20 @@ class SHard extends React.Component<IQuizItem> {
 		this._canvas = el;
 		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
 	}	
-	private _refArea = [(el: KTextArea|null) => {
-		if(this._tarea[0] || !el) return;
-		this._tarea[0] = el;
-	},(el: KTextArea|null) => {
-		if(this._tarea[1] || !el) return;
-		this._tarea[1] = el;
-	},(el: KTextArea|null) => {
-		if(this._tarea[2] || !el) return;
-		this._tarea[2] = el;
-	}]
+	private _refArea = [
+		(el: KTextArea|null) => {
+			if(this._tarea[0] || !el) return;
+			this._tarea[0] = el;
+		},
+		(el: KTextArea|null) => {
+			if(this._tarea[1] || !el) return;
+			this._tarea[1] = el;
+		},
+		(el: KTextArea|null) => {
+			if(this._tarea[2] || !el) return;
+			this._tarea[2] = el;
+		}
+	];
 
 	private _onResize = (w: number, h: number) => {
 		this._bndW = w;

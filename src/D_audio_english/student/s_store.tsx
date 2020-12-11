@@ -27,11 +27,11 @@ interface IStateCtx extends IStateBase {
 	confirmBasicProg: QPROG;
 	confirmSupProg: QPROG;
 	confirmHardProg: QPROG;
-	additionalView : boolean;
+	additionalView: boolean;
 	additionalBasicProg: QPROG;
 	additionalSupProg: QPROG;
 	additionalHardProg: QPROG;
-	dictationView : boolean;
+	dictationView: boolean;
 	dictationProg: QPROG[];
 	idx: number;
 	scriptProg: SPROG;
@@ -101,21 +101,21 @@ class StudentContext extends StudentContextBase {
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
 			const msg = data.data as  common.IIndexMsg;
 			if(msg.msgtype === 'confirm_send') {
-				if(msg.idx === 0){
+				if(msg.idx === 0) {
 					if(this.state.confirmSupProg > QPROG.UNINIT) return;
 					this.state.confirmSupProg = QPROG.ON;
 					this.state.idx = 0;
-				}else if(msg.idx === 1){
+				} else if(msg.idx === 1) {
 					if(this.state.confirmBasicProg > QPROG.UNINIT) return;
 					this.state.confirmBasicProg = QPROG.ON;
 					this.state.idx = 1;
-				}else{
+				} else {
 					const hintmsg = msg as common.IConfirmHardMsg;
 					if(this.state.confirmHardProg > QPROG.UNINIT) return;
 					this.state.confirmHardProg = QPROG.ON;
 					this.state.idx = 2;
 					this.state.hint = hintmsg.hint;
-					console.log('hardreturn'+this.state.hint)
+					console.log('hardreturn' + this.state.hint);
 				}
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.confirmView = true;
@@ -124,33 +124,33 @@ class StudentContext extends StudentContextBase {
 				this.state.roll = '';
 				this.state.shadowing = false;
 			} else if(msg.msgtype === 'confirm_end') {
-				if(msg.idx === 0){
+				if(msg.idx === 0) {
 					console.log('confirmend sup');
 					const qProg = this.state.confirmSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.confirmSupProg = QPROG.COMPLETE;
-				}else if(msg.idx === 1){
+				} else if(msg.idx === 1) {
 					const qProg = this.state.confirmBasicProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.confirmBasicProg = QPROG.COMPLETE;
-				}else{
+				} else {
 					const qProg = this.state.confirmHardProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.confirmHardProg = QPROG.COMPLETE;
 				}
-			}else if(msg.msgtype === 'additional_send'){
-				if(msg.idx === 0){
+			} else if(msg.msgtype === 'additional_send') {
+				if(msg.idx === 0) {
 					if(this.state.additionalSupProg > QPROG.UNINIT) return;
 					this.state.additionalSupProg = QPROG.ON;
 					this.state.idx = 0;
-				}else if(msg.idx === 1){
+				} else if(msg.idx === 1) {
 					if(this.state.additionalBasicProg > QPROG.UNINIT) return;
 					this.state.additionalBasicProg = QPROG.ON;
 					this.state.idx = 1;
-				}else{
+				} else {
 					if(this.state.additionalHardProg > QPROG.UNINIT) return;
 					this.state.additionalHardProg = QPROG.ON;
 					this.state.idx = 2;
@@ -162,24 +162,24 @@ class StudentContext extends StudentContextBase {
 				this.state.roll = '';
 				this.state.shadowing = false;
 			} else if(msg.msgtype === 'additional_end') {
-				if(msg.idx === 0){
+				if(msg.idx === 0) {
 					const qProg = this.state.additionalSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.additionalSupProg = QPROG.COMPLETE;
-				}else if(msg.idx === 1){
+				} else if(msg.idx === 1) {
 					const qProg = this.state.additionalBasicProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.additionalBasicProg = QPROG.COMPLETE;
-				}else{
+				} else {
 					const qProg = this.state.additionalHardProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 					this.state.additionalHardProg = QPROG.COMPLETE;
 				}
-			} else if(msg.msgtype === 'dictation_send'){
-				console.log('dictation_send',msg.idx)
+			} else if(msg.msgtype === 'dictation_send') {
+				console.log('dictation_send',msg.idx);
 				if(this.state.dictationProg[msg.idx] > QPROG.UNINIT) return;
 				this.state.dictationProg[msg.idx] = QPROG.ON;
 				this.state.idx = msg.idx;
@@ -189,7 +189,7 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
-			}else if(msg.msgtype === 'script_send') {
+			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
 				if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.READYA;
@@ -199,7 +199,7 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
-			}else if(msg.msgtype === 'shadowing_send') {
+			} else if(msg.msgtype === 'shadowing_send') {
 				if(this.state.viewDiv !== 'content') return;
 				else if(this.state.qsMode !== 'script') return;	
 				this.state.roll = '';

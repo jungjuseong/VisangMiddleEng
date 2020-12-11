@@ -8,11 +8,7 @@ import { ToggleBtn } from '@common/component/button';
 import * as common from '../../../common';
 import SelectBox from './_select_box';
 
-const SwiperComponent = require('react-id-swiper').default;
-
-let _zIndex = observable([0]);
-
-interface ITableItem {
+interface ITableItemProps {
 	inview: boolean;
 	graphic: common.IAdditionalSup;
 	maxWidth: number;
@@ -21,7 +17,7 @@ interface ITableItem {
 	disableSelect?: boolean;
 	viewResult?: boolean;
 	viewCorrect?: boolean;
-	onChoice?:(idx: number, choice: number|string, subidx: number) => void;
+	onChoice?: (idx: number, choice: number|string, subidx: number) => void;
 	onChange?: (value: string, idx: number) => void;
 	viewBtn?: boolean;
 	renderCnt?: number;
@@ -31,7 +27,7 @@ interface ITableItem {
 
 @inject()
 @observer
-class TableItem extends React.Component<ITableItem> {
+class TableItem extends React.Component<ITableItemProps> {
 
 	@observable private m_view = false;
 
@@ -44,7 +40,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	@observable private _opt = true;
 
-	constructor(props: ITableItem) {
+	constructor(props: ITableItemProps) {
 		super(props);
 		const { sentence1, sentence2, sentence3, sentence4 } = props.graphic;
 		const answerList = [sentence1.answer, sentence2.answer, sentence3.answer, sentence4.answer];
@@ -59,13 +55,12 @@ class TableItem extends React.Component<ITableItem> {
 		this._initSBox();
 	}
 
-
 	private _onSelect = (value: string, idx: number) => {
 		const drops = this.props.graphic.app_drops;
 		if (idx < drops.length && drops[idx]) {
 			drops[idx].inputed = value;
 		}
-		if(this.props.onChoice) this.props.onChoice(this.props.idx,value,idx)
+		if (this.props.onChoice) this.props.onChoice(this.props.idx,value,idx);
 		if (this.props.onChange) this.props.onChange(value, idx);
 	}
 
@@ -119,7 +114,6 @@ class TableItem extends React.Component<ITableItem> {
 						} else {
 							sarr.push(sTmp);
 						}
-
 						lastIdx = pattern.lastIndex;
 						result = pattern.exec(str);
 					}
@@ -137,9 +131,7 @@ class TableItem extends React.Component<ITableItem> {
 						}
 						sarr.push(sTmpElmnt);
 					}
-
 					return <li key={idx} className={strAdd}><div>{sarr}</div></li>;
-
 				})}
 			</>
 		);
@@ -148,7 +140,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	public componentDidMount() {
 		while (this._sbox.length > 0) this._sbox.pop();
-		console.log('didmount')
+		console.log('DidMount');
 		this._jsx = this._parseBlock(
 			this.props.graphic,
 			this._refSelect,
@@ -156,7 +148,8 @@ class TableItem extends React.Component<ITableItem> {
 			this.props.optionBoxPosition
 		);
 	}
-	public componentWillReceiveProps(next: ITableItem) {
+
+	public componentWillReceiveProps(next: ITableItemProps) {
 		if (next.graphic !== this.props.graphic) {
 			while (this._sbox.length > 0) this._sbox.pop();
 			this._jsx = this._parseBlock(
@@ -169,16 +162,16 @@ class TableItem extends React.Component<ITableItem> {
 	}
 
 	private _initSBox() {
-		const drops = this.props.graphic.app_drops;
+		const { graphic, disableSelect,viewResult,viewCorrect } = this.props;
 		this._sbox.forEach((sbox, idx) => {
 			if (sbox) {
 				sbox.clear();
-				if (idx < drops.length && drops[idx]) {
-					sbox.setValue(drops[idx].inputed);
+				if (idx < graphic.app_drops.length && graphic.app_drops[idx]) {
+					sbox.setValue(graphic.app_drops[idx].inputed);
 				}
-				sbox.setDisableSelect(this.props.disableSelect === true);
-				sbox.setViewResult(this.props.viewResult === true);
-				sbox.setViewCorrect(this.props.viewCorrect === true);
+				sbox.setDisableSelect(disableSelect === true);
+				sbox.setViewResult(viewResult === true);
+				sbox.setViewCorrect(viewCorrect === true);
 			}
 		});
 	}
@@ -190,9 +183,9 @@ class TableItem extends React.Component<ITableItem> {
 		this.m_swiper = el.swiper;
 	}
 
-	public componentDidUpdate(prev: ITableItem) {
-
-		if (this.props.inview && !prev.inview) {
+	public componentDidUpdate(prev: ITableItemProps) {
+		const { inview,renderCnt,disableSelect,viewResult,viewCorrect } = this.props;
+		if (inview && !prev.inview) {
 			if (this.m_swiper) {
 				this.m_swiper.slideTo(0, 0);
 				_.delay(() => {
@@ -208,18 +201,17 @@ class TableItem extends React.Component<ITableItem> {
 			}
 		}
 
-
-		if (this.props.inview && !prev.inview) {
+		if (inview && !prev.inview) {
 			this._initSBox();
 		}
-		if (this.props.renderCnt !== prev.renderCnt) {
+		if (renderCnt !== prev.renderCnt) {
 			this._initSBox();
 		}
 
-		if (this.props.disableSelect !== prev.disableSelect) {
+		if (disableSelect !== prev.disableSelect) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setDisableSelect(this.props.disableSelect === true);
+					sbox.setDisableSelect(disableSelect === true);
 				}
 			});
 		}
@@ -230,25 +222,23 @@ class TableItem extends React.Component<ITableItem> {
 			}
 		}
 		*/
-		if (this.props.viewResult !== prev.viewResult) {
+		if (viewResult !== prev.viewResult) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setViewResult(this.props.viewResult === true);
+					sbox.setViewResult(viewResult === true);
 				}
 			});
 		}
-		if (this.props.viewCorrect !== prev.viewCorrect) {
+		if (viewCorrect !== prev.viewCorrect) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setViewCorrect(this.props.viewCorrect === true);
+					sbox.setViewCorrect(viewCorrect === true);
 				}
 			});
 		}
 	}
 
-
-	public render() {
-	
+	public render() {	
 		this._cont = (
 			<div className="content-box">
 				<p>{this.props.idx + 1}</p>
@@ -260,7 +250,7 @@ class TableItem extends React.Component<ITableItem> {
 			</div>
 		);
 		return (
-			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100-this.props.idx) }}>
+			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100 - this.props.idx) }}>
 				{this._cont}
 				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
 			</div>

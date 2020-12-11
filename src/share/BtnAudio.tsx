@@ -32,10 +32,11 @@ export class BtnAudio extends React.Component<IBtnAudio> {
 	}
 
 	private _onPlay = () => {
-	    this._playing = true;
-        if(this.props.onPlay) this.props.onPlay(); 
-        App.pub_play(this.props.url, this._onPlayEnd);
+		this._playing = true;
+		if(this.props.onPlay) this.props.onPlay(); 
+		App.pub_play(this.props.url, this._onPlayEnd);
 	}
+
 	private _onPlayEnd = async (isEnded: boolean) => {
 		if(this._nPlay > 0) {
 			this._nPlay = this._nPlay - 1;
