@@ -9,15 +9,16 @@ import { observable } from 'mobx';
 
 import { _getJSX } from '../../../get_jsx';
 
-interface IQuizItem {
+interface IQuizItemProps {
 	view: boolean;
 	idx: number;
 	data: IConfirmSup;
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number) => void;
 }
+
 @observer
-class SSupplement extends React.Component<IQuizItem> {
+class SSupplement extends React.Component<IQuizItemProps> {
 	@observable private _toggle: number[] = [0,0,0];
 
 	private _disable_toggle: boolean;
@@ -31,7 +32,7 @@ class SSupplement extends React.Component<IQuizItem> {
 	private _jsx_question2_answer: number;
 	private _jsx_question3_answer: number;
 
-	public constructor(props: IQuizItem) {
+	public constructor(props: IQuizItemProps) {
 		super(props);
 		this._jsx_sentence = _getJSX(props.data.directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data.directive.eng); // 문제
@@ -50,11 +51,13 @@ class SSupplement extends React.Component<IQuizItem> {
 		this._toggle[param] = 1;
 		this.props.onChoice(param, 1);
 	}
+
 	private _onClickFalse = (param: 0 | 1 | 2) => {
 		if (this._disable_toggle) return;
 		this._toggle[param] = 2;
 		this.props.onChoice(param, 2);
 	}
+	
 	private _getToggleState = (num: number, ORX: ''|'O'|'X') => {
 		if(this.props.confirmProg === QPROG.COMPLETE) {
 			switch(num) {
