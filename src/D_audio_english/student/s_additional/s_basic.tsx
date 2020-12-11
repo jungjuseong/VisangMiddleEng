@@ -54,9 +54,9 @@ class SBasic extends React.Component<IQuizItem> {
 			this._refArea[idx] = []
 			for(let i = 0; i < 4 ; i ++){
 				this._refArea[idx][i] = ((el: KTextArea|null) => {
-						if(this._tarea[idx][i] || !el) return;
-						this._tarea[idx][i] = el;
-					})
+					if(this._tarea[idx][i] || !el) return;
+					this._tarea[idx][i] = el;
+				})
 			}
 		})
 	}
@@ -130,7 +130,6 @@ class SBasic extends React.Component<IQuizItem> {
 				}else{
 					OXs[idx][index] = 'X';
 				}
-				console.log(OXs[idx][index]);
 			})
 		})
 	}

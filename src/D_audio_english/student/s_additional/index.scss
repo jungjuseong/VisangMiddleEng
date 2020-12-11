@@ -378,7 +378,27 @@
                             width: 1150px;
                             height: 300px;
                             border-radius: 15px;
-                            padding-left: 30px;
+                            padding-left: 30px;                            
+
+                            .OX_box{
+                                position: absolute;
+                                display: inline-block;
+                                background-repeat: no-repeat;
+                                top: 36px;
+                                left: 8px;
+                                font-size: 25px;
+                                text-align: center;
+                                z-index: 101;
+                                line-height: 5 * height("common/icon_o.png") / 6;
+                                width: width("common/icon_o.png");
+                                height:  height("common/icon_o.png");
+                                &.O{
+                                    background-image: resolve("common/icon_o.png");
+                                }
+                                &.X{
+                                    background-image: resolve("common/icon_x.png");
+                                }
+                            }
     
                             canvas{
                                 top: 0;
@@ -410,12 +430,6 @@
                                     }
                                 }
                             }
-                            .answer_box {
-                                border-bottom: 4px solid #000;
-                                width: 216px;
-                                margin-right: 45px;
-                                min-height: 50px;
-                            }
                         }
                         .s_typing {
                             position: relative;
@@ -428,16 +442,27 @@
                             font-size: 52px;
                             font-family: NotoSans;
                             font-weight: bold;
+                            align-items: center;
                             
                             .area-bnd{
                                 position: relative;
-                                display: flex;
+                                display: inline-table;
                                 align-items: center;
                                 vertical-align: top;
                                 min-width: 300px;
                                 width: 100%;
                                 margin: 0 25px;
                                 border-bottom: 3px solid #fff;
+                                .answer_box{
+                                    display: block;
+                                    font-size: 45px;
+                                    color: red;
+                                    line-height: 25px;
+                                    visibility: hidden;
+                                    &.X{
+                                        visibility: visible;
+                                    }
+                                }
                                 .index{
                                     flex: 0 0 auto;
                                 }
@@ -448,7 +473,7 @@
                                     min-height: 64px;
                                     textarea{
                                         box-sizing: border-box;
-                                        font-size: 52px;
+                                        font-size: 45px;
                                         padding: 30px 35px 30px 30px;
                                         color: #fff;
                                         font-family: NotoSans;

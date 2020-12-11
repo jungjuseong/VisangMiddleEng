@@ -42,13 +42,14 @@ class SHard extends React.Component<IQuizItem> {
 	private _bndW_p = 0;
 	private _bndH_p = 0;
 
-	private _tarea: (KTextArea|null)[] = [null,null,null];
 	private _canvas?: HTMLCanvasElement;
 	private _ctx?: CanvasRenderingContext2D;
     private _stime = 0;
  
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
+	private _tarea: (KTextArea|null)[][] = [[null,null],[null,null],[null,null]];
+	private _refArea:((el: KTextArea|null) =>void)[][] = [];
 
 	public constructor(props: IQuizItem) {
 		super(props);
@@ -56,6 +57,15 @@ class SHard extends React.Component<IQuizItem> {
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 
 		keyBoardState.state = 'hide';
+		this._tarea.map((tarea,idx)=>{
+			this._refArea[idx] = []
+			for(let i = 0; i < 2 ; i ++){
+				this._refArea[idx][i] = (el: KTextArea|null) => {
+					if(tarea[i] || !el) return;
+					tarea[i] = el;
+				}
+			}
+		})
 	}
 
 	private _onChange = (text: string , index:number) => {
@@ -79,17 +89,7 @@ class SHard extends React.Component<IQuizItem> {
 		if(this._canvas || !el) return;
 		this._canvas = el;
 		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
-	private _refArea = [(el: KTextArea|null) => {
-		if(this._tarea[0] || !el) return;
-		this._tarea[0] = el;
-	},(el: KTextArea|null) => {
-		if(this._tarea[1] || !el) return;
-		this._tarea[1] = el;
-	},(el: KTextArea|null) => {
-		if(this._tarea[2] || !el) return;
-		this._tarea[2] = el;
-	}]
+	}
 
 	private _onResize = (w: number, h: number) => {
 		this._bndW = w;
@@ -145,6 +145,30 @@ class SHard extends React.Component<IQuizItem> {
 		const { view, data ,state} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a','b','c'];
+		let correct_list: (''|'O'|'X')[] = ['','',''];
+		let OXs: (''|'O'|'X')[][] = [['',''],['',''],['','']];
+		if(this.props.prog === QPROG.COMPLETE){
+			data.map((quiz,idx) =>{
+				const answer_list = [quiz.sentence1.answer1, quiz.sentence1.answer2];
+				if(answer_list[0] === this._tarea[idx][0]?.value){
+					OXs[idx][0] = 'O';
+				}
+				else{
+					OXs[idx][0] = 'X';
+				}
+				if(answer_list[1] === this._tarea[idx][1]?.value){
+					OXs[idx][1] = 'O';
+				}
+				else{
+					OXs[idx][1] = 'X';
+				}
+				if(OXs[idx][0] === 'O' && OXs[idx][1] === 'O'){
+					correct_list[idx] = 'O';
+				}else{
+					correct_list[idx] = 'X';
+				}
+			})
+		}
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -159,16 +183,20 @@ class SHard extends React.Component<IQuizItem> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
+											<div className={"OX_box " + correct_list[idx]}></div>
 											<canvas></canvas>
 											<div className="question_box">
 												<p>{idx + 1}.</p>
 												<p>{_getJSX(quiz.sentence)}</p>
 											</div>
 										</div>
-										<div className="s_typing" >
+										<div className="s_typing">
 											<div className="area-bnd" onClick={()=>{this._selectArea(0)}}>
+												<div className={"answer_box "+ OXs[idx][0]}>
+													{quiz.sentence1.answer1}
+												</div>
 												<KTextArea 
-													ref={this._refArea[idx]} 
+													ref={this._refArea[idx][0]} 
 													view={view} 
 													on={view && this._curIdx === idx && this._select_area === 0 && !this._sended}
 													autoResize={true}
@@ -183,8 +211,11 @@ class SHard extends React.Component<IQuizItem> {
 											</div>
 											{' → '}
 											<div className="area-bnd" onClick={()=>{this._selectArea(1)}}>
+												<div className={"answer_box "+ OXs[idx][1]}>
+													{quiz.sentence1.answer2}
+												</div>
 												<KTextArea 
-													ref={this._refArea[idx]} 
+													ref={this._refArea[idx][1]} 
 													view={view} 
 													on={view && this._curIdx === idx && this._select_area === 1 && !this._sended}
 													autoResize={true}
