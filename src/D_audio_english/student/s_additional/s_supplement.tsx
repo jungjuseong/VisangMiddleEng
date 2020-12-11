@@ -135,16 +135,6 @@ class SHard extends React.Component<IQuizItem> {
 		}
 	}
 
-	// private _checkAnswer= () =>{
-	// 	const { view, data ,state, prog, onChoice} = this.props;
-	// 	{data.map((quiz, idx) => {
-	// 		if(quiz.app_drops[idx].correct === "summer"){
-	// 			console.log(quiz.app_drops[idx].correct);
-	// 			console.log("correct");
-	// 		}
-	// 	})}
-	// }
-
 	public render() {
 		const { view, data ,prog, onChoice} = this.props;
 		let OXs: Array<''|'O'|'X'> = ['','',''];
@@ -157,7 +147,7 @@ class SHard extends React.Component<IQuizItem> {
 						if(answer.correct === answer.inputed) correct_count += 1;
 					});
 				}
-				OXs[idx] = (correct_count === 3) ? 'O' : 'X';
+				OXs[idx] = (correct_count === answer_arr.length) ? 'O' : 'X';
 			});
 		}
 		return (

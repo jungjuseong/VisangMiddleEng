@@ -72,6 +72,25 @@
                             border-radius: 15px;
                             padding-left: 30px;
     
+                            .OX_box{
+                                position: absolute;
+                                display: inline-block;
+                                background-repeat: no-repeat;
+                                top: 27px;
+                                left: 7px;
+                                font-size: 25px;
+                                text-align: center;
+                                z-index: 101;
+                                line-height: 5 * height("common/icon_o.png") / 6;
+                                width: width("common/icon_o.png");
+                                height:  height("common/icon_o.png");
+                                &.O{
+                                    background-image: resolve("common/icon_o.png");
+                                }
+                                &.X{
+                                    background-image: resolve("common/icon_x.png");
+                                }
+                            }
                             canvas{
                                 top: 0;
                                 left: 0;
@@ -119,6 +138,20 @@
                                 font-size: 52px;
                                 font-weight: bold;
                                 border-bottom: 3px solid #fff;
+
+                                .answer_box{
+                                    position: absolute;
+                                    display: block;
+                                    font-size: 45px;
+                                    color: red;
+                                    left: 52px;
+                                    top: 10px;
+                                    line-height: 15px;
+                                    visibility: hidden;
+                                    &.X{
+                                        visibility: visible;
+                                    }
+                                }
                                 .index{
                                     flex: 0 0 auto;
                                 }
