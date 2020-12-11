@@ -31,6 +31,10 @@ class TComprehension extends React.Component<ITComprehension> {
 		App.pub_stop();
 		this.props.state.viewStoryBook = !this.props.state.viewStoryBook;
 	}
+	private _onQuiz = () => {
+		App.pub_stop();
+		this.props.state.viewStoryBook = !this.props.state.viewStoryBook;
+	}
 	private _offStoryBook = () => {
 		this.props.state.viewStoryBook = false;
 	}
@@ -124,7 +128,7 @@ class TComprehension extends React.Component<ITComprehension> {
 				</div>
 				<ToggleBtn disabled={this._btn_disable === 'all'} className={'btn_book' + (this._Title === 'Compreshension' ? '' : ' up')} onClick={this._onBook}/>
 				<ToggleBtn disabled={this._btn_disable === 'all'} className={'btn_video' + (this._Title === 'Compreshension' ? '' : ' up')} onClick={this._onVideo}/>
-
+				<ToggleBtn disabled={this._btn_disable === 'all'} className={'btn_additional_quiz' + (this._Title === 'Compreshension' ? '' : ' up')} onClick={this._onQuiz}/>
 				<div className="btn_tab" style={{display: this._Title === 'Compreshension' ? '' : 'none'}}>
 					<ToggleBtn className="btn_warmup" on={this._Tab === 'Warmup' && this._Title === 'Compreshension'} disabled={this._btn_disable !== ''} onClick={this._clickWarmup} />
 					<ToggleBtn className="btn_passage" on={this._Tab === 'Passage' && this._Title === 'Compreshension'} disabled={this._btn_disable !== ''} onClick={this._clickPassage} />
