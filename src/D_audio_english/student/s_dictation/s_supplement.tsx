@@ -123,22 +123,16 @@ class SSupplement extends React.Component<IQuizItem> {
 		const { view, data, state } = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a', 'b', 'c'];
-		let OXs: Array<''|'O'|'X'> = ['','',''];
 		let corrects: ('' | 'O' | 'X')[][] = [['', '', ''], ['', '', ''], ['', '', '']];
-		let no_answer = 0;
-		let correct_count = 0;
 		if (this.props.dictationProg === QPROG.COMPLETE){
 			data.map((quiz, idx) => {
 				const answerlist = [quiz.sentence1.answer1, quiz.sentence2.answer1, quiz.sentence3.answer1];
 				answerlist.map((answer, index) => {
-					if(answer === "") correct_count -= 1;
 					if (answer === this._tarea[idx][index]?.value) {
 						corrects[idx][index] = 'O';
-						correct_count += 1;
 					} else {
 						corrects[idx][index] = 'X';
 					}
-					OXs[idx] = (correct_count === answerlist.length) ? 'O' : 'X';
 				})
 			})
 		}
@@ -157,7 +151,6 @@ class SSupplement extends React.Component<IQuizItem> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
-											<div className={"OX_box " + OXs[idx]}></div>
 											<canvas></canvas>
 											<div className="question_box">
 												<p>{_getJSX(quiz.sentence)}</p>
@@ -170,11 +163,12 @@ class SSupplement extends React.Component<IQuizItem> {
 												}
 												else
 													return (
-														<div className="area-bnd" key={index} onClick={() => { this._selectArea(index) }}>
+														<div className="area-bnd" key={index} onClick={() => { this._selectArea(index) }}>															
 															<div className={"answer_box "+ corrects[idx][index]}>
 																{sentence.answer1}
 															</div>
-															<span className="index">{alphabet[index]}.</span>
+															<div className={"OX_box "+ corrects[idx][index]}></div>
+															<span className={"index"}>{alphabet[index]}.</span>
 															<KTextArea
 																ref={this._refArea[idx][index]}
 																view={view}

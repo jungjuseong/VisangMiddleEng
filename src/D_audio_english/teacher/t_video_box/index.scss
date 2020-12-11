@@ -104,20 +104,34 @@
 			}
 		}
 		.control{
-			position:absolute;
+			position: relative;
 			left:0px; bottom:0px; 
-			width: 50%; height:143px;
+			width: 490px; height:60px;
+			background-color: #333333;
+			border-radius: 15px;
+			.control_over{
+				position: absolute;
+				.brake_point{
+					position: relative;
+					float: left;
+					width: 20px;
+					height: 20px;
+					background-color: purple;
+					margin-right: 13px;
+					text-align: center;
+					border-radius: 20px;
+					color: #fff;
+					line-height: 15px;
+				}
+			}
 			.control_left{
 				position:absolute;
-				display:inline-block;
-				bottom:12px;
+				display:flex;
 				white-space:nowrap;
-				vertical-align: middle;
-				font-size:0px;
+				height: 100%;
 				.btn_play_pause{
-					display:inline-block;
-					vertical-align: middle;
-					margin-left:13px;
+					display:block;
+					margin: auto 0 auto 13px;
 					@include btn_on(
 						resolve('digenglish_lib/images/mplayer/btn_play.png'),
 						resolve('digenglish_lib/images/mplayer/btn_pause.png'),
@@ -163,10 +177,12 @@
 				}
 			}
 			.control_top{
-				display: inline-block;
-				width: 100%;
-				margin: 25px 0; padding:0 15px;
-				height: 24px;
+				display: flex;
+				align-items: center;
+				float: right;
+				width: 90%;
+				padding:0 15px;
+				height: 100%;
 				font-size: 0px;
 				&>div{
 					display:table;
@@ -175,7 +191,7 @@
 						display: table-cell;
 						vertical-align: middle;
 						position: relative;
-						top: 2px; width: auto;
+						width: auto;
 						.prog_bg{
 							$PH: 6px;
 							position:relative; 
