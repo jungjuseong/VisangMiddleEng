@@ -4,7 +4,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import * as kutil from '@common/util/kutil';
-import * as common from '../common';
+import {IQuizPage} from '../common';
 import { App } from '../../App';
 import { BtnAudio } from '../../share/BtnAudio';
 import PreInBox from '../../share/PreInBox';
@@ -13,7 +13,7 @@ import PzTgt from './_pz_tgt';
 import PzSrc from './_pz_src';
 
 @observer
-class QuizSpelling extends React.Component<common.IQuizPage> {
+class QuizSpelling extends React.Component<IQuizPage> {
 	@observable private _nPlay = 0;
 	@observable private _btnAudioDisabled: boolean = true;
 
@@ -21,7 +21,7 @@ class QuizSpelling extends React.Component<common.IQuizPage> {
 	private _srcs: PzSrc[] = [];
 	private _chars: string[] = [];
 
-	constructor(props: common.IQuizPage) {
+	constructor(props: IQuizPage) {
 		super(props);
 		
 		const entry = props.quiz.quiz_spelling ? props.quiz.quiz_spelling.entry : props.quiz.entry;
@@ -53,7 +53,7 @@ class QuizSpelling extends React.Component<common.IQuizPage> {
 			if(src) src.reset();
 		}
 	}
-	public componentDidUpdate(prev: common.IQuizPage) {
+	public componentDidUpdate(prev: IQuizPage) {
 		if(this.props.on && !prev.on) {
 			if(this.props.isTeacher && this.props.quizProg === 'quiz') {
 			    this._nPlay = 2;

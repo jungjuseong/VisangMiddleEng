@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
-import * as common from './common';
+import {IQuizPage} from './common';
 import { App } from '../App';
 import { BtnAudio } from '../share/BtnAudio';
 import QuizMCBtn from '../share/QuizMCBtn';
@@ -10,7 +10,7 @@ import QuizMCBtn from '../share/QuizMCBtn';
 import PreInBox from '../share/PreInBox';
 
 @observer
-class QuizMeaning extends React.Component<common.IQuizPage> {
+class QuizMeaning extends React.Component<IQuizPage> {
 	@observable private _nPlay = 0;
 	@observable private _selected: number = 0;
 	@observable private _btnAudioDisabled: boolean = true;
@@ -21,7 +21,7 @@ class QuizMeaning extends React.Component<common.IQuizPage> {
 		this._selected = 0;
 	}
 
-	public componentDidUpdate(prev: common.IQuizPage) {
+	public componentDidUpdate(prev: IQuizPage) {
 		
 		if(this.props.on && !prev.on) {
 			if(this.props.isTeacher) this._selected = 0;

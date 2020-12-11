@@ -13,7 +13,7 @@ import { App } from '../../App';
 
 import * as felsocket from '../../felsocket';
 
-interface ISScript {
+interface ISScriptProps {
 	view: boolean;
 	questionProg: QPROG;
 	scriptProg: SPROG;
@@ -23,36 +23,38 @@ interface ISScript {
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
+
 @observer
-class SScript extends React.Component<ISScript> {
+class SScript extends React.Component<ISScriptProps> {
 	@observable private _selected: number[] = [];
 
 	private _stime = 0;
 	
-	private _clickText = (idx: number, script: IScript) => {
+	private _clickText = (index: number, script: IScript) => {
 		const { scriptProg } = this.props;
 		if(this._stime === 0) this._stime = Date.now();
 
 		if(scriptProg !== SPROG.SELECTING) return; 
 
-		const cidx = this._selected.indexOf(idx);
-		if(cidx < 0) this._selected.push(idx);
+		const cidx = this._selected.indexOf(index);
+		if(cidx < 0) this._selected.push(index);
 		else this._selected.splice(cidx, 1);
 	}
 
 	private _onSend = async () => {
 		const { scriptProg, state,actions } = this.props;
+		
 		if(!App.student || scriptProg !== SPROG.SELECTING) return; 
 
 		App.pub_playToPad();
-		const msg: IQNAMsg = {
+		const qnaMessage: IQNAMsg = {
 			msgtype: 'qna_return',
 			id: App.student.id,
 			returns: this._selected.slice(0), 
 			stime: this._stime,
             etime: Date.now(),
 		};
-		felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
+		felsocket.sendTeacher($SocketType.MSGTOTEACHER, qnaMessage);
 		state.scriptProg = SPROG.SENDING;
 		await kutil.wait(600);
 		if(state.scriptProg === SPROG.SENDING) {
@@ -62,6 +64,7 @@ class SScript extends React.Component<ISScript> {
 			actions.startGoodJob(); // 추가
 		}
 	}
+
 	private _gotoQuestion = () => {
 		const { scriptMode,qsMode } = this.props.state;
 		if(scriptMode !== 'COMPREHENSION') return;
@@ -70,7 +73,7 @@ class SScript extends React.Component<ISScript> {
 		this.props.state.qsMode = 'question';
 		
 	}
-	public componentWillReceiveProps(next: ISScript) {
+	public componentWillReceiveProps(next: ISScriptProps) {
 		if(next.scriptProg !== this.props.scriptProg) {
 			if(next.scriptProg < SPROG.SELECTING) {
 				while(this._selected.length > 0) this._selected.pop();
@@ -78,16 +81,13 @@ class SScript extends React.Component<ISScript> {
 			}
 		}
 	}
+	
 	public render() {
 		const { scriptMode,scriptProg, actions, state, questionProg} = this.props;
 		const c_data = actions.getData();
 		return (
 			<div className={'s_script ' + state.scriptMode}>
-                <ToggleBtn 
-                    className="btn_QUESTION" 
-                    view={state.scriptMode === 'COMPREHENSION' && questionProg === QPROG.COMPLETE} 
-                    onClick={this._gotoQuestion}
-                />
+                <ToggleBtn className="btn_QUESTION" view={state.scriptMode === 'COMPREHENSION' && questionProg === QPROG.COMPLETE} onClick={this._gotoQuestion}/>
 				<div className="script_container">
 					<ScriptContainer
 						view={state.viewDiv === 'content'}

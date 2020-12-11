@@ -6,15 +6,20 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
+import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import * as common from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+import { CorrectBar } from '../../../share/Progress_bar';
 
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IQuizBox {
 	view: boolean;
+	actions: IActionsCtx;
+	state:IStateCtx;
+	index: number;
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: common.IDictation[];
@@ -24,9 +29,7 @@ class Hard extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
-	@observable private _select = true;
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
+	@observable private _sended = false;
 	
 	private _swiper?: Swiper;
 
@@ -131,30 +134,16 @@ class Hard extends React.Component<IQuizBox> {
 		// 	}				
 		// }, 300);
 	}
-
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
-		const { view } = this.props;
+		const { view ,state,index } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
 			this._trans = false;
-			this._select = true;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -171,21 +160,34 @@ class Hard extends React.Component<IQuizBox> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
+		}
+
+		if(state.dictationProg[index] >= SENDPROG.SENDED){
+			this._sended = true;
 		}
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { data, state, index} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		let qResult = -1;
+        const isQComplete = state.dictationProg[index] >= SENDPROG.COMPLETE;
+        if(isQComplete) {
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultDictation[index].arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
+            else qResult = 0;
+            if(qResult > 100) qResult = 100;
+        }
 		return (
 			<>
 			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className="subject_rate"></div>
-				<ToggleBtn className="btn_answer" on={this._hint} onClick={this._viewAnswer}/>
-				<div className="correct_answer_rate"></div>
+				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
+				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<CorrectBar 
+					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
+					preview={-1} 
+					result={qResult}
+				/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

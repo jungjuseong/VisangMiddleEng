@@ -37,11 +37,6 @@ class SBasic extends React.Component<IQuizItem> {
 	@observable private _sended: boolean = false;
 	@observable private _select_area: number = 0;
 
-	private _bndW = 0;
-	private _bndH = 0;
-	private _bndW_p = 0;
-	private _bndH_p = 0;
-
 	private _tarea: (KTextArea|null)[][] = [[null,null,null],[null,null,null],[null,null,null]];
 	private _canvas?: HTMLCanvasElement;
 	private _ctx?: CanvasRenderingContext2D;
@@ -80,19 +75,6 @@ class SBasic extends React.Component<IQuizItem> {
 		if (index !== null)
 			this._select_area = index
 	}
-	private _refCanvas = (el: HTMLCanvasElement|null) => {
-		if(this._canvas || !el) return;
-		this._canvas = el;
-		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
-	
-
-	
-	private _onResize = (w: number, h: number) => {
-		this._bndW = w;
-		this._bndH = h;
-	}
-
 	private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
 
@@ -110,19 +92,16 @@ class SBasic extends React.Component<IQuizItem> {
 
 	public componentDidUpdate(prev: IQuizItem) {
 		if(this.props.view && !prev.view) {
-			this._bndH_p = 0;
-			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'on';
 			
 			// if(this._tarea) this._tarea.
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
+				console.log('swiper.update')
 				this._swiper.update();
 			}
 		} else if(!this.props.view && prev.view) {
-			this._bndH_p = 0;
-			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}

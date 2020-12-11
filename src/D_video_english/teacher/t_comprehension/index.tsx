@@ -15,7 +15,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import SendUINew from '../../../share/sendui_new';
 import { CorrectBar } from '../../../share/Progress_bar';
 
-import * as common from '../../common';
+import { IData,IMsg, IRollMsg,IScript,IFocusMsg } from '../../common';
 
 import ScriptContainer from '../../script_container';
 
@@ -51,7 +51,7 @@ class Comprehension extends React.Component<IComprehension> {
     private m_player = new MPlayer(new MConfig(true));
     private m_player_inittime = 0; // 비디오 시작시간 
 	private m_swiper: SwiperComponent|null = null;
-	private m_data: common.IData;
+	private m_data: IData;
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
 	@observable private _title: 'COMPREHENSION'|'DIALOGUE' = 'COMPREHENSION';
@@ -105,7 +105,7 @@ class Comprehension extends React.Component<IComprehension> {
             let msgtype: 'playing'|'paused';
             if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
             else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
-            const msg: common.IMsg = {
+            const msg: IMsg = {
                 msgtype,
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -128,20 +128,21 @@ class Comprehension extends React.Component<IComprehension> {
         const {state, actions} = this.props;
 
         if(	this._title === 'COMPREHENSION' ) {
-            if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY) return;
-            else if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
+            if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY ||  
+                this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY)
+                return;
         } else {
             if(state.dialogueProg !== SENDPROG.READY) return;
         }
 
-        if(	this._title === 'COMPREHENSION' ) {
+        if (this._title === 'COMPREHENSION') {
             if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
             else state.scriptProg = SENDPROG.SENDING;
         } else state.dialogueProg = SENDPROG.SENDING;
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
-            let msg: common.IMsg;
+            let msg: IMsg;
             if(	this._title === 'COMPREHENSION' ) {
                 actions.clearReturnUsers();
                 actions.setRetCnt(0);
@@ -173,28 +174,24 @@ class Comprehension extends React.Component<IComprehension> {
 	private _onPopupSend = (roll: ''|'A'|'B') => {
         const {state, actions} = this.props;
         if(this.c_popup === 'Q&A') {
-            if(this._title !== 'COMPREHENSION') return;
-            else if(state.qnaProg > SENDPROG.READY) return;
+            if(this._title !== 'COMPREHENSION' || state.qnaProg > SENDPROG.READY) return;
 
             state.qnaProg = SENDPROG.SENDING;
             App.pub_playToPad();
 
-            let msg: common.IMsg = {msgtype: 'qna_send',};
+            let msg: IMsg = {msgtype: 'qna_send',};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             // this._viewClue = false;
             _.delay(() => {
-                if(	this._title !== 'COMPREHENSION' ) return;
-                else if(state.qnaProg !== SENDPROG.SENDING) return;
-
+                if(	this._title !== 'COMPREHENSION' || state.qnaProg !== SENDPROG.SENDING) return;
                 state.qnaProg = SENDPROG.SENDED;
             }, 300);
             
             
         } else if(this.c_popup === 'ROLE PLAY') {
-            if(this._title !== 'DIALOGUE') return;
-            else if(state.dialogueProg !== SENDPROG.SENDED) return;
-            else if(this._roll !== '' || roll === '') return;
+            if(this._title !== 'DIALOGUE' || state.dialogueProg !== SENDPROG.SENDED) return;
+            if(this._roll !== '' || roll === '') return;
 
             if(this.m_player.currentTime !== this.m_player_inittime
                 || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
@@ -205,7 +202,7 @@ class Comprehension extends React.Component<IComprehension> {
             this.m_player.setMuted(false);
             this.m_player.setMutedTemp(false);
 
-            let msg: common.IRollMsg = {msgtype: 'roll_send', roll};
+            let msg: IRollMsg = {msgtype: 'roll_send', roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
                 if(this._title !== 'DIALOGUE') return;
@@ -227,7 +224,7 @@ class Comprehension extends React.Component<IComprehension> {
             this.m_player.setMuted(false);
             this.m_player.setMutedTemp(false);
 
-            let msg: common.IMsg = {msgtype: 'shadowing_send'};
+            let msg: IMsg = {msgtype: 'shadowing_send'};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
                 if(this._title !== 'DIALOGUE') return;
@@ -262,12 +259,12 @@ class Comprehension extends React.Component<IComprehension> {
 		if(this._viewClue) {
 			this._viewClue = false;
 			
-			let msg: common.IMsg = {msgtype: 'hide_clue',};
+			let msg: IMsg = {msgtype: 'hide_clue',};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 		} else {
 			this._viewClue = true;
 			
-			let msg: common.IMsg = {msgtype: 'view_clue',};
+			let msg: IMsg = {msgtype: 'view_clue',};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         }
     }    
@@ -277,7 +274,7 @@ class Comprehension extends React.Component<IComprehension> {
 		this._hint = false;
     }
     
-	private _clickItem = (idx: number, script: common.IScript) => {
+	private _clickItem = (idx: number, script: IScript) => {
 		if(this._roll !== '' || this._shadowing) {
 			/*
 			if(!this._countdown.isRunning) {
@@ -293,7 +290,7 @@ class Comprehension extends React.Component<IComprehension> {
 	private _setShadowPlay = (val: boolean) => {
 		if(this._shadowing) {
 			this._isShadowPlay = val;
-			const msg: common.IMsg = {
+			const msg: IMsg = {
 				msgtype: val ? 'playing' : 'paused',
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -373,7 +370,6 @@ class Comprehension extends React.Component<IComprehension> {
         if(this._curQidx === 0) this.props.actions.setNavi(false, true);
     }
     
-
 	private _clickDial = (ev: React.MouseEvent<HTMLElement>) => {
         const { state } = this.props;
         if (this._title === 'DIALOGUE') return;
@@ -449,25 +445,25 @@ class Comprehension extends React.Component<IComprehension> {
         const { state, actions } = this.props;
         const quizProg = state.questionProg;
 
-        if(	this._title !== 'COMPREHENSION' || 
-            this._tab !== 'QUESTION' || 
+        if(	this._title !== 'COMPREHENSION' || this._tab !== 'QUESTION' || 
             quizProg !== SENDPROG.SENDED
         ) return;
 
         App.pub_playBtnTab();
-        const msg: common.IMsg = {
+        const msg: IMsg = {
             msgtype: 'quiz_end',
         };
         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
         actions.quizComplete();
-        this.props.actions.setNavi(true, true);
+        actions.setNavi(true, true);
     }
     
 	/* Popup화면 */
 	private _onPopupClosed = () => {
-        if(this._title === 'COMPREHENSION' && this._tab === 'SCRIPT' && this.props.state.qnaProg === SENDPROG.READY) this.props.actions.setNavi(true, true);
-        else if (this._title === 'DIALOGUE' && this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
+        const { state, actions } = this.props;
+        if(this._title === 'COMPREHENSION' && this._tab === 'SCRIPT' && state.qnaProg === SENDPROG.READY) actions.setNavi(true, true);
+        else if (this._title === 'DIALOGUE' && this._roll === '' && !this._shadowing) actions.setNavi(true, true);
         this.c_popup = 'off';
     }
 
@@ -481,11 +477,11 @@ class Comprehension extends React.Component<IComprehension> {
         if(state.qnaProg === SENDPROG.READY) {
             App.pub_playBtnTab();
             this.c_popup = 'Q&A';
-            this.props.actions.setNavi(false, false);
+            actions.setNavi(false, false);
         } else if(state.qnaProg >= SENDPROG.SENDING) {
             
             App.pub_playBtnTab();
-            const msg: common.IMsg = {
+            const msg: IMsg = {
                 msgtype: 'qna_end',
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
@@ -516,14 +512,14 @@ class Comprehension extends React.Component<IComprehension> {
 		this._sendFocusIdx(idx);
 	}
 	private _sendFocusIdx(idx: number) {
-		const msg: common.IFocusMsg = {
+		const msg: IFocusMsg = {
 			msgtype: 'focusidx',
 			idx,
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 	}
 	private _sendDialogueEnd() {
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: 'dialogue_end',
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -577,11 +573,13 @@ class Comprehension extends React.Component<IComprehension> {
 		App.pub_playBtnTab();
 		this._letstalk = true;
 		this.props.actions.setNaviView(false);
-	}
+    }
+    
 	private _letstalkClosed = () => {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
-	}
+    }
+    
 	private _toggleTrans = () => {
 		if(this._title !== 'DIALOGUE') return;
 		App.pub_playBtnTab();
@@ -615,6 +613,7 @@ class Comprehension extends React.Component<IComprehension> {
     }
     
 	private _stopClick = () => {
+        const { qnaProg } = this.props.state;
         this._sendFocusIdx(-1);
         this._lastFocusIdx = -1;
         this._focusIdx = -1;
@@ -624,7 +623,7 @@ class Comprehension extends React.Component<IComprehension> {
         this._sendDialogueEnd();
         
         const isOnStudy = this._roll === 'A' || this._roll === 'B' || this._shadowing;
-        if(this._title === 'COMPREHENSION' && this._tab === 'SCRIPT' && (this.props.state.qnaProg < SENDPROG.SENDING || this.props.state.qnaProg >= SENDPROG.COMPLETE)) this._setNavi();
+        if(this._title === 'COMPREHENSION' && this._tab === 'SCRIPT' && (qnaProg < SENDPROG.SENDING || qnaProg >= SENDPROG.COMPLETE)) this._setNavi();
         else if(this._title === 'DIALOGUE') {
             this._isShadowPlay = false;
             if(!isOnStudy) this._setNavi();

@@ -11,13 +11,13 @@ import { Loading } from '../../../share/loading';
 import { CountDown2, TimerState } from '../../../share/Timer';
 import Yourturn from '../../../share/yourturn';
 
-import * as common from '../../common';
+import { IScript,IData } from '../../common';
 
 import ControlBox from './_control_box';
 import CaptionBox from './_caption_box';
 
 
-function _getCurrentIdx(scripts: common.IScript[], time: number) {
+function _getCurrentIdx(scripts: IScript[], time: number) {
     let timeRound = Math.round(time / 0.001) * 0.001;
     for (let i = 0, len = scripts.length; i < len; i++) {
         const s = scripts[i];
@@ -33,7 +33,7 @@ function _getCurrentIdx(scripts: common.IScript[], time: number) {
 interface IVideoBox {
     player: MPlayer;
     playerInitTime: number;  // 비디오 시작시간
-	data: common.IData;
+	data: IData;
 	roll: ''|'A'|'B';
 	shadowing: boolean;
 	countdown: TimerState;
@@ -59,33 +59,33 @@ class VideoBox extends React.Component<IVideoBox> {
 
 	private _refVideo = (el: HTMLMediaElement | null) => {
 		if (!el) return;
-		const { player } = this.props;
+
+		const { player,data,shadowing,isShadowPlay,onChangeScript } = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
 
-		player.load(App.data_url + this.props.data.video);
-		const scripts = this.props.data.scripts;
+		player.load(App.data_url + data.video);
+		const scripts = data.scripts;
 		player.addOnTime((time: number) => {
 			time = time / 1000;
 			const curIdx = _getCurrentIdx(scripts, time);
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
-				if(this.props.shadowing) {
+				if(shadowing) {
 					console.log('yourt',this.m_yourturn);
 					if(this.m_yourturn < 0) {
 						if(this.m_curIdx >= 0) {
                             this.m_ytNext = curIdx;
                             player.pause();
                             const script = scripts[this.m_curIdx];
-                            const delay = (script.dms_end - script.dms_start) * 2000;
                             this.m_yourturn = _.delay(() => {
-                                if(this.m_yourturn >= 0 && this.props.isShadowPlay) {
+                                if(this.m_yourturn >= 0 && isShadowPlay) {
                                     this.m_curIdx = this.m_ytNext;
 									this.m_yourturn = -1;
-									this.props.onChangeScript(curIdx);
+									onChangeScript(curIdx);
                                     player.play();
                                 }
-                            }, delay); 
+                            }, (script.dms_end - script.dms_start) * 2000); 
                             return;
 						}
 					} else {
@@ -93,7 +93,7 @@ class VideoBox extends React.Component<IVideoBox> {
 					}
 				}	
 				this.m_curIdx = curIdx;
-				this.props.onChangeScript(curIdx);
+				onChangeScript(curIdx);
 			}
 		});
 	}
@@ -125,6 +125,7 @@ class VideoBox extends React.Component<IVideoBox> {
 		}
 	}
 	private _prevClick = () => {
+		const { player, data, playerInitTime,isShadowPlay,shadowing } = this.props;
 		if(this.m_viewCountDown) return;
 		App.pub_playBtnTab();
 
@@ -135,29 +136,29 @@ class VideoBox extends React.Component<IVideoBox> {
 			this.m_yourturn = -1;
 		}					
 	
-		const player = this.props.player;
-		const scripts = this.props.data.scripts;
+		//const player = this.props.player;
+		const scripts = data.scripts;
 		const time = player.currentTime / 1000;
 		const curIdx = _getCurrentIdx(scripts, time);
 		if (curIdx >= 0) {
 			if (curIdx > 0) {
                 const script = scripts[curIdx - 1];
-                if(this.props.playerInitTime > script.dms_start) player.seek(this.props.playerInitTime * 1000);
+                if(playerInitTime > script.dms_start) player.seek(playerInitTime * 1000);
 				else player.seek(script.dms_start * 1000);
-			} else player.seek(this.props.playerInitTime * 1000);
+			} else player.seek(playerInitTime * 1000);
 		} else {
 			for (let len = scripts.length, i = len - 1; i >= 0; i--) {
 				if (time > scripts[i].dms_start) {
-					if(this.props.playerInitTime > scripts[i].dms_start) player.seek(this.props.playerInitTime * 1000);
+					if(playerInitTime > scripts[i].dms_start) player.seek(playerInitTime * 1000);
 				    else player.seek(scripts[i].dms_start * 1000);
 					break;
 				} else if (i === 0) {
-					player.seek(this.props.playerInitTime * 1000);
+					player.seek(playerInitTime * 1000);
 				}
 			}
 		}
-		if(this.props.shadowing) {
-			if (this.props.isShadowPlay) player.play();
+		if(shadowing) {
+			if (isShadowPlay) player.play();
 			else player.pause();
 		}
 	}
