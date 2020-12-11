@@ -4,20 +4,17 @@ import Draggable from 'react-draggable';
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
-import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
+import { state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
-import ReactResizeDetector from 'react-resize-detector';
-import SendUI from '../../../share/sendui_new';
 import TableItem from './table-item';
 
-import { observer, PropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
-import { IStateCtx, IActionsCtx, SPROG } from '../s_store';
+import { IStateCtx, IActionsCtx } from '../s_store';
 
-import { _getJSX, _getBlockJSX} from '../../../get_jsx';
-import { App } from '../../../App';
-import { NONE } from 'src/share/style';
+import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -44,7 +41,7 @@ class SHard extends React.Component<IQuizItem> {
 	private _bndW_p = 0;
 	private _bndH_p = 0;
 
-	private _tarea: (KTextArea|null)[] = [null,null,null];
+	private _tarea: Array<KTextArea|null> = [null,null,null];
 	private _canvas?: HTMLCanvasElement;
 	private _ctx?: CanvasRenderingContext2D;
     private _stime = 0;

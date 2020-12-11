@@ -23,7 +23,7 @@ interface IValArr {
 }
 
 interface IQuizNumResult {
-	numOfCorrect: number;
+	arrayOfCorrect: boolean[];
 	c1: number[];
 	c2: number[];
 	c3: number[];
@@ -37,7 +37,7 @@ interface IQuizStringResult {
 } 
 
 interface IQuizeStringArrayResult{
-	numOfCorrect: number;
+	arrayOfCorrect: boolean[];
 	uid:string[];
 	c0: IQuizStringResult[];
 }
@@ -106,14 +106,14 @@ class TeacherContext extends TeacherContextBase {
 		this.state.qnaProg = SENDPROG.READY,
 		this.state.dialogueProg = SENDPROG.READY
 		this.state.resultConfirmSup = {
-			numOfCorrect: 0,
+			arrayOfCorrect: [],
 			c1: [],
 			c2: [],
 			c3: [],
 			uid: []
 		}
 		this.state.resultConfirmBasic = {
-			numOfCorrect: 0,
+			arrayOfCorrect: [],
 			c1: [],
 			c2: [],
 			c3: [],
@@ -126,17 +126,17 @@ class TeacherContext extends TeacherContextBase {
 			uid: []
 		}
 		this.state.resultAdditionalSup = {
-			numOfCorrect: 0,
+			arrayOfCorrect: [],
 			c0 : [],
 			uid : []
 		}
 		this.state.resultAdditionalBasic ={
-			numOfCorrect: 0,
+			arrayOfCorrect: [],
 			c0 : [],
 			uid : []
 		}
 		this.state.resultAdditionalHard ={
-			numOfCorrect: 0,
+			arrayOfCorrect: [],
 			c0 : [],
 			uid : []
 		}
@@ -199,7 +199,11 @@ class TeacherContext extends TeacherContextBase {
 							const ret = qmsg.returns;						// 사용자가 선택한 번호
 							const result = this.state.resultConfirmSup;					// 결과 저장 	
 
-							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]){
+								result.arrayOfCorrect.push(true);
+							}else{
+								result.arrayOfCorrect.push(false)
+							} 
 							result.c1.push(ret.answer1);
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
@@ -220,7 +224,8 @@ class TeacherContext extends TeacherContextBase {
 							const ret = qmsg.returns;						// 사용자가 선택한 번호
 							const result = this.state.resultConfirmBasic;					// 결과 저장 	
 
-							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.numOfCorrect++;
+							if(ret.answer1 === answers[0] && ret.answer2 === answers[1] && ret.answer3 === answers[2]) result.arrayOfCorrect.push(true);
+							else result.arrayOfCorrect.push(false);
 							result.c1.push(ret.answer1);
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
@@ -281,7 +286,9 @@ class TeacherContext extends TeacherContextBase {
 								result.c0[i].c3.push(ret[i].answer3);
 							}
 							if(resultCorrect){
-								result.numOfCorrect++
+								result.arrayOfCorrect.push(true)
+							}else{
+								result.arrayOfCorrect.push(false)
 							}
 							result.uid.push(qmsg.id);
 						}
@@ -317,7 +324,9 @@ class TeacherContext extends TeacherContextBase {
 								result.c0[i].c3.push(ret[i].answer3);
 							}
 							if(resultCorrect){
-								result.numOfCorrect++
+								result.arrayOfCorrect.push(true)
+							}else{
+								result.arrayOfCorrect.push(false)
 							}
 							result.uid.push(qmsg.id);
 						}

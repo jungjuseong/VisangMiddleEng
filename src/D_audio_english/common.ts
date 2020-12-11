@@ -17,11 +17,11 @@ export interface IMsg {
 				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx'|'qna_send'|'qna_end'|'shadowing_send'|'roll_send';
 }
 
-export interface IIndexMsg extends IMsg{
+export interface IIndexMsg extends IMsg {
 	idx: number;
 }
 
-export interface IConfirmHardMsg extends IIndexMsg{
+export interface IConfirmHardMsg extends IIndexMsg {
 	hint: boolean;
 }
 
@@ -43,17 +43,17 @@ export interface IRollMsg extends IMsg {
 
 export interface IQuizReturnMsg extends IIndexMsg {
 	id: string;
-	returns : IQuizReturn;
+	returns: IQuizReturn;
 }
 
-export interface IAdditionalQuizReturnMsg extends IIndexMsg{
+export interface IAdditionalQuizReturnMsg extends IIndexMsg {
 	id: string;
-	returns : IQuizStringReturn[];
+	returns: IQuizStringReturn[];
 }
 
 export interface IQuizStringReturnMsg extends IIndexMsg {
 	id: string;
-	returns : IQuizStringReturn;
+	returns: IQuizStringReturn;
 }
 
 export interface IQNAMsg extends IMsg {
@@ -110,7 +110,7 @@ export interface IIntroduction {
 	readonly ex_answer: string;
 }
 
-export interface IConfirmNomal extends IInClassStudyProps{
+export interface IConfirmNomal extends IInClassStudyProps {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
@@ -123,7 +123,7 @@ export interface IConfirmNomal extends IInClassStudyProps{
 	readonly item6: IItem;
 }
 
-export interface IConfirmSup extends IInClassStudyProps{
+export interface IConfirmSup extends IInClassStudyProps {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
@@ -134,7 +134,7 @@ export interface IConfirmSup extends IInClassStudyProps{
 	readonly problem4: IProblemSup;
 }
 
-export interface IConfirmHard extends IInClassStudyProps{
+export interface IConfirmHard extends IInClassStudyProps {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
@@ -145,48 +145,48 @@ export interface IConfirmHard extends IInClassStudyProps{
 	readonly problem4: IProblemHard;
 }
 
-export interface IAdditional extends IInClassStudyProps{
+export interface IAdditional extends IInClassStudyProps {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
 	readonly directive: IDirecrive;
 	readonly table_title: number;
-	readonly sentence : string;
+	readonly sentence: string;
 }
 
-export interface IAdditionalBasic extends IAdditional{
-	readonly sentence_answer1:string;
-	readonly sentence_answer2:string;
-	readonly sentence_answer3:string;
-	readonly sentence_answer4:string;
+export interface IAdditionalBasic extends IAdditional {
+	readonly sentence_answer1: string;
+	readonly sentence_answer2: string;
+	readonly sentence_answer3: string;
+	readonly sentence_answer4: string;
 }
 
-export interface IAdditionalSup extends IAdditional{
-	readonly sentence1:ISentenceSup;
-	readonly sentence2:ISentenceSup;
-	readonly sentence3:ISentenceSup;
-	readonly sentence4:ISentenceSup;
+export interface IAdditionalSup extends IAdditional {
+	readonly sentence1: ISentenceSup;
+	readonly sentence2: ISentenceSup;
+	readonly sentence3: ISentenceSup;
+	readonly sentence4: ISentenceSup;
 
 	app_drops: IDropDown[];
 }
-export interface IAdditionalHard extends IAdditional{
-	readonly sentence1:ISentenceHard;
-	readonly sentence2:ISentenceHard;
-	readonly sentence3:ISentenceHard;
-	readonly sentence4:ISentenceHard;
+export interface IAdditionalHard extends IAdditional {
+	readonly sentence1: ISentenceHard;
+	readonly sentence2: ISentenceHard;
+	readonly sentence3: ISentenceHard;
+	readonly sentence4: ISentenceHard;
 }
 
-export interface IDictation extends IInClassStudyProps{
+export interface IDictation extends IInClassStudyProps {
 	readonly seq: number;
 	readonly main_sound: string;
 	readonly kor_eng: boolean;
 	readonly directive: IDirecrive;
 	readonly table_title: number;
-	readonly sentence : string;
-	readonly sentence1:ISentenceDic;
-	readonly sentence2:ISentenceDic;
-	readonly sentence3:ISentenceDic;
-	readonly sentence4:ISentenceDic;
+	readonly sentence: string;
+	readonly sentence1: ISentenceDic;
+	readonly sentence2: ISentenceDic;
+	readonly sentence3: ISentenceDic;
+	readonly sentence4: ISentenceDic;
 }
 
 export interface IDropDown {
@@ -196,24 +196,24 @@ export interface IDropDown {
 	inputed: string;
 }
 
-export interface ISentenceDic{
-	readonly answer1 : string;
-	readonly answer2 : string;
-	readonly answer3 : string;
-	readonly answer4 : string;
+export interface ISentenceDic {
+	readonly answer1: string;
+	readonly answer2: string;
+	readonly answer3: string;
+	readonly answer4: string;
 }
 
-export interface ISentenceSup{
-	readonly answer : number;
-	readonly choice1 : string;
-	readonly choice2 : string;
-	readonly choice3 : string;
-	readonly choice4 : string;
+export interface ISentenceSup {
+	readonly answer: number;
+	readonly choice1: string;
+	readonly choice2: string;
+	readonly choice3: string;
+	readonly choice4: string;
 }
 
-export interface ISentenceHard{
-	readonly answer1 : string;
-	readonly answer2 : string;
+export interface ISentenceHard {
+	readonly answer1: string;
+	readonly answer2: string;
 }
 
 export interface IDirecrive {
@@ -232,22 +232,22 @@ export interface IProblem {
 	readonly question_audio: string;
 }
 
-export interface IProblemSup extends IProblem{
+export interface IProblemSup extends IProblem {
 	readonly answer: number;
-	readonly choice1 : string;
-	readonly choice2 : string;
-	readonly choice3 : string;
-	readonly choice4 : string;
+	readonly choice1: string;
+	readonly choice2: string;
+	readonly choice3: string;
+	readonly choice4: string;
 }
 
-export interface IProblemHard extends IProblem{
+export interface IProblemHard extends IProblem {
 	readonly answer: string;
-	readonly hint : string;
+	readonly hint: string;
 }
 
-export interface IRolePlay{
+export interface IRolePlay {
 	readonly main_sound: string;
-	readonly video_start : number;
+	readonly video_start: number;
 	speakerA: ISpeaker;
 	speakerB: ISpeaker;
 	speakerC: ISpeaker;
@@ -309,19 +309,19 @@ function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: strin
 	return ret;
 }
 export function initData(data: IData) {
-	let cnum = -1
+	let cnum = -1;
 	let arr: IScript[] = [];
 	data.scripts = [];
-	for(let i = 0; i < data.script.length; i++){
+	for(let i = 0; i < data.script.length; i++) {
 		const grap = data.script[i];
-		if(grap.script_group != cnum){
-			if(cnum != -1){
+		if(grap.script_group !== cnum) {
+			if(cnum !== -1) {
 				data.scripts.push(arr);
 			}
 			cnum = grap.script_group;
 			arr = [];
 		}
-		arr.push(grap)
+		arr.push(grap);
 	}
 	data.scripts.push(arr);
 
@@ -376,7 +376,7 @@ export function drawBalloon(
 	shadowBlur?: number,
 	shadowColor?: IRGBA,
 ) {
-	const color = 'green'
+	const color = 'green';
 	let vgap;
 	if(px < x) vgap = (x - px) * 1.5;
 	else vgap = (px - (x + w)) * 1.5;

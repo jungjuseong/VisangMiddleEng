@@ -109,6 +109,13 @@ class Supplement extends React.Component<IQuizBox> {
 		this._toggle[param] = false;
 	}
 	private _getToggleState = (num: number) =>{
+		if(this._hint){
+			if(this._toggle[num] === null) return '';
+			if(this._toggle[num])
+				return 'on_true_t';
+			else
+				return 'on_false_t';
+		}
 		if(this._toggle[num] === null) return '';
 		if(this._toggle[num])
 			return 'on_true';
@@ -179,7 +186,7 @@ class Supplement extends React.Component<IQuizBox> {
 		let qResult = -1;
         const isQComplete = state.confirmSupProg >= SENDPROG.COMPLETE;
         if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.numOfCorrect / state.numOfStudent);
+            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
             else qResult = 0;
             if(qResult > 100) qResult = 100;
         }
