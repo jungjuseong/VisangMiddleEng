@@ -101,7 +101,8 @@ class SHard extends React.Component<IQuizItem> {
 	}
 
 	public componentDidUpdate(prev: IQuizItem) {
-		if(this.props.view && !prev.view) {
+		const {view, prog} = this.props;
+		if(view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
@@ -113,19 +114,19 @@ class SHard extends React.Component<IQuizItem> {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 			}
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}
-		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
+		if(prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
 		}
-		if(this.props.prog >= QPROG.SENDED){
-			this._sended = true
+		if(prog >= QPROG.SENDED) {
+			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
 	}
@@ -141,23 +142,19 @@ class SHard extends React.Component<IQuizItem> {
 	// }
 
 	public render() {
-		const { view, data ,state, prog, onChoice} = this.props;
+		const { view, data ,prog, onChoice} = this.props;
 		let OXs: Array<''|'O'|'X'> = ['','',''];
-		if(this.props.prog === QPROG.COMPLETE){
-			{data.map((quiz, idx) => {
-				let correct_num :number = 0;
-				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]]
-				{answer_arr.map((answer, index)=>{
-					if(answer.correct === answer.inputed){
-						correct_num +=1;
-					}
-				})}
-				if(correct_num === 3){
-					OXs[idx] = 'O';
-				}else{
-					OXs[idx] = 'X';
+		if(this.props.prog === QPROG.COMPLETE) {
+			data.map((quiz, idx) => {
+				let correct_num = 0;
+				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]];
+				{
+					answer_arr.map((answer, index) => {
+						if(answer.correct === answer.inputed) correct_num += 1;
+					});
 				}
-			})}
+				OXs[idx] = (correct_num === 3) ? 'O' : 'X';
+			});
 		}
 		return (
 			<>
@@ -172,20 +169,20 @@ class SHard extends React.Component<IQuizItem> {
 												{this._jsx_sentence}
 											</WrapTextNew>
 										</div>
-										<div className={"OX_box " + OXs[idx]}></div>
+										<div className={'OX_box ' + OXs[idx]}/>
 										<TableItem
-										viewCorrect={false}
-										disableSelect={prog === QPROG.COMPLETE}
-										viewResult = {prog === QPROG.COMPLETE}
-										inview={view}
-										graphic={quiz}
-										className="type_3"
-										maxWidth={1000}
-										renderCnt={this._renderCnt}
-										optionBoxPosition="bottom"
-										viewBtn={false}
-										idx={idx}
-										onChoice = {onChoice}
+											className="type_3"
+											viewCorrect={false}
+											disableSelect={prog === QPROG.COMPLETE}
+											viewResult={prog === QPROG.COMPLETE}
+											inview={view}
+											graphic={quiz}
+											maxWidth={1000}
+											renderCnt={this._renderCnt}
+											optionBoxPosition="bottom"
+											viewBtn={false}
+											idx={idx}
+											onChoice={onChoice}
 										/>
 									</div>
 								);
