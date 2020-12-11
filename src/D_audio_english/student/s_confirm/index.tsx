@@ -229,18 +229,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 	}
 
 	private _setStyle(props: ISQuestionProps) {
-		if(
-			props.questionView &&
-			props.scriptProg > SPROG.UNMOUNT
-		) this._style.transition = 'left 0.3s';
-		else this._style.transition = '';
-		
-		if(
-			props.questionView && 
-			props.qsMode === 'question'
-		) this._style.left = '0px';
-		else this._style.left = '1280px';
-		// console.log(props, this._style);
+		this._style.transition = (props.questionView && props.scriptProg > SPROG.UNMOUNT) ? 'left 0.3s' : '';		
+		this._style.left = (props.questionView && props.qsMode === 'question') ? '0px' : '1280px';
 	}
 
 	public componentWillMount() {
@@ -249,8 +239,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 
 	public componentWillReceiveProps(next: ISQuestionProps) {
 		const { state,qsMode,scriptProg } = this.props;
-		if(
-			next.state.confirmSupProg !== state.confirmSupProg ||
+		if(next.state.confirmSupProg !== state.confirmSupProg ||
 			next.state.confirmBasicProg !== state.confirmBasicProg ||
 			next.state.confirmHardProg !== state.confirmHardProg ||
 			next.scriptProg !== scriptProg ||

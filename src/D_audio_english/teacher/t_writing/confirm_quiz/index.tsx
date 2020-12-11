@@ -7,7 +7,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
 import { App } from '../../../../App';
 
-import * as common from '../../../common';
+import { IData } from '../../../common';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
@@ -18,17 +18,17 @@ import { state } from '@common/component/Keyboard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizBox {
+interface IQuizBoxProps {
 	view: boolean;
 	actions: IActionsCtx;
-	state:IStateCtx;
+	state: IStateCtx;
 	index: number;
 	onClosed: () => void;
 	onHintClick: () => void;
-	mdata: common.IData;
+	mdata: IData;
 }
 @observer
-class ConfirmQuiz extends React.Component<IQuizBox> {
+class ConfirmQuiz extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -48,7 +48,7 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
 	};
 
- 	public componentDidUpdate(prev: IQuizBox) {
+ 	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -79,12 +79,12 @@ class ConfirmQuiz extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick ,actions,state} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,actions} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} actions={actions} state={state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Basic view={view && index === 1} actions={actions} state={state} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Hard view={view && index === 2} actions={actions} state={state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick}/>
+				<Supplement view={view && index === 0} actions={actions} state={this.props.state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Basic view={view && index === 1} actions={actions} state={this.props.state} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<Hard view={view && index === 2} actions={actions} state={this.props.state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick}/>
 			</>
 		);
 	}

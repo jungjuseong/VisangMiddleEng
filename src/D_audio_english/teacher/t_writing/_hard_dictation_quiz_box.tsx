@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
-import * as common from '../../common';
+import { IDictation } from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
@@ -15,17 +15,17 @@ import { CorrectBar } from '../../../share/Progress_bar';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizBox {
+interface IQuizBoxProps {
 	view: boolean;
 	actions: IActionsCtx;
-	state:IStateCtx;
+	state: IStateCtx;
 	index: number;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IDictation[];
+	data: IDictation[];
 }
 @observer
-class Hard extends React.Component<IQuizBox> {
+class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -46,10 +46,10 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _jsx_question: Array<string> = [];
-	private _jsx_question_answers: Array<Array<string>> = [];
+	private _jsx_question: string[] = [];
+	private _jsx_question_answers: string[][] = [];
 
-	private boxnum :number;
+	private boxnum: number;
 
 	private _characterImage: string;
 
@@ -57,7 +57,7 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _btnAudio?: BtnAudio;
 	
-	public constructor(props: IQuizBox) {
+	public constructor(props: IQuizBoxProps) {
 		super(props);
 
 		this._boxs = [null,null,null];
@@ -65,19 +65,19 @@ class Hard extends React.Component<IQuizBox> {
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
-		props.data.forEach((data,idx) =>{
-			this._jsx_question.push(data.sentence)
-			this._jsx_question_answers.push([props.data[idx].sentence1.answer1, props.data[idx].sentence2.answer1, props.data[idx].sentence3.answer1, props.data[idx].sentence4.answer1])
-		})
+		props.data.forEach((data,idx) => {
+			this._jsx_question.push(data.sentence);
+			this._jsx_question_answers.push([props.data[idx].sentence1.answer1, props.data[idx].sentence2.answer1, props.data[idx].sentence3.answer1, props.data[idx].sentence4.answer1]);
+		});
 		
-		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
+		const characterImages = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
 		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
-	private refText = (el: HTMLDivElement, idx : number) => {
+	private refText = (el: HTMLDivElement, idx: number) => {
 		if(this._boxs[idx] || !el) return;
 		this._boxs[idx] = el;
 	}
@@ -108,19 +108,18 @@ class Hard extends React.Component<IQuizBox> {
 
 		if(!this._boxs) return;
 
-		this._boxs.forEach((box,idx) =>{
-			var answer:Array<string>;
-			answer=this._jsx_question_answers[idx];
-			if(box){
+		this._boxs.forEach((box, idx) => {
+			const answer: string[] = this._jsx_question_answers[idx];
+			if(box) {
 				const blocks = box.querySelectorAll('.block');
 				if(!blocks) return;
 
-				blocks.forEach((block, idx)=>{
+				blocks.forEach((block, index) => {
 					while(block.lastChild) block.removeChild(block.lastChild);
-					block.appendChild(document.createTextNode(answer[idx]));
-				})
+					block.appendChild(document.createTextNode(answer[index]));
+				});
 			}
-		})
+		});
 		// if(this._swiper) {
 		// 	this._swiper.slideTo(0, 0);
 		// 	this._swiper.update();
@@ -138,7 +137,7 @@ class Hard extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBox) {
+ 	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view ,state,index } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -163,7 +162,7 @@ class Hard extends React.Component<IQuizBox> {
 			App.pub_stop();
 		}
 
-		if(state.dictationProg[index] >= SENDPROG.SENDED){
+		if(state.dictationProg[index] >= SENDPROG.SENDED) {
 			this._sended = true;
 		}
 	}
@@ -172,19 +171,19 @@ class Hard extends React.Component<IQuizBox> {
 		const { data, state, index} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
-        const isQComplete = state.dictationProg[index] >= SENDPROG.COMPLETE;
-        if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultDictation[index].arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
-            else qResult = 0;
-            if(qResult > 100) qResult = 100;
-        }
+		const isQComplete = state.dictationProg[index] >= SENDPROG.COMPLETE;
+
+		if(isQComplete) {
+			qResult = (state.numOfStudent > 0) ? Math.round(100 * state.resultDictation[index].arrayOfCorrect.filter((it) => it === true).length / state.numOfStudent) : 0;
+			if(qResult > 100) qResult = 100;
+		}
 		return (
 			<>
 			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
-				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
@@ -195,17 +194,17 @@ class Hard extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-								<BtnAudio className={'btn_audio'} url={App.data_url +data[0].main_sound}/>	
+								<BtnAudio className={'btn_audio'} url={App.data_url + data[0].main_sound}/>	
 								</div>
 							</div>
 						</div>
-						<div className = "dict_question" >
-							{this.props.data.map((data,idx) =>{
+						<div className="dict_question" >
+							{this.props.data.map((item,idx) => {
 								this.boxnum = idx;
-								return <div key={idx} className="blank_sentence" ref = {(el : HTMLDivElement) => {this.refText(el,idx)}}>
-									<p>{idx+1}.</p>
+								return (<div key={idx} className="blank_sentence" ref={(el: HTMLDivElement) => this.refText(el,idx)}>
+									<p>{idx + 1}.</p>
 									<p>{_getJSX(this._jsx_question[idx])}</p>
-								</div>
+								</div>);
 							})}
 						</div>
 					</div>
@@ -216,4 +215,4 @@ class Hard extends React.Component<IQuizBox> {
 	}
 }
 
-export default Hard;
+export default HardDictationQuizBox;
