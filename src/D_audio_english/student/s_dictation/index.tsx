@@ -33,7 +33,7 @@ class NItem extends React.Component<INItem> {
 	}
 }
 
-interface ISQuestion {
+interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;
 	scriptProg: SPROG;
@@ -43,7 +43,7 @@ interface ISQuestion {
 }
 
 @observer
-class SDictation extends React.Component<ISQuestion> {
+class SDictation extends React.Component<ISQuestionProps> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: common.IQuizStringReturn[] = [];
@@ -52,7 +52,7 @@ class SDictation extends React.Component<ISQuestion> {
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
 
-	constructor(props: ISQuestion) {
+	constructor(props: ISQuestionProps) {
 		super(props);
 		for(let i = 0; i < 3; i++) {
 			this._choices[i] = {
@@ -80,33 +80,32 @@ class SDictation extends React.Component<ISQuestion> {
 	}
 
 	private _onSend = async () => {
-		if(this.props.state.dictationProg[this.props.state.idx] !== QPROG.ON && this.props.state.idx === 0) return;
+		const { state, actions } = this.props;
+		if(state.dictationProg[state.idx] !== QPROG.ON && state.idx === 0) return;
 		App.pub_playToPad();
 		let choices: common.IQuizStringReturn[];
 		choices = this._choices;
-		//초기화 함수 만들어서 할것
-		const data = this.props.actions.getData();
-		const data_array = [data.dictation_sup,data.dictation_basic,data.dictation_hard]
-		this.props.state.dictationProg[this.props.state.idx] = QPROG.SENDING;
+		// 초기화 함수 만들어서 할것
+		const data = actions.getData();
+		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
+		state.dictationProg[state.idx] = QPROG.SENDING;
 		if(App.student) {
 			const msg: common.IAdditionalQuizReturnMsg = {
 				msgtype: 'dictation_return',
-				idx: this.props.state.idx,
+				idx: state.idx,
 				id: App.student.id,
 				returns: choices
 			};
-
 			felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 			await kutil.wait(600);
 
-			if(this.props.state.dictationProg[this.props.state.idx] === QPROG.SENDING) {
-				this.props.state.dictationProg[this.props.state.idx] = QPROG.SENDED;
-
+			if(state.dictationProg[state.idx] === QPROG.SENDING) {
+				state.dictationProg[state.idx] = QPROG.SENDED;
 				App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-				this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 			}
 		}
-		for(let i = 0; i < data_array[this.props.state.idx].length; i++) {
+		for(let i = 0; i < data_array[state.idx].length; i++) {
 			this._choices[i] = {
 				answer1: '',
 				answer2: '',
@@ -116,78 +115,68 @@ class SDictation extends React.Component<ISQuestion> {
 	}
 
 	private _onChoice = (idx: number, choice: number|string, subidx: number) => {
-		if(this.props.state.dictationProg[this.props.state.idx] !== QPROG.ON && this.props.state.idx === 0) return;
+		const { state,actions } = this.props;
+		if(state.dictationProg[this.props.state.idx] !== QPROG.ON && state.idx === 0) return;
 		App.pub_playBtnTab();
-		switch(subidx){
-			case 0 :{
+		switch(subidx) {
+			case 0:
 				this._choices[idx].answer1 = choice as string;
-				break;
-			}
-			case 1 :{
+				break;			
+			case 1:
 				this._choices[idx].answer2 = choice as string;
-				break;
-			}
-			case 2 :{
+				break;			
+			case 2:
 				this._choices[idx].answer3 = choice as string;
-				break;
-			}
+				break;			
 			default : return;
 		}
-		const data = this.props.actions.getData()
-		const data_array = [data.dictation_sup,data.dictation_basic,data.dictation_hard]
-		let checkchoice = false
-		for(let i = 0 ; i < this._choices.length ; i++){
-			if((this._choices[i].answer1 === '' && data_array[this.props.state.idx][i].sentence1.answer1 !='') || (this._choices[i].answer2 ==='' && data_array[this.props.state.idx][i].sentence2.answer1 !='') || (this._choices[i].answer3 === '' && data_array[this.props.state.idx][i].sentence3.answer1 !='')){
+		const data = actions.getData();
+		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
+		let checkchoice = false;
+		for(let i = 0 ; i < this._choices.length ; i++) {
+			if((this._choices[i].answer1 === '' && data_array[state.idx][i].sentence1.answer1 !== '') || 
+			(this._choices[i].answer2 === '' && data_array[state.idx][i].sentence2.answer1 !== '') || 
+			(this._choices[i].answer3 === '' && data_array[state.idx][i].sentence3.answer1 !== '')) {
 				checkchoice = true;
 				break;
 			}
-		}
-		
-		if(checkchoice){
+		}		
+		if(checkchoice) {
 			this._felView = false;
-			console.log('chocie false')
-		}else{
+			console.log('chocie false');
+		} else {
 			this._felView = true;
-			console.log('chocie true')
-		}
-		
+			console.log('chocie true');
+		}		
 	}
+
 	private _gotoScript = () => {
-		if(this.props.state.qsMode === 'script') return;
+		const {state} = this.props;
+		if(state.qsMode === 'script') return;
 
 		App.pub_playBtnTab();
-		this.props.state.qsMode = 'script';
+		state.qsMode = 'script';
 	}
-	private _setStyle(props: ISQuestion) {
-		if(
-			props.questionView &&
-			props.scriptProg > SPROG.UNMOUNT
-		) this._style.transition = 'left 0.3s';
-		else this._style.transition = '';
-		
-		if(
-			props.questionView && 
-			props.qsMode === 'question'
-		) this._style.left = '0px';
-		else this._style.left = '1280px';
-		// console.log(props, this._style);
+	
+	private _setStyle(props: ISQuestionProps) {
+		const { questionView, scriptProg, qsMode } = props;
+		this._style.transition = (questionView && scriptProg > SPROG.UNMOUNT) ? 'left 0.3s' : '';
+		this._style.left = (questionView && qsMode === 'question') ? '0px' : '1280px';
 	}
 	public componentWillMount() {
 		this._setStyle(this.props);		
 	}
 
-	public componentWillReceiveProps(next: ISQuestion) {
-		if(
-			next.state.dictationProg[this.props.state.idx] !== this.props.state.dictationProg[this.props.state.idx] ||
-			next.scriptProg !== this.props.scriptProg ||
-			next.qsMode !== this.props.qsMode
-		) {
-			this._setStyle(next);		
-		}
+	public componentWillReceiveProps(next: ISQuestionProps) {
+		const { state, scriptProg, qsMode } = this.props;
+		if(next.state.dictationProg[state.idx] !== state.dictationProg[state.idx] ||
+			next.scriptProg !== scriptProg || next.qsMode !== qsMode
+		) this._setStyle(next);		
 	}
 	
-	public componentDidUpdate(prev: ISQuestion) {
-		if (this.props.view && !prev.view) {			
+	public componentDidUpdate(prev: ISQuestionProps) {
+		const { view, state, qsMode } = this.props;
+		if (view && !prev.view) {			
 			this._curIdx = 0;
 			this._curIdx_tgt = 0;
 			this._felView = false;
@@ -196,15 +185,15 @@ class SDictation extends React.Component<ISQuestion> {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 			}
-			if(this.props.state.dictationProg[this.props.state.idx] < QPROG.COMPLETE) {
+			if(state.dictationProg[state.idx] < QPROG.COMPLETE) {
 					for(let i = 0; i < this._choices.length; i++) {
 						this._choices[i].answer1 = '';
 						this._choices[i].answer2 = '';
 						this._choices[i].answer3 = '';
 					}
 			}
-		} else if (!this.props.view && prev.view) {
-			if(this.props.state.dictationProg[this.props.state.idx] < QPROG.COMPLETE ) {
+		} else if (!view && prev.view) {
+			if(state.dictationProg[state.idx] < QPROG.COMPLETE ) {
 				for(let i = 0; i < this._choices.length; i++) {
 					this._choices[i].answer1 = '';
 					this._choices[i].answer2 = '';
@@ -213,7 +202,7 @@ class SDictation extends React.Component<ISQuestion> {
 			}
 		}
 
-		if(this.props.qsMode === 'script' && prev.qsMode === 'question') {
+		if(qsMode === 'script' && prev.qsMode === 'question') {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
@@ -223,7 +212,7 @@ class SDictation extends React.Component<ISQuestion> {
 	public render() {
 		const {view, state, actions} = this.props;
 		const c_data = actions.getData();
-		const data_array = [c_data.dictation_sup,c_data.dictation_basic,c_data.dictation_hard]
+		const data_array = [c_data.dictation_sup, c_data.dictation_basic, c_data.dictation_hard];
 		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
@@ -231,19 +220,19 @@ class SDictation extends React.Component<ISQuestion> {
 				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
-						{data_array.map((data,idx) =>{
-							return <SSup
-									key={idx}						
-									view={view && state.idx === idx}
-									state={state}
-									actions={actions}
-									idx={idx}
-									choice={0}
-									data={data}
-									dictationProg={state.dictationProg[idx]}
-									onChoice={this._onChoice}
-									/>
-						})}
+						{data_array.map((data,idx) =>
+							<SSup
+										key={idx}						
+										view={view && state.idx === idx}
+										state={state}
+										actions={actions}
+										idx={idx}
+										choice={0}
+										data={data}
+										dictationProg={state.dictationProg[idx]}
+										onChoice={this._onChoice}
+							/>
+						)}
 					</div>
 				</div>
 				<SendUINew
