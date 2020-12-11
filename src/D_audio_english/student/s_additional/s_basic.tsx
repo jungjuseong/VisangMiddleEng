@@ -124,13 +124,14 @@ class SBasic extends React.Component<IQuizItemProps> {
 				const answer_list = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3];
 				correct_count = 0;
 				answer_list.map((answer,index) => {
+					if(answer === "") correct_count -= 1;
 					if (answer === this._tarea[idx][index]?.value){
 						corrects[idx][index] = 'O';
 						correct_count += 1;
 					}else{
 						corrects[idx][index] = 'X';
 					}
-					OXs[idx] = (correct_count === 2) ? 'O' : 'X';
+					OXs[idx] = (correct_count === answer_list.length) ? 'O' : 'X';
 				});
 			});
 		}
