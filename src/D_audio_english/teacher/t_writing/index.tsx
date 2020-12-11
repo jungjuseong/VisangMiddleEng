@@ -222,7 +222,7 @@ class Writing extends React.Component<IWriting> {
             }else {
                 if(state.scriptProg !==  SENDPROG.SENDING) return;
                 state.scriptProg = SENDPROG.SENDED;
-                msg = {msgtype: 'script_send', idx : 0};
+                msg = {msgtype: 'script_send', idx : this._curQidx};
             } 
             
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -377,8 +377,10 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
-
+        if(state.scriptProg > SENDPROG.READY) {
+            state.scriptProg = SENDPROG.READY;
+            actions.clearQnaReturns();
+        }  
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -434,8 +436,11 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
-        
+        if(state.scriptProg > SENDPROG.READY) {
+            state.scriptProg = SENDPROG.READY;
+            actions.clearQnaReturns();
+        }  
+        App.pub_stop();
         App.pub_playBtnTab();
         this._curQidx = 0;
         this._hint = false;
@@ -462,7 +467,10 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
+        if(state.scriptProg > SENDPROG.READY) {
+            state.scriptProg = SENDPROG.READY;
+            actions.clearQnaReturns();
+        }  
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -485,7 +493,10 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
+        if(state.scriptProg > SENDPROG.READY) {
+            state.scriptProg = SENDPROG.READY;
+            actions.clearQnaReturns();
+        }  
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -508,7 +519,10 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
         // else if(state.dictationProg === SENDPROG.SENDED) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
+        if(state.scriptProg > SENDPROG.READY) {
+            state.scriptProg = SENDPROG.READY;
+            actions.clearQnaReturns();
+        }        
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -530,7 +544,6 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalSupProg === SENDPROG.SENDED) return;
         else if(state.additionalHardProg === SENDPROG.SENDED) return;
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
-        // else if(state.dictationProg === SENDPROG.SENDED) return;
         else if(state.scriptProg === SENDPROG.SENDED) return;
 
         App.pub_stop();
@@ -616,7 +629,6 @@ class Writing extends React.Component<IWriting> {
         else if(state.additionalSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
         else if(state.additionalHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
         else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) actions.setNavi(false,false);
-        else if(state.scriptProg === SENDPROG.SENDED) actions.setNavi(false,false);
 		else actions.setNavi(true, true);
 		
         actions.setNaviFnc(
@@ -759,20 +771,11 @@ class Writing extends React.Component<IWriting> {
 
 	public render() {
         const { view, state, actions } = this.props;
-        const { confirmBasicProg,qnaProg,numOfStudent,retCnt } = state;
+        const { qnaProg } = state;
 
         const introductions = this.m_data.introduction;
         const dictations = [this.m_data.dictation_sup, this.m_data.dictation_basic, this.m_data.dictation_hard];
-        const isQComplete = confirmBasicProg >= SENDPROG.COMPLETE;
-
-        const isOnStudy = ((confirmBasicProg === SENDPROG.SENDING || confirmBasicProg === SENDPROG.SENDED || qnaProg >= SENDPROG.SENDING));
-        
-        const quizResult = actions.getResult();
-        let qResult = -1;        
-        if(isQComplete) {
-            qResult = 0;
-            if(qResult > 100) qResult = 100;
-        }
+        const isOnStudy = (qnaProg >= SENDPROG.SENDING);
 
         const isCompI = (this._tab === 'INTRODUCTION');
         const isCompC = (this._tab === 'CONFIRM');
@@ -788,9 +791,6 @@ class Writing extends React.Component<IWriting> {
                             (isCompA && this._curQidx ===2 && state.additionalHardProg < SENDPROG.SENDED) ||
                             (isCompD && state.dictationProg[this._curQidx] < SENDPROG.SENDED) ||
                             (isCompS && state.scriptProg < SENDPROG.SENDED);
-        
-        const isViewInfo = (isCompI && confirmBasicProg >= SENDPROG.SENDED) || isCompS;
-        const isViewReturn = (isCompI && confirmBasicProg >= SENDPROG.SENDED) || (isCompS && qnaProg >=  SENDPROG.SENDED);
         const style: React.CSSProperties = {};
     
         return (
@@ -820,7 +820,7 @@ class Writing extends React.Component<IWriting> {
                         })}
                     </div>
                     
-                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'INTRODUCTION' ? '' : 'none'}}>
+                    <div className={'question'} style={{display: this._tab === 'INTRODUCTION' ? '' : 'none'}}>
                             {introductions.map((introduction, idx) => {
                                 return (
                                     <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
@@ -833,7 +833,7 @@ class Writing extends React.Component<IWriting> {
                                 );
                             })}
                     </div>
-                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
+                    <div className={'question' } style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
                             <ConfirmQuiz 
                                 view={view}
@@ -846,7 +846,7 @@ class Writing extends React.Component<IWriting> {
                             />                          
                         </div>              
                     </div>
-                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
+                    <div className={'question' } style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
                         <div key={1} >
                             <AdditionalQuiz 
                                 view={view}
@@ -859,7 +859,7 @@ class Writing extends React.Component<IWriting> {
                             />                          
                         </div>              
                     </div>
-                    <div className={'question' + (confirmBasicProg >= SENDPROG.COMPLETE ? ' complete' : '')} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
+                    <div className={'question'} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
                         {dictations.map((dictation, idx) => {
                             return (
                             <div key={idx}>
@@ -880,7 +880,7 @@ class Writing extends React.Component<IWriting> {
                         return (
                             <div key = {idx} className={'script_container' + (this._tab === 'SCRIPT'&&idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
                                 <ScriptAudio
-                                    view={view && idx == this._curQidx}
+                                    view={view && idx == this._curQidx&&this._tab === 'SCRIPT'}
                                     state={state}
                                     actions={actions}
                                     idx={idx}

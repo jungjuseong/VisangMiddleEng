@@ -394,6 +394,7 @@ class TeacherContext extends TeacherContextBase {
 					}
 					break;		
 				case 'qna_return' :
+					console.log('qnaqnaqnaqnaqnaqnaqnaqnaqnaqna1')
 					if(this.state.qnaProg === SENDPROG.SENDED) {
 						const qmsg = msg as IQNAMsg;
 						let sidx = -1;
@@ -403,7 +404,7 @@ class TeacherContext extends TeacherContextBase {
 								break;
 							}
 						}
-	
+						console.log('qnaqnaqnaqnaqnaqnaqnaqnaqnaqna2')
 						const ridx = this._returnUsers.indexOf(qmsg.id);
 						if(sidx >= 0 && ridx < 0) {
 							for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
