@@ -1,38 +1,34 @@
 import * as React from 'react';
-import Draggable from 'react-draggable';
 
 import { QPROG } from '../s_store';
 import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
-import { state as keyBoardState } from '@common/component/Keyboard';
+import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
-import TableItem from './table-item';
-
+import ReactResizeDetector from 'react-resize-detector';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
-
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
-
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizItem {
+interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IAdditionalSup[];
-	prog: QPROG;
-	onChoice: (idx: number, choice: number|string, subidx: number) => void;
+	data: common.IConfirmHard;
+	confirmProg: QPROG;
+	onChoice: (idx: number, choice: number|string) => void;
 }
+
 @observer
-class SHard extends React.Component<IQuizItem> {	
+class SHardQuizItem extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
-	@observable private _renderCnt = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
 
@@ -49,12 +45,19 @@ class SHard extends React.Component<IQuizItem> {
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 
-	public constructor(props: IQuizItem) {
+	public constructor(props: IQuizItemProps) {
 		super(props);
-		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
-		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
+		this._jsx_sentence = _getJSX(props.data.directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data.directive.eng);
 
 		keyBoardState.state = 'hide';
+	}
+	private _onChange = (text: string) => {
+		if(this._stime === 0) this._stime = Date.now();
+		
+		if(!this.props.view) return;
+		this.props.onChoice(this._curIdx,text);
+		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
 		if(this._stime === 0) this._stime = Date.now();
@@ -68,7 +71,8 @@ class SHard extends React.Component<IQuizItem> {
 		if(this._canvas || !el) return;
 		this._canvas = el;
 		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
+	}
+		
 	private _refArea = [
 		(el: KTextArea|null) => {
 			if(this._tarea[0] || !el) return;
@@ -90,7 +94,7 @@ class SHard extends React.Component<IQuizItem> {
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
+		if (this._swiper || !el) return;
 
 		const swiper = el.swiper;
 		swiper.on('transitionStart', () => {
@@ -104,9 +108,9 @@ class SHard extends React.Component<IQuizItem> {
 		this._swiper = swiper;
 	}
 
-	public componentDidUpdate(prev: IQuizItem) {
-		const {view, prog} = this.props;
-		if(view && !prev.view) {
+	public componentDidUpdate(prev: IQuizItemProps) {
+		const { view,confirmProg } = this.props;
+		if (view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
@@ -118,70 +122,70 @@ class SHard extends React.Component<IQuizItem> {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 			}
-		} else if(!view && prev.view) {
+		} else if (!view && prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}
-		if(prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
+		if(confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
 		}
-		if(prog >= QPROG.SENDED) {
+		if(confirmProg >= QPROG.SENDED) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
 	}
 
 	public render() {
-		const { view, data ,prog, onChoice} = this.props;
-		let OXs: Array<''|'O'|'X'> = ['','',''];
-		if(this.props.prog === QPROG.COMPLETE) {
-			data.map((quiz, idx) => {
-				let correct_count = 0;
-				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]];
-				{
-					answer_arr.map((answer, index) => {
-						if(answer.correct === answer.inputed) correct_count += 1;
-					});
-				}
-				OXs[idx] = (correct_count === answer_arr.length) ? 'O' : 'X';
-			});
-		}
+		const { view, data ,state} = this.props;
+		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
+		const quizs = [data.problem1, data.problem2, data.problem3];
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="sup_question">
+					<div className="hard_question">
 						<SwiperComponent ref={this._refSwiper}>
-							{data.map((quiz, idx) => {
+							{quizs.map((quiz, idx) => {
 								return (
-									<div key={idx} className="table_box">
+									<div key={idx} className={'q-item' + keyon}>
 										<div className="quiz">
 											<WrapTextNew view={view}>
 												{this._jsx_sentence}
 											</WrapTextNew>
 										</div>
-										<div className={'OX_box ' + OXs[idx]}/>
-										<TableItem
-											className="type_3"
-											viewCorrect={false}
-											disableSelect={prog === QPROG.COMPLETE}
-											viewResult={prog === QPROG.COMPLETE}
-											inview={view}
-											graphic={quiz}
-											maxWidth={1000}
-											renderCnt={this._renderCnt}
-											optionBoxPosition="bottom"
-											viewBtn={false}
-											idx={idx}
-											onChoice={onChoice}
-										/>
+										<div className="sentence_box">
+											<canvas/>
+											<div className="question_box">
+												<p>{idx + 1}.{quizs[idx].question}</p>
+												<p className={state.hint ? '' : 'no_hint'}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+											</div>
+										</div>
+										<div className="s_typing" >
+											<div className="area-bnd">
+												<canvas ref={this._refCanvas}/>
+												<KTextArea 
+													ref={this._refArea[idx]} 
+													view={view} 
+													on={view && this._curIdx === idx && !this._sended}
+													autoResize={true}
+													skipEnter={false}
+													onChange={this._onChange}
+													onDone={this._onDone}
+													maxLength={60}
+													maxLineNum={3}
+													rows={1}
+												/>
+												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
+											</div>
+										</div>
 									</div>
 								);
 							})}
 						</SwiperComponent>
+						<Keyboard />
 					</div>
 				</div>
 			</>
@@ -189,4 +193,4 @@ class SHard extends React.Component<IQuizItem> {
 	}
 }
 
-export default SHard;
+export default SHardQuizItem;

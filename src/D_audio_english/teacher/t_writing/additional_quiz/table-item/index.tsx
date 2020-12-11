@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import { ToggleBtn } from '@common/component/button';
 
-import * as common from '../../../../common';
+import { IAdditionalSup } from '../../../../common';
 import SelectBox from './_select_box';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -14,7 +14,7 @@ let _zIndex = observable([0]);
 
 interface ITableItem {
 	inview: boolean;
-	graphic: common.IAdditionalSup;
+	graphic: IAdditionalSup;
 	maxWidth: number;
 	className: string;
 	optionBoxPosition: 'top' | 'bottom';
@@ -68,7 +68,7 @@ class TableItem extends React.Component<ITableItem> {
 	}
 
 	private _parseBlock = (
-		graphic: common.IAdditionalSup,
+		graphic: IAdditionalSup,
 		onRef: (sbox: SelectBox, idx: number) => void,
 		onChange: (value: string, idx: number) => void,
 		boxPositon: 'top' | 'bottom' = 'bottom'
@@ -146,7 +146,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	public componentDidMount() {
 		while (this._sbox.length > 0) this._sbox.pop();
-		console.log('didmount')
+		console.log('didmount');
 		this._jsx = this._parseBlock(
 			this.props.graphic,
 			this._refSelect,
@@ -255,7 +255,7 @@ class TableItem extends React.Component<ITableItem> {
 			</div>
 		);
 		return (
-			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100-this.props.idx) }}>
+			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100 - this.props.idx) }}>
 				{this._cont}
 				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
 			</div>

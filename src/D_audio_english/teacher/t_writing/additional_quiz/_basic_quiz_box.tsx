@@ -1,32 +1,29 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
-import * as butil from '@common/component/butil';
-
-import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
-import * as common from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
+import { IStateCtx, IActionsCtx, SENDPROG } from '../../t_store';
 import { CorrectBar } from '../../../../share/Progress_bar';
+
+import { IAdditionalBasic } from '../../../common';
+import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
-const SwiperComponent = require('react-id-swiper').default;
-
-interface IQuizBox {
+interface IQuizBoxProps {
 	view: boolean;
 	actions: IActionsCtx;
-	state:IStateCtx;
+	state: IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
-	data: common.IAdditionalHard[];
+	data: IAdditionalBasic[];
 }
 @observer
-class Hard extends React.Component<IQuizBox> {
+class BasicQuizBox extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -36,19 +33,17 @@ class Hard extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	
-	private _characterImage: string;
 
+	private _characterImage: string;
 	private _btnAudio?: BtnAudio;
 	
-	public constructor(props: IQuizBox) {
+	public constructor(props: IQuizBoxProps) {
 		super(props);
 		
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor); // 문제
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng); // 문제
 
-		
-		const characterImages:Array<string> = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
+		const characterImages: string[] = ['letstalk_bear.png','letstalk_boy.png','letstalk_gir.png'];
 		const pathPrefix = `${_project_}/teacher/images/`;
 
 		const randomIndex = Math.floor(Math.random() * 3);
@@ -76,7 +71,7 @@ class Hard extends React.Component<IQuizBox> {
 
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
-		console.log('viewHint')
+		console.log('viewHint');
 		this.props.onHintClick();
 		this._hint = !this._hint;
 
@@ -98,7 +93,7 @@ class Hard extends React.Component<IQuizBox> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
- 	public componentDidUpdate(prev: IQuizBox) {
+ 	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view ,state } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -123,28 +118,27 @@ class Hard extends React.Component<IQuizBox> {
 			App.pub_stop();
 		}
 
-		if(state.additionalHardProg >= SENDPROG.SENDED){
-			this._sended = true;
-		}
+		if(state.additionalBasicProg >= SENDPROG.SENDED) this._sended = true;
 	}
 	
 	public render() {
 		const { data, state} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
-        const isQComplete = state.additionalHardProg >= SENDPROG.COMPLETE;
-        if(isQComplete) {
-            if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalHard.arrayOfCorrect.filter(it=>it===true).length / state.numOfStudent);
-            else qResult = 0;
-            if(qResult > 100) qResult = 100;
-        }
+
+		if(state.additionalBasicProg >= SENDPROG.COMPLETE) {
+			if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalBasic.arrayOfCorrect.filter((it) => it === true).length / state.numOfStudent);
+			else qResult = 0;
+			if(qResult > 100) qResult = 100;
+		}
+		
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={"subject_rate"+ (this._sended ? '' : ' hide')}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={"btn_answer"+ (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultAdditionalBasic.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate'+ (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
@@ -155,31 +149,38 @@ class Hard extends React.Component<IQuizBox> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-									<BtnAudio className={'btn_audio'} url={App.data_url +data[0].main_sound}/>											
+									<BtnAudio className={'btn_audio'} url={App.data_url + data[0].main_sound}/>	
 								</div>
 							</div>
 						</div>
-						<div className = "hard_question">
-							{data.map((question, idx) =>{
+						<div className="basic_question">
+							{data.map((question, idx) => {
 								return <div key={idx}>
-									<p className="number">{idx + 1}.</p>
-									<p>{_getJSX(question.sentence)}</p>
-									<div className="answer_bundle">
-										<div className="answer_box">
+									<div>
+										<p className="number">{idx + 1}.</p>
+										<p>{_getJSX(question.sentence)}</p>
+									</div>
+									<div>
+										<div className="answer_box" style={{ borderBottom: question.sentence_answer1 !== '' ? '' : 'none',  }}>
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
-												{question.sentence1.answer1}
+												{question.sentence_answer1}
 											</div>
 										</div>
-										{' → '}
-										<div className="answer_box">
+										<div className="answer_box" style={{ borderBottom: question.sentence_answer2 !== '' ? '' : 'none' }}>
 											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
-												{question.sentence1.answer2}
+												{question.sentence_answer2}
+											</div>
+										</div>
+										<div className="answer_box" style={{ borderBottom: question.sentence_answer3 !== '' ? '' : 'none' }}>
+											<div className={'sample' + (this._hint ? ' hide' : '')}/>
+											<div className={'hint' + (this._hint ? '' : ' hide')}>
+												{question.sentence_answer3}
 											</div>
 										</div>
 									</div>
-								</div>
+								</div>;
 							})}
 						</div>
 					</div>
@@ -190,4 +191,4 @@ class Hard extends React.Component<IQuizBox> {
 	}
 }
 
-export default Hard;
+export default BasicQuizBox;

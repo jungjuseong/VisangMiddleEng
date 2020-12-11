@@ -1,33 +1,33 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observer, PropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
-import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
+import { IStateCtx, IActionsCtx } from '../../t_store';
 
 import { App } from '../../../../App';
 
-import * as common from '../../../common';
+import { IData } from '../../../common';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
-import Supplement from './_supplement';
-import Basic from './_basic';
-import Hard from './_hard';
+import SupplementQuizBox from './_supplement_quiz_box';
+import BasicQuizBox from './_basic_quiz_box';
+import HardQuizBox from './_hard_quiz_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizBox {
+interface IQuizBoxProps {
 	view: boolean;
 	index: number;
 	actions: IActionsCtx;
-	state:IStateCtx;
+	state: IStateCtx;
 	onClosed: () => void;
 	onHintClick: () => void;
-	mdata: common.IData;
+	mdata: IData;
 }
 @observer
-class AdditionalQuiz extends React.Component<IQuizBox> {
+class AdditionalQuiz extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _trans = false;
@@ -47,7 +47,7 @@ class AdditionalQuiz extends React.Component<IQuizBox> {
 		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
 	};
 
- 	public componentDidUpdate(prev: IQuizBox) {
+ 	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -81,9 +81,9 @@ class AdditionalQuiz extends React.Component<IQuizBox> {
 		const { mdata, view,index, onClosed, onHintClick ,actions, state} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} actions={actions} state={state} data={mdata.additional_sup} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Basic view={view && index === 1} actions={actions} state={state} data={mdata.additional_basic} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Hard view={view && index === 2} actions={actions} state={state} data={mdata.additional_hard} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<SupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.additional_sup} onClosed={onClosed} onHintClick={onHintClick}/>
+				<BasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.additional_basic} onClosed={onClosed} onHintClick={onHintClick}/>
+				<HardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.additional_hard} onClosed={onClosed} onHintClick={onHintClick}/>
 			</>
 		);
 	}
