@@ -118,21 +118,16 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		const { view, data, dictationProg } = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a', 'b', 'c'];
-		let OXs: Array<''|'O'|'X'> = ['','',''];
 		let corrects: Array<Array<'' | 'O' | 'X'>> = [['', '', ''], ['', '', ''], ['', '', '']];
-		let correct_count = 0;
 		if (dictationProg === QPROG.COMPLETE) {
 			data.map((quiz, idx) => {
 				const answerlist = [quiz.sentence1.answer1, quiz.sentence2.answer1, quiz.sentence3.answer1];
 				answerlist.map((answer, index) => {
-					if(answer === '') correct_count -= 1;
 					if (answer === this._tarea[idx][index]?.value) {
 						corrects[idx][index] = 'O';
-						correct_count += 1;
 					} else {
 						corrects[idx][index] = 'X';
 					}
-					OXs[idx] = (correct_count === answerlist.length) ? 'O' : 'X';
 				});
 			});
 		}
@@ -151,7 +146,6 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
-											<div className={'OX_box ' + OXs[idx]}/>
 											<canvas/>
 											<div className="question_box">
 												<p>{_getJSX(quiz.sentence)}</p>
@@ -159,27 +153,27 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 										</div>
 										<div className="s_typing" >
 											{sentences.map((sentence, index) => {
-												if (sentence.answer1 === '') return;								
-												
+												if (sentence.answer1 === '') return;
 												return (
-													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>
-														<div className={'answer_box ' + corrects[idx][index]}>
+													<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
+														<div className={"answer_box "+ corrects[idx][index]}>
 															{sentence.answer1}
 														</div>
-														<span className="index">{alphabet[index]}.</span>
+														<div className={"OX_box " + corrects[idx][index]}></div>
+														<span className={"index"}>{alphabet[index]}.</span>
 														<KTextArea
 															ref={this._refArea[idx][index]}
 															view={view}
 															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
 															autoResize={true}
 															skipEnter={false}
-															onChange={(text: string) => this._onChange(text, index)}
+															onChange={(text: string) => {this._onChange(text, index)}}
 															onDone={this._onDone}
 															maxLength={60}
 															maxLineNum={3}
 															rows={1}
 														/>
-													</div>
+													</div>														
 												);
 											})}
 										</div>
