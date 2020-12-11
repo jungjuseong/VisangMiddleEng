@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import * as common from '../common';
+import { IScript,IRolePlay,IQnaReturn } from '../common';
 import ScriptBox from './_script_box';
-import { App } from '../../App';
-import { BtnAudio } from '../../share/BtnAudio';
 
 const SwiperComponent = require('react-id-swiper').default;
 
 interface IScriptContainer {
-	role: common.IRolePlay;
-	script: common.IScript[];
+	role: IRolePlay;
+	script: IScript[];
 	focusIdx: number;
 	selected: number[];
-	idx : number;
-	qnaReturns: common.IQnaReturn[];
-	clickThumb: (idx: number, script: common.IScript) => void;
-	clickText?: (idx: number, script: common.IScript) => void;
+	idx: number;
+	qnaReturns: IQnaReturn[];
+	clickThumb: (idx: number, script: IScript) => void;
+	clickText?: (idx: number, script: IScript) => void;
 	qnaReturnsClick?: (idx: number) => void;
 	view: boolean;
 	roll: ''|'A'|'B';
@@ -49,44 +47,46 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 
 	}
 	public scrollTo(fidx: number, dur?: number) {
-		fidx = fidx - 1;
-		if(fidx < 0) fidx = 0;
-		this.m_swiper.slideTo(fidx, dur);
+		// fidx = fidx - 1;
+		// if(fidx < 0) fidx = 0;
+		this.m_swiper.slideTo((fidx - 1) < 0 ? 0 : fidx - 1, dur);
 	}
 	public componentDidUpdate(prev: IScriptContainer) {
 		// console.log(this.props.selected);
+		const { view, shadowing, noSwiping, focusIdx, viewTrans, roll } = this.props;
+
 		if(!this.m_swiper) return;
 		
 		let bUpdate = false;
 		
-		if(prev.focusIdx !== this.props.focusIdx && this.props.focusIdx >= 0) {
-			let fidx = this.props.focusIdx - 1;
+		if(prev.focusIdx !== focusIdx && focusIdx >= 0) {
+			let fidx = focusIdx - 1;
 			if(fidx < 0) fidx = 0;
 			this.m_swiper.slideTo(fidx);
 		}
-		if(this.props.view !== prev.view) {
+		if(view !== prev.view) {
 			bUpdate = true;
 			this.m_swiper.slideTo(0, 0);
 		}
-		if(this.props.roll !== prev.roll && this.props.roll !== '') {
+		if(roll !== prev.roll && roll !== '') {
 			bUpdate = true;
 			this.m_swiper.slideTo(0);
 		}
-		if(this.props.shadowing && !prev.shadowing) {
+		if(shadowing && !prev.shadowing) {
 			bUpdate = true;
 			this.m_swiper.slideTo(0);
 		}		
-		if(this.props.noSwiping !== prev.noSwiping) {
+		if(noSwiping !== prev.noSwiping) {
 			bUpdate = true;
-			this.m_soption.noSwiping = this.props.noSwiping;
-			this.m_swiper.params.noSwiping = this.props.noSwiping;
-			this.m_soption.followFinger = !this.props.noSwiping;
-			this.m_swiper.params.followFinger = !this.props.noSwiping;
+			this.m_soption.noSwiping = noSwiping;
+			this.m_swiper.params.noSwiping = noSwiping;
+			this.m_soption.followFinger = !noSwiping;
+			this.m_swiper.params.followFinger = !noSwiping;
 			
-			if(this.m_soption.scrollbar) this.m_soption.scrollbar.draggable = !this.props.noSwiping;
-			if(this.m_swiper.params.scrollbar) this.m_swiper.params.scrollbar.draggable = !this.props.noSwiping;
+			if(this.m_soption.scrollbar) this.m_soption.scrollbar.draggable = !noSwiping;
+			if(this.m_swiper.params.scrollbar) this.m_swiper.params.scrollbar.draggable = !noSwiping;
 			
-			if(this.props.noSwiping) {
+			if(noSwiping) {
 				this.m_soption.noSwipingClass = 'swiper-wrapper';
 				this.m_swiper.params.noSwipingClass = 'swiper-wrapper';
 			} else {
@@ -95,8 +95,8 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 			}
 		}
 		let tidx = -1;
-		if(this.props.viewTrans !== prev.viewTrans) {
-			if(!this.props.noSwiping) tidx = this.m_swiper.activeIndex;
+		if(viewTrans !== prev.viewTrans) {
+			if(!noSwiping) tidx = this.m_swiper.activeIndex;
 			bUpdate = true;
 		}
 		if(bUpdate && this.props.view) {
@@ -108,25 +108,24 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		}
 	}
 	public render() {
-		const { role, selected, qnaReturns } = this.props;
+		const { view, script, role, selected, roll, numRender, shadowing, viewClue, viewScript, viewTrans, qnaReturns, focusIdx } = this.props;
 		const thumbA = role.speakerA.image_s;
 		const thumbB = role.speakerB.image_s;
 		const thumbC = role.speakerC.image_s;
 		const thumbD = role.speakerD.image_s;
 		const thumbE = role.speakerE.image_s;
 
-		const arr: string[] = ['script_box'];
-		
+		const arr: string[] = ['script_box'];		
 		const boxClass = arr.join(' ');
 		return (
 			<>
-			<div className='swiper-container'>
-				{this.props.script.map((script, idx) => {
+			<div className="swiper-container">
+				{script.map((item, idx) => {
 					let thumb;
-					if (script.roll === 'E')  thumb = thumbE;
-					else if (script.roll === 'D')  thumb = thumbD;
-					else if (script.roll === 'C')  thumb = thumbC;
-					else if (script.roll === 'B')  thumb = thumbB;
+					if (item.roll === 'E')  thumb = thumbE;
+					else if (item.roll === 'D')  thumb = thumbD;
+					else if (item.roll === 'C')  thumb = thumbC;
+					else if (item.roll === 'B')  thumb = thumbB;
 					else thumb = thumbA;
 					const sidx = selected.indexOf(idx); 
 
@@ -135,29 +134,29 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 					return (
 						<div className={boxClass} key={'script_' + idx}>
 							<ScriptBox  
-								view={this.props.view}
-								script={script} 
+								view={view}
+								script={item} 
 								image_s={thumb} 
 								idx={idx}
-								focus={idx === this.props.focusIdx}
+								focus={idx === focusIdx}
 								selected={sidx >= 0}
 								numOfReturn={numOfReturn}
-								roll={script.roll}
-								sroll={this.props.roll}
-								shadowing={this.props.shadowing}
+								roll={item.roll}
+								sroll={roll}
+								shadowing={shadowing}
 								clickThumb={this.props.clickThumb}
 								clickText={this.props.clickText}
 								qnaReturnsClick={this.props.qnaReturnsClick}
-								compDiv={"DIALOGUE"}
-								viewClue={this.props.viewClue}
-								viewScript={this.props.viewScript}
-								viewTrans={this.props.viewTrans}								
+								compDiv={'DIALOGUE'}
+								viewClue={viewClue}
+								viewScript={viewScript}
+								viewTrans={viewTrans}								
 							/>
 						</div>
 					);
 				})}
 			</div>
-			<div style={{display: 'none'}}>{this.props.numRender}</div>
+			<div style={{display: 'none'}}>{numRender}</div>
 			</>
 		);
 	}

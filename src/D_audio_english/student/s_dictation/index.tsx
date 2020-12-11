@@ -11,9 +11,7 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import * as common from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasic from './s_basic';
 import SSup from './s_supplement';
-import SHard from './s_hard';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -56,6 +54,13 @@ class SDictation extends React.Component<ISQuestion> {
 
 	constructor(props: ISQuestion) {
 		super(props);
+		for(let i = 0; i < 3; i++) {
+			this._choices[i] = {
+				answer1: '',
+				answer2: '',
+				answer3: ''
+			};
+		}
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -140,6 +145,7 @@ class SDictation extends React.Component<ISQuestion> {
 		
 		if(checkchoice){
 			this._felView = false;
+			console.log('chocie false')
 		}else{
 			this._felView = true;
 			console.log('chocie true')
@@ -226,7 +232,8 @@ class SDictation extends React.Component<ISQuestion> {
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						{data_array.map((data,idx) =>{
-							return <SSup							
+							return <SSup
+									key={idx}						
 									view={view && state.idx === idx}
 									state={state}
 									actions={actions}

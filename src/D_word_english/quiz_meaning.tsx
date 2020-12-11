@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
-import {IQuizPage} from './common';
+import { IQuizPage } from './common';
 import { App } from '../App';
 import { BtnAudio } from '../share/BtnAudio';
 import QuizMCBtn from '../share/QuizMCBtn';
@@ -22,65 +22,64 @@ class QuizMeaning extends React.Component<IQuizPage> {
 	}
 
 	public componentDidUpdate(prev: IQuizPage) {
-		
-		if(this.props.on && !prev.on) {
-			if(this.props.isTeacher) this._selected = 0;
-			if(this.props.isTeacher && this.props.quizProg === 'quiz') {
+		const { isTeacher, quizProg, view, on } = this.props;
+		if(on && !prev.on) {
+			if(isTeacher) this._selected = 0;
+			if(isTeacher && quizProg === 'quiz') {
 			    this._nPlay = 2;
 			    this._btnAudioDisabled = true;
 			} else {
 			    this._nPlay = 0;
 			    this._btnAudioDisabled = false;
 			}
-		} else if(!this.props.on && prev.on) {
+		} else if(!on && prev.on) {
 			this._nPlay = 0;
-			if(this.props.isTeacher) this._selected = 0;
+			if(isTeacher) this._selected = 0;
 		}
-		if(!this.props.view && prev.view) {
+		if(!view && prev.view) {
 			this._selected = 0;
 		}
 	}
 
 	private _onMc = (num: number) => {
-		if(!this.props.on) return;
-		else if(this.props.quizProg !== 'quiz') return;
+		const { isTeacher, quiz, quizProg, idx, on, onItemChange } = this.props;
+		if(!on) return;
+		else if(quizProg !== 'quiz') return;
 
-		if(this._selected === num) this._selected = 0;
-		else this._selected = num;
+		this._selected = (this._selected === num) ? 0 : num;
 
-		if(!this.props.isTeacher) {
-			const word = this.props.quiz;
-			word.app_result = this._selected === word.quiz_meaning.correct;
+		if(!isTeacher) {
+			quiz.app_result = (this._selected === quiz.quiz_meaning.correct);
 		}
-		if(this.props.onItemChange) this.props.onItemChange(this.props.idx, this._selected + '');
+		if(onItemChange) onItemChange(idx, this._selected + '');
 	}
 
 	private _onStop = () => {
-		if(this.props.on && this._nPlay > 0 && this.props.quizProg === 'quiz') {
+		const { onSoundComplete, quizProg, idx, on, onItemChange } = this.props;
+		if(on && this._nPlay > 0 && quizProg === 'quiz') {
 			this._nPlay = 0;
 			this._btnAudioDisabled = false;
-			this.props.onSoundComplete(this.props.idx);
+			onSoundComplete(idx);
 			console.log('end?, click ok');
 		}
 	}
 	public render() {
-		const {isGroup, group, isTeacher, quizProg, hasPreview, percent}  = this.props;
-		const word = this.props.quiz;
-		const quiz = word.quiz_meaning;
-		const correct = quiz.correct;
-		const choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3];
+		const { quiz, isTeacher, quizProg, hasPreview, percent }  = this.props;
+		const quiz_meaning = quiz.quiz_meaning;
+		const correct = quiz_meaning.correct;
+		const choices: string[] = [quiz_meaning.choice1, quiz_meaning.choice2, quiz_meaning.choice3];
 
 		return (
 			<>
 				<PreInBox
 					view={isTeacher && quizProg === 'result'}
-					preClass={hasPreview ? word.app_meaning : -1}
+					preClass={hasPreview ? quiz.app_meaning : -1}
 					inClass={percent}
 					top={65}
 					right={110}
 				/>
-				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + word.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
-				<div className="word">{word.entry}</div>
+				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + quiz.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
+				<div className="word">{quiz.entry}</div>
 				<div className="mean">{choices.map((choice, idx) => {
 					const arr: string[] = ['quiz_box'];
 					let selected = this._selected;

@@ -21,37 +21,38 @@ class QuizSound extends React.Component<common.IQuizPage> {
 		this._selected = 0;
 	}
 	public componentDidUpdate(prev: common.IQuizPage) {
-		if(this.props.on && !prev.on) {
-			if(this.props.isTeacher) this._selected = 0;
-			if(this.props.isTeacher && this.props.quizProg === 'quiz') {
+		const { view, isTeacher, quizProg, on } = this.props;
+		if(on && !prev.on) {
+			if(isTeacher) this._selected = 0;
+			if(isTeacher && quizProg === 'quiz') {
 			    this._nPlay = 2;
 			    this._btnAudioDisabled = true;
 			} else {
 			    this._nPlay = 0;
 			    this._btnAudioDisabled = false;
 			}	
-		} else if(!this.props.on && prev.on) {
+		} else if(!on && prev.on) {
 			this._nPlay = 0;
-			if(this.props.isTeacher) this._selected = 0;
+			if(isTeacher) this._selected = 0;
 		}
-		if(!this.props.view && prev.view) {
+		if(!view && prev.view) {
 			this._selected = 0;
 		}
 	}
 
 	private _onMc = (num: number) => {
-		if(!this.props.on) return;
-		else if(this.props.quizProg !== 'quiz') return;
+		const { idx, quiz, isTeacher, quizProg, on, onItemChange } = this.props;
 
-		if(this._selected === num) this._selected = 0;
-		else this._selected = num;
+		if(!on) return;
+		else if(quizProg !== 'quiz') return;
+
+		this._selected = (this._selected === num) ? 0 : num;
 		
-		if(!this.props.isTeacher) {
-			const word = this.props.quiz;
-			word.app_result = this._selected === word.quiz_sound.correct;
+		if(!isTeacher) {
+			quiz.app_result = (this._selected === quiz.quiz_sound.correct);
 		}
 
-		if(this.props.onItemChange) this.props.onItemChange(this.props.idx, this._selected + '');
+		if(onItemChange) onItemChange(idx, this._selected + '');
 	}
 
 	private _onStop = () => {
@@ -63,25 +64,24 @@ class QuizSound extends React.Component<common.IQuizPage> {
 	}
 
 	public render() {
-		const {isGroup, group, isTeacher, quizProg, hasPreview, percent}  = this.props;
-		const word = this.props.quiz;
-		const quiz = word.quiz_sound;
-		const correct = quiz.correct;
-		let choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3, quiz.choice4];
-		if(quiz.choice4 === '') choices = [quiz.choice1, quiz.choice2, quiz.choice3];
+		const { view, isTeacher, quizProg, hasPreview, percent, quiz }  = this.props;
+		const quiz_sound = quiz.quiz_sound;
+		const correct = quiz_sound.correct;
+		let choices: string[] = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3, quiz_sound.choice4];
+		if(quiz_sound.choice4 === '') choices = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3];
 		
 		return (
 			<>
 				<PreInBox
 					view={isTeacher && quizProg === 'result'}
-					preClass={hasPreview ? word.app_sound : -1}
+					preClass={hasPreview ? quiz.app_sound : -1}
 					inClass={percent}
 					top={65}
 					right={110}
 				/>
 
-				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + word.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
-				<div className={quiz.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{choices.map((choice, idx) => {
+				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + quiz.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
+				<div className={quiz_sound.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{choices.map((choice, idx) => {
 					const arr: string[] = ['quiz_box'];
 					let selected = this._selected;
 					const total = choice.length;
@@ -111,7 +111,7 @@ class QuizSound extends React.Component<common.IQuizPage> {
 							*/
 						}
 					}
-					if(quiz.choice4 === '') {
+					if(quiz_sound.choice4 === '') {
 						return (
 							<div key={idx}>
 								<QuizMCBtn 
@@ -120,9 +120,9 @@ class QuizSound extends React.Component<common.IQuizPage> {
 									num={idx + 1} 
 									on={selected === (idx + 1)} 
 									onClick={this._onMc} 
-									disabled={this.props.quizProg !== 'quiz'}
+									disabled={quizProg !== 'quiz'}
 								>
-									<WrapTextNew view={this.props.view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
+									<WrapTextNew view={view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
 								</QuizMCBtn>
 							</div>
 						);
@@ -134,9 +134,9 @@ class QuizSound extends React.Component<common.IQuizPage> {
 								num={idx + 1} 
 								on={selected === (idx + 1)} 
 								onClick={this._onMc} 
-								disabled={this.props.quizProg !== 'quiz'}
+								disabled={quizProg !== 'quiz'}
 							>
-								<WrapTextNew view={this.props.view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
+								<WrapTextNew view={view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
 							</QuizMCBtn>
 						);
 					}

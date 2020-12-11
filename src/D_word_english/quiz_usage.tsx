@@ -34,8 +34,6 @@ class QuizUsage extends React.Component<IQuizPage> {
 			sMax = qs.choice3;
 			max = sMax.length;
 		}
-
-
 		this._jsx = this._getJSX(qs.sentence, sMax);
 	}
 
@@ -46,7 +44,6 @@ class QuizUsage extends React.Component<IQuizPage> {
 				{nodes.map((node) => node)}
 			</>
 		);
-
 	}
 
 	private async _soundComplete() {
