@@ -392,7 +392,47 @@ class TeacherContext extends TeacherContextBase {
 							result.uid.push(qmsg.id);
 						}
 					}
-					break;				
+					break;		
+				case 'qna_return' :
+					if(this.state.qnaProg === SENDPROG.SENDED) {
+						const qmsg = msg as IQNAMsg;
+						let sidx = -1;
+						for(let i = 0; i < App.students.length; i++) {
+							if(App.students[i].id === qmsg.id) {
+								sidx = i;
+								break;
+							}
+						}
+	
+						const ridx = this._returnUsers.indexOf(qmsg.id);
+						if(sidx >= 0 && ridx < 0) {
+							for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
+								const scriptIdx = qmsg.returns[i];
+								if(scriptIdx < this._qnaReturns.length) {
+									const users = this._qnaReturns[scriptIdx].users;
+									if(users.indexOf(qmsg.id) < 0) users.push(qmsg.id);
+	
+									this._qnaReturns[scriptIdx].num = users.length;
+								}
+							}
+							this._returnUsers.push(qmsg.id);
+							felsocket.addStudentForStudentReportType6(qmsg.id);
+							this.actions.setRetCnt(this._returnUsers.length);
+						}
+						
+						let ans_submit = 'qna;';
+						const scripts = this._data.scripts[msg.idx];
+						if( qmsg.returns.length > 0) {
+							qmsg.returns.forEach((val,idx) => {
+								const script = scripts[val];
+								if(script) {
+									if(ans_submit === 'qna;') ans_submit += script.seq + '|' + script.dms_eng;
+									else ans_submit += '§' + script.seq + '|' + script.dms_eng;
+								}
+							});
+						}
+					}
+					break;		
 				default:
 					break;
 			}
@@ -439,7 +479,7 @@ class TeacherContext extends TeacherContextBase {
 			}
 		}
 
-		const scripts = this._data.script;
+		const scripts = this._data.scripts[0];
 		const speakerA = this._data.role_play.speakerA.name;
 		const speakerB = this._data.role_play.speakerB.name;
 		const speakerC = this._data.role_play.speakerC.name;

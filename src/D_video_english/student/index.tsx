@@ -41,14 +41,6 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 				<span>가나다라</span><span style={{fontWeight: 'bold'}}>가나다라</span>
 			</div>
 			<div className="content-container"><div className="content-wrapper" style={{left: leftOffset + 'px'}}>
-				<div><VideoDirection 
-							className="video-direction" 
-							view={state.viewDiv === 'direction'} 
-							on={state.directionON} 
-							isTeacher={false}
-							video_url={_digenglish_lib_ + 'direction/video_english.webp'}
-							video_frame={125}
-				/></div>
 				<div>
 					<VideoDirection {...videoProps} className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={false}/>
 				</div>

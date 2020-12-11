@@ -58,14 +58,6 @@ class SScript extends React.Component<ISScriptProps> {
 		}
 	}
 
-	private _gotoQuestion = () => {
-		const { state } = this.props;
-		if(state.qsMode === 'question') return;
-		// if(state.qsMode === 'question') return;
-		App.pub_playBtnTab();
-		state.qsMode = 'question';		
-	}
-
 	public componentWillReceiveProps(next: ISScriptProps) {
 		if(next.scriptProg !== this.props.scriptProg) {
 			if(next.scriptProg < SPROG.SELECTING) {
