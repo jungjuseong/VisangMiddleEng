@@ -128,7 +128,6 @@ class SSupplement extends React.Component<IQuizItem> {
 		let no_answer = 0;
 		let correct_count = 0;
 		if (this.props.dictationProg === QPROG.COMPLETE){
-			console.log("hihihihihih");
 			data.map((quiz, idx) => {
 				const answerlist = [quiz.sentence1.answer1, quiz.sentence2.answer1, quiz.sentence3.answer1];
 				answerlist.map((answer, index) => {

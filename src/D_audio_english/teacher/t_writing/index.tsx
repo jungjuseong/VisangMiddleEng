@@ -867,7 +867,7 @@ class Writing extends React.Component<IWriting> {
                                     view={view && idx === this._curQidx}
                                     actions={actions}
                                     state={state}
-                                    index ={this._curQidx}
+                                    index ={idx}
                                     data={dictation}
                                     onClosed={this._letstalkClosed}
                                     onHintClick={this._clickAnswer}
