@@ -150,14 +150,14 @@ class SHard extends React.Component<IQuizItem> {
 		let OXs: Array<''|'O'|'X'> = ['','',''];
 		if(this.props.prog === QPROG.COMPLETE) {
 			data.map((quiz, idx) => {
-				let correct_num = 0;
+				let correct_count = 0;
 				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]];
 				{
 					answer_arr.map((answer, index) => {
-						if(answer.correct === answer.inputed) correct_num += 1;
+						if(answer.correct === answer.inputed) correct_count += 1;
 					});
 				}
-				OXs[idx] = (correct_num === 3) ? 'O' : 'X';
+				OXs[idx] = (correct_count === 3) ? 'O' : 'X';
 			});
 		}
 		return (

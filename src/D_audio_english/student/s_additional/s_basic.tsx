@@ -18,7 +18,7 @@ interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
-	idx: number;
+	idx: number;	
 	choice: number;
 	data: common.IAdditionalBasic[];
 	prog: QPROG;
@@ -110,26 +110,30 @@ class SBasic extends React.Component<IQuizItemProps> {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
-		if(this.props.prog === QPROG.COMPLETE) {
-			this._checkAnswer();
-		}
-	}
-
-	private _checkAnswer = () => {
-		let OXs: Array<Array<(''|'O'|'X')>> = [['','',''],['','',''],['','','']];
-		this.props.data.map((quiz,idx) => {
-			const answerlist = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3];
-			answerlist.map((answer,index) => {
-				OXs[idx][index] = (answer === this._tarea[idx][index]?.value) ? 'O' : 'X';				
-				console.log(OXs[idx][index]);
-			});
-		});
 	}
 
 	public render() {
 		const { view, data ,state, prog} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const alphabet = ['a','b','c'];	
+		const alphabet = ['a','b','c'];
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		let corrects: Array<Array<(''|'O'|'X')>> = [['','',''],['','',''],['','','']];
+		let correct_count = 0;
+		if(this.props.prog === QPROG.COMPLETE){
+			this.props.data.map((quiz,idx) => {
+				const answer_list = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3];
+				correct_count = 0;
+				answer_list.map((answer,index) => {
+					if (answer === this._tarea[idx][index]?.value){
+						corrects[idx][index] = 'O';
+						correct_count += 1;
+					}else{
+						corrects[idx][index] = 'X';
+					}
+					OXs[idx] = (correct_count === 2) ? 'O' : 'X';
+				});
+			});
+		}
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
@@ -145,15 +149,16 @@ class SBasic extends React.Component<IQuizItemProps> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
+											<div className={"OX_box " + OXs[idx]}></div>
 											<canvas/>
 											<div className="question_box">
 												<p>{idx + 1}.</p>
 												<p>{_getJSX(quiz.sentence)}</p>
 											</div>
 											<div>
-												<div className="answer_box" style={{ borderBottom: quiz.sentence_answer1 !== '' ? '' : 'none',  }}/>
-												<div className="answer_box" style={{ borderBottom: quiz.sentence_answer2 !== '' ? '' : 'none',  }}/>
-												<div className="answer_box" style={{ borderBottom: quiz.sentence_answer3 !== '' ? '' : 'none',  }}/>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer1 !== '' ? '' : 'none',  }}/>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer2 !== '' ? '' : 'none',  }}/>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer3 !== '' ? '' : 'none',  }}/>
 											</div>
 										</div>
 										<div className="s_typing" >
@@ -161,6 +166,9 @@ class SBasic extends React.Component<IQuizItemProps> {
 												if (answer === '') return;																			
 												return (
 													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>
+														<div className={"answer_box "+ corrects[idx][index]}>
+															{answer}
+														</div>
 														<span className="index">{alphabet[index]}.</span>
 														<KTextArea 
 															ref={this._refArea[idx][index]} 
