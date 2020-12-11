@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { QPROG } from '../s_store';
-import * as common from '../../common';
+import { IDictation } from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
@@ -20,12 +20,12 @@ interface IQuizItemProps {
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IDictation[];
+	data: IDictation[];
 	confirmProg: QPROG;
 	onChoice: (idx: number, choice: number|string) => void;
 }
 @observer
-class SHard extends React.Component<IQuizItemProps> {	
+class SBasicQuizItem extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
@@ -75,13 +75,14 @@ class SHard extends React.Component<IQuizItemProps> {
 		if(this._canvas || !el) return;
 		this._canvas = el;
 		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
+	}
+
 	private _refArea = [
 		(el: KTextArea|null) => {
 			if(this._tarea[0] || !el) return;
 			this._tarea[0] = el;
-		},
-		(el: KTextArea|null) => {
+		}
+		,(el: KTextArea|null) => {
 			if(this._tarea[1] || !el) return;
 			this._tarea[1] = el;
 		},
@@ -112,11 +113,11 @@ class SHard extends React.Component<IQuizItemProps> {
 	}
 
 	private _selectArea = (index: number) => {
-		if (index !== null) this._select_area = index;
+		if (index !== null)	this._select_area = index;
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
-		const { view, confirmProg } = this.props;
+		const {view, confirmProg} = this.props;
 		if(view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
@@ -153,7 +154,7 @@ class SHard extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="dict_question">
+					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
 								const sentences = [quiz.sentence1, quiz.sentence2, quiz.sentence3, quiz.sentence4];
@@ -172,9 +173,8 @@ class SHard extends React.Component<IQuizItemProps> {
 										</div>
 										<div className="s_typing" >
 											{sentences.map((sentence, index) => {
-												if (sentence.answer1 === '') return;						
-						
-												return (													
+												if (sentence.answer1 === '') return;
+												return (														
 													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>											
 														<span className="index">{alphabet[index]}.</span>
 														<KTextArea 
@@ -205,4 +205,4 @@ class SHard extends React.Component<IQuizItemProps> {
 	}
 }
 
-export default SHard;
+export default SBasicQuizItem;

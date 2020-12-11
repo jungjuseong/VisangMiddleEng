@@ -53,7 +53,7 @@ class TeacherPage extends React.Component<ITeacher> {
 							view={viewDiv === 'direction'} 
 							on={state.directionON} 
 							isTeacher={true}
-							video_url={_digenglish_lib_ + 'direction/video_english.webp'}
+							video_url={_digenglish_lib_ + 'direction/ls_comprehension.webp'}
 							video_frame={125}
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}

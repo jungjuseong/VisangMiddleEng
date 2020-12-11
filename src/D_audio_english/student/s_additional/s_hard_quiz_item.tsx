@@ -5,7 +5,7 @@ import * as common from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { Keyboard, state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
-import ReactResizeDetector from 'react-resize-detector';
+
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
@@ -14,49 +14,59 @@ import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizItem {
+interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IConfirmHard;
-	confirmProg: QPROG;
-	onChoice: (idx: number, choice: number|string) => void;
+	data: common.IAdditionalHard[];
+	prog: QPROG;
+	onChoice: (idx: number, choice: number|string, subidx: number) => void;
 }
 
 @observer
-class SHard extends React.Component<IQuizItem> {	
+class SHard extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
+	@observable private _select_area: number = 0;
 
 	private _bndW = 0;
 	private _bndH = 0;
 	private _bndW_p = 0;
 	private _bndH_p = 0;
 
-	private _tarea: Array<KTextArea|null> = [null,null,null];
 	private _canvas?: HTMLCanvasElement;
 	private _ctx?: CanvasRenderingContext2D;
     private _stime = 0;
  
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
+	private _tarea: Array<Array<(KTextArea|null)>> = [[null,null],[null,null],[null,null]];
+	private _refArea: Array<Array<((el: KTextArea|null) => void)>> = [];
 
-	public constructor(props: IQuizItem) {
+	public constructor(props: IQuizItemProps) {
 		super(props);
-		this._jsx_sentence = _getJSX(props.data.directive.kor);
-		this._jsx_eng_sentence = _getJSX(props.data.directive.eng);
+		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
+		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 
 		keyBoardState.state = 'hide';
+		this._tarea.map((tarea,idx) => {
+			this._refArea[idx] = [];
+			for(let i = 0; i < 2 ; i ++) {
+				this._refArea[idx][i] = (el: KTextArea|null) => {
+					if(tarea[i] || !el) return;
+					tarea[i] = el;
+				};
+			}
+		});
 	}
-	private _onChange = (text: string) => {
-		if(this._stime === 0) this._stime = Date.now();
-		
+
+	private _onChange = (text: string , index: number) => {
 		if(!this.props.view) return;
-		this.props.onChoice(this._curIdx,text);
+		this.props.onChoice(this._curIdx,text,index);
 		this._tlen = text.trim().length;
 	}
 	private _onDone = (text: string) => {
@@ -67,25 +77,14 @@ class SHard extends React.Component<IQuizItem> {
 		keyBoardState.state = 'on';
 
 	}
+	private _selectArea = (index: number) => {
+		if (index != null) this._select_area = index;
+	}
 	private _refCanvas = (el: HTMLCanvasElement|null) => {
 		if(this._canvas || !el) return;
 		this._canvas = el;
 		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
-	private _refArea = [
-		(el: KTextArea|null) => {
-			if(this._tarea[0] || !el) return;
-			this._tarea[0] = el;
-		},
-		(el: KTextArea|null) => {
-			if(this._tarea[1] || !el) return;
-			this._tarea[1] = el;
-		},
-		(el: KTextArea|null) => {
-			if(this._tarea[2] || !el) return;
-			this._tarea[2] = el;
-		}
-	];
+	}
 
 	private _onResize = (w: number, h: number) => {
 		this._bndW = w;
@@ -93,7 +92,7 @@ class SHard extends React.Component<IQuizItem> {
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
-		if (this._swiper || !el) return;
+		if(this._swiper || !el) return;
 
 		const swiper = el.swiper;
 		swiper.on('transitionStart', () => {
@@ -107,9 +106,8 @@ class SHard extends React.Component<IQuizItem> {
 		this._swiper = swiper;
 	}
 
-	public componentDidUpdate(prev: IQuizItem) {
-		const {view,confirmProg} = this.props;
-		if (view && !prev.view) {
+	public componentDidUpdate(prev: IQuizItemProps) {
+		if(this.props.view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
@@ -121,33 +119,45 @@ class SHard extends React.Component<IQuizItem> {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 			}
-		} else if (!view && prev.view) {
+		} else if(!this.props.view && prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}
-		if(confirmProg === QPROG.COMPLETE && prev.confirmProg < QPROG.COMPLETE) {
+		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
 		}
-		if(confirmProg >= QPROG.SENDED) {
+		if(this.props.prog >= QPROG.SENDED) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
 	}
 
 	public render() {
-		const { view, data ,state} = this.props;
+		const { view, data, prog } = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const quizs = [data.problem1, data.problem2, data.problem3];
+		const alphabet = ['a','b','c'];
+		let correct_list: Array<(''|'O'|'X')> = ['','',''];
+		let OXs: Array<Array<(''|'O'|'X')>> = [['',''],['',''],['','']];
+		
+		if(prog === QPROG.COMPLETE) {
+			data.map((quiz,idx) => {
+				const answer_list = [quiz.sentence1.answer1, quiz.sentence1.answer2];
+				OXs[idx][0] = (answer_list[0] === this._tarea[idx][0]?.value) ? 'O' : 'X';
+				OXs[idx][1] = (answer_list[1] === this._tarea[idx][1]?.value) ? 'O' : 'X';
+				
+				correct_list[idx] = (OXs[idx][0] === 'O' && OXs[idx][1] === 'O') ? 'O' : 'X';
+			});
+		}
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
 					<div className="hard_question">
 						<SwiperComponent ref={this._refSwiper}>
-							{quizs.map((quiz, idx) => {
+							{data.map((quiz, idx) => {	
 								return (
 									<div key={idx} className={'q-item' + keyon}>
 										<div className="quiz">
@@ -156,28 +166,48 @@ class SHard extends React.Component<IQuizItem> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
+											<div className={'OX_box ' + correct_list[idx]}/>
 											<canvas/>
 											<div className="question_box">
-												<p>{idx + 1}.{quizs[idx].question}</p>
-												<p className={state.hint ? '' : 'no_hint'}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+												<p>{idx + 1}.</p>
+												<p>{_getJSX(quiz.sentence)}</p>
 											</div>
 										</div>
 										<div className="s_typing" >
-											<div className="area-bnd">
-												<canvas ref={this._refCanvas}/>
+											<div className="area-bnd" onClick={() => this._selectArea(0)}>
+												<div className={'answer_box ' + OXs[idx][0]}>
+													{quiz.sentence1.answer1}
+												</div>
 												<KTextArea 
-													ref={this._refArea[idx]} 
+													ref={this._refArea[idx][0]} 
 													view={view} 
-													on={view && this._curIdx === idx && !this._sended}
+													on={view && this._curIdx === idx && this._select_area === 0 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
-													onChange={this._onChange}
+													onChange={(text: string) => this._onChange(text,0)}
 													onDone={this._onDone}
 													maxLength={60}
 													maxLineNum={3}
 													rows={1}
 												/>
-												<ReactResizeDetector handleWidth={false} handleHeight={true} onResize={this._onResize}/>
+											</div>
+											{' → '}
+											<div className="area-bnd" onClick={() => this._selectArea(1)}>
+												<div className={'answer_box ' + OXs[idx][1]}>
+													{quiz.sentence1.answer2}
+												</div>
+												<KTextArea 
+													ref={this._refArea[idx][1]} 
+													view={view} 
+													on={view && this._curIdx === idx && this._select_area === 1 && !this._sended}
+													autoResize={true}
+													skipEnter={false}
+													onChange={(text: string) => this._onChange(text,1)}
+													onDone={this._onDone}
+													maxLength={60}
+													maxLineNum={3}
+													rows={1}
+												/>
 											</div>
 										</div>
 									</div>

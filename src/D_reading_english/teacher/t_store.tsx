@@ -19,6 +19,7 @@ const enum SENDPROG {
 interface IStateCtx extends IStateBase {
 	videoPopup: boolean;
 	viewStoryBook: boolean;
+	viewAdditionalQuiz:boolean;
 	warmup_returns: IWarmupReturn[][];
 	isNaviBack: boolean;
 	isVideoStudied: boolean;

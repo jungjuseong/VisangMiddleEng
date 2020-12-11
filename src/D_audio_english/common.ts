@@ -14,7 +14,7 @@ export interface IMsg {
 	msgtype:	'confirm_send'|'confirm_end'|'confirm_return'|
 				'additional_send'|'additional_end'|'additional_return'|
 				'dictation_send'|'dictation_end'|'dictation_return'|
-				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx'|'qna_send'|'qna_end'|'shadowing_send'|'roll_send';
+				'script_send'|'script_end'|'script_return'|'playing'|'paused'|'focusidx'|'qna_send'|'qna_end'|'shadowing_send'|'roll_send'|'qna_return';
 }
 
 export interface IIndexMsg extends IMsg {
@@ -56,7 +56,7 @@ export interface IQuizStringReturnMsg extends IIndexMsg {
 	returns: IQuizStringReturn;
 }
 
-export interface IQNAMsg extends IMsg {
+export interface IQNAMsg extends IIndexMsg {
 	id: string;
 	returns: number[];
 	stime: number;

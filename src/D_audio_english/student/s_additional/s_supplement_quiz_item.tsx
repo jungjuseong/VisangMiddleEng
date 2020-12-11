@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Draggable from 'react-draggable';
 
 import { QPROG } from '../s_store';
-import * as common from '../../common';
+import { IAdditionalSup } from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
@@ -12,24 +11,22 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
-
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
-
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface IQuizItem {
+interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 	idx: number;
 	choice: number;
-	data: common.IAdditionalSup[];
+	data: IAdditionalSup[];
 	prog: QPROG;
 	onChoice: (idx: number, choice: number|string, subidx: number) => void;
 }
 @observer
-class SHard extends React.Component<IQuizItem> {	
+class SSupplementQuizItem extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _renderCnt = 0;
@@ -49,7 +46,7 @@ class SHard extends React.Component<IQuizItem> {
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 
-	public constructor(props: IQuizItem) {
+	public constructor(props: IQuizItemProps) {
 		super(props);
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
@@ -104,7 +101,7 @@ class SHard extends React.Component<IQuizItem> {
 		this._swiper = swiper;
 	}
 
-	public componentDidUpdate(prev: IQuizItem) {
+	public componentDidUpdate(prev: IQuizItemProps) {
 		const {view, prog} = this.props;
 		if(view && !prev.view) {
 			this._bndH_p = 0;
@@ -135,29 +132,19 @@ class SHard extends React.Component<IQuizItem> {
 		}
 	}
 
-	// private _checkAnswer= () =>{
-	// 	const { view, data ,state, prog, onChoice} = this.props;
-	// 	{data.map((quiz, idx) => {
-	// 		if(quiz.app_drops[idx].correct === "summer"){
-	// 			console.log(quiz.app_drops[idx].correct);
-	// 			console.log("correct");
-	// 		}
-	// 	})}
-	// }
-
 	public render() {
 		const { view, data ,prog, onChoice} = this.props;
 		let OXs: Array<''|'O'|'X'> = ['','',''];
-		if(this.props.prog === QPROG.COMPLETE) {
+		if(prog === QPROG.COMPLETE) {
 			data.map((quiz, idx) => {
-				let correct_num = 0;
+				let correct_count = 0;
 				const answer_arr = [quiz.app_drops[0],quiz.app_drops[1],quiz.app_drops[2]];
 				{
 					answer_arr.map((answer, index) => {
-						if(answer.correct === answer.inputed) correct_num += 1;
+						if(answer.correct === answer.inputed) correct_count += 1;
 					});
 				}
-				OXs[idx] = (correct_num === 3) ? 'O' : 'X';
+				OXs[idx] = (correct_count === answer_arr.length) ? 'O' : 'X';
 			});
 		}
 		return (
@@ -199,4 +186,4 @@ class SHard extends React.Component<IQuizItem> {
 	}
 }
 
-export default SHard;
+export default SSupplementQuizItem;

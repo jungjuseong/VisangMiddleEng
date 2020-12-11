@@ -10,7 +10,6 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
-
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -19,14 +18,14 @@ interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
-	idx: number;
+	idx: number;	
 	choice: number;
-	data: common.IDictation[];
-	dictationProg: QPROG;
+	data: common.IAdditionalBasic[];
+	prog: QPROG;
 	onChoice: (idx: number, choice: number|string, subidx: number) => void;
 }
 @observer
-class SSupplement extends React.Component<IQuizItemProps> {	
+class SBasicQuizItem extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
@@ -39,21 +38,20 @@ class SSupplement extends React.Component<IQuizItemProps> {
  
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
-	private _refArea: Array<Array<(el: KTextArea|null) => void>> = [];
+	private _refArea: Array<Array<(el: KTextArea|null) => void>> = [[]];
 
 	public constructor(props: IQuizItemProps) {
 		super(props);
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
-
 		keyBoardState.state = 'hide';
-		props.data.map((dictation,idx) => {
+		props.data.map((additional,idx) => {
 			this._refArea[idx] = [];
-			for(let i = 0; i < 4 ; i ++) {
+			for(let i = 0; i < 4 ; i++) {
 				this._refArea[idx][i] = ((el: KTextArea|null) => {
-						if(this._tarea[idx][i] || !el) return;
-						this._tarea[idx][i] = el;
-					});
+					if(this._tarea[idx][i] || !el) return;
+					this._tarea[idx][i] = el;
+				});
 			}
 		});
 	}
@@ -62,11 +60,15 @@ class SSupplement extends React.Component<IQuizItemProps> {
 		this.props.onChoice(this._curIdx,text,index);
 		this._tlen = text.trim().length;
 	}
-	private _onDone = (text: string) => {
+	
+	private _onDone = (text: string) => {		
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
 		keyBoardState.state = 'on';
+	}
 
+	private _selectArea = (index: number) => {
+		if (index !== null)	this._select_area = index;
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -84,61 +86,62 @@ class SSupplement extends React.Component<IQuizItemProps> {
 		this._swiper = swiper;
 	}
 
-	private _selectArea = (index: number) => {if (index !== null) this._select_area = index;};
-	
 	public componentDidUpdate(prev: IQuizItemProps) {
-		const { view,dictationProg } = this.props;
-		if(view && !prev.view) {
+		if(this.props.view && !prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'on';
 			
 			// if(this._tarea) this._tarea.
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
-				this._swiper.update();
 				console.log('swiper.update');
+				this._swiper.update();
 			}
-		} else if(!view && prev.view) {
+		} else if(!this.props.view && prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'hide';
 		}
-		if(dictationProg === QPROG.COMPLETE && prev.dictationProg < QPROG.COMPLETE) {
+		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
-			}			
+			}
 		}
-		if(this.props.dictationProg >= QPROG.SENDED) {
+		if(this.props.prog >= QPROG.SENDED) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
-		if(this.props.dictationProg === QPROG.COMPLETE) {
-			this._checkAnswer();
-		}
-	}
-
-	private _checkAnswer = () => {
-		const {data} = this.props;
-		let OXs: Array<Array<''|'O'|'X'>> = [['','',''],['','',''],['','','']];
-		data.map((quiz,idx) => {
-			const answerlist = [quiz.sentence1.answer1, quiz.sentence2.answer1, quiz.sentence3.answer1];
-			answerlist.map((answer,index) => {
-				OXs[idx][index] = (answer === this._tarea[idx][index]?.value) ? 'O' : 'X';
-				console.log(OXs[idx][index]);
-			});
-		});
 	}
 
 	public render() {
-		const { view, data ,state} = this.props;
+		const { view, data ,state, prog} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a','b','c'];
+		let OXs: Array<''|'O'|'X'> = ['','',''];
+		let corrects: Array<Array<(''|'O'|'X')>> = [['','',''],['','',''],['','','']];
+		let correct_count = 0;
+		if(this.props.prog === QPROG.COMPLETE) {
+			this.props.data.map((quiz,idx) => {
+				const answer_list = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3];
+				correct_count = 0;
+				answer_list.map((answer,index) => {
+					if(answer === '') correct_count -= 1;
+					if (answer === this._tarea[idx][index]?.value) {
+						corrects[idx][index] = 'O';
+						correct_count += 1;
+					} else {
+						corrects[idx][index] = 'X';
+					}
+					OXs[idx] = (correct_count === answer_list.length) ? 'O' : 'X';
+				});
+			});
+		}
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
-					<div className="dict_question">
+					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
-								const sentences = [quiz.sentence1, quiz.sentence2, quiz.sentence3];
+								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 								return (
 									<div key={idx} className={'q-item' + keyon}>
 										<div className="quiz">
@@ -147,17 +150,26 @@ class SSupplement extends React.Component<IQuizItemProps> {
 											</WrapTextNew>
 										</div>
 										<div className="sentence_box">
+											<div className={'OX_box ' + OXs[idx]}/>
 											<canvas/>
 											<div className="question_box">
+												<p>{idx + 1}.</p>
 												<p>{_getJSX(quiz.sentence)}</p>
+											</div>
+											<div>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer1 !== '' ? '' : 'none',  }}/>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer2 !== '' ? '' : 'none',  }}/>
+												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer3 !== '' ? '' : 'none',  }}/>
 											</div>
 										</div>
 										<div className="s_typing" >
-											{sentences.map((sentence, index) => {
-												if (sentence.answer1 === '') return;
-												
-												return (														
-													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>											
+											{answerlist.map((answer, index) => {
+												if (answer === '') return;																			
+												return (
+													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>
+														<div className={'answer_box ' + corrects[idx][index]}>
+															{answer}
+														</div>
 														<span className="index">{alphabet[index]}.</span>
 														<KTextArea 
 															ref={this._refArea[idx][index]} 
@@ -187,4 +199,4 @@ class SSupplement extends React.Component<IQuizItemProps> {
 	}
 }
 
-export default SSupplement;
+export default SBasicQuizItem;

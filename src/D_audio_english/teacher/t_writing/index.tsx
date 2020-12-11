@@ -291,7 +291,7 @@ class Writing extends React.Component<IWriting> {
         }else if(this._tab === 'DICTATION'){
             if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDED) return;
             state.dictationProg[this._curQidx] = SENDPROG.COMPLETE;
-            msg = {msgtype: 'dictation_end', idx : 0};
+            msg = {msgtype: 'dictation_end', idx : this._curQidx};
         } else {
             if(state.scriptProg !==  SENDPROG.SENDING) return;
             state.scriptProg = SENDPROG.SENDED;
@@ -867,7 +867,7 @@ class Writing extends React.Component<IWriting> {
                                     view={view && idx === this._curQidx}
                                     actions={actions}
                                     state={state}
-                                    index ={this._curQidx}
+                                    index ={idx}
                                     data={dictation}
                                     onClosed={this._letstalkClosed}
                                     onHintClick={this._clickAnswer}

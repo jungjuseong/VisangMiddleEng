@@ -95,6 +95,7 @@ class StudentContext extends StudentContextBase {
 		}
 		super._setViewDiv(viewDiv);
 	}
+	
 	@action public receive(data: ISocketData) {
 		super.receive(data);
 		// console.log('receive', data);
@@ -189,6 +190,11 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
+			} else if(msg.msgtype === 'dictation_end') {
+				const qProg = this.state.dictationProg[msg.idx];
+				if(this.state.viewDiv !== 'content') return;
+				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
+				this.state.dictationProg[msg.idx] = QPROG.COMPLETE;
 			} else if(msg.msgtype === 'script_send') {
 				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
 
@@ -199,6 +205,15 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
+			} else if(msg.msgtype === 'qna_send') {
+				if(this.state.viewDiv !== 'content') return;
+				else if(this.state.scriptProg !== SPROG.MOUNTED) return;
+				this.state.focusIdx = -1;
+				this.state.scriptProg = SPROG.YESORNO;
+			} else if(msg.msgtype === 'qna_end') {
+				if(this.state.viewDiv !== 'content') return;
+				else if(this.state.scriptProg < SPROG.MOUNTED) return;
+				this.state.scriptProg = SPROG.MOUNTED;
 			} else if(msg.msgtype === 'shadowing_send') {
 				if(this.state.viewDiv !== 'content') return;
 				else if(this.state.qsMode !== 'script') return;	

@@ -32,17 +32,15 @@ class SContent extends React.Component<ISContentProps> {
 	private _stime = 0;
 	
 	private _clickYes = () => {
-		const { scriptMode, scriptProg } = this.props.state;
+		let { state } = this.props;
 		if(this._stime === 0) this._stime = Date.now();
 
-		if(scriptProg !== SPROG.YESORNO || scriptMode !== 'COMPREHENSION') return;
+		if(state.scriptProg !== SPROG.YESORNO || state.scriptMode !== 'COMPREHENSION') return;
 
 		App.pub_playBtnTab();
-		this.state = {
-			...this.state,
-			qsMode: 'script',
-			scriptProg: SPROG.SELECTING,
-		};
+		state.qsMode = 'script';
+		state.scriptProg = SPROG.SELECTING;
+	
 
 		this._img_pop_on = true;
 		_.delay(() => {

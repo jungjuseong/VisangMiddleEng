@@ -9,7 +9,7 @@ import { IConfirmNomal } from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { App } from '../../../App';
 
-interface IQuizItem {
+interface IQuizItemProps {
 	view: boolean;
 	idx: number;
 	choice: number;
@@ -19,20 +19,20 @@ interface IQuizItem {
 }
 
 @observer
-class SBasic extends React.Component<IQuizItem> {
+class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _choices: number[] = [0,0,0];
 	@observable private _clicked_number: number = 0;
 	@observable private _sended: boolean;
 	@observable private _view_answer: boolean;
 
-	public constructor(props: IQuizItem) {
+	public constructor(props: IQuizItemProps) {
 		super(props);
 		this._clicked_number = 0;
 		this._sended = false;
 		this._view_answer = false;
 	}
 
-	public componentDidUpdate(prev: IQuizItem) {
+	public componentDidUpdate(prev: IQuizItemProps) {
 		const { view,confirmProg } = this.props;
 		if (view && !prev.view) {
 			this._clicked_number = 0;
@@ -277,4 +277,4 @@ class SBasic extends React.Component<IQuizItem> {
 	}
 }
 
-export default SBasic;
+export default SBasicQuizItem;
