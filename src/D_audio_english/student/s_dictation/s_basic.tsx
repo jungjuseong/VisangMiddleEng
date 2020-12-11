@@ -151,7 +151,6 @@ class SBasic extends React.Component<IQuizItemProps> {
 		const { view, data } = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a','b','c'];
-		const answer_arr = [];
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>

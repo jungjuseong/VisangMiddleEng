@@ -369,15 +369,16 @@ class TeacherContext extends TeacherContextBase {
 							}
 						}
 						const ridx = this.state.resultDictation[msg.idx].uid.indexOf(qmsg.id);
-						const dicdata_array = [this._data.dictation_sup,this._data.dictation_basic,this._data.dictation_hard];
+						const dic_data_array = [this._data.dictation_sup,this._data.dictation_basic,this._data.dictation_hard];
 						if(sidx >= 0 && ridx < 0) {
 							const ret = qmsg.returns;						// 사용자가 선택한 번호
 							const result = this.state.resultDictation[msg.idx];					// 결과 저장 
 							
 							let resultCorrect = true;
-							for(let i = 0 ; i < dicdata_array[msg.idx].length; i++) {
+							for(let i = 0 ; i < dic_data_array[msg.idx].length; i++) {
 								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: [] };
-								const answers = [dicdata_array[msg.idx][i].sentence1.answer1,dicdata_array[msg.idx][i].sentence2.answer1,dicdata_array[msg.idx][i].sentence3.answer1];
+								const dic_data = dic_data_array[msg.idx][i];
+								const answers = [dic_data.sentence1.answer1,dic_data.sentence2.answer1,dic_data.sentence3.answer1];
 								if(ret[i].answer1 !== answers[0] || ret[i].answer2 !== answers[1] || ret[i].answer3 !== answers[2]) resultCorrect = false;
 								console.log('ret' , ret[i]);
 								console.log('answers' , answers);
