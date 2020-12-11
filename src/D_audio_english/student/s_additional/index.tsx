@@ -8,12 +8,12 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import * as common from '../../common';
+import { IQuizStringReturn,IAdditionalQuizReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasic from './s_basic';
-import SSup from './s_supplement';
-import SHard from './s_hard';
+import SBasicQuizItem from './s_basic_quiz_item';
+import SSupplementQuizItem from './s_supplement_quiz_item';
+import SHardQuizItem from './s_hard_quiz_item';
 
 interface INItem {
 	idx: number;
@@ -46,7 +46,7 @@ interface ISQuestionProps {
 class SAdditional extends React.Component<ISQuestionProps> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizStringReturn[] = [];
+	@observable private _choices: IQuizStringReturn[] = [];
 	@observable private _felView = false;
 
 	private _style: React.CSSProperties = {};
@@ -86,14 +86,14 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		if(state.additionalBasicProg !== QPROG.ON && state.idx === 1) return;
 		if(state.additionalHardProg !== QPROG.ON && state.idx === 2) return;
 		App.pub_playToPad();
-		let choices: common.IQuizStringReturn[];
+		let choices: IQuizStringReturn[];
 		choices = this._choices;
 		// 초기화 함수 만들어서 할것
 		const quizssup = actions.getData().additional_sup;
 		if(state.idx === 0) {
 			state.additionalSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IAdditionalQuizReturnMsg = {
+				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx: 0,
 					id: App.student.id,
@@ -113,7 +113,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		} else if(state.idx === 1) {
 			state.additionalBasicProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IAdditionalQuizReturnMsg = {
+				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx: 1,
 					id: App.student.id,
@@ -133,7 +133,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		} else if(state.idx === 2) {
 			state.additionalHardProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IAdditionalQuizReturnMsg = {
+				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
 					idx: 2,
 					id: App.student.id,
@@ -292,7 +292,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 			<div className="s_additional" style={{...this._style}}>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
-						<SSup
+						<SSupplementQuizItem
 							view={view && state.idx === 0}
 							state={state}
 							actions={actions}
@@ -302,7 +302,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 							prog={state.additionalSupProg}
 							onChoice={this._onChoice}
 						/>
-						<SBasic	
+						<SBasicQuizItem
 							view={view && state.idx === 1}
 							state={state}
 							actions={actions}
@@ -312,7 +312,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 							prog={state.additionalBasicProg}
 							onChoice={this._onChoice}
 						/>
-						<SHard							
+						<SHardQuizItem							
 							view={view && state.idx === 2}
 							state={state}
 							actions={actions}
@@ -324,13 +324,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 						/>
 					</div>
 				</div>
-				<SendUINew
-					view={view && this._felView}
-					type={'pad'}
-					sended={false}
-					originY={0}
-					onSend={this._onSend}
-				/>
+				<SendUINew view={view && this._felView} type={'pad'} sended={false} originY={0}	onSend={this._onSend}/>
 			</div>
 		);
 	}

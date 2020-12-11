@@ -222,12 +222,12 @@ class VideoBox extends React.Component<IVideoBox> {
 
 			
 				</div> */}
-				{/* <ControlBox
+				<ControlBox
 					player={player}
 					disable={this.m_viewCountDown || shadowing}
 					isPlay={isPlay}
 					togglePlay={this._togglePlay}
-				/> */}
+				/>
 			</div>
 		);
 	}

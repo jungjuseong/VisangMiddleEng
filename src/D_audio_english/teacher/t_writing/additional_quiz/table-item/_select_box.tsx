@@ -27,7 +27,7 @@ class OptionBox extends React.Component<IOptionBox> {
 let OPT_Z_IDX = 2;
 let _zIndex = observable([0]);
 
-interface ISelectBox {
+interface ISelectBoxProps {
 	text: string;
 	correct: string;
 	options: string[];
@@ -41,7 +41,7 @@ interface ISelectBox {
 }
 
 @observer
-class SelectBox extends React.Component<ISelectBox> {
+class SelectBox extends React.Component<ISelectBoxProps> {
 	@observable private _value = '';
 	@observable private _on = false;
 
@@ -53,7 +53,7 @@ class SelectBox extends React.Component<ISelectBox> {
 	private _zidx = 2;
 	private _boxPositon: 'top' | 'bottom';
 
-	constructor(props: ISelectBox) {
+	constructor(props: ISelectBoxProps) {
 		super(props);
 		this._boxPositon = props.boxPositon;
 	}
@@ -104,7 +104,6 @@ class SelectBox extends React.Component<ISelectBox> {
 
 			} else this._boxPositon = this.props.boxPositon;
 
-
 			if (this._on && drop) {
 				this._zidx = 2;
 				this._on = false;
@@ -119,7 +118,6 @@ class SelectBox extends React.Component<ISelectBox> {
 						if (box) box.classList.remove('on');
 					}
 				}
-
 				if (this._on) {
 					this._on = false;
 					_.delay(() => {

@@ -18,7 +18,7 @@ interface IQuizItemProps {
 }
 
 @observer
-class SSupplement extends React.Component<IQuizItemProps> {
+class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _toggle: number[] = [0,0,0];
 
 	private _disable_toggle: boolean;
@@ -185,4 +185,4 @@ class SSupplement extends React.Component<IQuizItemProps> {
 	}
 }
 
-export default SSupplement;
+export default SSupplementQuizItem;

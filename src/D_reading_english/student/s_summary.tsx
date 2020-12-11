@@ -1,6 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Observer, observer } from 'mobx-react';
+import {  observer } from 'mobx-react';
 
 import * as _ from 'lodash';
 
@@ -17,7 +16,6 @@ import SendUI from '../../share/sendui_new';
 import * as style from '../../share/style';
 import WrapTextNew from '@common/component/WrapTextNew';
 import QuizMCBtn from '../../share/QuizMCBtn';
-import * as StrUtil from '@common/util/StrUtil';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -35,19 +33,13 @@ class SummaryChoice extends React.Component<ISummaryChoice> {
 		this.props.onClick(this.props.num);
 	}
 	public render() {
-		const {num, text, selected, answer, prog} = this.props;
-		let view = this.props.view;
-		if(!view) {
-			view = false;
-		}
+		const {view, num, text, selected, prog} = this.props;
+		// let view = this.props.view;
+		// if(!view) {
+		// 	view = false;
+		// }
 		return (
-			<QuizMCBtn 
-				className={'btn_choice'} 
-				num={num} 
-				on={num === selected}
-				disabled={prog !== SENDPROG.READY}
-				onClick={this._onClick}
-			>
+			<QuizMCBtn className={'btn_choice'} num={num} on={num === selected}	disabled={prog !== SENDPROG.READY} onClick={this._onClick}>
 				<div>
 					<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={27} maxSize={30} textAlign="left">
 						{text}
@@ -86,10 +78,12 @@ class SummaryItem extends React.Component<ISummaryItem> {
         this._jsx = (<>{nodes.map((node, idx) => node)}</>);
         this._max = max;
 	}
+
 	private _refText = (el: HTMLDivElement) => {
 		if(this._box || !el) return;
 		this._box = el;
-    }
+	}
+	
     private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
 		this._swiper = el.swiper;

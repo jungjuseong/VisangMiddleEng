@@ -95,6 +95,7 @@ class StudentContext extends StudentContextBase {
 		}
 		super._setViewDiv(viewDiv);
 	}
+	
 	@action public receive(data: ISocketData) {
 		super.receive(data);
 		// console.log('receive', data);
@@ -204,7 +205,7 @@ class StudentContext extends StudentContextBase {
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
-			}else if(msg.msgtype === 'qna_send') {
+			} else if(msg.msgtype === 'qna_send') {
 				if(this.state.viewDiv !== 'content') return;
 				else if(this.state.scriptProg[msg.idx] !== SPROG.MOUNTED) return;
 				this.state.focusIdx = -1;

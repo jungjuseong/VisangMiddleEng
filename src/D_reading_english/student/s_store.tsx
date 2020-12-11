@@ -100,16 +100,16 @@ class StudentContext extends StudentContextBase {
 		this.actions.setUploadedFnc = (fnc: ((url: string) => void)|null) => this._uploadedFnc = fnc;
 
 		this.actions.swapGraphicData = () => {
-			//Type6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
+			// Type6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
 			const { graphic} = this._data;
 			const lastGraphicData = graphic[2];
 			this._data.graphic[2] = graphic[1];
 			this._data.graphic[1] = lastGraphicData;
-		}
+		};
 
 		this.actions.setIsTableItemSwapped = () => {
 			this.state.isTableItemSwapped = !this.state.isTableItemSwapped;
-		}
+		};
 	}
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
@@ -144,7 +144,7 @@ class StudentContext extends StudentContextBase {
 		
 	}
 	private _swapGraphicData = () => {
-		//Type6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
+		// Type 6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
 		const { graphic} = this._data;
 		const lastGraphicData = graphic[2];
 		this._data.graphic[2] = graphic[1];
@@ -255,7 +255,7 @@ class StudentContext extends StudentContextBase {
 
 				this.state.graphicSheet = '';
 				this.state.prog = 'graphic';
-				if(this._data.visualizing_type == 6 && this.state.isTableItemSwapped == false) {
+				if(this._data.visualizing_type === 6 && this.state.isTableItemSwapped === false) {
 					this.actions.setIsTableItemSwapped();
 					this._swapGraphicData();
 				}
@@ -263,7 +263,7 @@ class StudentContext extends StudentContextBase {
 			} else if(msg.msgtype === 'graphic_end') {
 				if(this.state.prog !== 'graphic') return;
 				this.state.graphicProg = SENDPROG.COMPLETE;
-				if(this._data.visualizing_type == 6 && this.state.isTableItemSwapped == true) {
+				if(this._data.visualizing_type === 6 && this.state.isTableItemSwapped === true) {
 					this.actions.setIsTableItemSwapped();
 					this._swapGraphicData();
 				}

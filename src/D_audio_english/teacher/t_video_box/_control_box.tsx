@@ -20,9 +20,17 @@ interface IControlBox {
 @observer
 class ControlBox extends React.Component<IControlBox> {
 	public render() {
+		const brake_point: Array<number> = [1,2,3];
 		const player = this.props.player;
 		return (
 			<div className="control">
+				<div className="control_over">
+					{brake_point.map((num, idx)=>{
+						return(
+							<div className="brake_point">{num}</div>
+						);
+					})}
+				</div>
 				<div className="control_left">
 					<ToggleBtn className="btn_play_pause" on={this.props.isPlay} onClick={this.props.togglePlay} />
 				</div>

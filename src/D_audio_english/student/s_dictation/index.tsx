@@ -8,12 +8,10 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import * as common from '../../common';
+import { IQuizStringReturn,IAdditionalQuizReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SSup from './s_supplement';
-
-const SwiperComponent = require('react-id-swiper').default;
+import SSupplementQuizItem from './s_supplement_quiz_item';
 
 interface INItem {
 	idx: number;
@@ -46,7 +44,7 @@ interface ISQuestionProps {
 class SDictation extends React.Component<ISQuestionProps> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizStringReturn[] = [];
+	@observable private _choices: IQuizStringReturn[] = [];
 	@observable private _felView = false;
 
 	private _style: React.CSSProperties = {};
@@ -83,14 +81,14 @@ class SDictation extends React.Component<ISQuestionProps> {
 		const { state, actions } = this.props;
 		if(state.dictationProg[state.idx] !== QPROG.ON && state.idx === 0) return;
 		App.pub_playToPad();
-		let choices: common.IQuizStringReturn[];
+		let choices: IQuizStringReturn[];
 		choices = this._choices;
 		// 초기화 함수 만들어서 할것
 		const data = actions.getData();
 		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
 		state.dictationProg[state.idx] = QPROG.SENDING;
 		if(App.student) {
-			const msg: common.IAdditionalQuizReturnMsg = {
+			const msg: IAdditionalQuizReturnMsg = {
 				msgtype: 'dictation_return',
 				idx: state.idx,
 				id: App.student.id,
@@ -220,7 +218,7 @@ class SDictation extends React.Component<ISQuestionProps> {
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						{data_array.map((data,idx) =>
-							<SSup
+							<SSupplementQuizItem
 										key={idx}						
 										view={view && state.idx === idx}
 										state={state}

@@ -8,12 +8,12 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import * as common from '../../common';
+import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasic from './s_basic';
-import SSup from './s_supplement';
-import SHard from './s_hard';
+import SBasicQuizItem from './s_basic_quiz_item';
+import SSupplementQuizItem from './s_supplement_quiz_item';
+import SHardQuizItem from './s_hard_quiz_item';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -35,7 +35,7 @@ class NItem extends React.Component<INItem> {
 	}
 }
 
-interface ISQuestion {
+interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;
 	scriptProg: SPROG[];
@@ -45,25 +45,25 @@ interface ISQuestion {
 }
 
 @observer
-class SConfirm extends React.Component<ISQuestion> {
+class SConfirm extends React.Component<ISQuestionProps> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizReturn = {
+	@observable private _choices: IQuizReturn = {
 		answer1: 0,
 		answer2: 0,
 		answer3: 0
 	};
-	@observable private _writings: common.IQuizStringReturn = {
-		answer1:'',
-		answer2:'',
-		answer3:''
-	}
+	@observable private _writings: IQuizStringReturn = {
+		answer1: '',
+		answer2: '',
+		answer3: ''
+	};
 	@observable private _felView = false;
 
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
 
-	constructor(props: ISQuestion) {
+	constructor(props: ISQuestionProps) {
 		super(props);
 	}
 
@@ -84,29 +84,22 @@ class SConfirm extends React.Component<ISQuestion> {
 	}
 
 	private _onSend = async () => {
-		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
-		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
-		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
+		const { state,actions } = this.props;
+		if(state.confirmSupProg !== QPROG.ON && state.idx === 0) return;
+		if(state.confirmBasicProg !== QPROG.ON && state.idx === 1) return;
+		if(state.confirmHardProg !== QPROG.ON && state.idx === 2) return;
 		App.pub_playToPad();
-		let choices: common.IQuizReturn;
-		let writings: common.IQuizStringReturn;
+		let choices: IQuizReturn;
+		let writings: IQuizStringReturn;
 		choices = this._choices;
 		writings = this._writings;
-		//초기화 함수 만들어서 할것
-		this._writings = {
-			answer1:'',
-			answer2:'',
-			answer3:''
-		}
-		this._choices = {
-			answer1: 0,
-			answer2: 0,
-			answer3: 0
-		}
-		if(this.props.state.idx === 0){
-			this.props.state.confirmSupProg = QPROG.SENDING;
+		// 초기화 함수 만들어서 할것
+		this._writings = { answer1: '', answer2: '', answer3: ''};
+		this._choices = { answer1: 0, answer2: 0, answer3: 0};
+		if(state.idx === 0) {
+			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 0,
 					id: App.student.id,
@@ -116,19 +109,19 @@ class SConfirm extends React.Component<ISQuestion> {
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmSupProg === QPROG.SENDING) {
-					this.props.state.confirmSupProg = QPROG.SENDED;
+				if(state.confirmSupProg === QPROG.SENDING) {
+					state.confirmSupProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 				}
 			}
-		}else if(this.props.state.idx === 1){
-			this.props.state.confirmBasicProg = QPROG.SENDING;
+		} else if(state.idx === 1) {
+			state.confirmBasicProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
-					idx:1,
+					idx: 1,
 					id: App.student.id,
 					returns: choices
 				};
@@ -136,19 +129,19 @@ class SConfirm extends React.Component<ISQuestion> {
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmBasicProg === QPROG.SENDING) {
-					this.props.state.confirmBasicProg = QPROG.SENDED;
+				if(state.confirmBasicProg === QPROG.SENDING) {
+					state.confirmBasicProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 				}
 			}
-		}else if(this.props.state.idx === 2){
-			this.props.state.confirmHardProg = QPROG.SENDING;
+		} else if(state.idx === 2) {
+			state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizStringReturnMsg = {
+				const msg: IQuizStringReturnMsg = {
 					msgtype: 'confirm_return',
-					idx:2,
+					idx: 2,
 					id: App.student.id,
 					returns: writings
 				};
@@ -156,121 +149,107 @@ class SConfirm extends React.Component<ISQuestion> {
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 				await kutil.wait(600);
 	
-				if(this.props.state.confirmHardProg === QPROG.SENDING) {
-					this.props.state.confirmHardProg = QPROG.SENDED;
+				if(state.confirmHardProg === QPROG.SENDING) {
+					state.confirmHardProg = QPROG.SENDED;
 	
 					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					this.props.actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 				}
 			}
-		}else{
-			return
-		}
+		} 
+		return;
 	}
 
-
 	private _onChoice = (idx: number, choice: number|string) => {
-		if(this.props.state.confirmSupProg !== QPROG.ON && this.props.state.idx === 0) return;
-		if(this.props.state.confirmBasicProg !== QPROG.ON && this.props.state.idx === 1) return;
-		if(this.props.state.confirmHardProg !== QPROG.ON && this.props.state.idx === 2) return;
+		const { state,actions } = this.props;
+		if(state.confirmSupProg !== QPROG.ON && state.idx === 0) return;
+		if(state.confirmBasicProg !== QPROG.ON && state.idx === 1) return;
+		if(state.confirmHardProg !== QPROG.ON && state.idx === 2) return;
 
 		App.pub_playBtnTab();
-		if(this.props.state.idx === 0){
-			switch(idx){
-				case 0 :{
+		if(state.idx === 0) {
+			switch(idx) {
+				case 0:
 					this._choices.answer1 = choice as number;
 					break;
-				}
-				case 1 :{
+				
+				case 1:
 					this._choices.answer2 = choice as number;
 					break;
-				}
-				case 2 :{
+				
+				case 2:
 					this._choices.answer3 = choice as number;
-					break;
-				}
+					break;				
 				default : return;
 			}
-		}else if(this.props.state.idx === 1){
-			switch(idx){
-				case 0 :{
+		} else if(state.idx === 1) {
+			switch(idx) {
+				case 0 :
 					this._choices.answer1 = choice as number;
-					break;
-				}
-				case 1 :{
+					break;				
+				case 1:
 					this._choices.answer2 = choice as number;
-					break;
-				}
-				case 2 :{
+					break;				
+				case 2:
 					this._choices.answer3 = choice as number;
-					break;
-				}
+					break;				
 				default : return;
 			}
-		}else if(this.props.state.idx === 2){
-			switch(idx){
-				case 0 :{
+		} else if(state.idx === 2) {
+			switch(idx) {
+				case 0 :
 					this._writings.answer1 = choice as string;
-					break;
-				}
-				case 1 :{
+					break;				
+				case 1:
 					this._writings.answer2 = choice as string;
 					break;
-				}
-				case 2 :{
+				case 2:
 					this._writings.answer3 = choice as string;
-					break;
-				}
+					break;				
 				default : return;
 			}
 		}
-		if((this._choices.answer1 === 0 || this._choices.answer2 ===0 || this._choices.answer3 === 0) && (this._writings.answer1 ==='' || this._writings.answer2 ==='' || this._writings.answer3 ==='')){
+		const any_answer_zero = (this._choices.answer1 === 0 || this._choices.answer2 === 0 || this._choices.answer3 === 0);
+		const any_writing_empty = (this._writings.answer1 === '' || this._writings.answer2 === '' || this._writings.answer3 === '');
+		if(any_answer_zero && any_writing_empty) {
 			this._felView = false;
-			console.log('choices' + this._choices.answer1 + this._choices.answer2 + this._choices.answer3)
-			console.log('chocie false')
-		}else{
+			console.log('choices' + this._choices.answer1 + this._choices.answer2 + this._choices.answer3);
+			console.log('chocie false');
+		} else {
 			this._felView = true;
-			console.log('chocie true')
+			console.log('chocie true');
 		}
 	}
 	private _gotoScript = () => {
-		if(this.props.state.qsMode === 'script') return;
+		const { state } = this.props;
+		if(state.qsMode === 'script') return;
 
 		App.pub_playBtnTab();
-		this.props.state.qsMode = 'script';
+		state.qsMode = 'script';
 	}
-	private _setStyle(props: ISQuestion) {
-		if(
-			props.questionView &&
-			props.scriptProg.find(it=> it>SPROG.UNMOUNT) !=undefined
-		) this._style.transition = 'left 0.3s';
-		else this._style.transition = '';
-		
-		if(
-			props.questionView && 
-			props.qsMode === 'question'
-		) this._style.left = '0px';
-		else this._style.left = '1280px';
-		// console.log(props, this._style);
+
+	private _setStyle(props: ISQuestionProps) {
+		this._style.transition = (props.questionView && props.scriptProg.find(it=> it>SPROG.UNMOUNT) !=undefined) ? 'left 0.3s' : '';		
+		this._style.left = (props.questionView && props.qsMode === 'question') ? '0px' : '1280px';
 	}
+
 	public componentWillMount() {
 		this._setStyle(this.props);		
 	}
 
-	public componentWillReceiveProps(next: ISQuestion) {
-		if(
-			next.state.confirmSupProg !== this.props.state.confirmSupProg ||
-			next.state.confirmBasicProg !== this.props.state.confirmBasicProg ||
-			next.state.confirmHardProg !== this.props.state.confirmHardProg ||
-			next.scriptProg !== this.props.scriptProg ||
-			next.qsMode !== this.props.qsMode
-		) {
-			this._setStyle(next);		
-		}
+	public componentWillReceiveProps(next: ISQuestionProps) {
+		const { state,qsMode,scriptProg } = this.props;
+		if(next.state.confirmSupProg !== state.confirmSupProg ||
+			next.state.confirmBasicProg !== state.confirmBasicProg ||
+			next.state.confirmHardProg !== state.confirmHardProg ||
+			next.scriptProg !== scriptProg ||
+			next.qsMode !== qsMode
+		) this._setStyle(next);		
 	}
 	
-	public componentDidUpdate(prev: ISQuestion) {
-		if (this.props.view && !prev.view) {			
+	public componentDidUpdate(prev: ISQuestionProps) {
+		const {state, view, qsMode} = this.props;
+		if (view && !prev.view) {			
 			this._curIdx = 0;
 			this._curIdx_tgt = 0;
 			this._felView = false;
@@ -279,24 +258,23 @@ class SConfirm extends React.Component<ISQuestion> {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
 			}
-			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
-				(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
-				(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
+			if((state.confirmSupProg < QPROG.COMPLETE && state.idx === 0) || 
+				(state.confirmBasicProg < QPROG.COMPLETE && state.idx === 1) ||
+				(state.confirmHardProg < QPROG.COMPLETE && state.idx === 2)) {
 					this._choices.answer1 = 0;
 					this._choices.answer2 = 0;
 					this._choices.answer3 = 0;
 			}
-		} else if (!this.props.view && prev.view) {
-			if((this.props.state.confirmSupProg < QPROG.COMPLETE && this.props.state.idx === 0) || 
-			(this.props.state.confirmBasicProg < QPROG.COMPLETE && this.props.state.idx === 1) ||
-			(this.props.state.confirmHardProg < QPROG.COMPLETE && this.props.state.idx === 2)) {
+		} else if (!view && prev.view) {
+			if((state.confirmSupProg < QPROG.COMPLETE && state.idx === 0) || 
+			(state.confirmBasicProg < QPROG.COMPLETE && state.idx === 1) ||
+			(state.confirmHardProg < QPROG.COMPLETE && state.idx === 2)) {
 				this._choices.answer1 = 0;
 				this._choices.answer2 = 0;
 				this._choices.answer3 = 0;
 			}
 		}
-
-		if(this.props.qsMode === 'script' && prev.qsMode === 'question') {
+		if(qsMode === 'script' && prev.qsMode === 'question') {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}			
@@ -313,14 +291,14 @@ class SConfirm extends React.Component<ISQuestion> {
 			<div className="s_question" style={{...this._style}}>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
-						<SSup
+						<SSupplementQuizItem
 							view={view && state.idx === 0} 
 							idx={0}
 							data={c_data.confirm_sup[0]}
 							confirmProg={state.confirmSupProg}
 							onChoice={this._onChoice}
 						/>
-						<SBasic
+						<SBasicQuizItem
 							view={view && state.idx === 1} 
 							idx={1}
 							choice={0}
@@ -328,7 +306,7 @@ class SConfirm extends React.Component<ISQuestion> {
 							confirmProg={state.confirmBasicProg}
 							onChoice={this._onChoice}
 						/>
-						<SHard
+						<SHardQuizItem
 							view={view && state.idx === 2}
 							state={state}
 							actions={actions}
@@ -340,13 +318,7 @@ class SConfirm extends React.Component<ISQuestion> {
 						/>
 					</div>
 				</div>
-				<SendUINew
-					view={view && this._felView}
-					type={'pad'}
-					sended={false}
-					originY={0}
-					onSend={this._onSend}
-				/>
+				<SendUINew view={view && this._felView}	type={'pad'} sended={false}	originY={0}	onSend={this._onSend}/>
 			</div>
 		);
 	}

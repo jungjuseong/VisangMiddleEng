@@ -4024,7 +4024,6 @@ body {
 #wrap .t_writing .writing_content_box .script_container .video_container {
     position: relative;
     margin-top: 10px;
-    height: 400px;
     overflow: hidden;
     z-index: 0;
 }

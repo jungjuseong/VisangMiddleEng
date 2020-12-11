@@ -74,6 +74,7 @@ class SContent extends React.Component<ISContentProps> {
 
 	public render() {
 		const {view, state, actions, scriptProg, qsMode} = this.props;
+		const { confirmView,additionalView,dictationView } = state;
 		let style: React.CSSProperties = {};
 		if(!view) {
 			style = {
@@ -85,37 +86,10 @@ class SContent extends React.Component<ISContentProps> {
 		}
 		return (
 			<div className="s_content" style={style}>
-				<SScript
-					view={view && scriptProg[state.idx] > SPROG.UNMOUNT}
-					scriptProg={scriptProg}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
-				<SConfirm 
-					view={view && state.confirmView} 
-					questionView={state.confirmView}
-					scriptProg={scriptProg}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
-				<SAdditional
-					view={view && state.additionalView} 
-					questionView={state.additionalView}
-					scriptProg={scriptProg}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
-				<SDictation
-					view={view && state.dictationView} 
-					questionView={state.dictationView}
-					scriptProg={scriptProg}
-					qsMode={qsMode}
-					state={state}
-					actions={actions}
-				/>
+				<SScript view={view && scriptProg[state.idx] > SPROG.UNMOUNT} scriptProg={scriptProg} qsMode={qsMode} state={state} actions={actions}/>
+				<SConfirm view={view && confirmView} questionView={confirmView}	scriptProg={scriptProg}	qsMode={qsMode}	state={state} actions={actions}/>
+				<SAdditional view={view && additionalView} questionView={additionalView} scriptProg={scriptProg} qsMode={qsMode} state={state} actions={actions}/>
+				<SDictation	view={view && dictationView} questionView={dictationView} scriptProg={scriptProg} qsMode={qsMode} state={state}	actions={actions}/>
 
 				<div className={'img_pop' + (this._img_pop_on ? ' on' : '')} />
 				<div className={'btn_box' + (scriptProg[state.idx] === SPROG.YESORNO ? ' on' : '')}>
