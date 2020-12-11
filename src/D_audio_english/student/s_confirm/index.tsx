@@ -8,7 +8,7 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import * as common from '../../common';
+import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
 import SBasicQuizItem from './s_basic_quiz_item';
@@ -35,7 +35,7 @@ class NItem extends React.Component<INItem> {
 	}
 }
 
-interface ISQuestion {
+interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;
 	scriptProg: SPROG;
@@ -45,15 +45,15 @@ interface ISQuestion {
 }
 
 @observer
-class SConfirm extends React.Component<ISQuestion> {
+class SConfirm extends React.Component<ISQuestionProps> {
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
-	@observable private _choices: common.IQuizReturn = {
+	@observable private _choices: IQuizReturn = {
 		answer1: 0,
 		answer2: 0,
 		answer3: 0
 	};
-	@observable private _writings: common.IQuizStringReturn = {
+	@observable private _writings: IQuizStringReturn = {
 		answer1: '',
 		answer2: '',
 		answer3: ''
@@ -63,7 +63,7 @@ class SConfirm extends React.Component<ISQuestion> {
 	private _style: React.CSSProperties = {};
 	private _swiper: Swiper|null = null;
 
-	constructor(props: ISQuestion) {
+	constructor(props: ISQuestionProps) {
 		super(props);
 	}
 
@@ -89,8 +89,8 @@ class SConfirm extends React.Component<ISQuestion> {
 		if(state.confirmBasicProg !== QPROG.ON && state.idx === 1) return;
 		if(state.confirmHardProg !== QPROG.ON && state.idx === 2) return;
 		App.pub_playToPad();
-		let choices: common.IQuizReturn;
-		let writings: common.IQuizStringReturn;
+		let choices: IQuizReturn;
+		let writings: IQuizStringReturn;
 		choices = this._choices;
 		writings = this._writings;
 		// 초기화 함수 만들어서 할것
@@ -99,7 +99,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		if(state.idx === 0) {
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 0,
 					id: App.student.id,
@@ -119,7 +119,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		} else if(state.idx === 1) {
 			state.confirmBasicProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizReturnMsg = {
+				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 1,
 					id: App.student.id,
@@ -139,7 +139,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		} else if(state.idx === 2) {
 			state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: common.IQuizStringReturnMsg = {
+				const msg: IQuizStringReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 2,
 					id: App.student.id,
@@ -228,7 +228,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		state.qsMode = 'script';
 	}
 
-	private _setStyle(props: ISQuestion) {
+	private _setStyle(props: ISQuestionProps) {
 		if(
 			props.questionView &&
 			props.scriptProg > SPROG.UNMOUNT
@@ -247,7 +247,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		this._setStyle(this.props);		
 	}
 
-	public componentWillReceiveProps(next: ISQuestion) {
+	public componentWillReceiveProps(next: ISQuestionProps) {
 		const { state,qsMode,scriptProg } = this.props;
 		if(
 			next.state.confirmSupProg !== state.confirmSupProg ||
@@ -258,7 +258,7 @@ class SConfirm extends React.Component<ISQuestion> {
 		) this._setStyle(next);		
 	}
 	
-	public componentDidUpdate(prev: ISQuestion) {
+	public componentDidUpdate(prev: ISQuestionProps) {
 		const {state, view, qsMode} = this.props;
 		if (view && !prev.view) {			
 			this._curIdx = 0;

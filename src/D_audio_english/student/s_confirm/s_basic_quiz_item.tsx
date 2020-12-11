@@ -236,37 +236,13 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 								</div>
 							</div>
 
-							<Draggable 
-								bounds="parent"
-								{...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 500, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => this.selectNumber(1)}
-							>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 500, y: 400 }} onStop={this.handleStop}	onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(1)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>1</div>
 							</Draggable>
-							<Draggable
-								bounds="parent" 
-								{...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 600, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => this.selectNumber(2)}
-							>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 600, y: 400 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(2)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>2</div>
 							</Draggable>
-							<Draggable
-								bounds="parent" 
-								{...dragHandlers}
-								positionOffset={{ x: 0, y: 0 }}
-								position={{ x: 700, y: 400 }}
-								onStop={this.handleStop}
-								onDrag={this.handleDrag}
-								onMouseDown={() => this.selectNumber(3)}
-							>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 700, y: 400 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(3)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>3</div>
 							</Draggable>
 						</div>

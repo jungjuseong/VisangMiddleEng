@@ -26,7 +26,7 @@ interface IQuizItemProps {
 }
 
 @observer
-class SHard extends React.Component<IQuizItemProps> {	
+class SHardQuizItem extends React.Component<IQuizItemProps> {	
 	@observable private _tlen = 0;
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
@@ -222,4 +222,4 @@ class SHard extends React.Component<IQuizItemProps> {
 	}
 }
 
-export default SHard;
+export default SHardQuizItem;

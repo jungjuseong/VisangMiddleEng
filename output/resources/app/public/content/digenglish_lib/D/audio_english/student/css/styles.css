@@ -1352,6 +1352,28 @@
     padding-left: 30px;
 }
 
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box .OX_box {
+    position: absolute;
+    display: inline-block;
+    background-repeat: no-repeat;
+    top: 27px;
+    left: 7px;
+    font-size: 25px;
+    text-align: center;
+    z-index: 101;
+    line-height: 55px;
+    width: 66px;
+    height: 66px;
+}
+
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box .OX_box.O {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_o.png");
+}
+
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box .OX_box.X {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_x.png");
+}
+
 #wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box canvas {
     top: 0;
     left: 0;
@@ -1387,7 +1409,7 @@
     width: 150px;
 }
 
-#wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box .answer_box {
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .sentence_box .blank_box {
     border-bottom: 4px solid #000;
     width: 216px;
     margin-right: 45px;
@@ -1416,6 +1438,21 @@
     font-size: 52px;
     font-weight: bold;
     border-bottom: 3px solid #fff;
+}
+
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .s_typing .area-bnd .answer_box {
+    position: absolute;
+    display: block;
+    font-size: 45px;
+    color: red;
+    left: 120px;
+    top: 10px;
+    line-height: 45px;
+    visibility: hidden;
+}
+
+#wrap .s_content .s_additional .question .q-item .basic_question .q-item .s_typing .area-bnd .answer_box.X {
+    visibility: visible;
 }
 
 #wrap .s_content .s_additional .question .q-item .basic_question .q-item .s_typing .area-bnd .index {
@@ -1871,6 +1908,28 @@
     padding-left: 30px;
 }
 
+#wrap .s_content .s_additional .question .q-item .hard_question .q-item .sentence_box .OX_box {
+    position: absolute;
+    display: inline-block;
+    background-repeat: no-repeat;
+    top: 36px;
+    left: 8px;
+    font-size: 25px;
+    text-align: center;
+    z-index: 101;
+    line-height: 55px;
+    width: 66px;
+    height: 66px;
+}
+
+#wrap .s_content .s_additional .question .q-item .hard_question .q-item .sentence_box .OX_box.O {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_o.png");
+}
+
+#wrap .s_content .s_additional .question .q-item .hard_question .q-item .sentence_box .OX_box.X {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_x.png");
+}
+
 #wrap .s_content .s_additional .question .q-item .hard_question .q-item .sentence_box canvas {
     top: 0;
     left: 0;
@@ -1906,13 +1965,6 @@
     width: 150px;
 }
 
-#wrap .s_content .s_additional .question .q-item .hard_question .q-item .sentence_box .answer_box {
-    border-bottom: 4px solid #000;
-    width: 216px;
-    margin-right: 45px;
-    min-height: 50px;
-}
-
 #wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing {
     position: relative;
     display: flex;
@@ -1924,17 +1976,30 @@
     font-size: 52px;
     font-family: NotoSans;
     font-weight: bold;
+    align-items: center;
 }
 
 #wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing .area-bnd {
     position: relative;
-    display: flex;
+    display: inline-table;
     align-items: center;
     vertical-align: top;
     min-width: 300px;
     width: 100%;
     margin: 0 25px;
     border-bottom: 3px solid #fff;
+}
+
+#wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing .area-bnd .answer_box {
+    display: block;
+    font-size: 45px;
+    color: red;
+    line-height: 25px;
+    visibility: hidden;
+}
+
+#wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing .area-bnd .answer_box.X {
+    visibility: visible;
 }
 
 #wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing .area-bnd .index {
@@ -1950,7 +2015,7 @@
 
 #wrap .s_content .s_additional .question .q-item .hard_question .q-item .s_typing .area-bnd .k-tarea textarea {
     box-sizing: border-box;
-    font-size: 52px;
+    font-size: 45px;
     padding: 30px 35px 30px 30px;
     color: #fff;
     font-family: NotoSans;
@@ -2173,6 +2238,28 @@
     padding-left: 30px;
 }
 
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box {
+    position: absolute;
+    display: inline-block;
+    background-repeat: no-repeat;
+    top: 27px;
+    left: 7px;
+    font-size: 25px;
+    text-align: center;
+    z-index: 101;
+    line-height: 55px;
+    width: 66px;
+    height: 66px;
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box.O {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_o.png");
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box.X {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_x.png");
+}
+
 #wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box canvas {
     top: 0;
     left: 0;
@@ -2225,6 +2312,21 @@
     font-size: 52px;
     font-weight: bold;
     border-bottom: 3px solid #fff;
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .answer_box {
+    position: absolute;
+    display: block;
+    font-size: 45px;
+    color: red;
+    left: 52px;
+    top: 10px;
+    line-height: 15px;
+    visibility: hidden;
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .answer_box.X {
+    visibility: visible;
 }
 
 #wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .index {
