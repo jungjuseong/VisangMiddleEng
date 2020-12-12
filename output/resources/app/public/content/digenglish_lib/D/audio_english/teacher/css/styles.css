@@ -4249,26 +4249,42 @@ body {
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control {
-    position: absolute;
+    position: relative;
     left: 0px;
     bottom: 0px;
-    width: 50%;
-    height: 143px;
+    width: 490px;
+    height: 60px;
+    background-color: #333333;
+    border-radius: 15px;
+}
+
+#wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_over {
+    position: absolute;
+}
+
+#wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_over .brake_point {
+    position: relative;
+    float: left;
+    width: 20px;
+    height: 20px;
+    background-color: purple;
+    margin-right: 13px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    line-height: 15px;
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_left {
     position: absolute;
-    display: inline-block;
-    bottom: 12px;
+    display: flex;
     white-space: nowrap;
-    vertical-align: middle;
-    font-size: 0px;
+    height: 100%;
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_left .btn_play_pause {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 13px;
+    display: block;
+    margin: auto 0 auto 13px;
     touch-action: none;
     padding: 0px;
     border: none;
@@ -4412,11 +4428,12 @@ body {
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_top {
-    display: inline-block;
-    width: 100%;
-    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    float: right;
+    width: 90%;
     padding: 0 15px;
-    height: 24px;
+    height: 100%;
     font-size: 0px;
 }
 
@@ -4429,7 +4446,6 @@ body {
     display: table-cell;
     vertical-align: middle;
     position: relative;
-    top: 2px;
     width: auto;
 }
 

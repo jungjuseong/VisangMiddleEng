@@ -120,19 +120,8 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 				});
 			}
 		});
-		// if(this._swiper) {
-		// 	this._swiper.slideTo(0, 0);
-		// 	this._swiper.update();
-		// 	if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		// }
-		// _.delay(() => {
-		// 	if(this._swiper) {
-		// 		this._swiper.slideTo(0, 0);
-		// 		this._swiper.update();
-		// 		if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		// 	}				
-		// }, 300);
 	}
+	
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}

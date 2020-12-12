@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { observable } from 'mobx';
 
 import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
@@ -13,9 +13,8 @@ import * as common from '../../common';
 
 import SendUINew from '../../../share/sendui_new';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
-import { IMsg,IData,IFocusMsg, IIndexMsg ,IConfirmHardMsg } from '../../common';
+import { IData, IIndexMsg ,IConfirmHardMsg } from '../../common';
 
-import ScriptContainer from '../../script_container';
 import { CoverPopup } from '../../../share/CoverPopup';
 
 import IntroQuiz from './_intro_quiz';
@@ -25,46 +24,39 @@ import HardDictationQuizBox from './_hard_dictation_quiz_box';
 import PopTrans from './_pop_trans';
 import ScriptAudio from './script_audio';
 
-import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
+type ITabType ='INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT'
 
 /* 페이지 관련 class */
-class NItemW extends React.Component<{ idx: number, on: boolean, tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT', onClick: (idx: number) => void }> {
+class NItemW extends React.Component<{ idx: number, on: boolean, tab: ITabType, onClick: (idx: number) => void }> {
+    private static SUB_TAB_MENU = [ '보충','기본','심화'];
 	private _click = () => {
 		this.props.onClick(this.props.idx);
 	}
 	public render() {
         const { idx, on, tab } = this.props;
-        if(['INTRODUCTION','SCRIPT'].includes(tab)) {
-            return <span className={on ? 'on' : ''} onClick={this._click}>{idx + 1}</span>;
-        } else if(['CONFIRM','ADDITIONAL','DICTATION'].includes(tab)) {           
-            let pageText = '보충';
-            if (idx === 1) pageText = '기본';
-            else if (idx === 2) pageText = '심화';
-            
-            return <span className={on ? 'on' : ''} onClick={this._click}>{pageText}</span>;
-        } else {
-            return <span className={on ? 'on' : ''} onClick={this._click}>{idx + 1}</span>;
-        }
-	}
+        return (<span className={on ? 'on' : ''} onClick={this._click}>
+            {(['CONFIRM','ADDITIONAL','DICTATION'].includes(tab)) ? NItemW.SUB_TAB_MENU[idx] : idx + 1}
+        </span>);        
+    }
 }
 
-interface IWriting {
+interface IWritingProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class Writing extends React.Component<IWriting> {
+class Writing extends React.Component<IWritingProps> {
     private m_data: IData;
     
     private m_player = new MPlayer(new MConfig(true));
     private m_player_inittime = 0; // 비디오 시작시간 
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
-	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
+	@observable private _tab: ITabType = 'INTRODUCTION';
 
-	private _tab_save: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'INTRODUCTION';
+	private _tab_save: ITabType = 'INTRODUCTION';
 	@observable private _hint = false;
 
 	@observable private _view = false;
@@ -84,7 +76,7 @@ class Writing extends React.Component<IWriting> {
 
 	@observable private _qselected: number[] = [];
 	
-	public constructor(props: IWriting) {
+	public constructor(props: IWritingProps) {
         super(props);
         this.m_data = props.actions.getData();
         this.m_player_inittime = 0;
@@ -222,11 +214,107 @@ class Writing extends React.Component<IWriting> {
         });
     }
     
+    private _clickConfirmAnswer = () => {
+        const {state,actions} = this.props;
+        if(this._tab === 'CONFIRM') {
+            if(this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.SENDED ||
+                this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.SENDED ||
+                this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.SENDED) return;
+        }
+        App.pub_playBtnTab();
+        let msg: IIndexMsg;
+        if(this._tab === 'CONFIRM') {
+            switch(this._curQidx) {
+                case 0 :
+                    if(state.confirmSupProg !==  SENDPROG.SENDED) return;
+                    state.confirmSupProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'confirm_end', idx : 0};
+                    break;                
+                case 1 :
+                    if(state.confirmBasicProg !==  SENDPROG.SENDED) return;
+                    state.confirmBasicProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'confirm_end', idx : 1};
+                    // actions.quizComplete();
+                    break;                
+                case 2 :
+                    if(state.confirmHardProg !==  SENDPROG.SENDED) return;
+                    state.confirmHardProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'confirm_end', idx : 2};
+                    break;                
+                default:
+                    return;                
+            }
+        } else {
+            if(state.scriptProg !==  SENDPROG.SENDING) return;
+            state.scriptProg = SENDPROG.SENDED;
+            msg = {msgtype: 'script_send', idx : 0};
+            state.scriptProg = SENDPROG.COMPLETE;
+        } 
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        actions.setNavi(true,true);
+    }
+    
+    private _clickAdditionalAnswer = () => {
+        const {state, actions} = this.props;
+
+        App.pub_playBtnTab();
+        let msg: IIndexMsg;
+        if(this._tab === 'ADDITIONAL') {
+            switch(this._curQidx) {
+                case 0:
+                    if(state.additionalSupProg !==  SENDPROG.SENDED) return;
+                    state.additionalSupProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 0};
+                    break;                
+                case 1:
+                    if(state.additionalBasicProg !==  SENDPROG.SENDED) return;
+                    state.additionalBasicProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 1};
+                    break;                
+                case 2:
+                    if(state.additionalHardProg !==  SENDPROG.SENDED) return;
+                    state.additionalHardProg = SENDPROG.COMPLETE;
+                    msg = {msgtype: 'additional_end', idx : 2};
+                    break;                
+                default:
+                    return;
+            }
+        } else {
+            if(state.scriptProg !==  SENDPROG.SENDING) return;
+            state.scriptProg = SENDPROG.SENDED;
+            msg = {msgtype: 'script_send', idx : 0};
+            state.scriptProg = SENDPROG.COMPLETE;
+        } 
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        actions.setNavi(true,true);
+	}
+
+    private _clickDictationAnswer = () => {
+        const {state, actions} = this.props;
+
+        App.pub_playBtnTab();
+        let msg: IIndexMsg;
+        if(this._tab === 'DICTATION') {
+            if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDED) return;
+            state.dictationProg[this._curQidx] = SENDPROG.COMPLETE;
+            msg = {msgtype: 'dictation_end', idx : this._curQidx};
+        } else {
+            if(state.scriptProg !==  SENDPROG.SENDING) return;
+            state.scriptProg = SENDPROG.SENDED;
+            msg = {msgtype: 'script_send', idx : 0};
+            state.scriptProg = SENDPROG.COMPLETE;
+        } 
+        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        actions.setNavi(true,true);
+	}
+
     private _clickAnswer = () => {
         const {state, actions} = this.props;
-        if(this._tab === 'CONFIRM' && this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.SENDED) return;
-        if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.SENDED) return;
-        if(this._tab === 'CONFIRM' && this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.SENDED) return;
+        if(this._tab === 'CONFIRM') {
+            if(this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.SENDED ||
+                this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.SENDED ||
+                this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.SENDED) return;
+        }
 
         App.pub_playBtnTab();
         let msg: IIndexMsg;
@@ -285,64 +373,6 @@ class Writing extends React.Component<IWriting> {
         this.props.actions.setNavi(true,true);
 	}
 
-	// private _onPopupSend = (roll: ''|'A'|'B') => {
-    //     const {state, actions} = this.props;
-    //     if(this.c_popup === 'Q&A') {
-    //         if(this._title !== 'COMPREHENSION') return;
-    //         else if(state.qnaProg > SENDPROG.READY) return;
-
-    //         state.qnaProg = SENDPROG.SENDING;
-    //         App.pub_playToPad();
-
-    //         let msg: IMsg = {msgtype: 'qna_send',};
-    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-
-    //         // this._viewClue = false;
-    //         _.delay(() => {
-    //             if(	this._title !== 'COMPREHENSION' ) return;
-    //             else if(state.qnaProg !== SENDPROG.SENDING) return;
-
-    //             state.qnaProg = SENDPROG.SENDED;
-    //         }, 300);            
-            
-    //     } else if(this.c_popup === 'ROLE PLAY') {
-    //         if (this._title !== 'DIALOGUE') return;
-    //         if(state.dialogueProg !== SENDPROG.SENDED) return;
-    //         if(this._roll !== '' || roll === '') return;
-
-    //         this._lastFocusIdx = 0;
-    //         this._focusIdx = -1;
-
-    //         let msg: IRollMsg = {msgtype: 'roll_send', roll};
-    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-    //         _.delay(() => {
-    //             if(this._title !== 'DIALOGUE') return;
-    //             else if(state.dialogueProg !== SENDPROG.SENDED) return;
-    //             this._roll = roll;
-    //         }, 300);
-
-    //     } else if(this.c_popup === 'SHADOWING') {
-    //         if(this._title !== 'DIALOGUE') return;
-    //         else if(state.dialogueProg !== SENDPROG.SENDED) return;
-    //         else if(this._shadowing) return;
-
-    //         this._lastFocusIdx = 0;
-    //         this._focusIdx = -1;
-
-    //         let msg: IMsg = {msgtype: 'shadowing_send'};
-    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-    //         _.delay(() => {
-    //             if(this._title !== 'DIALOGUE') return;
-    //             else if(state.dialogueProg !== SENDPROG.SENDED) return;
-    //             this._shadowing = true;
-    //         }, 300);
-    //     }
-    //     this.props.actions.setNavi(false, false);
-    // }
-    // 인트로 페이지로 이동
 	private _goToIntro = () => {
         alert('go to Intro page');
         this.props.actions.gotoDirection();
@@ -404,20 +434,23 @@ class Writing extends React.Component<IWriting> {
         actions.init();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 
-	}
+    }
+    
+    private _falsySended = (state: IStateCtx):boolean => 
+        (state.confirmBasicProg === SENDPROG.SENDED ||
+        state.confirmSupProg === SENDPROG.SENDED ||
+        state.confirmHardProg === SENDPROG.SENDED ||
+        state.additionalBasicProg === SENDPROG.SENDED ||
+        state.additionalSupProg === SENDPROG.SENDED || 
+        state.additionalHardProg === SENDPROG.SENDED ||
+        state.dictationProg.indexOf(SENDPROG.SENDED) !== -1);
     
 	private _clickIntroduction = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions,state } = this.props;
-        const { confirmBasicProg,qnaProg} = state;
 
         if(this._tab === 'INTRODUCTION') return;
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) return;
+        if(this._falsySended(state)) return;
+
         if(state.scriptProg > SENDPROG.READY) {
             state.scriptProg = SENDPROG.READY;
             actions.clearQnaReturns();
@@ -435,25 +468,17 @@ class Writing extends React.Component<IWriting> {
         }
         if(this._curQidx === 0) actions.setNavi(false, true);
     }
-    
+
 	private _clickConfirm = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
-        const { confirmBasicProg,qnaProg } = this.props.state;
 
         if (this._tab === 'CONFIRM') return;
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) return;
-        // else if(state.dictationProg === SENDPROG.SENDED) return;
+        if(this._falsySended(state)) return;
+
         if(state.scriptProg > SENDPROG.READY) {
             state.scriptProg = SENDPROG.READY;
             actions.clearQnaReturns();
-        }  
-
+        } 
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -462,24 +487,16 @@ class Writing extends React.Component<IWriting> {
         this._tab = 'CONFIRM';
         actions.setNavi(true, true);
     }
+
     private _clickAdditional = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
-        const { confirmBasicProg,qnaProg } = this.props.state;
 
-        if (this._tab === 'ADDITIONAL') return;
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) return;
-        // else if(state.dictationProg === SENDPROG.SENDED) return;
+        if (this._tab === 'ADDITIONAL' || this._falsySended(state)) return;
+
         if(state.scriptProg > SENDPROG.READY) {
             state.scriptProg = SENDPROG.READY;
             actions.clearQnaReturns();
-        }  
-
+        } 
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -488,24 +505,16 @@ class Writing extends React.Component<IWriting> {
         this._tab = 'ADDITIONAL';
         actions.setNavi(true, true);
     }
+
     private _clickDictation = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
-        const { confirmBasicProg,qnaProg } = this.props.state;
 
-        if (this._tab === 'DICTATION') return;
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) return;
-        // else if(state.dictationProg === SENDPROG.SENDED) return;
+        if (this._tab === 'DICTATION' || this._falsySended(state)) return;
+
         if(state.scriptProg > SENDPROG.READY) {
             state.scriptProg = SENDPROG.READY;
             actions.clearQnaReturns();
-        }        
-
+        }
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -514,19 +523,11 @@ class Writing extends React.Component<IWriting> {
         this._tab = 'DICTATION';
         actions.setNavi(true, true);
     }
+
     private _clickScript = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
-        const { confirmBasicProg,qnaProg } = this.props.state;
 
-        if (this._tab === 'SCRIPT') return;
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) return;
-        else if(state.scriptProg === SENDPROG.SENDED) return;
+        if (this._tab === 'SCRIPT' || this._falsySended(state)) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -541,14 +542,9 @@ class Writing extends React.Component<IWriting> {
         const { actions } = this.props;
 
         App.pub_playBtnTab();
-
-        const isCompQ = (this._tab === 'INTRODUCTION');
-
-        if(isCompQ) felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsersForQuiz());
-
-        else felsocket.startStudentReportProcess($ReportType.JOIN, actions.getReturnUsers());
-
+        felsocket.startStudentReportProcess($ReportType.JOIN, (this._tab === 'INTRODUCTION') ? actions.getReturnUsersForQuiz() : actions.getReturnUsers());
     }
+
     private _sendDialogueEnd() {
 		const msg: common.IMsg = {
 			msgtype: 'script_end',
@@ -567,27 +563,12 @@ class Writing extends React.Component<IWriting> {
         else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u2);
 	}
 
-	// private _sendFocusIdx(idx: number) {
-	// 	const msg: IFocusMsg = {
-	// 		msgtype: 'focusidx',
-	// 		idx,
-	// 	};
-    //     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        
-	// }
-	// private _sendDialogueEnd() {
-	// 	const msg: IMsg = {
-	// 		msgtype: 'dialogue_end',
-	// 	};
-    //     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        
-    // }
-    
     private _onPopTrans = () => {
 		App.pub_playBtnTab();
 		this._popTrans = true;
 		this.props.actions.setNaviView(false);
-	}
+    }
+    
 	private _PopTransClosed = () => {
 		this._popTrans = false;
 		this.props.actions.setNaviView(true);
@@ -595,142 +576,66 @@ class Writing extends React.Component<IWriting> {
 	private _letstalkClosed = () => {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
-	}
+    }
+    
+    private _TabSequence: ITabType[] = ['INTRODUCTION','CONFIRM','ADDITIONAL','DICTATION','SCRIPT'];
+
 	private _setNavi() {
         const { state,actions } = this.props;
-        const { confirmBasicProg,qnaProg } = state;
-
         actions.setNaviView(true);
         if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(state.confirmBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.confirmSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.confirmHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.additionalBasicProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.additionalSupProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.additionalHardProg === SENDPROG.SENDED) actions.setNavi(false,false);
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) actions.setNavi(false,false);
-		else actions.setNavi(true, true);
-		
-        actions.setNaviFnc(
-            () => {
-                if(this._tab === 'INTRODUCTION') {
-                    if(this._curQidx === 0) {
-                        actions.gotoDirection();
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx - 1;
-                        this._setNavi();
-                    }
-                } else if(this._tab === 'CONFIRM') {
-                    // if(confirmProg === SENDPROG.SENDED || confirmProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                    if(this._curQidx === 0) {
-                        this._hint = false;
-                        this._tab = 'INTRODUCTION';
-                        this._curQidx = this.m_data.introduction.length - 1;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx - 1;
-                        this._setNavi();
-                    }
-                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-                    // if(state.scriptProg > SENDPROG.READY) {
-                    //     state.scriptProg = SENDPROG.READY;
-                    //     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+        else {
+            if(state.confirmBasicProg === SENDPROG.SENDED ||
+                state.confirmSupProg === SENDPROG.SENDED ||
+                state.confirmHardProg === SENDPROG.SENDED ||
+                state.additionalBasicProg === SENDPROG.SENDED ||
+                state.additionalSupProg === SENDPROG.SENDED ||
+                state.additionalHardProg === SENDPROG.SENDED ||
+                state.dictationProg.indexOf(SENDPROG.SENDED) !== -1) actions.setNavi(false,false);
+            else actions.setNavi(true, true);
+        }
 
-                    //     actions.clearQnaReturns();
-                    // }
-                } else if(this._tab === 'ADDITIONAL') {
-                    if(this._curQidx === 0) {
-                        this._hint = false;
-                        this._tab = 'CONFIRM';
-                        this._curQidx = this.m_data.introduction.length - 1;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx - 1;
-                        this._setNavi();
-                    }
-                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-                } else if(this._tab === 'DICTATION') {
-                    if(this._curQidx === 0) {
-                        this._hint = false;
-                        this._tab = 'ADDITIONAL';
-                        this._curQidx = this.m_data.introduction.length - 1;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx - 1;
-                        this._setNavi();
-                    }
-                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-                } else if(this._tab === 'SCRIPT') {
-                    if(this._curQidx === 0) {
-                        this._hint = false;
-                        this._tab = 'DICTATION';
-                        this._curQidx = this.m_data.introduction.length - 1;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx - 1;
-                        this._setNavi();
-                    }
-                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+        const __leftNaviFunc = () => {
+            const tabIndex = this._TabSequence.indexOf(this._tab);
+            if (tabIndex === 0) {
+                if(this._curQidx === 0) actions.gotoDirection();
+                else {
+                    this._hint = false;
+                    this._curQidx -= 1;
+                    this._setNavi();
                 }
-            },
-            () => {
-                if(this._tab === 'INTRODUCTION') {
-                    if(this._curQidx === this.m_data.introduction.length - 1) {
-                        if(confirmBasicProg === SENDPROG.SENDED || confirmBasicProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                        this._hint = false;
-                        this._tab = 'CONFIRM';
-                        this._curQidx = 0;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx + 1;
-                        this._setNavi();
-                    }
-                } else if(this._tab === 'CONFIRM') {
-                    if(this._curQidx === this.m_data.introduction.length - 1) {
-                        if(confirmBasicProg === SENDPROG.SENDED || confirmBasicProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                        this._hint = false;
-                        this._tab = 'ADDITIONAL';
-                        this._curQidx = 0;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx + 1;
-                        this._setNavi();
-                    }
-                } else if(this._tab === 'ADDITIONAL') {
-                    if(this._curQidx === this.m_data.introduction.length - 1) {
-                        if(confirmBasicProg === SENDPROG.SENDED || confirmBasicProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                        this._hint = false;
-                        this._tab = 'DICTATION';
-                        this._curQidx = 0;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx + 1;
-                        this._setNavi();
-                    }
-                } else if(this._tab === 'DICTATION') {
-                    if(this._curQidx === this.m_data.introduction.length - 1) {
-                        if(confirmBasicProg === SENDPROG.SENDED || confirmBasicProg === SENDPROG.SENDING || qnaProg >= SENDPROG.SENDING) return;
-                        this._hint = false;
-                        this._tab = 'SCRIPT';
-                        this._curQidx = 0;
-                    } else {
-                        this._hint = false;
-                        this._curQidx = this._curQidx + 1;
-                        this._setNavi();
-                    }
-                } else if(this._tab === 'SCRIPT') {
-                    if(this._curQidx !== this.m_data.introduction.length - 1) {                        
-                        this._hint = false;
-                        this._curQidx = this._curQidx + 1;
-                        this._setNavi();
-                    }
+            } else if (tabIndex > 0) {
+                if(this._curQidx === 0) {
+                    this._tab = this._TabSequence[tabIndex - 1]; 
+                    this._curQidx = this.m_data.introduction.length - 1;
+                } else {
+                    this._curQidx -= 1;
+                    this._setNavi();
+                    this._hint = false;
+                    felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 }
             }
-        );
+        };
+
+        const __rightNaviFunc = () => {
+            const tabIndex = this._TabSequence.indexOf(this._tab);
+            if (tabIndex >= 0) {
+                this._hint = false;
+                if(this._curQidx === this.m_data.introduction.length - 1) {
+                    if(state.confirmBasicProg === SENDPROG.SENDED || state.confirmBasicProg === SENDPROG.SENDING || state.qnaProg >= SENDPROG.SENDING) return;
+                    this._hint = false;
+                    this._tab = this._TabSequence[tabIndex + 1];
+                    this._curQidx = 0;
+                } else {
+                    this._curQidx += 1;
+                    this._setNavi();
+                }
+            }
+        }
+        actions.setNaviFnc(__leftNaviFunc, __rightNaviFunc);
 	}
 
-	public componentDidUpdate(prev: IWriting) {
+	public componentDidUpdate(prev: IWritingProps) {
         const { view } = this.props;
 
         if (view && !prev.view) {
@@ -815,43 +720,19 @@ class Writing extends React.Component<IWriting> {
                     </div>
                     <div className={'question' } style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
-                            <ConfirmQuiz 
-                                view={view}
-                                actions={actions}
-                                state={state}
-                                index={this._curQidx}
-                                mdata={this.m_data} 
-                                onClosed={this._letstalkClosed}
-                                onHintClick={this._clickAnswer}
-                            />                          
+                            <ConfirmQuiz index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickConfirmAnswer} view={view} actions={actions} state={state}  />                          
                         </div>              
                     </div>
                     <div className={'question' } style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
                         <div key={1} >
-                            <AdditionalQuiz 
-                                view={view}
-                                actions={actions}
-                                state={state}
-                                index={this._curQidx}
-                                mdata={this.m_data} 
-                                onClosed={this._letstalkClosed}
-                                onHintClick={this._clickAnswer}
-                            />                          
-                        </div>              
+                            <AdditionalQuiz view={view} actions={actions} state={state} index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickAdditionalAnswer}/>                          
+                        </div>               
                     </div>
                     <div className={'question'} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
                         {dictations.map((dictation, idx) => {
                             return (
                             <div key={idx}>
-                                <HardDictationQuizBox 
-                                    view={view && idx === this._curQidx}
-                                    actions={actions}
-                                    state={state}
-                                    index={idx}
-                                    data={dictation}
-                                    onClosed={this._letstalkClosed}
-                                    onHintClick={this._clickAnswer}
-                                />                          
+                                <HardDictationQuizBox index={idx} data={dictation} onClosed={this._letstalkClosed} onHintClick={this._clickDictationAnswer} view={view && idx === this._curQidx} actions={actions} state={state} />                          
                             </div>
                             );
                         })}
@@ -859,13 +740,7 @@ class Writing extends React.Component<IWriting> {
                     {this.m_data.scripts.map((script, idx) => {
                         return (
                             <div key={idx} className={'script_container' + (this._tab === 'SCRIPT' && idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
-                                <ScriptAudio
-                                    view={view && idx === this._curQidx&&this._tab === 'SCRIPT'}
-                                    state={state}
-                                    actions={actions}
-                                    idx={idx}
-                                    script={script}
-                                />
+                                <ScriptAudio view={view && idx === this._curQidx&&this._tab === 'SCRIPT'} state={state} actions={actions} idx={idx} script={script} />
                             </div>
                         );
                     })}
