@@ -119,6 +119,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 			}
 		});
 	}
+	
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}

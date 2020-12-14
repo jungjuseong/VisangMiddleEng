@@ -44,6 +44,10 @@ node version 10.22.1
 
 - yarn run serve
 
+## hot build
+
+- yarn run hot_d_audio_english_t
+
 ## browser
 
 http://localhost:8082/content/D_audio_english/teacher.html?kdmtdvlp=y
@@ -51,12 +55,14 @@ http://localhost:8082/content/D_audio_english/teacher.html?kdmtdvlp=y
 ## 11/24
 
 템플릿 명 변경
-D_word_english
-D_video_english
-D_audio_english
-D_reading_english
+
+. D_word_english
+. D_video_english
+. D_audio_english
+. D_reading_english
 
 audio 공통
+
 문제 한영 버튼 이미지 수정
 정답 버튼 이미지 수정
 종료 버튼 이미지 수정

@@ -38,7 +38,7 @@ class NItem extends React.Component<INItem> {
 interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;
-	scriptProg: SPROG;
+	scriptProg: SPROG[];
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
 	actions: IActionsCtx;
@@ -229,7 +229,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 	}
 
 	private _setStyle(props: ISQuestionProps) {
-		this._style.transition = (props.questionView && props.scriptProg > SPROG.UNMOUNT) ? 'left 0.3s' : '';		
+		this._style.transition = (props.questionView && props.scriptProg.find(it=> it>SPROG.UNMOUNT) !=undefined) ? 'left 0.3s' : '';		
 		this._style.left = (props.questionView && props.qsMode === 'question') ? '0px' : '1280px';
 	}
 
@@ -289,7 +289,6 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
-				<ToggleBtn className="btn_SCRIPT" onClick={this._gotoScript} view={state.scriptProg > SPROG.UNMOUNT}/>
 				<div className="question">
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						<SSupplementQuizItem

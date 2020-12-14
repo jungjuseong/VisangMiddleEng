@@ -17,7 +17,7 @@ import SDictation from './s_dictation';
 
 interface ISContentProps {
 	view: boolean;
-	scriptProg: SPROG;
+	scriptProg: SPROG[];
 	qsMode: ''|'question'|'script';
 	state: IStateCtx;
 	actions: IActionsCtx;
@@ -30,15 +30,13 @@ class SContent extends React.Component<ISContentProps> {
 	private _stime = 0;
 	
 	private _clickYes = () => {
-		if(this._stime === 0) this._stime = Date.now();
-
 		const {state} = this.props;
-		if(state.scriptProg !== SPROG.YESORNO) return;
+		if(state.scriptProg[state.idx] !== SPROG.YESORNO) return;
 		
 
 		App.pub_playBtnTab();
 		state.qsMode = 'script';
-		state.scriptProg = SPROG.SELECTING;
+		state.scriptProg[state.idx] = SPROG.SELECTING;
 
 		this._img_pop_on = true;
 		_.delay(() => {
@@ -51,9 +49,9 @@ class SContent extends React.Component<ISContentProps> {
 
 		if(this._stime === 0) this._stime = Date.now();
 
-		if(state.scriptProg !== SPROG.YESORNO) return;
+		if(state.scriptProg[state.idx] !== SPROG.YESORNO) return;
 		App.pub_playBtnTab();
-		state.scriptProg = SPROG.SENDED;
+		state.scriptProg[state.idx] = SPROG.SENDED;
 		if(!App.student) return;
 		// const msg: IQNAMsg = {
 		// 	msgtype: 'qna_return',
@@ -88,15 +86,15 @@ class SContent extends React.Component<ISContentProps> {
 		}
 		return (
 			<div className="s_content" style={style}>
-				<SScript view={view && scriptProg > SPROG.UNMOUNT} scriptProg={scriptProg} qsMode={qsMode} state={state} actions={actions}/>
+				<SScript view={view && scriptProg[state.idx] > SPROG.UNMOUNT} scriptProg={scriptProg} qsMode={qsMode} state={state} actions={actions}/>
 				<SConfirm view={view && confirmView} questionView={confirmView}	scriptProg={scriptProg}	qsMode={qsMode}	state={state} actions={actions}/>
 				<SAdditional view={view && additionalView} questionView={additionalView} scriptProg={scriptProg} qsMode={qsMode} state={state} actions={actions}/>
 				<SDictation	view={view && dictationView} questionView={dictationView} scriptProg={scriptProg} qsMode={qsMode} state={state}	actions={actions}/>
 
 				<div className={'img_pop' + (this._img_pop_on ? ' on' : '')} />
-				<div className={'btn_box' + (scriptProg === SPROG.YESORNO ? ' on' : '')}>
-					<ToggleBtn className="btn_yes" onClick={this._clickYes} on={scriptProg === SPROG.SELECTING}/>
-					<ToggleBtn className="btn_no" onClick={this._clickNo} on={scriptProg === SPROG.SENDED}/>
+				<div className={'btn_box' + (scriptProg[state.idx] === SPROG.YESORNO ? ' on' : '')}>
+					<ToggleBtn className="btn_yes" onClick={this._clickYes} on={scriptProg[state.idx] === SPROG.SELECTING}/>
+					<ToggleBtn className="btn_no" onClick={this._clickNo} on={scriptProg[state.idx] === SPROG.SENDED}/>
 				</div>
 			</div>
 		);

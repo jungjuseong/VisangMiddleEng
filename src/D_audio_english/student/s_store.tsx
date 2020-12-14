@@ -34,7 +34,7 @@ interface IStateCtx extends IStateBase {
 	dictationView: boolean;
 	dictationProg: QPROG[];
 	idx: number;
-	scriptProg: SPROG;
+	scriptProg: SPROG[];
 	hint: boolean;
 	roll: ''|'A'|'B';
 	shadowing: boolean;
@@ -65,8 +65,8 @@ class StudentContext extends StudentContextBase {
 		this.state.additionalSupProg = QPROG.UNINIT;
 		this.state.additionalHardProg = QPROG.UNINIT;
 		this.state.dictationProg = [QPROG.UNINIT,QPROG.UNINIT,QPROG.UNINIT];
-		this.state.idx = -1;
-		this.state.scriptProg = SPROG.UNMOUNT;
+		this.state.idx = 0;
+		this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 		this.state.qsMode  = '';
 		this.state.hint = false;
 		this.state.roll = '';
@@ -85,7 +85,7 @@ class StudentContext extends StudentContextBase {
 			this.state.dictationView = false;
 			if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.UNINIT;
 			
-			this.state.scriptProg = SPROG.UNMOUNT;
+			this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 			this.state.qsMode  = '';
 			this.state.roll = '';
 			this.state.viewClue = false;
@@ -118,7 +118,7 @@ class StudentContext extends StudentContextBase {
 					this.state.hint = hintmsg.hint;
 					console.log('hardreturn' + this.state.hint);
 				}
-				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.confirmView = true;
 				this.state.viewDiv = 'content';
 				this.state.qsMode  = 'question';
@@ -156,7 +156,7 @@ class StudentContext extends StudentContextBase {
 					this.state.additionalHardProg = QPROG.ON;
 					this.state.idx = 2;
 				}
-				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.additionalView = true;
 				this.state.viewDiv = 'content';
 				this.state.qsMode  = 'question';
@@ -184,7 +184,7 @@ class StudentContext extends StudentContextBase {
 				if(this.state.dictationProg[msg.idx] > QPROG.UNINIT) return;
 				this.state.dictationProg[msg.idx] = QPROG.ON;
 				this.state.idx = msg.idx;
-				this.state.scriptProg = SPROG.UNMOUNT;
+				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.dictationView = true;
 				this.state.viewDiv = 'content';
 				this.state.qsMode  = 'question';
@@ -196,24 +196,24 @@ class StudentContext extends StudentContextBase {
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 				this.state.dictationProg[msg.idx] = QPROG.COMPLETE;
 			} else if(msg.msgtype === 'script_send') {
-				if(this.state.scriptProg !== SPROG.UNMOUNT) return;
+				if(this.state.scriptProg[msg.idx] !== SPROG.UNMOUNT) return;
 
 				if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.READYA;
-
-				this.state.scriptProg = SPROG.MOUNTED;
+				this.state.idx = msg.idx;
+				this.state.scriptProg[msg.idx] = SPROG.MOUNTED;
 				this.state.viewDiv = 'content';
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
 			} else if(msg.msgtype === 'qna_send') {
 				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg !== SPROG.MOUNTED) return;
+				else if(this.state.scriptProg[msg.idx] !== SPROG.MOUNTED) return;
 				this.state.focusIdx = -1;
-				this.state.scriptProg = SPROG.YESORNO;
+				this.state.scriptProg[msg.idx] = SPROG.YESORNO;
 			} else if(msg.msgtype === 'qna_end') {
 				if(this.state.viewDiv !== 'content') return;
-				else if(this.state.scriptProg < SPROG.MOUNTED) return;
-				this.state.scriptProg = SPROG.MOUNTED;
+				else if(this.state.scriptProg[msg.idx] < SPROG.MOUNTED) return;
+				this.state.scriptProg[msg.idx] = SPROG.MOUNTED;
 			} else if(msg.msgtype === 'shadowing_send') {
 				if(this.state.viewDiv !== 'content') return;
 				else if(this.state.qsMode !== 'script') return;	

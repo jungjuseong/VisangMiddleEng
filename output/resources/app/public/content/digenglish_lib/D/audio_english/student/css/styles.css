@@ -1446,8 +1446,8 @@
     font-size: 45px;
     color: red;
     left: 120px;
-    top: 10px;
-    line-height: 45px;
+    top: 0px;
+    line-height: 0px;
     visibility: hidden;
 }
 
@@ -2238,28 +2238,6 @@
     padding-left: 30px;
 }
 
-#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box {
-    position: absolute;
-    display: inline-block;
-    background-repeat: no-repeat;
-    top: 27px;
-    left: 7px;
-    font-size: 25px;
-    text-align: center;
-    z-index: 101;
-    line-height: 55px;
-    width: 66px;
-    height: 66px;
-}
-
-#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box.O {
-    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_o.png");
-}
-
-#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box .OX_box.X {
-    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_x.png");
-}
-
 #wrap .s_content .s_dictation .question .q-item .dict_question .q-item .sentence_box canvas {
     top: 0;
     left: 0;
@@ -2320,13 +2298,35 @@
     font-size: 45px;
     color: red;
     left: 52px;
-    top: 10px;
-    line-height: 15px;
+    top: 0px;
+    line-height: 0px;
     visibility: hidden;
 }
 
 #wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .answer_box.X {
     visibility: visible;
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .OX_box {
+    position: absolute;
+    display: inline-block;
+    background-repeat: no-repeat;
+    top: 40px;
+    left: -10px;
+    font-size: 25px;
+    text-align: center;
+    z-index: 101;
+    line-height: 55px;
+    width: 66px;
+    height: 66px;
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .OX_box.O {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_o.png");
+}
+
+#wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .OX_box.X {
+    background-image: url("/content/digenglish_lib/D/audio_english/common/icon_x.png");
 }
 
 #wrap .s_content .s_dictation .question .q-item .dict_question .q-item .s_typing .area-bnd .index {
