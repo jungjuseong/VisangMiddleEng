@@ -54,6 +54,7 @@ class VideoBox extends React.Component<IVideoBox> {
 	@observable private m_viewCountDown = false;
 	@observable private m_yourturn = -1;
 	@observable private m_ytNext = -1;
+	@observable private _view_autdio_box : boolean = false;
 
 	private _refBox = (el: HTMLElement | null) => {
         if (this.m_box || !el) return;
@@ -109,7 +110,9 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 	private _playClick = () => {
 		App.pub_playBtnTab();
-		this.props.player.play();
+		this._togglePlay();
+		// this.props.player.play();
+		this._view_autdio_box = !this._view_autdio_box;
 	}
 
 	private _togglePlay = () => {
@@ -207,7 +210,7 @@ class VideoBox extends React.Component<IVideoBox> {
 			<div className="video_box" ref={this._refBox}>
 				<video ref={this._refVideo} style={{display : 'none'}}>
 				</video>
-				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._togglePlay}/>
+				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._playClick}/>
 				
 				{/* <Yourturn 
 						className="yourturn" 
@@ -227,6 +230,7 @@ class VideoBox extends React.Component<IVideoBox> {
 					disable={this.m_viewCountDown || shadowing}
 					isPlay={isPlay}
 					togglePlay={this._togglePlay}
+					view = {this._view_autdio_box}
 				/>
 			</div>
 		);
