@@ -63,10 +63,10 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		player.load(App.data_url + data.role_play.main_sound);
 		
 		const scripts = data.scripts[idx];
-
+		console.log('refVideo',scripts)
 		player.addOnTime((time: number) => {
 			const curIdx = _getCurrentIdx(scripts, time / 1000);
-			const script = scripts[this.m_curIdx];
+			const script = scripts[idx];
 			const delay = (script.audio_end - script.audio_start) * 2000;
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {

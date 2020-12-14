@@ -89,6 +89,8 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 	@action
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		/** */
+		this.props.onHintClick();
+		this._hint = !this._hint;
 	}
 
 	protected _refSwiper = (el: SwiperComponent) => {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
@@ -12,6 +13,7 @@ import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
+import { SENDPROG } from 'src/D_video_english/teacher/t_store';
 
 @observer
 class ConfirmHardQuizBox extends ConfirmQuizBox {
@@ -26,16 +28,27 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 		this._jsx_questions.push(hard_data.problem1);
 		this._jsx_questions.push(hard_data.problem1);
 	}
-	
+	@action
+	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
+		this.props.onHintClick();
+		this._hint = true;
+			
+		this._doSwipe();
+	}
+
 	public render() {
 		const { data, state} = this.props;
 		let sentence = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
+		let answerView = false
+		if(state.confirmHardProg >= SENDPROG.SENDED){
+			answerView = true
+		}
 
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={'btn_example' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + ((this._sended && answerView) ? '' : ' hide')}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_example' + ((this._sended && answerView) ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				
 				<div className="quiz_box">
 					<div className="white_board">

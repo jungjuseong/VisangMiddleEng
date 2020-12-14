@@ -221,6 +221,13 @@ class StudentContext extends StudentContextBase {
 				this.state.roll = '';
 				this.state.shadowing = true;
 				this.state.focusIdx = -1;
+			} else if(msg.msgtype === 'roll_send') {
+				if(this.state.viewDiv !== 'content') return;
+				else if(this.state.qsMode !== 'script') return;
+				const rmsg = msg as common.IRollMsg;
+				this.state.roll = rmsg.roll;
+				this.state.shadowing = false;
+				this.state.focusIdx = -1;
 			} else if(msg.msgtype === 'playing' || msg.msgtype === 'paused') {
 				if(this.state.viewDiv !== 'content') return;
 				this.state.isPlay = (msg.msgtype === 'playing');
