@@ -33,17 +33,20 @@ function _getTimeStr(ms: number, max: number) {
 
 @observer
 class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
+	@observable private m_dragLeft = 0;
+
 	private m_dragging = false;
 	private m_bg!: HTMLElement;
 	private m_bgW = 0;
 	private m_s = 0;
-	@observable private m_dragLeft = 0;
 	private m_dragLeft_s = 0;
+	
 	private _seek = _.throttle((percent: number) => {
 		if(this.props.disable) return;
 		const player = this.props.player;
-		player.seek(player.duration * percent / 100);
+		player.seek(this.props.player.duration * percent / 100);
 	}, 300, { leading: false });
+
 	private _refBG = (el: HTMLElement | null) => {
 		if (this.m_bg || !el) return;
 		this.m_bg = el;
@@ -97,11 +100,7 @@ class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
 		return (
 			<>
 				<div className="prog_box">
-					<DraggableCore
-						onDrag={this._drag}
-						onStart={this._start}
-						onStop={this._stop}
-					>
+					<DraggableCore onDrag={this._drag} onStart={this._start} onStop={this._stop}>
 						<div className="prog_bg" ref={this._refBG}>
 							<div className="prog_bar" style={{ width: percent + '%' }} />
 							<div className="prog_tmp" />

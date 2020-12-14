@@ -9,14 +9,14 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
 import { CoverPopup } from '../../../share/CoverPopup';
-import * as common from '../../common';
+import { IScript } from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 interface IQuizBoxProps {
 	view: boolean;
 	onClosed: () => void;
-	data: common.IScript[];
+	data: IScript[];
 }
 @observer
 class PopTranslation extends React.Component<IQuizBoxProps> {
@@ -36,32 +36,20 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
 	};
 
-    private _jsx_sentence1: JSX.Element;
-    private _jsx_sentence2: JSX.Element;
-    private _jsx_sentence3: JSX.Element;
-    private _jsx_kor_sentence1: string;
-    private _jsx_kor_sentence2: string;
-    private _jsx_kor_sentence3: string;
-	private _character: string;
+    private _jsx_sentences: Array<{eng: JSX.Element, kor: JSX.Element}> = [];
+	// private _jsx_kor_sentences: JSX.Element[] = [];
 
+	private readonly _Characters = ['letstalk_bear.png','letstalk_boy.png','letstalk_girl.png'];
+	private _character: string = _project_ + 'teacher/images/' + this._Characters[Math.floor(Math.random() * 3)];
 	private _btnAudio?: BtnAudio;
-	
+
 	public constructor(props: IQuizBoxProps) {
-        super(props);
-        
-		this._jsx_sentence1 = _getJSX(props.data[0].dms_eng); // 문제
-		this._jsx_sentence2 = _getJSX(props.data[1].dms_eng); // 문제
-		this._jsx_sentence3 = _getJSX(props.data[2].dms_eng); // 문제
-		this._jsx_kor_sentence1 = props.data[0].dms_kor; // 문제
-		this._jsx_kor_sentence2 = props.data[1].dms_kor; // 문제
-		this._jsx_kor_sentence3 = props.data[2].dms_kor; // 문제
-
-		const rnd = Math.floor(Math.random() * 3);
-		if(rnd === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
-		else if(rnd === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		super(props);
+		
+		for(let sentence of props.data) {
+			this._jsx_sentences.push({eng: _getJSX(sentence.dms_eng), kor: _getJSX(sentence.dms_kor)});
+		}
 	}
-
 
 	private _viewHint = () => {
 		App.pub_playBtnTab();
@@ -101,7 +89,8 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
-		if(this.props.view && !prev.view) {
+		const { view } = this.props;
+		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
 			if(this._swiper) {
@@ -117,14 +106,14 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 				}				
 			}, 300);
 
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._view = false;	
 			App.pub_stop();
 		}
 	}
 	
 	public render() {
-		const { view, onClosed, data, } = this.props;
+		const { onClosed } = this.props;
 
 		return (
 			<>
@@ -134,24 +123,13 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 						<div className="popbox">
 							<div className="sentence_box">
 								<div>
-									<div className="question_box" onClick={this._onClick}>
-										{this._jsx_sentence1}
-									</div>
-									<div className="kor_question_box" onClick={this._onClick}>
-										{this._jsx_kor_sentence1}
-									</div>
-									<div className="question_box" onClick={this._onClick}>
-										{this._jsx_sentence2}
-									</div>
-									<div className="kor_question_box" onClick={this._onClick}>
-										{this._jsx_kor_sentence2}
-									</div>
-									<div className="question_box" onClick={this._onClick}>
-										{this._jsx_sentence3}
-									</div>
-									<div className="kor_question_box" onClick={this._onClick}>
-										{this._jsx_kor_sentence3}
-									</div>
+								{this._jsx_sentences.map((sentence, key) => 
+										(<>
+										<div className="question_box" onClick={this._onClick}>{sentence.eng}</div>
+										<div className="kor_question_box" onClick={this._onClick}>{sentence.kor}</div>
+										</>)
+									)
+								}
 								</div>
 							</div>
 						</div>

@@ -1,22 +1,15 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { observer, PropTypes } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
 
-import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
-
+import { IStateCtx, IActionsCtx } from '../../t_store';
 import { App } from '../../../../App';
-
 import { IData } from '../../../common';
-
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
-import Supplement from './_supplement';
-import Basic from './_basic';
-import Hard from './_hard';
-import { state } from '@common/component/Keyboard';
-
-const SwiperComponent = require('react-id-swiper').default;
+import ConfirmSupplementQuizBox from './_confirm_supplement_quiz_box';
+import ConfirmBasicQuizBox from './_confirm_basic_quiz_box';
+import ConfirmHardQuizBox from './_confirm_hard_quiz_box';
 
 interface IQuizBoxProps {
 	view: boolean;
@@ -29,12 +22,7 @@ interface IQuizBoxProps {
 }
 @observer
 class ConfirmQuiz extends React.Component<IQuizBoxProps> {
-	@observable private _view = false;
-	@observable private _hint = false;
-	@observable private _trans = false;
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
-	
+
 	private _swiper?: Swiper;
 
 	private readonly _soption: SwiperOptions = {
@@ -51,11 +39,6 @@ class ConfirmQuiz extends React.Component<IQuizBoxProps> {
  	public componentDidUpdate(prev: IQuizBoxProps) {
 		const { view } = this.props;
 		if(view && !prev.view) {
-			this._view = true;
-			this._hint = false;
-			this._trans = false;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -71,20 +54,17 @@ class ConfirmQuiz extends React.Component<IQuizBoxProps> {
 			}, 300);
 
 		} else if(!view && prev.view) {
-			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick ,actions} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,state, actions} = this.props;
 		return (
 			<>
-				<Supplement view={view && index === 0} actions={actions} state={this.props.state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Basic view={view && index === 1} actions={actions} state={this.props.state} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<Hard view={view && index === 2} actions={actions} state={this.props.state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick}/>
+				<ConfirmSupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<ConfirmBasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
+				<ConfirmHardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick}/>
 			</>
 		);
 	}
