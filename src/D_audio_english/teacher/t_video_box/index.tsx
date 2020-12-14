@@ -28,7 +28,7 @@ function _getCurrentIdx(scripts: IScript[], time: number) {
 	return -1;
 }
 
-interface IVideoBox {
+interface IVideoBoxProps {
     player: MPlayer;
     playerInitTime: number;  // 비디오 시작시간
 	data: IData;
@@ -41,7 +41,7 @@ interface IVideoBox {
 	onChangeScript: (idx: number) => void;
 }
 @observer
-class VideoBox extends React.Component<IVideoBox> {
+class VideoBox extends React.Component<IVideoBoxProps> {
 	private m_box!: HTMLElement;
 	@observable private m_curIdx: number = -1;
 	@observable private m_viewCountDown = false;
@@ -55,26 +55,26 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 
 	private _refVideo = (el: HTMLMediaElement | null) => {
-		const { data, idx, isShadowPlay, onChangeScript } = this.props;
+		const { data, idx, isShadowPlay, player, shadowing, onChangeScript } = this.props;
+
 		if (!el) return;
-		const { player } = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
-
 		player.load(App.data_url + data.role_play.main_sound);
+		
 		const scripts = data.scripts[idx];
+
 		player.addOnTime((time: number) => {
-			time = time / 1000;
-			const curIdx = _getCurrentIdx(scripts, time);
+			const curIdx = _getCurrentIdx(scripts, time / 1000);
+			const script = scripts[this.m_curIdx];
+			const delay = (script.audio_end - script.audio_start) * 2000;
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
-				if(this.props.shadowing) {
+				if(shadowing) {
 					if(this.m_yourturn < 0) {
 						if(this.m_curIdx >= 0) {
 							this.m_ytNext = curIdx;
 							player.pause();
-							const script = scripts[this.m_curIdx];
-							const delay = (script.audio_end - script.audio_start) * 2000;
 							this.m_yourturn = _.delay(() => {
 								if(this.m_yourturn >= 0 && isShadowPlay) {
 									this.m_curIdx = this.m_ytNext;
@@ -95,7 +95,7 @@ class VideoBox extends React.Component<IVideoBox> {
 					} else {
 						return;
 					}
-				}	
+				}
 				this.m_curIdx = curIdx;
 				console.log('onc',curIdx);
 				onChangeScript(curIdx);
@@ -121,7 +121,6 @@ class VideoBox extends React.Component<IVideoBox> {
 		}
 		if(shadowing) {
 			setShadowPlay(!isShadowPlay);
-
 			if (isShadowPlay) player.pause();
 			else player.play();
 		} else {
@@ -134,7 +133,7 @@ class VideoBox extends React.Component<IVideoBox> {
 		}
 	}
 
-	public componentDidUpdate(prev: IVideoBox) {
+	public componentDidUpdate(prev: IVideoBoxProps) {
 		const { player, roll, shadowing,playerInitTime,setShadowPlay} = this.props;
 		if(roll !== prev.roll) {
 			if(	this.m_yourturn >= 0) {

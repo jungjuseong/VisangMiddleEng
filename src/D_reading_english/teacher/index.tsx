@@ -53,7 +53,7 @@ class Comp extends React.Component<ITeacher> {
 							video_frame={125}
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}
-						>
+							>
 							<div className="lesson">{App.lesson}</div>
 						</VideoDirection></div>
 						<div><TComprehension view={viewDiv === 'content'}  state={state} actions={actions}/></div>

@@ -6,24 +6,20 @@ import { observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
-import * as common from '../../common';
+import { IIntroduction } from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
-const SwiperComponent = require('react-id-swiper').default;
-
 interface IQuizBox {
 	view: boolean;
 	onClosed: () => void;
-	data: common.IIntroduction;
+	data: IIntroduction;
 }
 @observer
 class IntroQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
 	@observable private _hint = false;
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
 	
 	private _swiper?: Swiper;
 
@@ -74,16 +70,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		}, 300);
 	}
 
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
-	}
-
 	private _onClick = () => {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
@@ -93,8 +79,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -111,8 +95,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
 	}

@@ -17,6 +17,7 @@ import { CountDown2, TimerState } from '../../../share/Timer';
 import Yourturn from '../../../share/yourturn';
 
 import TransPopup from './_trans_popup';
+import SentenceStructure from './_sentence_struct_popup';
 import PassagePopup from './_passage_popup';
 import ImgPassage from './_img_passage';
 import ScriptItem from './_script_item';
@@ -53,6 +54,7 @@ class Passage extends React.Component<IPassage> {
 	@observable private _studyDiv: 'off'|'READALOUD'|'SHADOWING'|'QNA' = 'off';
 
 	@observable private _trans = false;
+	@observable private _view_structure = false;
 
 	@observable private _prog = SENDPROG.READY;
 	@observable private _studyProg = SENDPROG.READY;
@@ -283,6 +285,7 @@ class Passage extends React.Component<IPassage> {
 		this._zoom = false;
 		this._studyDiv = 'off';
 		this._trans = false;
+		this._view_structure = false;
 		this._studyProg = SENDPROG.READY;
 		this._retCnt = 0;
 		while(this._retUsers.length > 0) this._retUsers.pop();
@@ -365,10 +368,17 @@ class Passage extends React.Component<IPassage> {
 		const msg: common.IMsgForIdx = {msgtype: 'view_trans', idx: this._trans ? 1 : 0};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);		
 	}
+	private _clickStructure = () => {
+		App.pub_playBtnTab();
+		this._view_structure = !this._view_structure;
+	}
 	private _offTrans = () => {
 		this._trans = false;
 		const msg: common.IMsgForIdx = {msgtype: 'view_trans', idx: this._trans ? 1 : 0};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);		
+	}
+	private _offStructure = () => {
+		this._view_structure = false;		
 	}
 	private _clickZoom = () => {
 		App.pub_playBtnTab();
@@ -726,7 +736,8 @@ class Passage extends React.Component<IPassage> {
 						>
 							<div>{this._retCnt}/{this._numOfStudent}</div>
 						</div>
-						{/* <ToggleBtn disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/> */}
+						<ToggleBtn disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/>
+						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickStructure}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickZoom}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_audio_drop" on={this._audioOn} onClick={this._onAudio}/>
 						{/*
@@ -814,6 +825,11 @@ class Passage extends React.Component<IPassage> {
 						view={this._trans === true} 
 						scripts={scripts} 
 						onClosed={this._offTrans}
+					/>
+					<SentenceStructure
+						view={this._view_structure === true} 
+						scripts={scripts} 
+						onClosed={this._offStructure}
 					/>
 				</div>
 		);

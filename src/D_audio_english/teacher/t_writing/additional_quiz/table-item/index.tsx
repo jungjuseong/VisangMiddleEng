@@ -12,7 +12,7 @@ const SwiperComponent = require('react-id-swiper').default;
 
 let _zIndex = observable([0]);
 
-interface ITableItem {
+interface ITableItemProps {
 	inview: boolean;
 	graphic: IAdditionalSup;
 	maxWidth: number;
@@ -30,11 +30,9 @@ interface ITableItem {
 
 @inject()
 @observer
-class TableItem extends React.Component<ITableItem> {
-
+class TableItem extends React.Component<ITableItemProps> {
 	@observable private m_view = false;
 
-	private _drop = false;
 	private _jsx!: JSX.Element;
 	private SELECT_KEY = 0;
 	private _cont!: JSX.Element;
@@ -43,7 +41,7 @@ class TableItem extends React.Component<ITableItem> {
 
 	@observable private _opt = true;
 
-	constructor(props: ITableItem) {
+	constructor(props: ITableItemProps) {
 		super(props);
 		const { sentence1, sentence2, sentence3, sentence4 } = props.graphic;
 		const answerList = [sentence1.answer, sentence2.answer, sentence3.answer, sentence4.answer];
@@ -52,12 +50,12 @@ class TableItem extends React.Component<ITableItem> {
 			this._totalNumOfSentnc++;
 		}
 	}
+
 	private _refSelect = (sbox: SelectBox, idx: number) => {
 		if (this._sbox[idx] || !sbox || idx < 0) return;
 		this._sbox[idx] = sbox;
 		this._initSBox();
 	}
-
 
 	private _onSelect = (value: string, idx: number) => {
 		const drops = this.props.graphic.app_drops;
@@ -67,18 +65,10 @@ class TableItem extends React.Component<ITableItem> {
 		if (this.props.onChange) this.props.onChange(value, idx);
 	}
 
-	private _parseBlock = (
-		graphic: IAdditionalSup,
-		onRef: (sbox: SelectBox, idx: number) => void,
-		onChange: (value: string, idx: number) => void,
-		boxPositon: 'top' | 'bottom' = 'bottom'
-	) => {
+	private _parseBlock = (graphic: IAdditionalSup,	onRef: (sbox: SelectBox, idx: number) => void, onChange: (value: string, idx: number) => void,boxPositon: 'top' | 'bottom' = 'bottom') => {
 		const question = graphic.sentence;
 		const arrLine = question.split('<br>');
-
-		let boxIdx = 0;
-
-		const ret = (
+		return (
 			<>
 				{arrLine.map((str, idx) => {
 					const pattern = new RegExp(/\{(.*?)\}/g);
@@ -86,18 +76,19 @@ class TableItem extends React.Component<ITableItem> {
 					let lastIdx = 0;
 					let sTmp = '';
 					let sTmpElmnt: React.ReactFragment;
-					const sarr: React.ReactNode[] = [];
+					const s_arr: React.ReactNode[] = [];
 
 					// case1. 문장 안에 select_box 있음.
+					let boxIdx = 0;
 					while (result) {
 						if (result.index > lastIdx) {
 							sTmp = str.substring(lastIdx, result.index);
 							sTmpElmnt = <span key={this.SELECT_KEY++} dangerouslySetInnerHTML={{ __html: sTmp }} />;
-							sarr.push(sTmpElmnt);
+							s_arr.push(sTmpElmnt);
 						}
 						sTmp = result[1];
 						if (boxIdx < graphic.app_drops.length) {
-							sarr.push(((bIdx: number) =>
+							s_arr.push(((bIdx: number) =>
 								<SelectBox
 									key={this.SELECT_KEY++}
 									ref={(sbox: SelectBox) => onRef(sbox, bIdx)}
@@ -114,10 +105,7 @@ class TableItem extends React.Component<ITableItem> {
 								/>
 							)(boxIdx));
 							boxIdx++;
-						} else {
-							sarr.push(sTmp);
-						}
-
+						} else s_arr.push(sTmp);						
 						lastIdx = pattern.lastIndex;
 						result = pattern.exec(str);
 					}
@@ -133,36 +121,23 @@ class TableItem extends React.Component<ITableItem> {
 						} else {
 							sTmpElmnt = <span key={this.SELECT_KEY++} dangerouslySetInnerHTML={{ __html: sTmp }} />;
 						}
-						sarr.push(sTmpElmnt);
+						s_arr.push(sTmpElmnt);
 					}
-
-					return <li key={idx} className={strAdd}><div>{sarr}</div></li>;
-
+					return <li key={idx} className={strAdd}><div>{s_arr}</div></li>;
 				})}
 			</>
 		);
-		return ret;
 	}
 
 	public componentDidMount() {
 		while (this._sbox.length > 0) this._sbox.pop();
 		console.log('didmount');
-		this._jsx = this._parseBlock(
-			this.props.graphic,
-			this._refSelect,
-			this._onSelect,
-			this.props.optionBoxPosition
-		);
+		this._jsx = this._parseBlock(this.props.graphic,this._refSelect,this._onSelect,	this.props.optionBoxPosition);
 	}
-	public componentWillReceiveProps(next: ITableItem) {
+	public componentWillReceiveProps(next: ITableItemProps) {
 		if (next.graphic !== this.props.graphic) {
 			while (this._sbox.length > 0) this._sbox.pop();
-			this._jsx = this._parseBlock(
-				next.graphic,
-				this._refSelect,
-				this._onSelect,
-				this.props.optionBoxPosition
-			);
+			this._jsx = this._parseBlock(next.graphic,this._refSelect,this._onSelect,this.props.optionBoxPosition);
 		}
 	}
 
@@ -188,9 +163,10 @@ class TableItem extends React.Component<ITableItem> {
 		this.m_swiper = el.swiper;
 	}
 
-	public componentDidUpdate(prev: ITableItem) {
+	public componentDidUpdate(prev: ITableItemProps) {
+		const { inview,renderCnt,disableSelect,viewResult, viewCorrect } = this.props;
 
-		if (this.props.inview && !prev.inview) {
+		if (inview && !prev.inview) {
 			if (this.m_swiper) {
 				this.m_swiper.slideTo(0, 0);
 				_.delay(() => {
@@ -206,18 +182,17 @@ class TableItem extends React.Component<ITableItem> {
 			}
 		}
 
-
-		if (this.props.inview && !prev.inview) {
+		if (inview && !prev.inview) {
 			this._initSBox();
 		}
-		if (this.props.renderCnt !== prev.renderCnt) {
+		if (renderCnt !== prev.renderCnt) {
 			this._initSBox();
 		}
 
-		if (this.props.disableSelect !== prev.disableSelect) {
+		if (disableSelect !== prev.disableSelect) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setDisableSelect(this.props.disableSelect === true);
+					sbox.setDisableSelect(disableSelect === true);
 				}
 			});
 		}
@@ -228,25 +203,24 @@ class TableItem extends React.Component<ITableItem> {
 			}
 		}
 		*/
-		if (this.props.viewResult !== prev.viewResult) {
+		if (viewResult !== prev.viewResult) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setViewResult(this.props.viewResult === true);
+					sbox.setViewResult(viewResult === true);
 				}
 			});
 		}
-		if (this.props.viewCorrect !== prev.viewCorrect) {
+		if (viewCorrect !== prev.viewCorrect) {
 			this._sbox.forEach((sbox, idx) => {
 				if (sbox) {
-					sbox.setViewCorrect(this.props.viewCorrect === true);
+					sbox.setViewCorrect(viewCorrect === true);
 				}
 			});
 		}
 	}
 
-
-	public render() {
-	
+	public render() {	
+		const { maxWidth, viewBtn, onClickBtn, idx, className} = this.props;
 		this._cont = (
 			<div className="content-box">
 				<div>
@@ -255,9 +229,9 @@ class TableItem extends React.Component<ITableItem> {
 			</div>
 		);
 		return (
-			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100 - this.props.idx) }}>
+			<div className={'table-item ' + className} style={{ maxWidth: maxWidth + 'px', zIndex: (100 - idx) }}>
 				{this._cont}
-				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
+				<ToggleBtn className="table-item-btn" view={viewBtn === true} onClick={onClickBtn} />
 			</div>
 		);
 	}

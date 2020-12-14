@@ -11,9 +11,9 @@ import { IData } from '../../../common';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
-import SupplementQuizBox from './_supplement_quiz_box';
-import BasicQuizBox from './_basic_quiz_box';
-import HardQuizBox from './_hard_quiz_box';
+import SupplementQuizBox from './_additional_supplement_quiz_box';
+import BasicQuizBox from './_additional_basic_quiz_box';
+import HardQuizBox from './_additional_hard_quiz_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 

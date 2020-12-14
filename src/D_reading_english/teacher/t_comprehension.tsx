@@ -14,6 +14,8 @@ import GraphicOrganizer from './t_graphic_organizer';
 import Summary from './t_summary';
 import VideoPopup from './t_video_box';
 import TStoryBook from './t_storybook';
+import LetsTalk from './_additional_pop_quiz';
+
 
 interface ITComprehension {
 	view: boolean;
@@ -33,7 +35,8 @@ class TComprehension extends React.Component<ITComprehension> {
 	}
 	private _onQuiz = () => {
 		App.pub_stop();
-		this.props.state.viewStoryBook = !this.props.state.viewStoryBook;
+		this.props.state.viewAdditionalQuiz = !this.props.state.viewAdditionalQuiz;
+		this.props.actions.setNaviView(false);
 	}
 	private _offStoryBook = () => {
 		this.props.state.viewStoryBook = false;
@@ -95,7 +98,10 @@ class TComprehension extends React.Component<ITComprehension> {
 		this._Tab = 'Question';
 		this.props.state.isNaviBack = false;
 	}
-
+	private _letsTalkClosed = () => {
+		this.props.state.viewAdditionalQuiz = false;
+		this.props.actions.setNaviView(true);
+	}
 	private _onSetNavi = (title: 'Compreshension'|'VISUALIZING'|'SUMMARIZING', tab: 'Warmup'| 'Passage'|'Question' |'GraphicOrganizer'| 'Summary') => {
 		this._btn_disable = '';
 		this._Title = title;
@@ -110,6 +116,7 @@ class TComprehension extends React.Component<ITComprehension> {
 			this._Title = 'Compreshension';
 			this._Tab = 'Warmup';
 			this._btn_disable = '';
+			this.props.state.viewAdditionalQuiz = false;
 		} else if(!this.props.view && prev.view) {
 			//
 		}
@@ -209,6 +216,12 @@ class TComprehension extends React.Component<ITComprehension> {
 					actions={actions} 
 					onClosed={this._offStoryBook}
 				/>
+
+				<LetsTalk 
+                    view={state.viewAdditionalQuiz} 
+                    data={data.letstalk} 
+                    onClosed={this._letsTalkClosed}
+                />
 			</div>
 		);
 	}
