@@ -47,7 +47,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	@observable private m_viewCountDown = false;
 	@observable private m_yourturn = -1;
 	@observable private m_ytNext = -1;
-	@observable private _view_autdio_box: boolean = false;
+	@observable private _view_audio_box: boolean = false;
 
 	private _refBox = (el: HTMLElement | null) => {
         if (this.m_box || !el) return;
@@ -63,11 +63,8 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		player.load(App.data_url + data.role_play.main_sound);
 		
 		const scripts = data.scripts[idx];
-		console.log('refVideo',scripts)
 		player.addOnTime((time: number) => {
 			const curIdx = _getCurrentIdx(scripts, time / 1000);
-			const script = scripts[idx];
-			const delay = (script.audio_end - script.audio_start) * 2000;
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
 				if(shadowing) {
@@ -75,6 +72,8 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 						if(this.m_curIdx >= 0) {
 							this.m_ytNext = curIdx;
 							player.pause();
+							const script = scripts[this.m_curIdx];
+                            const delay = (script.audio_end - script.audio_start) * 2000;
 							this.m_yourturn = _.delay(() => {
 								if(this.m_yourturn >= 0 && isShadowPlay) {
 									this.m_curIdx = this.m_ytNext;
@@ -105,8 +104,9 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	private _playClick = () => {
 		App.pub_playBtnTab();
 		this._togglePlay();
-		// this.props.player.play();
-		this._view_autdio_box = !this._view_autdio_box;
+		this._view_audio_box = !this._view_audio_box;
+		if (!this._view_audio_box) this.props.player.pause();
+		else this.props.player.play();
 	}
 
 	private _togglePlay = () => {
@@ -180,7 +180,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 					disable={this.m_viewCountDown || shadowing}
 					isPlay={isPlay}
 					togglePlay={this._togglePlay}
-					view={this._view_autdio_box}
+					view={this._view_audio_box}
 				/>
 			</div>
 		);

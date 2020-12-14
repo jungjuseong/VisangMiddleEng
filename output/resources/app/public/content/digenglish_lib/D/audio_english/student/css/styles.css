@@ -2485,6 +2485,10 @@
     content: url("/content/digenglish_lib/D/audio_english/student/images/btn_question.png") url("/content/digenglish_lib/D/audio_english/student/images/btn_question_down.png") url("/content/digenglish_lib/D/audio_english/student/images/btn_question_dis.png");
 }
 
+#wrap .s_content .s_script.hide {
+    display: none;
+}
+
 #wrap .s_content .s_script .script_container {
     position: absolute;
     left: 0px;

@@ -48,6 +48,7 @@ class SentenceStructurePopup extends React.Component<ITrans> {
 	}
 	public render() {
 		const { view, scripts } = this.props;
+		// 클래스 이름 변경 필요(*)
 		return (
 			<CoverPopup className="trans_popup" view={this.props.view && this.m_view} onClosed={this.props.onClosed} >
 				<span className="title">TRANSLATION</span><ToggleBtn className="btn_close" onClick={this._onClose} />
