@@ -8,27 +8,25 @@ import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
 
-import * as common from '../../common';
+import { IScript, IFocusMsg, IRollMsg, IData, IMsg } from '../../common';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
-import { IMsg,IData,IFocusMsg } from '../../common';
-import { TimerState } from '../../../share/Timer';
 
 import ComprehensionPopup from './_comprehension_popup';
 import ScriptContainer from '../../script_container';
 import VideoBox from '../t_video_box';
 import { ToggleBtn } from '@common/component/button';
 
-interface IScriptAudio {
+interface IScriptAudioProps {
 	view: boolean;
 	state: IStateCtx;
     actions: IActionsCtx;
-    idx : number;
-    script : common.IScript[]
+    idx: number;
+    script: IScript[];
 }
 
 @observer
-class ScriptAudio extends React.Component<IScriptAudio> {
+class ScriptAudio extends React.Component<IScriptAudioProps> {
     private m_data: IData;
     
     private m_player = new MPlayer(new MConfig(true));
@@ -36,7 +34,6 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 	
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'SCRIPT';
     @observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
-	@observable private _answer = false;
 	@observable private _view = false;
 	@observable private _curQidx = -1;
 	@observable private _viewClue = false;
@@ -54,7 +51,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 	// private _rollProg: SENDPROG = SENDPROG.READY;
 	private _scontainer?: ScriptContainer;
 	
-	public constructor(props: IScriptAudio) {
+	public constructor(props: IScriptAudioProps) {
         super(props);
         this.m_data = props.actions.getData();
         this.m_player_inittime = this.props.script[0].audio_start;
@@ -71,7 +68,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             let msgtype: 'playing'|'paused';
             if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
             else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
-            const msg: common.IMsg = {
+            const msg: IMsg = {
                 msgtype,
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -82,7 +79,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 		this.m_data = this.props.actions.getData();
     }
 
-    //SCRIPT
+    // SCRIPT
     private _refScriptContainer = (el: ScriptContainer) => {
 		if(this._scontainer || !el) return;
 		this._scontainer = el;
@@ -98,7 +95,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 		App.pub_playBtnTab();
 		felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);	
     }
-    private _clickItem = (idx: number, script: common.IScript) => {
+    private _clickItem = (idx: number, script: IScript) => {
 		if(this._roll !== '' || this._shadowing) {
 			/*
 			if(!this._countdown.isRunning) {
@@ -142,10 +139,10 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             this._focusIdx = -1;
             if(this._roll !== '') this.m_player.setMutedTemp(false);
         }
-		this._sendFocusIdx(idx);
+        this._sendFocusIdx(idx);
     }
     private _sendFocusIdx(idx: number) {
-		const msg: common.IFocusMsg = {
+		const msg: IFocusMsg = {
 			msgtype: 'focusidx',
             idx : this.props.idx,
             fidx : idx
@@ -156,7 +153,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
     private _setShadowPlay = (val: boolean) => {
 		if(this._shadowing) {
 			this._isShadowPlay = val;
-			const msg: common.IMsg = {
+			const msg: IMsg = {
 				msgtype: val ? 'playing' : 'paused',
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -164,7 +161,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
     }
 
     private _sendDialogueEnd() {
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: 'script_end',
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -189,7 +186,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
 
         // if(this.c_popup !== 'off') return;
         // else if(state.scriptProg < SENDPROG.SENDED) return;
-        console.log('onQAcilck')
+        console.log('onQAcilck');
 
         if(state.qnaProg === SENDPROG.READY) {
             App.pub_playBtnTab();
@@ -198,7 +195,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         } else if(state.qnaProg >= SENDPROG.SENDING) {
             
             App.pub_playBtnTab();
-            const msg: common.IMsg = {
+            const msg: IMsg = {
                 msgtype: 'qna_end',
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
@@ -233,20 +230,20 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         //     state.dialogueProg >= SENDPROG.SENDED && 
         //     this._roll === ''
         // ) {
-            App.pub_playBtnTab();
-            if(this._shadowing) {
-                this._isShadowPlay = false;
-                this._shadowing = false;
-                actions.setNavi(true, true);
-            } else {
-                this._lastFocusIdx = -1;
-                this._focusIdx = -1;
-                this._sendFocusIdx(-1);
-                this.c_popup = 'SHADOWING';
-                this.m_player.pause();	
-                this._sendDialogueEnd();
-                actions.setNavi(false, false);		
-            // }
+        App.pub_playBtnTab();
+        if(this._shadowing) {
+            this._isShadowPlay = false;
+            this._shadowing = false;
+            actions.setNavi(true, true);
+        } else {
+            this._lastFocusIdx = -1;
+            this._focusIdx = -1;
+            this._sendFocusIdx(-1);
+            this.c_popup = 'SHADOWING';
+            this.m_player.pause();	
+            this._sendDialogueEnd();
+            actions.setNavi(false, false);		
+        // }
         }
     }
     
@@ -258,7 +255,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             state.qnaProg = SENDPROG.SENDING;
             App.pub_playToPad();
 
-            let msg: common.IMsg = {msgtype: 'qna_send',};
+            let msg: IMsg = {msgtype: 'qna_send',};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             // this._viewClue = false;
@@ -282,7 +279,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             this.m_player.setMuted(false);
             this.m_player.setMutedTemp(false);
 
-            let msg: common.IRollMsg = {msgtype: 'roll_send', roll};
+            let msg: IRollMsg = {msgtype: 'roll_send', roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
                 if(state.dialogueProg !== SENDPROG.SENDED) return;
@@ -302,14 +299,14 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             this.m_player.setMuted(false);
             this.m_player.setMutedTemp(false);
 
-            let msg: common.IMsg = {msgtype: 'shadowing_send'};
+            let msg: IMsg = {msgtype: 'shadowing_send'};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
                 // if(state.dialogueProg !== SENDPROG.SENDED) return;
                 this._shadowing = true;
             }, 300);
         }
-        this.props.actions.setNavi(false, false);
+        actions.setNavi(false, false);
     }
 
     private _onPopupClosed = () => {
@@ -318,7 +315,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
         this.c_popup = 'off';
     }
 
-	public componentDidUpdate(prev: IScriptAudio) {
+	public componentDidUpdate(prev: IScriptAudioProps) {
         const { view } = this.props;
 
         if (view && !prev.view) {
@@ -351,17 +348,17 @@ class ScriptAudio extends React.Component<IScriptAudio> {
             <>
             <ToggleBtn className={'btn_script_show' + (this._viewScript ? ' on' : '')} on={this._viewScript} onClick={this._toggleScript} />
             <div className="video_container">
-				<VideoBox 
-					player={this.m_player} 
-					playerInitTime={this.m_player_inittime} 
+				<VideoBox
                     data={this.m_data}
                     idx={idx}
-					roll={this._roll}
-					shadowing={this._shadowing}
-					onChangeScript={this._onChangeScript}
-					stopClick={this._stopClick}
-					isShadowPlay={this._isShadowPlay}
-					setShadowPlay={this._setShadowPlay}
+                    isShadowPlay={this._isShadowPlay}
+                    onChangeScript={this._onChangeScript}
+                    player={this.m_player} 
+                    playerInitTime={this.m_player_inittime} 
+                    roll={this._roll}
+                    setShadowPlay={this._setShadowPlay}
+                    shadowing={this._shadowing}
+                    stopClick={this._stopClick}
 				/>
 			</div>
             <ScriptContainer
@@ -369,7 +366,7 @@ class ScriptAudio extends React.Component<IScriptAudio> {
                 view={view}
                 role={this.m_data.role_play}
                 script={script}
-                idx = {idx}
+                idx={idx}
                 focusIdx={this._focusIdx}
                 selected={this._selected}
                 qnaReturns={this.props.actions.getQnaReturns()}

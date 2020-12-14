@@ -22,16 +22,16 @@ import { NONE } from 'src/share/style';
 function _getCurrentIdx(scripts: common.IScript[], time: number) {
 	let timeRound = Math.round(time / 0.001) * 0.001;
 	// console.log('time:', time)
-    for (let i = 0, len = scripts.length; i < len; i++) {
+	for (let i = 0, len = scripts.length; i < len; i++) {
 		// console.log('timeround:',timeRound)
-        const s = scripts[i];
-        if (timeRound >= s.audio_start && timeRound <= s.audio_end) {
+		const s = scripts[i];
+		if (timeRound >= s.audio_start && timeRound <= s.audio_end) {
 			return i;		        
-        } else if (timeRound < s.audio_start) {
-            return -2;
-        }
-    }
-    return -1;
+		} else if (timeRound < s.audio_start) {
+			return -2;
+		}
+	}
+	return -1;
 }
 
 interface IVideoBox {
@@ -61,13 +61,14 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 
 	private _refVideo = (el: HTMLMediaElement | null) => {
+		const { data, idx, isShadowPlay, onChangeScript } = this.props;
 		if (!el) return;
 		const { player } = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
 
-		player.load(App.data_url + this.props.data.role_play.main_sound);
-		const scripts = this.props.data.scripts[this.props.idx];
+		player.load(App.data_url + data.role_play.main_sound);
+		const scripts = data.scripts[idx];
 		player.addOnTime((time: number) => {
 			time = time / 1000;
 			const curIdx = _getCurrentIdx(scripts, time);
@@ -77,25 +78,25 @@ class VideoBox extends React.Component<IVideoBox> {
 					if(this.m_yourturn < 0) {
 						if(this.m_curIdx >= 0) {
 							this.m_ytNext = curIdx;
-                            player.pause();
-                            const script = scripts[this.m_curIdx];
-                            const delay = (script.audio_end - script.audio_start) * 2000;
-                            this.m_yourturn = _.delay(() => {
-                                if(this.m_yourturn >= 0 && this.props.isShadowPlay) {
+							player.pause();
+							const script = scripts[this.m_curIdx];
+							const delay = (script.audio_end - script.audio_start) * 2000;
+							this.m_yourturn = _.delay(() => {
+								if(this.m_yourturn >= 0 && isShadowPlay) {
 									this.m_curIdx = this.m_ytNext;
 									this.m_yourturn = -1;
-									if(curIdx != -1){
-										this.props.onChangeScript(curIdx);
+									if(curIdx !== -1) {
+										onChangeScript(curIdx);
 										player.play();
-									}else{
+									} else {
 										player.play();
 										player.pause();
-										this.props.onChangeScript(curIdx);
+										onChangeScript(curIdx);
 										return;
 									}				
-                                }
+								}
 							}, delay); 
-                            return;
+							return;
 						}
 					} else {
 						return;
@@ -103,7 +104,7 @@ class VideoBox extends React.Component<IVideoBox> {
 				}	
 				this.m_curIdx = curIdx;
 				console.log('onc',curIdx);
-				this.props.onChangeScript(curIdx);
+				onChangeScript(curIdx);
 			}
 		});
 	}
@@ -113,86 +114,61 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 
 	private _togglePlay = () => {
-		const scripts = this.props.data.scripts[this.props.idx];
+		const { data,shadowing, player,setShadowPlay, playerInitTime, isShadowPlay } = this.props;
+		const scripts = data.scripts[this.props.idx];
 		if(this.m_viewCountDown) return;
 		App.pub_playBtnTab();
-		const player = this.props.player;
 		if(	this.m_yourturn >= 0) {
 			this.m_curIdx = this.m_ytNext;
 			clearTimeout(this.m_yourturn);
 			this.m_yourturn = -1;
 		}
-		if(this.props.shadowing) {
-			let isShadowPlay = !this.props.isShadowPlay;
-			this.props.setShadowPlay(isShadowPlay);
+		if(shadowing) {
+			setShadowPlay(!isShadowPlay);
 
-			if (isShadowPlay) player.play();
-			else player.pause();
+			if (isShadowPlay) player.pause();
+			else player.play();
 		} else {
 			console.log(player.bPlay);
 			if (player.bPlay) player.pause();
 			else {
-                if(player.currentTime >= player.duration || player.currentTime < this.props.playerInitTime*1000) {
-					player.gotoAndPlay(this.props.playerInitTime *1000, scripts[scripts.length-1].audio_end * 1000, 1);	
-				}else{
-					player.gotoAndPlay(player.currentTime, scripts[scripts.length-1].audio_end * 1000, 1);
-				}
+				const playTime = (player.currentTime >= player.duration || player.currentTime < playerInitTime * 1000) ? playerInitTime * 1000 : player.currentTime;
+				player.gotoAndPlay(playTime, scripts[scripts.length - 1].audio_end * 1000, 1);				
             }
 		}
 	}
 
-	private _countStart = () => {
-		// console.log('_countStart');
-	}
-	private _countZero = () => {
-        const { player, data, roll, shadowing} = this.props;
-        this.m_viewCountDown = false;
-        if(roll === '') return;
-
-        if(player.currentTime !== this.props.playerInitTime 
-            || player.currentTime < this.props.playerInitTime) player.seek(this.props.playerInitTime * 1000);
-        player.play();
-		
-	}
 	public componentDidUpdate(prev: IVideoBox) {
-		const { player, data, roll, shadowing} = this.props;
-		if(this.props.roll !== prev.roll) {
+		const { player, roll, shadowing,playerInitTime,setShadowPlay} = this.props;
+		if(roll !== prev.roll) {
 			if(	this.m_yourturn >= 0) {
 				clearTimeout(this.m_yourturn);
 				this.m_yourturn = -1;
 			}
 			this.props.setShadowPlay(false);
-			if(this.props.roll === '') {
+			if(roll === '') {
 				player.pause();
-				this.m_viewCountDown = false;
-				
+				this.m_viewCountDown = false;				
 			} else {
-                if(player.currentTime !== this.props.playerInitTime 
-                    || player.currentTime < this.props.playerInitTime) player.seek(this.props.playerInitTime * 1000);
+                if(player.currentTime !== playerInitTime || player.currentTime < playerInitTime) player.seek(playerInitTime * 1000);
                 this.m_curIdx = -1;
                 player.pause();
                 player.setMuted(false);
                 this.m_viewCountDown = true;
 			}
 		}
-		if(this.props.shadowing !== prev.shadowing) {
+		if(shadowing !== prev.shadowing) {
 			if(	this.m_yourturn >= 0) {
 				clearTimeout(this.m_yourturn);
 				this.m_yourturn = -1;
-			}
-			
-			this.props.setShadowPlay(this.props.shadowing);
-
-			if(this.props.shadowing) {
-                if(player.currentTime !== this.props.playerInitTime 
-                    || player.currentTime < this.props.playerInitTime) player.seek(this.props.playerInitTime * 1000);
+			}			
+			setShadowPlay(shadowing);
+			if(shadowing) {
+                if(player.currentTime !== playerInitTime || player.currentTime < playerInitTime) player.seek(playerInitTime * 1000);
                 this.m_curIdx = -1;
-                player.play();
-                
+                player.play();                
                 player.setMuted(false);
-			} else {
-				player.pause();
-			}
+			} else player.pause();
 		}
 	}
 	public render() {
@@ -201,14 +177,12 @@ class VideoBox extends React.Component<IVideoBox> {
 		const viewLoading = !isOnRoll && !shadowing && (player.myState === MPRState.BUFFERING || player.myState === MPRState.LOADING);
 		const viewBtnPlay = !isOnRoll && !shadowing && !player.bPlay;
 
-		const isPlay = (!shadowing && player.bPlay) || (shadowing && this.props.isShadowPlay);
+		const isPlay = (!shadowing && player.bPlay) || (shadowing && isShadowPlay);
 
 		return (
 			<div className="video_box" ref={this._refBox}>
-				<video ref={this._refVideo} style={{display : 'none'}}>
-				</video>
-				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._togglePlay}/>
-				
+				<video ref={this._refVideo} style={{display : 'none'}}/>
+				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._togglePlay}/>				
 				{/* <Yourturn 
 						className="yourturn" 
 						view={this.m_yourturn >= 0 && isShadowPlay}
@@ -219,15 +193,8 @@ class VideoBox extends React.Component<IVideoBox> {
 					<Loading view={viewLoading} />
 					<CaptionBox view={this.m_viewCaption} script={script} />
 					<CountDown2 state={this.props.countdown} view={this.m_viewCountDown} onStart={this._countStart}  onComplete={this._countZero}/>
-
-			
 				</div> */}
-				<ControlBox
-					player={player}
-					disable={this.m_viewCountDown || shadowing}
-					isPlay={isPlay}
-					togglePlay={this._togglePlay}
-				/>
+				<ControlBox player={player} disable={this.m_viewCountDown || shadowing} isPlay={isPlay} togglePlay={this._togglePlay}/>
 			</div>
 		);
 	}
