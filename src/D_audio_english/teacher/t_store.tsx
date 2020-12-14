@@ -51,9 +51,8 @@ interface IStateCtx extends IStateBase {
 	additionalSupProg: SENDPROG;
 	additionalHardProg: SENDPROG;
 	dictationProg: SENDPROG[];
-	scriptProg: SENDPROG;
+	scriptProg: SENDPROG[];
 	qnaProg: SENDPROG;
-	dialogueProg: SENDPROG;
 	scriptResult: number[];
 	resultConfirmSup: IQuizNumResult;
 	resultConfirmBasic: IQuizNumResult;
@@ -99,9 +98,8 @@ class TeacherContext extends TeacherContextBase {
 		this.state.additionalSupProg = SENDPROG.READY;
 		this.state.additionalHardProg = SENDPROG.READY;
 		this.state.dictationProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
-		this.state.scriptProg = SENDPROG.READY;
+		this.state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
 		this.state.qnaProg = SENDPROG.READY;
-		this.state.dialogueProg = SENDPROG.READY;
 		this.state.resultConfirmSup = {
 			arrayOfCorrect: [],
 			c1: [],
@@ -155,9 +153,8 @@ class TeacherContext extends TeacherContextBase {
 			}
 		];
 		this.actions.init = () => {
-			this.state.scriptProg = SENDPROG.READY;
+			this.state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
 			this.state.qnaProg = SENDPROG.READY;
-			this.state.dialogueProg = SENDPROG.READY;
 			this._returnUsers = [];
 			if(this.state.confirmBasicProg < SENDPROG.COMPLETE) {
 				this.state.confirmBasicProg = SENDPROG.READY;
@@ -176,6 +173,9 @@ class TeacherContext extends TeacherContextBase {
 		this.actions.getQnaReturns = () => this._qnaReturns;
 		this.actions.clearQnaReturns = () => {
 			this._returnUsers = [];
+			for(let i = 0; i < this._data.scripts[0].length; i++) {
+				this._qnaReturns[i] = {num: 0, users: []};
+			}
 			this.actions.setRetCnt(0);
 		};
 	}
@@ -395,7 +395,6 @@ class TeacherContext extends TeacherContextBase {
 					}
 					break;		
 				case 'qna_return' :
-					console.log('qnaqnaqnaqnaqnaqnaqnaqnaqnaqna1');
 					if(this.state.qnaProg === SENDPROG.SENDED) {
 						const qmsg = msg as IQNAMsg;
 						let sidx = -1;
@@ -405,7 +404,6 @@ class TeacherContext extends TeacherContextBase {
 								break;
 							}
 						}
-						console.log('qnaqnaqnaqnaqnaqnaqnaqnaqnaqna2');
 						const ridx = this._returnUsers.indexOf(qmsg.id);
 						if(sidx >= 0 && ridx < 0) {
 							for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 

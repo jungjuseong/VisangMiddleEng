@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, SPROG } from './s_store';
@@ -60,25 +60,26 @@ class SScript extends React.Component<ISScriptProps> {
 	}
 
 	public componentWillReceiveProps(next: ISScriptProps) {
-		if(next.scriptProg !== this.props.scriptProg) {
-			if(next.scriptProg[this.props.state.idx] < SPROG.SELECTING) {
-				while(this._selected.length > 0) this._selected.pop();
-				this._stime = 0;
-			}
+		if(next.scriptProg[this.props.state.idx] < SPROG.SELECTING) {
+			while(this._selected.length > 0) this._selected.pop();
+			this._stime = 0;
 		}
+		
 	}
 
 	public render() {
 		const { view,scriptProg, actions , state} = this.props;
-		console.log('script logloglog')
+		const scripts = actions.getData().scripts
 		return (
-			<div className={'s_script '}>
+			<>
+			{scripts.map((script,idx) => {
+				return <div className={'s_script '+ (state.scriptProg[idx] > SPROG.UNMOUNT ? '' : 'hide')}>
 				<div className="script_container">
 					<ScriptContainer
-						view={state.viewDiv === 'content'}
+						view={state.viewDiv === 'content'&& state.scriptProg[idx] > SPROG.UNMOUNT}
 						role={actions.getData().role_play}
-						script={actions.getData().scripts[state.idx]}
-						idx={state.idx}
+						script={script}
+						idx={idx}
 						focusIdx={state.focusIdx}
 						selected={this._selected}
 						qnaReturns={[]}
@@ -93,13 +94,15 @@ class SScript extends React.Component<ISScriptProps> {
 					/>
 				</div>
 				<SendUINew
-					view={view && (scriptProg[this.props.state.idx] === SPROG.SELECTING || scriptProg[this.props.state.idx] === SPROG.SENDING) && this._selected.length > 0}
+					view={view && (scriptProg[idx] === SPROG.SELECTING || scriptProg[idx] === SPROG.SENDING) && this._selected.length > 0}
 					type={'pad'}
 					sended={false}
 					originY={0}
 					onSend={this._onSend}
 				/>
 			</div>
+			})}
+			</>
 		);
 	}
 }

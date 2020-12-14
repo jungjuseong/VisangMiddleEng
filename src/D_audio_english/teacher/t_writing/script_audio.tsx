@@ -8,7 +8,7 @@ import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
 
-import { IScript, IFocusMsg, IRollMsg, IData, IMsg } from '../../common';
+import { IScript, IFocusMsg, IRollMsg, IData, IMsg, IIndexMsg } from '../../common';
 
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 
@@ -35,7 +35,6 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 	@observable private _tab: 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT' = 'SCRIPT';
     @observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
 	@observable private _view = false;
-	@observable private _curQidx = -1;
 	@observable private _viewClue = false;
 	@observable private _viewTrans = false;
 	@observable private _viewScript = false;
@@ -171,8 +170,8 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
         const { confirmBasicProg,qnaProg } = state;
 
         actions.setNaviView(true);
-        if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(confirmBasicProg === SENDPROG.SENDED) actions.setNavi(this._curQidx === 0 ? false : true, this._curQidx === this.m_data.introduction.length - 1 ? false : true);
+        if(this.props.idx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
+        else if(confirmBasicProg === SENDPROG.SENDED) actions.setNavi(this.props.idx === 0 ? false : true, this.props.idx === this.m_data.introduction.length - 1 ? false : true);
 		else actions.setNavi(true, true);
 		
     }
@@ -195,8 +194,9 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
         } else if(state.qnaProg >= SENDPROG.SENDING) {
             
             App.pub_playBtnTab();
-            const msg: IMsg = {
+            const msg: IIndexMsg = {
                 msgtype: 'qna_end',
+                idx:this.props.idx
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
             state.qnaProg = SENDPROG.READY;	
@@ -207,7 +207,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
     }
     private _onRollClick = () => {
         const {state,actions} = this.props;
-        if(state.dialogueProg >= SENDPROG.SENDED && !this._shadowing) {		
+        if(state.scriptProg[this.props.idx] >= SENDPROG.SENDED && !this._shadowing) {		
             App.pub_playBtnTab();
             if(this._roll === '') {
                 this.c_popup = 'ROLE PLAY';
@@ -248,14 +248,14 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
     }
     
     private _onPopupSend = (roll: ''|'A'|'B') => {
-        const {state, actions} = this.props;
+        const {state, actions,idx} = this.props;
         if(this.c_popup === 'Q&A') {
             if(state.qnaProg > SENDPROG.READY) return;
 
             state.qnaProg = SENDPROG.SENDING;
             App.pub_playToPad();
 
-            let msg: IMsg = {msgtype: 'qna_send',};
+            let msg: IIndexMsg = {msgtype: 'qna_send',idx};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
             // this._viewClue = false;
@@ -267,7 +267,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             
             
         } else if(this.c_popup === 'ROLE PLAY') {
-            if(state.dialogueProg !== SENDPROG.SENDED) return;
+            if(state.scriptProg[this.props.idx] !== SENDPROG.SENDED) return;
             else if(this._roll !== '' || roll === '') return;
 
             if(this.m_player.currentTime !== this.m_player_inittime
@@ -282,13 +282,13 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             let msg: IRollMsg = {msgtype: 'roll_send', roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
-                if(state.dialogueProg !== SENDPROG.SENDED) return;
+                if(state.scriptProg[this.props.idx] !== SENDPROG.SENDED) return;
                 this._roll = roll;
             }, 300);
 
         } else if(this.c_popup === 'SHADOWING') {
-            // if(state.dialogueProg !== SENDPROG.SENDED) return;
-            // if(this._shadowing) return;
+            if(state.scriptProg[this.props.idx] !== SENDPROG.SENDED) return;
+            if(this._shadowing) return;
 
             if(this.m_player.currentTime !== this.m_player_inittime
                 || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
@@ -302,7 +302,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             let msg: IMsg = {msgtype: 'shadowing_send'};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {
-                // if(state.dialogueProg !== SENDPROG.SENDED) return;
+                if(state.scriptProg[this.props.idx] !== SENDPROG.SENDED) return;
                 this._shadowing = true;
             }, 300);
         }
@@ -310,8 +310,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
     }
 
     private _onPopupClosed = () => {
-        if(this._tab === 'SCRIPT' && this.props.state.qnaProg === SENDPROG.READY) this.props.actions.setNavi(true, true);
-        else if (this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
+        if(this._tab === 'SCRIPT' && this.props.state.qnaProg === SENDPROG.READY && this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
         this.c_popup = 'off';
     }
 
@@ -343,7 +342,6 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             qResult = 0;
             if(qResult > 100) qResult = 100;
         }
-    
         return (
             <>
             <ToggleBtn className={'btn_script_show' + (this._viewScript ? ' on' : '')} on={this._viewScript} onClick={this._toggleScript} />
@@ -381,13 +379,13 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
                 numRender={state.retCnt}
             />
             <div className="bottom">
-                <ToggleBtn className="btn_QA"  view={view} on={state.qnaProg >= SENDPROG.SENDING} onClick={this._onQAClick} />
-                <ToggleBtn className="btn_role" view={view} on={this._roll === 'A' || this._roll === 'B'} onClick={this._onRollClick} />
-                <ToggleBtn className="btn_shadowing" view={view} on={this._shadowing} onClick={this._onShadowClick} />
+                <ToggleBtn className="btn_QA"  view={view} on={state.qnaProg >= SENDPROG.SENDING} disabled={state.scriptProg[this.props.idx] < SENDPROG.SENDED } onClick={this._onQAClick} />
+                <ToggleBtn className="btn_role" view={view} on={this._roll === 'A' || this._roll === 'B'} disabled={state.scriptProg[this.props.idx] < SENDPROG.SENDED } onClick={this._onRollClick} />
+                <ToggleBtn className="btn_shadowing" view={view} on={this._shadowing} disabled={state.scriptProg[this.props.idx] < SENDPROG.SENDED } onClick={this._onShadowClick} />
             </div>
             <ComprehensionPopup 
                 type={this.c_popup}
-                view={this.c_popup === 'Q&A' || this.c_popup === 'ROLE PLAY' || this.c_popup === 'SHADOWING'} 
+                view={this.c_popup === 'Q&A' || this.c_popup === 'ROLE PLAY' || this.c_popup === 'SHADOWING' } 
                 imgA={this.m_data.role_play.speakerA.image_l}
                 imgB={this.m_data.role_play.speakerB.image_l}
                 onSend={this._onPopupSend}
