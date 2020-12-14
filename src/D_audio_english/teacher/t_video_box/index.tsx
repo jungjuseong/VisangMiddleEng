@@ -4,22 +4,16 @@ import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import { observable, } from 'mobx';
 
-import { MPlayer, IMedia, MPRState } from '@common/mplayer/mplayer';
+import { MPlayer, IMedia } from '@common/mplayer/mplayer';
 
 import { App } from '../../../App';
 import { ToggleBtn } from '@common/component/button';
-import { Loading } from '../../../share/loading';
-import { CountDown2, TimerState } from '../../../share/Timer';
-import Yourturn from '../../../share/yourturn';
 
-import * as common from '../../common';
+import { IScript,IData } from '../../common';
 
 import ControlBox from './_control_box';
-import CaptionBox from './_caption_box';
-import { NONE } from 'src/share/style';
 
-
-function _getCurrentIdx(scripts: common.IScript[], time: number) {
+function _getCurrentIdx(scripts: IScript[], time: number) {
 	let timeRound = Math.round(time / 0.001) * 0.001;
 	// console.log('time:', time)
 	for (let i = 0, len = scripts.length; i < len; i++) {
@@ -37,7 +31,7 @@ function _getCurrentIdx(scripts: common.IScript[], time: number) {
 interface IVideoBox {
     player: MPlayer;
     playerInitTime: number;  // 비디오 시작시간
-	data: common.IData;
+	data: IData;
 	idx: number;
 	roll: ''|'A'|'B';
 	shadowing: boolean;
@@ -49,11 +43,11 @@ interface IVideoBox {
 @observer
 class VideoBox extends React.Component<IVideoBox> {
 	private m_box!: HTMLElement;
-	@observable private m_viewCaption = false;
 	@observable private m_curIdx: number = -1;
 	@observable private m_viewCountDown = false;
 	@observable private m_yourturn = -1;
 	@observable private m_ytNext = -1;
+	@observable private _view_autdio_box: boolean = false;
 
 	private _refBox = (el: HTMLElement | null) => {
         if (this.m_box || !el) return;
@@ -110,7 +104,9 @@ class VideoBox extends React.Component<IVideoBox> {
 	}
 	private _playClick = () => {
 		App.pub_playBtnTab();
-		this.props.player.play();
+		this._togglePlay();
+		// this.props.player.play();
+		this._view_autdio_box = !this._view_autdio_box;
 	}
 
 	private _togglePlay = () => {
@@ -172,29 +168,21 @@ class VideoBox extends React.Component<IVideoBox> {
 		}
 	}
 	public render() {
-		const { player, data, roll, shadowing, isShadowPlay,idx} = this.props;
-		const isOnRoll = roll === 'A' || roll === 'B';
-		const viewLoading = !isOnRoll && !shadowing && (player.myState === MPRState.BUFFERING || player.myState === MPRState.LOADING);
-		const viewBtnPlay = !isOnRoll && !shadowing && !player.bPlay;
-
+		const { player, shadowing, isShadowPlay } = this.props;
 		const isPlay = (!shadowing && player.bPlay) || (shadowing && isShadowPlay);
 
 		return (
 			<div className="video_box" ref={this._refBox}>
 				<video ref={this._refVideo} style={{display : 'none'}}/>
-				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._togglePlay}/>				
-				{/* <Yourturn 
-						className="yourturn" 
-						view={this.m_yourturn >= 0 && isShadowPlay}
-						start={this.m_yourturn >= 0}
-					/> */}
-				{/* <div className="video">
-					<video controls={false} ref={this._refVideo} onClick={this._clickVideo} />
-					<Loading view={viewLoading} />
-					<CaptionBox view={this.m_viewCaption} script={script} />
-					<CountDown2 state={this.props.countdown} view={this.m_viewCountDown} onStart={this._countStart}  onComplete={this._countZero}/>
-				</div> */}
-				<ControlBox player={player} disable={this.m_viewCountDown || shadowing} isPlay={isPlay} togglePlay={this._togglePlay}/>
+				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._playClick}/>
+
+				<ControlBox
+					player={player}
+					disable={this.m_viewCountDown || shadowing}
+					isPlay={isPlay}
+					togglePlay={this._togglePlay}
+					view={this._view_autdio_box}
+				/>
 			</div>
 		);
 	}

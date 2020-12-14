@@ -7,10 +7,10 @@
 		src: url(/content/digenglish_lib/font/NotoSans-Light.woff) format('woff');
 	}
 	.video_box{
-	    overflow:hidden;
 		position: relative;
 		width: 100%;
-		height: 100%;
+		height: 40px;
+		margin-top: 6px;
 		.video{
 			position: absolute;
 			left:0px; right: 0px;
@@ -104,24 +104,25 @@
 			}
 		}
 		.control{
-			position: relative;
-			left:0px; bottom:0px; 
-			width: 490px; height:60px;
+			position: absolute;
+			right:170px; bottom:0px; 
+			width: 370px; height:40px;
 			background-color: #333333;
 			border-radius: 15px;
 			.control_over{
 				position: absolute;
 				.brake_point{
-					position: relative;
-					float: left;
+					position: absolute;
 					width: 20px;
 					height: 20px;
+					top: -6px;
 					background-color: purple;
 					margin-right: 13px;
 					text-align: center;
 					border-radius: 20px;
 					color: #fff;
 					line-height: 15px;
+					z-index: 3;
 				}
 			}
 			.control_left{
