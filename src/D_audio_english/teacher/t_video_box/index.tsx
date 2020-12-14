@@ -134,7 +134,8 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	}
 
 	public componentDidUpdate(prev: IVideoBoxProps) {
-		const { player, roll, shadowing,playerInitTime,setShadowPlay} = this.props;
+		const { data, player, roll, shadowing,playerInitTime,setShadowPlay} = this.props;
+		const scripts = data.scripts[this.props.idx];
 		if(roll !== prev.roll) {
 			if(	this.m_yourturn >= 0) {
 				clearTimeout(this.m_yourturn);
@@ -148,8 +149,10 @@ class VideoBox extends React.Component<IVideoBoxProps> {
                 if(player.currentTime !== playerInitTime || player.currentTime < playerInitTime) player.seek(playerInitTime * 1000);
                 this.m_curIdx = -1;
                 player.pause();
-                player.setMuted(false);
-                this.m_viewCountDown = true;
+				player.setMuted(false);
+				if(player.currentTime !== this.props.playerInitTime 
+					|| player.currentTime < this.props.playerInitTime) player.seek(this.props.playerInitTime * 1000);
+				player.gotoAndPlay(playerInitTime * 1000, scripts[scripts.length - 1].audio_end * 1000, 1);	
 			}
 		}
 		if(shadowing !== prev.shadowing) {

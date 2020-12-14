@@ -479,7 +479,7 @@ class TeacherContext extends TeacherContextBase {
 			}
 		}
 
-		const scripts = this._data.scripts[0];
+		const scripts = this._data.scripts;
 		const speakerA = this._data.role_play.speakerA.name;
 		const speakerB = this._data.role_play.speakerB.name;
 		const speakerC = this._data.role_play.speakerC.name;
@@ -504,17 +504,19 @@ class TeacherContext extends TeacherContextBase {
 		
 		const previewMsg: IPreviewClassMsg[] = [];
 
-		for(let i = 0; i < scripts.length; i++) {
-			const script = scripts[i];
-			
-			if(script.speaker === speakerA) script.roll = 'A';
-			else if (script.speaker === speakerB) script.roll = 'B';
-			else if (script.speaker === speakerC) script.roll = 'C';
-			else if (script.speaker === speakerD) script.roll = 'D';
-			else script.roll = 'E';
-
-			this._qnaReturns[i] = {num: 0, users: []};
-		}
+		scripts.map((item,idx) =>{
+			for(let i = 0; i < item.length; i++) {
+				const script = item[i];
+				if(script.speaker === speakerA) script.roll = 'A';
+				else if (script.speaker === speakerB) script.roll = 'B';
+				else if (script.speaker === speakerC) script.roll = 'C';
+				else if (script.speaker === speakerD) script.roll = 'D';
+				else script.roll = 'E';
+	
+				this._qnaReturns[i] = {num: 0, users: []};
+			}
+		})
+		
 	
 		console.log('preview Msg~~~', previewMsg.length, previewMsg);
 
