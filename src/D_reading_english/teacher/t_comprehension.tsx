@@ -14,7 +14,7 @@ import GraphicOrganizer from './t_graphic_organizer';
 import Summary from './t_summary';
 import VideoPopup from './t_video_box';
 import TStoryBook from './t_storybook';
-import LetsTalk from './_additional_pop_quiz';
+import AdditionalQuiz from './_additional_pop_quiz';
 
 
 interface ITComprehension {
@@ -217,7 +217,7 @@ class TComprehension extends React.Component<ITComprehension> {
 					onClosed={this._offStoryBook}
 				/>
 
-				<LetsTalk 
+				<AdditionalQuiz 
                     view={state.viewAdditionalQuiz} 
                     data={data.letstalk} 
                     onClosed={this._letsTalkClosed}

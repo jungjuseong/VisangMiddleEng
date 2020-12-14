@@ -28,8 +28,6 @@ interface ILetsTalk {
 class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	@observable private _view = false;
 	@observable private _answer = false;
-	@observable private _zoom = false;
-	@observable private _zoomImgUrl = '';
 	@observable private _toggle: Array<boolean|null> = [null,null,null,null,null,null,null];
 	
 	private _swiper?: Swiper;
@@ -133,31 +131,10 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
-	private _clickZoom1 = () => {
-		if(!this._view) return;
-		App.pub_playBtnTab();
-		this._zoomImgUrl = App.data_url + this.props.data.img1;
-		this._zoom = true;
-	}
-
-	private _clickZoom2 = () => {
-		if(!this._view) return;
-		App.pub_playBtnTab();
-		this._zoomImgUrl = App.data_url + this.props.data.img2;
-		this._zoom = true;
-	}
-
-	private _closedZoom = () => {
-		this._zoom = false;
-		this._zoomImgUrl = '';
-	}
-
  	public componentDidUpdate(prev: ILetsTalk) {
 		if(this.props.view && !prev.view) {
 			this._view = true;
 			this._answer = false;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
@@ -173,24 +150,18 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
 	}
 	
 	public render() {
 		const { view, onClosed, data, } = this.props;
-
-		const img2 = (data.img2 && data.img2 !== '') ? <img  src={App.data_url + data.img2} draggable={false}/> : undefined;
-		const zoomImg = App.data_url + data.img1;
 		const quiz_list = [1,2,3,4,5,6,7]; // 임시
 
 		return (
 			<>
 			<CoverPopup className="lets_talk" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosepop}/>
 					<ToggleBtn className="btn_answer" on={this._answer} onClick={this._viewAnswer}/>
 					<div className="popbox">
 						<div className="sentence_box">
@@ -215,8 +186,8 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 						</div>
 					</div>
     			</div>
+				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
 			</CoverPopup>
-			<ImgPopup url={this._zoomImgUrl} view={this._zoom} onClosed={this._closedZoom}/> 
 			</>
 		);
 	}
