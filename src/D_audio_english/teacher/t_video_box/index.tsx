@@ -66,8 +66,6 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 
 		player.addOnTime((time: number) => {
 			const curIdx = _getCurrentIdx(scripts, time / 1000);
-			const script = scripts[this.m_curIdx];
-			const delay = (script.audio_end - script.audio_start) * 2000;
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
 				if(shadowing) {
@@ -75,6 +73,8 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 						if(this.m_curIdx >= 0) {
 							this.m_ytNext = curIdx;
 							player.pause();
+							const script = scripts[this.m_curIdx];
+                            const delay = (script.audio_end - script.audio_start) * 2000;
 							this.m_yourturn = _.delay(() => {
 								if(this.m_yourturn >= 0 && isShadowPlay) {
 									this.m_curIdx = this.m_ytNext;
