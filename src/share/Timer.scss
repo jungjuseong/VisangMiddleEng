@@ -1,8 +1,8 @@
 @mixin q_timer{
 	.q_timer{
 		position: relative;
-		width: width('digenglish_lib/images/icon_timer.png');
-		height: height('digenglish_lib/images/icon_timer.png');
+		width: width('digenglishCB_lib/images/icon_timer.png');
+		height: height('digenglishCB_lib/images/icon_timer.png');
 
 		&>svg{
 			position:absolute;
@@ -11,9 +11,9 @@
 		}
 		&>div {
 			position:absolute;
-			background: resolve('digenglish_lib/images/icon_timer.png') no-repeat ;
-			width: width('digenglish_lib/images/icon_timer.png');
-			height: height('digenglish_lib/images/icon_timer.png');
+			background: resolve('digenglishCB_lib/images/icon_timer.png') no-repeat ;
+			width: width('digenglishCB_lib/images/icon_timer.png');
+			height: height('digenglishCB_lib/images/icon_timer.png');
 			padding-top: 40px;
 			text-align: center;
 			font-size: 20px;

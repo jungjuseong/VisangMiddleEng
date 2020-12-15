@@ -61,11 +61,11 @@ div, p{
 .common_back{
 	background-size: 100% 100%;
 	@include btn_down_dis(
-		resolve('digenglish_lib/images/btn_back.png'), 
-		resolve('digenglish_lib/images/btn_back_down.png'),
+		resolve('digenglishCB_lib/images/btn_back.png'), 
+		resolve('digenglishCB_lib/images/btn_back_down.png'),
 		'',
-		width('digenglish_lib/images/btn_back.png'),
-		height('digenglish_lib/images/btn_back.png')
+		width('digenglishCB_lib/images/btn_back.png'),
+		height('digenglishCB_lib/images/btn_back.png')
 	);
 	&.down{
 		transform: scale(1.1, 1.1);

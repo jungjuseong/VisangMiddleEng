@@ -37,15 +37,15 @@ function _setAudio(id: string, url: string) {
 
 function _init() {
 /*
-	<audio id="group_point" src="/content/digenglish_lib/mp3/group_point.mp3" preload="true"></audio>
-	<audio id="qpoint_popup" src="/content/digenglish_lib/mp3/qpoint_popup.mp3" preload="true"></audio>
-	<audio id="spindle" src="/content/digenglish_lib/mp3/spindle.wav" preload="true"></audio>
-	<audio id="all_zero" src="/content/digenglish_lib/mp3/all_zero.mp3" preload="true"></audio>
+	<audio id="group_point" src="/content/digenglishCB_lib/mp3/group_point.mp3" preload="true"></audio>
+	<audio id="qpoint_popup" src="/content/digenglishCB_lib/mp3/qpoint_popup.mp3" preload="true"></audio>
+	<audio id="spindle" src="/content/digenglishCB_lib/mp3/spindle.wav" preload="true"></audio>
+	<audio id="all_zero" src="/content/digenglishCB_lib/mp3/all_zero.mp3" preload="true"></audio>
 */
-	_setAudio('group_point', `${_digenglish_lib_}mp3/group_point.mp3`);
-	_setAudio('qpoint_popup', `${_digenglish_lib_}mp3/qpoint_popup.mp3`);
-	_setAudio('spindle', `${_digenglish_lib_}mp3/spindle.wav`);
-	_setAudio('all_zero', `${_digenglish_lib_}mp3/all_zero.mp3`);
+	_setAudio('group_point', `${_digenglishCB_lib_}mp3/group_point.mp3`);
+	_setAudio('qpoint_popup', `${_digenglishCB_lib_}mp3/qpoint_popup.mp3`);
+	_setAudio('spindle', `${_digenglishCB_lib_}mp3/spindle.wav`);
+	_setAudio('all_zero', `${_digenglishCB_lib_}mp3/all_zero.mp3`);
 }
 
 

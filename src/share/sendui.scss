@@ -12,10 +12,10 @@
 	right:5px;
 	filter: drop-shadow(6px 6px 4px rgba(0, 0, 0, 0.8));
 	@include btn_on(
-		resolve('digenglish_lib/images/topad.svg'),
-		resolve('digenglish_lib/images/topad_on.svg'),
-		width('digenglish_lib/images/topad.svg'),
-		height('digenglish_lib/images/topad.svg')
+		resolve('digenglishCB_lib/images/topad.svg'),
+		resolve('digenglishCB_lib/images/topad_on.svg'),
+		width('digenglishCB_lib/images/topad.svg'),
+		height('digenglishCB_lib/images/topad.svg')
 	);
 	&.on {
 		filter: drop-shadow(6px 6px 4px rgba(0, 0, 0, 0.6));
@@ -27,10 +27,10 @@
 	right:0px;
 	filter: drop-shadow(6px 6px 4px rgba(0, 0, 0, 0.8));
 	@include btn_on(
-		resolve('digenglish_lib/images/btn_down.png'),
-		resolve('digenglish_lib/images/btn_down_down.png'),
-		width('digenglish_lib/images/btn_down.png'),
-		height('digenglish_lib/images/btn_down.png')
+		resolve('digenglishCB_lib/images/btn_down.png'),
+		resolve('digenglishCB_lib/images/btn_down_down.png'),
+		width('digenglishCB_lib/images/btn_down.png'),
+		height('digenglishCB_lib/images/btn_down.png')
 	);
 	&.on {
 		filter: drop-shadow(6px 6px 4px rgba(0, 0, 0, 0.6));
@@ -44,10 +44,10 @@
 	right:20px;
 	filter: drop-shadow(6px 6px 4px rgba(0, 0, 0, 0.8));
 	@include btn_on(
-		resolve('digenglish_lib/images/toteacher.svg'),
-		resolve('digenglish_lib/images/toteacher_on.svg'),
-		width('digenglish_lib/images/toteacher.svg'),
-		height('digenglish_lib/images/toteacher.svg')
+		resolve('digenglishCB_lib/images/toteacher.svg'),
+		resolve('digenglishCB_lib/images/toteacher_on.svg'),
+		width('digenglishCB_lib/images/toteacher.svg'),
+		height('digenglishCB_lib/images/toteacher.svg')
 	);
 
 	&.on {

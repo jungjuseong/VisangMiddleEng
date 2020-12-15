@@ -21,9 +21,9 @@
 }
 
 @mixin quiz-btn-mc{
-	$bg: resolve('digenglish_lib/images/mc_num_bg.png');
-	$width: width('digenglish_lib/images/mc_num_bg.png');
-	$height: height('digenglish_lib/images/mc_num_bg.png');
+	$bg: resolve('digenglishCB_lib/images/mc_num_bg.png');
+	$width: width('digenglishCB_lib/images/mc_num_bg.png');
+	$height: height('digenglishCB_lib/images/mc_num_bg.png');
 
 
 	&.btn-mc-1{

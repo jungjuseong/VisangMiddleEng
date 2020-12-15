@@ -1,9 +1,9 @@
 @import './selector.scss';
 @mixin share-quiz-num-time{
 	&>.timer {
-		background-image: resolve('digenglish_lib/images/quiz/bg_timer.png');
+		background-image: resolve('digenglishCB_lib/images/quiz/bg_timer.png');
 		width: 100%;
-		height: height('digenglish_lib/images/quiz/bg_timer.png');
+		height: height('digenglishCB_lib/images/quiz/bg_timer.png');
 
 		&>.title {
 			box-sizing: border-box;
@@ -39,31 +39,31 @@
 
 		&>.btn_all {
 			@include btn_on_dis(
-				resolve('digenglish_lib/images/quiz/btn_all.png'),
-				resolve('digenglish_lib/images/quiz/btn_all_on.png'),
-				resolve('digenglish_lib/images/quiz/btn_all_dis.png'),
-				width('digenglish_lib/images/quiz/btn_all.png'),
-				height('digenglish_lib/images/quiz/btn_all.png')
+				resolve('digenglishCB_lib/images/quiz/btn_all.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_all_on.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_all_dis.png'),
+				width('digenglishCB_lib/images/quiz/btn_all.png'),
+				height('digenglishCB_lib/images/quiz/btn_all.png')
 			);
 		}
 		&>.btn_studied {
 			margin-left: 20px;
 			@include btn_on_dis(
-				resolve('digenglish_lib/images/quiz/btn_studied.png'),
-				resolve('digenglish_lib/images/quiz/btn_studied_on.png'),
-				resolve('digenglish_lib/images/quiz/btn_studied_dis.png'),
-				width('digenglish_lib/images/quiz/btn_studied.png'),
-				height('digenglish_lib/images/quiz/btn_studied.png')
+				resolve('digenglishCB_lib/images/quiz/btn_studied.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_studied_on.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_studied_dis.png'),
+				width('digenglishCB_lib/images/quiz/btn_studied.png'),
+				height('digenglishCB_lib/images/quiz/btn_studied.png')
 			);
 		}
 		&>.btn_ai {
 			margin-left: 20px;
 			@include btn_on_dis(
-				resolve('digenglish_lib/images/quiz/btn_ai.png'),
-				resolve('digenglish_lib/images/quiz/btn_ai_on.png'),
-				resolve('digenglish_lib/images/quiz/btn_ai_dis.png'),
-				width('digenglish_lib/images/quiz/btn_ai.png'),
-				height('digenglish_lib/images/quiz/btn_ai.png')
+				resolve('digenglishCB_lib/images/quiz/btn_ai.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_ai_on.png'),
+				resolve('digenglishCB_lib/images/quiz/btn_ai_dis.png'),
+				width('digenglishCB_lib/images/quiz/btn_ai.png'),
+				height('digenglishCB_lib/images/quiz/btn_ai.png')
 			);
 		}
 	}
@@ -100,11 +100,11 @@
 		left: 50%;
 		transform: translateX(-50%);
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/quiz/btn_start.png'),
-			resolve('digenglish_lib/images/quiz/btn_start_down.png'),
-			resolve('digenglish_lib/images/quiz/btn_start_down.png'),
-			width('digenglish_lib/images/quiz/btn_start.png'),
-			height('digenglish_lib/images/quiz/btn_start.png')
+			resolve('digenglishCB_lib/images/quiz/btn_start.png'),
+			resolve('digenglishCB_lib/images/quiz/btn_start_down.png'),
+			resolve('digenglishCB_lib/images/quiz/btn_start_down.png'),
+			width('digenglishCB_lib/images/quiz/btn_start.png'),
+			height('digenglishCB_lib/images/quiz/btn_start.png')
 		);
 	}
 	.btn_back{

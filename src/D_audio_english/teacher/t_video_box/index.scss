@@ -4,7 +4,7 @@
 	@font-face {
 		font-family: NotoSans-Light;
 		font-weight:normal;
-		src: url(/content/digenglish_lib/font/NotoSans-Light.woff) format('woff');
+		src: url(/content/digenglishCB_lib/font/NotoSans-Light.woff) format('woff');
 	}
 	.video_box{
 		position: relative;
@@ -26,11 +26,11 @@
 				transform: translate(-50%, -50%);
 
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_video_play.png'),
-					resolve('digenglish_lib/images/mplayer/btn_video_play_on.png'),
-					resolve('digenglish_lib/images/mplayer/btn_video_play_down.png'),
-					width('digenglish_lib/images/mplayer/btn_video_play.png'),
-					height('digenglish_lib/images/mplayer/btn_video_play.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_video_play.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_video_play_on.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_video_play_down.png'),
+					width('digenglishCB_lib/images/mplayer/btn_video_play.png'),
+					height('digenglishCB_lib/images/mplayer/btn_video_play.png')
 				);
 			}
 			*/
@@ -134,10 +134,10 @@
 					display:block;
 					margin: auto 0 auto 13px;
 					@include btn_on(
-						resolve('digenglish_lib/images/mplayer/btn_play.png'),
-						resolve('digenglish_lib/images/mplayer/btn_pause.png'),
-						width('digenglish_lib/images/mplayer/btn_play.png'),
-						height('digenglish_lib/images/mplayer/btn_play.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_play.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_pause.png'),
+						width('digenglishCB_lib/images/mplayer/btn_play.png'),
+						height('digenglishCB_lib/images/mplayer/btn_play.png')
 					);							
 				}
 				.btn_stop{
@@ -145,11 +145,11 @@
 					vertical-align: middle;
 					margin-left:21px;
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/mplayer/btn_stop.png'),
-						resolve('digenglish_lib/images/mplayer/btn_stop_down.png'),
-						resolve('digenglish_lib/images/mplayer/btn_stop.png'),
-						width('digenglish_lib/images/mplayer/btn_stop.png'),
-						height('digenglish_lib/images/mplayer/btn_stop.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_stop_down.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
+						width('digenglishCB_lib/images/mplayer/btn_stop.png'),
+						height('digenglishCB_lib/images/mplayer/btn_stop.png')
 					);							
 				}
 				.btn_prev {
@@ -157,11 +157,11 @@
 					vertical-align: middle;
 					margin-left:21px;
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/mplayer/btn_prev.png'),
-						resolve('digenglish_lib/images/mplayer/btn_prev_down.png'),
-						resolve('digenglish_lib/images/mplayer/btn_prev.png'),
-						width('digenglish_lib/images/mplayer/btn_prev.png'),
-						height('digenglish_lib/images/mplayer/btn_prev.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_prev_down.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
+						width('digenglishCB_lib/images/mplayer/btn_prev.png'),
+						height('digenglishCB_lib/images/mplayer/btn_prev.png')
 					);							
 				}
 				.btn_next{
@@ -169,11 +169,11 @@
 					vertical-align: middle;
 					margin-left:21px;
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/mplayer/btn_next.png'),
-						resolve('digenglish_lib/images/mplayer/btn_next_down.png'),
-						resolve('digenglish_lib/images/mplayer/btn_next.png'),
-						width('digenglish_lib/images/mplayer/btn_next.png'),
-						height('digenglish_lib/images/mplayer/btn_next.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_next_down.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
+						width('digenglishCB_lib/images/mplayer/btn_next.png'),
+						height('digenglishCB_lib/images/mplayer/btn_next.png')
 					);							
 				}
 			}
@@ -222,11 +222,11 @@
 								z-index:2;
 								transform:translate(-50%, -50%);
 								@include btn_down_dis(
-									resolve('digenglish_lib/images/mplayer/btn_play_bar.png'),
-									resolve('digenglish_lib/images/mplayer/btn_play_bar_down.png'),
-									resolve('digenglish_lib/images/mplayer/btn_play_bar.png'),
-									width('digenglish_lib/images/mplayer/btn_play_bar.png'),
-									height('digenglish_lib/images/mplayer/btn_play_bar.png')
+									resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+									resolve('digenglishCB_lib/images/mplayer/btn_play_bar_down.png'),
+									resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+									width('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+									height('digenglishCB_lib/images/mplayer/btn_play_bar.png')
 								);
 							}
 						}
@@ -252,39 +252,39 @@
 				.btn_subscript{
 					margin-right:19px;
 					@include btn_on (
-						resolve('digenglish_lib/images/mplayer/btn_subscript.png'),
-						resolve('digenglish_lib/images/mplayer/btn_subscript_down.png'),
-						width('digenglish_lib/images/mplayer/btn_subscript.png'),
-						height('digenglish_lib/images/mplayer/btn_subscript.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_subscript.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_subscript_down.png'),
+						width('digenglishCB_lib/images/mplayer/btn_subscript.png'),
+						height('digenglishCB_lib/images/mplayer/btn_subscript.png')
 					);
 				}
 				.btn_audio{
 					margin-right:19px;
 					@include btn_on(
-						resolve('digenglish_lib/images/mplayer/btn_sound.png'),
-						resolve('digenglish_lib/images/mplayer/btn_mute_down.png'),
-						width('digenglish_lib/images/mplayer/btn_sound.png'),
-						height('digenglish_lib/images/mplayer/btn_sound.png')
+						resolve('digenglishCB_lib/images/mplayer/btn_sound.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_mute_down.png'),
+						width('digenglishCB_lib/images/mplayer/btn_sound.png'),
+						height('digenglishCB_lib/images/mplayer/btn_sound.png')
 					);
 				}
 				.btn_fullscreen{
 					margin-right:12px;
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/mplayer/btn_fullscreen.png'),
-						resolve('digenglish_lib/images/mplayer/btn_fullscreen_down.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_fullscreen_down.png'),
 						'',
-						width('digenglish_lib/images/mplayer/btn_fullscreen.png'),
-						height('digenglish_lib/images/mplayer/btn_fullscreen.png')
+						width('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
+						height('digenglishCB_lib/images/mplayer/btn_fullscreen.png')
 					);
 				}
 				.btn_fullscreen_off{
 					display: none;
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/mplayer/btn_smallscreen.png'),
-						resolve('digenglish_lib/images/mplayer/btn_smallscreen_down.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_smallscreen_down.png'),
 						'',
-						width('digenglish_lib/images/mplayer/btn_smallscreen.png'),
-						height('digenglish_lib/images/mplayer/btn_smallscreen.png')
+						width('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
+						height('digenglishCB_lib/images/mplayer/btn_smallscreen.png')
 					);
 				}
 			}
@@ -329,11 +329,11 @@
 								}
 								.prog_btn {
 									@include btn_down_dis(
-										resolve('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-										resolve('digenglish_lib/images/mplayer/btn_play_bar_L_down.png'),
-										resolve('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-										width('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-										height('digenglish_lib/images/mplayer/btn_play_bar_L.png')
+										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L_down.png'),
+										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+										width('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+										height('digenglishCB_lib/images/mplayer/btn_play_bar_L.png')
 									);
 								}
 							}

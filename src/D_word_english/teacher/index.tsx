@@ -32,7 +32,7 @@ class TeacherComponent extends React.Component<ITeacher> {
 					<span className="set" /> <span className="unlimit" /> <span className="start" />
 					<span className="time1" /><span className="time2" /> <span className="time3" />
 				</div>
-				<SVGBg className="bg_svg" data="/content/digenglish_lib/images/theme0_bg.svg" {...state.svg_bg}/>
+				<SVGBg className="bg_svg" data="/content/digenglishCB_lib/images/theme0_bg.svg" {...state.svg_bg}/>
 				<ContentBox prog={state.prog} state={state} actions={actions}/>
 				<Navi {...state.navi} onLeftClick={actions.naviLeft} onRightClick={actions.naviRight}/>				
 			</>

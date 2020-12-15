@@ -60,7 +60,7 @@ class Yourturn extends React.Component<IYourturn> {
     <g mask="url(#mask_ut)">
       <g transform="translate(58 62)" opacity="1">
         <animate attributeName="opacity" dur="2.533s" keyTimes="0;.25;1" values="0;1;1" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/girl.png`} height="632" width="357" transform="translate(0 -33.5)"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/girl.png`} height="632" width="357" transform="translate(0 -33.5)"/>
       </g>
     </g>
     <mask id="mask_ut">
@@ -88,7 +88,7 @@ class Yourturn extends React.Component<IYourturn> {
       <animateTransform attributeName="transform" additive="sum" type="scale" dur="2.533s" keyTimes="0;.51299;.579;.63199;.632;.697;.74999;.75;1" values="1,1;1,1;1.1,1.1;1.1,1.1;1,1;1.1,1.1;1.1,1.1;1,1;1,1" fill="freeze"/>
       <animateTransform attributeName="transform" additive="sum" type="translate" dur="2.533s" keyTimes="0;.51299;.579;.63199;.632;.697;.74999;.75;1" values="-205.35,-70;-205.35,-70;-205.2,-70.05;-205.2,-70.05;-205.35,-70;-205.2,-70.05;-205.2,-70.05;-205.35,-70;-205.35,-70" fill="freeze"/>
       <animate attributeName="opacity" dur="2.533s" keyTimes="0;.25;1" values="0;1;1" fill="freeze"/>
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/ut.png`} height="140" width="410" transform="translate(0 .05)"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/ut.png`} height="140" width="410" transform="translate(0 .05)"/>
     </g>
   </g>
 </svg>
@@ -105,11 +105,11 @@ export default Yourturn;
 <svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="1040" height="560" viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <defs>
     <g id="u" overflow="visible">
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/star.png`} height="96" width="51" transform="translate(279.5 0)"/>
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/teun.png`} height="84" width="283" transform="translate(0 8.9)"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/star.png`} height="96" width="51" transform="translate(279.5 0)"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/teun.png`} height="84" width="283" transform="translate(0 8.9)"/>
     </g>
     <g id="y" overflow="visible">
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/Your.png`} height="71" width="140"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/Your.png`} height="71" width="140"/>
     </g>
   </defs>
   <g id="Scene-1r1" overflow="visible">
@@ -118,7 +118,7 @@ export default Yourturn;
         <animateTransform attributeName="transform" additive="replace" type="translate" dur="2.533s" keyTimes="0;.145;.316;.395;.461;1" values="502.5,629;502.5,629;502.5,225.092;502.5,237;502.5,231;502.5,231" keySplines=".5 0 .75 .5;.5 0 .75 .5;0 0 1 1;0 0 1 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="scale" dur="2.533s" keyTimes="0;.145;.316;.395;1" values="1,1;1,1;1,1.02;1,1;1,1" keySplines=".5 0 .75 .5;.5 0 .75 .5;0 0 1 1;0 0 1 1" calcMode="spline" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="translate" dur="2.533s" keyTimes="0;.145;.316;.395;1" values="-154.5,-199;-154.5,-199;-154.5,-199.1;-154.5,-199;-154.5,-199" keySplines=".5 0 .75 .5;.5 0 .75 .5;0 0 1 1;0 0 1 1" calcMode="spline" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglish_lib_}images/yourturn/boy.png`} height="398" width="309"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/boy.png`} height="398" width="309"/>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="2.533s" keyTimes="0;.145;1" values="none;inline;inline"/>
     </g>

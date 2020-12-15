@@ -23,7 +23,7 @@ function _init() {
 		audio = document.createElement('audio');
 		audio.id = 'student_bubble';
 		audio.preload = 'true';
-		audio.src = `${_digenglish_lib_}mp3/student_bubble.mp3`;
+		audio.src = `${_digenglishCB_lib_}mp3/student_bubble.mp3`;
 		document.body.appendChild(audio);
 	}
 }

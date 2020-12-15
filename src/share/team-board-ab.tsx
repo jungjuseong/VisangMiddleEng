@@ -76,7 +76,7 @@ class TeamBoardAB extends React.Component<ITeamBoardAB> {
 <svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="727" height="500" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <g overflow="visible">
     <g transform="translate(108 106.05)">
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/board/team_board_${this.props.ga_na ? this.props.ga_na : ''}.png`} height="360" width="511"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/board/team_board_${this.props.ga_na ? this.props.ga_na : ''}.png`} height="360" width="511"/>
     </g>
     <g>
       <g transform="translate(445 10)" opacity="0">
@@ -87,7 +87,7 @@ class TeamBoardAB extends React.Component<ITeamBoardAB> {
           <animateTransform attributeName="transform" additive="sum" type="scale" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="1,1;.7,.7;1,1;1,1" fill="freeze"/>
           <animateTransform attributeName="transform" additive="sum" type="translate" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="-154.5,-154;-154.55,-154;-154.5,-154;-154.5,-154" fill="freeze"/>
           <animate attributeName="opacity" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="1;.6;1;1" fill="freeze"/>
-          <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/board/effect01.png`} height="308" width="309"/>
+          <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/board/effect01.png`} height="308" width="309"/>
         </g>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.5s" keyTimes="0;.028;1" values="none;inline;inline"/>
@@ -101,7 +101,7 @@ class TeamBoardAB extends React.Component<ITeamBoardAB> {
           <animateTransform attributeName="transform" additive="sum" type="scale" begin=".375s" repeatDur="1.125s" dur="0.833s" keyTimes="0;.5;.95;1" values="1,1;.7,.7;1,1;1,1" fill="freeze"/>
           <animateTransform attributeName="transform" additive="sum" type="translate" begin=".375s" repeatDur="1.125s" dur="0.833s" keyTimes="0;.5;.95;1" values="-58,-58;-58.1,-58.1;-58,-58;-58,-58" fill="freeze"/>
           <animate attributeName="opacity" begin=".375s" repeatDur="1.125s" dur="0.833s" keyTimes="0;.5;.95;1" values="1;.7;1;1" fill="freeze"/>
-          <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/board/effect03.png`} height="116" width="116"/>
+          <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/board/effect03.png`} height="116" width="116"/>
         </g>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.5s" keyTimes="0;.25;1" values="none;inline;inline"/>
@@ -115,7 +115,7 @@ class TeamBoardAB extends React.Component<ITeamBoardAB> {
           <animateTransform attributeName="transform" additive="sum" type="scale" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="1,1;.7,.7;1,1;1,1" fill="freeze"/>
           <animateTransform attributeName="transform" additive="sum" type="translate" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="-58,-58;-58.1,-58.1;-58,-58;-58,-58" fill="freeze"/>
           <animate attributeName="opacity" begin=".042s" repeatDur="1.458s" dur="0.833s" keyTimes="0;.45;.95;1" values="1;.7;1;1" fill="freeze"/>
-          <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/board/effect05.png`} height="116" width="116"/>
+          <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/board/effect05.png`} height="116" width="116"/>
         </g>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.5s" keyTimes="0;.028;1" values="none;inline;inline"/>

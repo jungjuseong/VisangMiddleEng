@@ -13,7 +13,7 @@ console.log(PROJECT, process.argv, process.argv0);
 const _config = {
 	cfg_debug: process.env.NODE_ENV !== "production",
 	cfg_dist: process.env.NODE_ENV === "production",
-	digenglish_lib: 'content/digenglish_lib',
+	digenglishCB_lib: 'content/digenglishCB_lib',
 };
 PROJECTS.forEach((prj) => {
 	let t = prj.value + "_t";
@@ -39,8 +39,8 @@ if(PROJECT) {
 		let last = PROJECT.endsWith("_t") ? 'teacher' : 'student';
 
 		return {
-			projectDir: `content/digenglish_lib/${fst}/${mid}`,
-			outDir: `content/digenglish_lib/${fst}/${mid}/${last}`,
+			projectDir: `content/digenglishCB_lib/${fst}/${mid}`,
+			outDir: `content/digenglishCB_lib/${fst}/${mid}/${last}`,
 			jsPath: `js/${last}.js`,
 		};
 	})();
@@ -55,7 +55,7 @@ if(PROJECT) {
 	_path.wwwroot = WWWROOT;
 	_path.assets = ASSETS;
 
-	_config._digenglish_lib_ = JSON.stringify('/content/digenglish_lib/');
+	_config._digenglishCB_lib_ = JSON.stringify('/content/digenglishCB_lib/');
 	_config._project_ = JSON.stringify('/' + _path.projectDir + '/');
   _config.paths = _path;
   _config._build_timestamp_ = JSON.stringify('===build-timestamp: ' + new Date().toString());

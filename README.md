@@ -17,11 +17,11 @@ yarn run ts-node ./add_project.ts -prefix {prefix} -project {project}
     ./src/index.tsx
     ./src/{PREFIX_project}
 
-    ../digenglish_lib/{PREFIX_project}/student/import.html
-    ../digenglish_lib/{PREFIX_project}/student/js/init.s.js
+    ../digenglishCB_lib/{PREFIX_project}/student/import.html
+    ../digenglishCB_lib/{PREFIX_project}/student/js/init.s.js
 
-    ../digenglish_lib/{PREFIX_project}/teacher/import.html
-    ../digenglish_lib/{PREFIX_project}/teacher/js/init.t.js
+    ../digenglishCB_lib/{PREFIX_project}/teacher/import.html
+    ../digenglishCB_lib/{PREFIX_project}/teacher/js/init.t.js
 
     {PREFIX_project}/student/index.html
     {PREFIX_project}/teacher/index.html

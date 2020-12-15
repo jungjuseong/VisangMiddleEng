@@ -16,8 +16,8 @@
 		left: 0px; width:100%;
 		bottom: 0px;
 
-		background-image: resolve('digenglish_lib/images/emoti_bg.png');
-		height: height('digenglish_lib/images/emoti_bg.png');
+		background-image: resolve('digenglishCB_lib/images/emoti_bg.png');
+		height: height('digenglishCB_lib/images/emoti_bg.png');
 		transform: translateY(110%);
 		transition: transform 0.3s;
 		text-align: center;
@@ -29,93 +29,93 @@
 		}
 		.emoti0{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_0.png'),
-				resolve('digenglish_lib/images/emoti_0_down.png'),
+				resolve('digenglishCB_lib/images/emoti_0.png'),
+				resolve('digenglishCB_lib/images/emoti_0_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_0.png'),
-				height('digenglish_lib/images/emoti_0.png')
+				width('digenglishCB_lib/images/emoti_0.png'),
+				height('digenglishCB_lib/images/emoti_0.png')
 			);
 		}
 		.emoti1{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_1.png'),
-				resolve('digenglish_lib/images/emoti_1_down.png'),
+				resolve('digenglishCB_lib/images/emoti_1.png'),
+				resolve('digenglishCB_lib/images/emoti_1_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_1.png'),
-				height('digenglish_lib/images/emoti_1.png')
+				width('digenglishCB_lib/images/emoti_1.png'),
+				height('digenglishCB_lib/images/emoti_1.png')
 			);
 		}
 		.emoti2{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_2.png'),
-				resolve('digenglish_lib/images/emoti_2_down.png'),
+				resolve('digenglishCB_lib/images/emoti_2.png'),
+				resolve('digenglishCB_lib/images/emoti_2_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_2.png'),
-				height('digenglish_lib/images/emoti_2.png')
+				width('digenglishCB_lib/images/emoti_2.png'),
+				height('digenglishCB_lib/images/emoti_2.png')
 			);
 		}
 		.emoti3{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_3.png'),
-				resolve('digenglish_lib/images/emoti_3_down.png'),
+				resolve('digenglishCB_lib/images/emoti_3.png'),
+				resolve('digenglishCB_lib/images/emoti_3_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_3.png'),
-				height('digenglish_lib/images/emoti_3.png')
+				width('digenglishCB_lib/images/emoti_3.png'),
+				height('digenglishCB_lib/images/emoti_3.png')
 			);
 		}
 		.emoti4{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_4.png'),
-				resolve('digenglish_lib/images/emoti_4_down.png'),
+				resolve('digenglishCB_lib/images/emoti_4.png'),
+				resolve('digenglishCB_lib/images/emoti_4_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_4.png'),
-				height('digenglish_lib/images/emoti_4.png')
+				width('digenglishCB_lib/images/emoti_4.png'),
+				height('digenglishCB_lib/images/emoti_4.png')
 			);
 		}
 
 		.emoti5{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_5.png'),
-				resolve('digenglish_lib/images/emoti_5_down.png'),
+				resolve('digenglishCB_lib/images/emoti_5.png'),
+				resolve('digenglishCB_lib/images/emoti_5_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_5.png'),
-				height('digenglish_lib/images/emoti_5.png')
+				width('digenglishCB_lib/images/emoti_5.png'),
+				height('digenglishCB_lib/images/emoti_5.png')
 			);
 		}
 		.emoti6{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_6.png'),
-				resolve('digenglish_lib/images/emoti_6_down.png'),
+				resolve('digenglishCB_lib/images/emoti_6.png'),
+				resolve('digenglishCB_lib/images/emoti_6_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_6.png'),
-				height('digenglish_lib/images/emoti_6.png')
+				width('digenglishCB_lib/images/emoti_6.png'),
+				height('digenglishCB_lib/images/emoti_6.png')
 			);
 		}
 		.emoti7{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_7.png'),
-				resolve('digenglish_lib/images/emoti_7_down.png'),
+				resolve('digenglishCB_lib/images/emoti_7.png'),
+				resolve('digenglishCB_lib/images/emoti_7_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_7.png'),
-				height('digenglish_lib/images/emoti_7.png')
+				width('digenglishCB_lib/images/emoti_7.png'),
+				height('digenglishCB_lib/images/emoti_7.png')
 			);
 		}
 		.emoti8{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_8.png'),
-				resolve('digenglish_lib/images/emoti_8_down.png'),
+				resolve('digenglishCB_lib/images/emoti_8.png'),
+				resolve('digenglishCB_lib/images/emoti_8_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_8.png'),
-				height('digenglish_lib/images/emoti_8.png')
+				width('digenglishCB_lib/images/emoti_8.png'),
+				height('digenglishCB_lib/images/emoti_8.png')
 			);
 		}
 		.emoti9{
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/emoti_9.png'),
-				resolve('digenglish_lib/images/emoti_9_down.png'),
+				resolve('digenglishCB_lib/images/emoti_9.png'),
+				resolve('digenglishCB_lib/images/emoti_9_down.png'),
 				'',
-				width('digenglish_lib/images/emoti_9.png'),
-				height('digenglish_lib/images/emoti_9.png')
+				width('digenglishCB_lib/images/emoti_9.png'),
+				height('digenglishCB_lib/images/emoti_9.png')
 			);
 		}
 
@@ -124,9 +124,9 @@
 }
 @mixin like-btn{
 	@include btn-switch(
-		resolve('digenglish_lib/images/like/btn_heart.png'),
-		width('digenglish_lib/images/like/btn_heart.png'),
-		height('digenglish_lib/images/like/btn_heart.png')
+		resolve('digenglishCB_lib/images/like/btn_heart.png'),
+		width('digenglishCB_lib/images/like/btn_heart.png'),
+		height('digenglishCB_lib/images/like/btn_heart.png')
 	);
 }
 

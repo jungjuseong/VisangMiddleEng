@@ -1,5 +1,5 @@
 @mixin team-pad-selected{
-	background-image: resolve('digenglish_lib/team/ready.png');
+	background-image: resolve('digenglishCB_lib/team/ready.png');
 	background-repeat: no-repeat;
 	&>svg{
 		position: absolute;

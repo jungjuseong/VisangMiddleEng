@@ -42,7 +42,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 			<div className="content-container">
 			<div className="content-wrapper" style={{left: left + 'px',}}>
 				<div>
-					<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={false} video_url={_digenglish_lib_ + 'direction/reading_english.webp'} video_frame={125}/>
+					<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={false} video_url={_digenglishCB_lib_ + 'direction/reading_english.webp'} video_frame={125}/>
 				</div>
 				<div>
 					<SWarmup view={viewDiv === 'content' && prog === 'warmup'} state={state} actions={actions}/>
@@ -53,8 +53,8 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>
 					<SCheckup view={viewDiv === 'content' && prog === 'v_checkup'} state={state} actions={actions}/>				
 					<Loading view={state.loading}/>
-					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglish_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
-					<SVGEmbed className="eyeon_svg" data={`${_digenglish_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
+					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
 				</div>
 			</div>
 			</div>

@@ -145,11 +145,11 @@
 			transform: translate(-50%, -50%);
 
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/mplayer/btn_video_play.png'),
-				resolve('digenglish_lib/images/mplayer/btn_video_play_on.png'),
-				resolve('digenglish_lib/images/mplayer/btn_video_play_down.png'),
-				width('digenglish_lib/images/mplayer/btn_video_play.png'),
-				height('digenglish_lib/images/mplayer/btn_video_play.png')
+				resolve('digenglishCB_lib/images/mplayer/btn_video_play.png'),
+				resolve('digenglishCB_lib/images/mplayer/btn_video_play_on.png'),
+				resolve('digenglishCB_lib/images/mplayer/btn_video_play_down.png'),
+				width('digenglishCB_lib/images/mplayer/btn_video_play.png'),
+				height('digenglishCB_lib/images/mplayer/btn_video_play.png')
 			);
 		}
 		&>.caption_box {
@@ -235,10 +235,10 @@
 				vertical-align: middle;
 				margin-left: 30px;
 				@include btn_on(
-					resolve('digenglish_lib/images/mplayer/btn_play.png'),
-					resolve('digenglish_lib/images/mplayer/btn_pause.png'),
-					width('digenglish_lib/images/mplayer/btn_play.png'),
-					height('digenglish_lib/images/mplayer/btn_play.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_play.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_pause.png'),
+					width('digenglishCB_lib/images/mplayer/btn_play.png'),
+					height('digenglishCB_lib/images/mplayer/btn_play.png')
 				);							
 			}
 			.btn_stop{
@@ -246,11 +246,11 @@
 				vertical-align: middle;
 				margin-left: 35px;
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_stop.png'),
-					resolve('digenglish_lib/images/mplayer/btn_stop_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_stop.png'),
-					width('digenglish_lib/images/mplayer/btn_stop.png'),
-					height('digenglish_lib/images/mplayer/btn_stop.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_stop_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
+					width('digenglishCB_lib/images/mplayer/btn_stop.png'),
+					height('digenglishCB_lib/images/mplayer/btn_stop.png')
 				);							
 			}
 			.btn_prev {
@@ -258,11 +258,11 @@
 				vertical-align: middle;
 				margin-left: 35px;
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_prev.png'),
-					resolve('digenglish_lib/images/mplayer/btn_prev_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_prev.png'),
-					width('digenglish_lib/images/mplayer/btn_prev.png'),
-					height('digenglish_lib/images/mplayer/btn_prev.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_prev_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
+					width('digenglishCB_lib/images/mplayer/btn_prev.png'),
+					height('digenglishCB_lib/images/mplayer/btn_prev.png')
 				);							
 			}
 			.btn_next{
@@ -270,11 +270,11 @@
 				vertical-align: middle;
 				margin-left: 25px;
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_next.png'),
-					resolve('digenglish_lib/images/mplayer/btn_next_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_next.png'),
-					width('digenglish_lib/images/mplayer/btn_next.png'),
-					height('digenglish_lib/images/mplayer/btn_next.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_next_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
+					width('digenglishCB_lib/images/mplayer/btn_next.png'),
+					height('digenglishCB_lib/images/mplayer/btn_next.png')
 				);							
 			}
 		}
@@ -322,11 +322,11 @@
 							z-index:2;
 							transform:translate(-50%, -50%);
 							@include btn_down_dis(
-								resolve('digenglish_lib/images/mplayer/btn_play_bar.png'),
-								resolve('digenglish_lib/images/mplayer/btn_play_bar_down.png'),
-								resolve('digenglish_lib/images/mplayer/btn_play_bar.png'),
-								width('digenglish_lib/images/mplayer/btn_play_bar.png'),
-								height('digenglish_lib/images/mplayer/btn_play_bar.png')
+								resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+								resolve('digenglishCB_lib/images/mplayer/btn_play_bar_down.png'),
+								resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+								width('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
+								height('digenglishCB_lib/images/mplayer/btn_play_bar.png')
 							);
 						}
 
@@ -372,47 +372,47 @@
 			.btn_subscript{
 				margin-right:20px;
 				@include btn_on (
-					resolve('digenglish_lib/images/mplayer/btn_subscript.png'),
-					resolve('digenglish_lib/images/mplayer/btn_subscript_down.png'),
-					width('digenglish_lib/images/mplayer/btn_subscript.png'),
-					height('digenglish_lib/images/mplayer/btn_subscript.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_subscript.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_subscript_down.png'),
+					width('digenglishCB_lib/images/mplayer/btn_subscript.png'),
+					height('digenglishCB_lib/images/mplayer/btn_subscript.png')
 				);
 
 				&.READALOUD, &.SHADOWING{
 					@include btn_on (
-						resolve('digenglish_lib/images/mplayer/btn_script.png'),
-						resolve('digenglish_lib/images/mplayer/btn_script_down.png'),
-						width('digenglish_lib/images/mplayer/btn_script.png'),
-						height('digenglish_lib/images/mplayer/btn_script.png')	
+						resolve('digenglishCB_lib/images/mplayer/btn_script.png'),
+						resolve('digenglishCB_lib/images/mplayer/btn_script_down.png'),
+						width('digenglishCB_lib/images/mplayer/btn_script.png'),
+						height('digenglishCB_lib/images/mplayer/btn_script.png')	
 					);				
 				}
 			}
 			.btn_audio{
 				margin-right:20px;
 				@include btn_on(
-					resolve('digenglish_lib/images/mplayer/btn_sound.png'),
-					resolve('digenglish_lib/images/mplayer/btn_mute_down.png'),
-					width('digenglish_lib/images/mplayer/btn_sound.png'),
-					height('digenglish_lib/images/mplayer/btn_sound.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_sound.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_mute_down.png'),
+					width('digenglishCB_lib/images/mplayer/btn_sound.png'),
+					height('digenglishCB_lib/images/mplayer/btn_sound.png')
 				);
 			}
 			.btn_fullscreen{
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_fullscreen.png'),
-					resolve('digenglish_lib/images/mplayer/btn_fullscreen_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_fullscreen_down.png'),
 					'',
-					width('digenglish_lib/images/mplayer/btn_fullscreen.png'),
-					height('digenglish_lib/images/mplayer/btn_fullscreen.png')
+					width('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
+					height('digenglishCB_lib/images/mplayer/btn_fullscreen.png')
 				);
 			}
 			.btn_fullscreen_off{
 				display: none;
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/mplayer/btn_smallscreen.png'),
-					resolve('digenglish_lib/images/mplayer/btn_smallscreen_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_smallscreen_down.png'),
 					'',
-					width('digenglish_lib/images/mplayer/btn_smallscreen.png'),
-					height('digenglish_lib/images/mplayer/btn_smallscreen.png')
+					width('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
+					height('digenglishCB_lib/images/mplayer/btn_smallscreen.png')
 				);
 			}
 		}
@@ -422,34 +422,34 @@
 			.btn_v_listen_repeat{
 				margin-right: 8px;
 				@include btn_down_dis (
-					resolve('digenglish_lib/images/mplayer/btn_v_listen_repeat.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_listen_repeat_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_listen_repeat_dis.png'),
-					width('digenglish_lib/images/mplayer/btn_v_listen_repeat.png'),
-					height('digenglish_lib/images/mplayer/btn_v_listen_repeat.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_v_listen_repeat.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_listen_repeat_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_listen_repeat_dis.png'),
+					width('digenglishCB_lib/images/mplayer/btn_v_listen_repeat.png'),
+					height('digenglishCB_lib/images/mplayer/btn_v_listen_repeat.png')
 				);
-				&.on { background-image: resolve('digenglish_lib/images/mplayer/btn_v_listen_repeat_down.png');}
+				&.on { background-image: resolve('digenglishCB_lib/images/mplayer/btn_v_listen_repeat_down.png');}
 			}
 			.btn_v_readalong{
 				margin-right: 8px;
 				@include btn_down_dis (
-					resolve('digenglish_lib/images/mplayer/btn_v_readalong.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_readalong_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_readalong_dis.png'),
-					width('digenglish_lib/images/mplayer/btn_v_readalong.png'),
-					height('digenglish_lib/images/mplayer/btn_v_readalong.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_v_readalong.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_readalong_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_readalong_dis.png'),
+					width('digenglishCB_lib/images/mplayer/btn_v_readalong.png'),
+					height('digenglishCB_lib/images/mplayer/btn_v_readalong.png')
 				);
-				&.on { background-image: resolve('digenglish_lib/images/mplayer/btn_v_readalong_down.png');}
+				&.on { background-image: resolve('digenglishCB_lib/images/mplayer/btn_v_readalong_down.png');}
 			}
 			.btn_v_checkup{
 				@include btn_down_dis (
-					resolve('digenglish_lib/images/mplayer/btn_v_checkup.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_checkup_down.png'),
-					resolve('digenglish_lib/images/mplayer/btn_v_checkup_dis.png'),
-					width('digenglish_lib/images/mplayer/btn_v_checkup.png'),
-					height('digenglish_lib/images/mplayer/btn_v_checkup.png')
+					resolve('digenglishCB_lib/images/mplayer/btn_v_checkup.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_checkup_down.png'),
+					resolve('digenglishCB_lib/images/mplayer/btn_v_checkup_dis.png'),
+					width('digenglishCB_lib/images/mplayer/btn_v_checkup.png'),
+					height('digenglishCB_lib/images/mplayer/btn_v_checkup.png')
 				);
-				&.on { background-image: resolve('digenglish_lib/images/mplayer/btn_v_checkup_down.png');}
+				&.on { background-image: resolve('digenglishCB_lib/images/mplayer/btn_v_checkup_down.png');}
 			}
 		}
 	}
@@ -496,11 +496,11 @@
 										}
 										.prog_btn {
 											@include btn_down_dis(
-												resolve('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-												resolve('digenglish_lib/images/mplayer/btn_play_bar_L_down.png'),
-												resolve('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-												width('digenglish_lib/images/mplayer/btn_play_bar_L.png'),
-												height('digenglish_lib/images/mplayer/btn_play_bar_L.png')
+												resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+												resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L_down.png'),
+												resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+												width('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
+												height('digenglishCB_lib/images/mplayer/btn_play_bar_L.png')
 											);
 										}
 									}

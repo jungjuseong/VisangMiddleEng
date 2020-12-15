@@ -12,9 +12,9 @@ $BTN_AUDIO_NORMAL: 92px;
 @mixin btn_audio($wh) {
 	background-size: 100% 100%;
 	@include btn_on_dis(
-		resolve('digenglish_lib/images/btn_audio.svg'),
-		resolve('digenglish_lib/images/btn_audio_on.svg'),
-		resolve('digenglish_lib/images/btn_audio_dis.svg'),
+		resolve('digenglishCB_lib/images/btn_audio.svg'),
+		resolve('digenglishCB_lib/images/btn_audio_on.svg'),
+		resolve('digenglishCB_lib/images/btn_audio_dis.svg'),
 		$wh,
 		$wh
 	);	
@@ -23,11 +23,11 @@ $BTN_AUDIO_NORMAL: 92px;
 @mixin btn_audio_s() {
 	background-size: 100% 100%;
 	@include btn_on_dis(
-		resolve('digenglish_lib/images/btn_audio_s.svg'),
-		resolve('digenglish_lib/images/btn_audio_s_on.svg'),
-		resolve('digenglish_lib/images/btn_audio_s.svg'),
-		width('digenglish_lib/images/btn_audio_s.svg'),
-		height('digenglish_lib/images/btn_audio_s.svg')
+		resolve('digenglishCB_lib/images/btn_audio_s.svg'),
+		resolve('digenglishCB_lib/images/btn_audio_s_on.svg'),
+		resolve('digenglishCB_lib/images/btn_audio_s.svg'),
+		width('digenglishCB_lib/images/btn_audio_s.svg'),
+		height('digenglishCB_lib/images/btn_audio_s.svg')
 	);	
 
 	filter: drop-shadow(-4px 4px 3px rgba(0, 0, 0, 0.3));
@@ -88,10 +88,10 @@ $BTN_AUDIO_NORMAL: 92px;
 		display: inline-block;
 		vertical-align: middle;
 		@include btn_on(
-			resolve('digenglish_lib/images/btn_answer.png'),
-			resolve('digenglish_lib/images/btn_answer_on.png'),
-			width('digenglish_lib/images/btn_answer.png'),
-			height('digenglish_lib/images/btn_answer.png')
+			resolve('digenglishCB_lib/images/btn_answer.png'),
+			resolve('digenglishCB_lib/images/btn_answer_on.png'),
+			width('digenglishCB_lib/images/btn_answer.png'),
+			height('digenglishCB_lib/images/btn_answer.png')
 		);
 		margin-right:3px;
 		pointer-events: unset;	
@@ -138,11 +138,11 @@ $BTN_AUDIO_NORMAL: 92px;
 @mixin common_back{
 	background-size: 100% 100%;
 	@include btn_down_dis(
-		resolve('digenglish_lib/images/btn_back.png'), 
-		resolve('digenglish_lib/images/btn_back_down.png'),
+		resolve('digenglishCB_lib/images/btn_back.png'), 
+		resolve('digenglishCB_lib/images/btn_back_down.png'),
 		'',
-		width('digenglish_lib/images/btn_back.png'),
-		height('digenglish_lib/images/btn_back.png')
+		width('digenglishCB_lib/images/btn_back.png'),
+		height('digenglishCB_lib/images/btn_back.png')
 	);
 	&.down{
 		transform: scale(1.1, 1.1);

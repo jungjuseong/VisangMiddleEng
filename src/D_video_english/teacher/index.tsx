@@ -42,7 +42,7 @@ class TeacherPage extends React.Component<ITeacher> {
 				{/*
 				<SVGBg 
 					className="bg_svg" 
-					data="/content/digenglish_lib/images/theme0_bg.svg" 
+					data="/content/digenglishCB_lib/images/theme0_bg.svg" 
 					{...state.svg_bg}
 				/>
 				*/}
@@ -53,7 +53,7 @@ class TeacherPage extends React.Component<ITeacher> {
 							view={viewDiv === 'direction'} 
 							on={state.directionON} 
 							isTeacher={true}
-							video_url={_digenglish_lib_ + 'direction/ls_comprehension.webp'}
+							video_url={_digenglishCB_lib_ + 'direction/ls_comprehension.webp'}
 							video_frame={125}
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}

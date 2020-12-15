@@ -1,7 +1,7 @@
 SET SRC=D:\myWork\react\app\fel40_react\output\resources\app\public\content
 SET TGT=E:\myDocument\fel_launcher\resources\app\public\content
 
-robocopy %SRC%\digenglish_lib %TGT%\digenglish_lib /MIR
+robocopy %SRC%\digenglishCB_lib %TGT%\digenglishCB_lib /MIR
 
 :: LS
 robocopy %SRC%\B_ls_comprehension %TGT%\fel\B_ls_comprehension /MIR

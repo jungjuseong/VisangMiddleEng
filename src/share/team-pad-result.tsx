@@ -114,9 +114,9 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 	public render() {
 		return (
 			<div className={this._className}>
-				<audio ref={this._refAudioWin} controls={false} autoPlay={false} src={`${_digenglish_lib_}team/winner/winner.mp3`}/>
-				<audio ref={this._refAudioLose} controls={false} autoPlay={false} src={`${_digenglish_lib_}team/good-work.mp3`}/>
-				<audio ref={this._refAudioTie} controls={false} autoPlay={false} src={`${_digenglish_lib_}team/winner/tie.mp3`}/>
+				<audio ref={this._refAudioWin} controls={false} autoPlay={false} src={`${_digenglishCB_lib_}team/winner/winner.mp3`}/>
+				<audio ref={this._refAudioLose} controls={false} autoPlay={false} src={`${_digenglishCB_lib_}team/good-work.mp3`}/>
+				<audio ref={this._refAudioTie} controls={false} autoPlay={false} src={`${_digenglishCB_lib_}team/winner/tie.mp3`}/>
 
 
 <svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="1280" height="800" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -144,10 +144,10 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
       <use xlinkHref="#11" transform="translate(25.2 -2.5)"/>
     </g>
     <g id="11" overflow="visible">
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/hand1.png`} height="239" width="186"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/hand1.png`} height="239" width="186"/>
     </g>
     <g id="22" overflow="visible">
-      <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/hand2.png`} height="224" width="218"/>
+      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/hand2.png`} height="224" width="218"/>
     </g>
     <pattern id="Pattern_1" patternUnits="userSpaceOnUse" patternTransform="matrix(.258 .965 -.965 .258 127.9 -26.75)" width="60" height="65">
       <image id="effect_png" x="0" y="0" width="60" height="65"/>
@@ -172,7 +172,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 				<animateTransform attributeName="transform" additive="replace" type="translate" dur="5s" keyTimes="0;0.1;0.158;0.225;0.283;0.35;0.809;0.858;1" values="284.5,251;284.5,251;284.522,251.023;284.5,251;284.522,251.023;284.5,251;284.522,251.023;284.558,250.989;284.558,250.989" fill="freeze"/>
 				<animateTransform attributeName="transform" additive="sum" type="scale" dur="5s" keyTimes="0;0.1;0.158;0.225;0.283;0.35;0.809;0.858;1" values="1,1;1,1;.8,.8;1,1;.8,.8;1,1;.8,.8;.95,.95;.95,.95" fill="freeze"/>
 				<animateTransform attributeName="transform" additive="sum" type="translate" dur="5s" keyTimes="0;0.1;0.158;0.225;0.283;0.35;0.809;0.858;1" values="-284.5,-251;-284.5,-251;-284.6,-251.1;-284.5,-251;-284.6,-251.1;-284.5,-251;-284.6,-251.1;-284.65,-251.05;-284.65,-251.05" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/2.png`} height="502" width="569"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/2.png`} height="502" width="569"/>
 				</g>
 				<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.1;0.867;1" values="none;inline;none;none"/>
 			</g>
@@ -181,28 +181,28 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 		<g>
 			<g transform="translate(476.25 227.2)" opacity="0">
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.075;0.142;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/circle.png`} height="330" width="320"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/circle.png`} height="330" width="320"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
 		<g>
 			<g transform="translate(462.25 220.2)" opacity="0">
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.075;0.142;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/crown.png`} height="237" width="339"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/crown.png`} height="237" width="339"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
 		<g>
 			<g transform="translate(321.2 457.25)" opacity="0">
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.075;0.142;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
 		<g>
 			<g transform="translate(486.15 491.15)" opacity="0">
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.075;0.142;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/WINNER.png`} height="62" width="294"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/WINNER.png`} height="62" width="294"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
@@ -213,7 +213,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 		<g>
 			<g transform="translate(476.25 227.2)" opacity="0">
 				<animate attributeName="opacity" dur="4s" keyTimes="0;0.075;0.134;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/circle.png`} height="330" width="320"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/circle.png`} height="330" width="320"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
@@ -325,14 +325,14 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 		<g>
 			<g transform="translate(321.2 457.25)" opacity="0">
 				<animate attributeName="opacity" dur="4s" keyTimes="0;0.075;0.134;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
 		<g>
 			<g transform="translate(468.6 490.2)" opacity="0">
 				<animate attributeName="opacity" dur="4s" keyTimes="0;0.075;0.134;0.833;0.9;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/GOOD_WORK.png`} height="54" width="339"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/GOOD_WORK.png`} height="54" width="339"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4s" keyTimes="0;0.075;1" values="none;inline;inline"/>
 		</g>
@@ -342,7 +342,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 				<animateTransform attributeName="transform" additive="sum" type="scale" dur="4s" keyTimes="0;.267;.333;.34999;.4;.41699;.483;.49999;.567;.58299;.65;.66699;.733;1" values=".968,.968;.968,.968;1.21,1.21;1.21,1.21;.968,.968;.968,.968;1.21,1.21;1.21,1.21;.968,.968;.968,.968;1.21,1.21;1.21,1.21;.968,.968;.968,.968" fill="freeze"/>
 				<animateTransform attributeName="transform" additive="sum" type="translate" dur="4s" keyTimes="0;.267;.333;.34999;.4;.41699;.483;.49999;.567;.58299;.65;.66699;.733;1" values="-30.1,-32.6;-30.1,-32.6;-30.1,-32.55;-30.1,-32.55;-30.1,-32.6;-30.1,-32.6;-30.1,-32.55;-30.1,-32.55;-30.1,-32.6;-30.1,-32.6;-30.1,-32.55;-30.1,-32.55;-30.1,-32.6;-30.1,-32.6" fill="freeze"/>
 				<animate attributeName="opacity" dur="4s" keyTimes="0;.267;.333;.66699;.733;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect.png`} height="65" width="60" transform="matrix(.979 -.204 .204 .979 -4.55 10)"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect.png`} height="65" width="60" transform="matrix(.979 -.204 .204 .979 -4.55 10)"/>
 				<path fill="url(#Pattern_1)" stroke="none" d="M87.3 -11.05Q87.1 -13.4 87 -15.8L65.15 -10 80.65 48 82.2 47.65Q82.05 45.5 82 43.35L82.55 42Q82.1 39.9 82.85 37.7L82.6 36.5 83.2 35.05 82.85 33.45Q84.75 21.9 85.9 10.4L86.45 5.2Q86.75 4.7 86.8 4.2 87.25 2.2 87.1 .4 87.75 -.25 87.65 -1.75 87.4 -4.8 87.75 -8.15 87.4 -9.55 87.3 -11.05Z"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4s" keyTimes="0;.267;.75;1" values="none;inline;none;none"/>
@@ -353,14 +353,14 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 		<g>
 			<g transform="translate(476.25 227.2)" opacity="0">
 				<animate attributeName="opacity" dur="4.958s" keyTimes="0;0.076;0.152;0.798;0.866;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/circle.png`} height="330" width="320"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/circle.png`} height="330" width="320"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4.958s" keyTimes="0;0.076;1" values="none;inline;inline"/>
 		</g>
 		<g mask="url(#tie-mask123)">
 			<g id="dkrtnm" transform="translate(503.4 273.1)" opacity="0">
 				<animate attributeName="opacity" dur="4.958s" keyTimes="0;0.076;0.152;0.798;0.866;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/hand.png`} height="243" width="266"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/hand.png`} height="243" width="266"/>
 			</g>
 		<animate attributeName="display" fill="freeze" repeatCount="1" dur="4.958s" keyTimes="0;0.076;1" values="none;inline;inline"/>
 		</g>
@@ -372,14 +372,14 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 		<g>
 			<g transform="translate(321.2 457.25)" opacity="0">
 				<animate attributeName="opacity" dur="4.958s" keyTimes="0;0.076;0.152;0.798;0.866;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/ribbon.png`} height="133" width="631"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4.958s" keyTimes="0;0.076;1" values="none;inline;inline"/>
 		</g>
 		<g>
 			<g id="tie" transform="translate(569.6 490.6)" opacity="0">
 				<animate attributeName="opacity" dur="4.958s" keyTimes="0;0.076;0.152;0.798;0.866;1" values="0;0;1;1;0;0" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/tie.png`} height="62" width="133"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/tie.png`} height="62" width="133"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="4.958s" keyTimes="0;0.076;1" values="none;inline;inline"/>
 		</g>
@@ -396,7 +396,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 					<animateTransform attributeName="transform" additive="sum" type="scale" begin=".542s" repeatDur="1.875s" dur="0.625s" keyTimes="0;.467;.933;1" values="1,1;.64,.64;1,1;1,1" fill="freeze"/>
 					<animateTransform attributeName="transform" additive="sum" type="translate" begin=".542s" repeatDur="1.875s" dur="0.625s" keyTimes="0;.467;.933;1" values="-22,-22;-22.15,-22.15;-22,-22;-22,-22" fill="freeze"/>
 					<animate attributeName="opacity" begin=".542s" repeatDur="1.875s" dur="0.625s" keyTimes="0;.467;.933;1" values="1;.76;1;1" fill="freeze"/>
-					<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect1.png`} height="44" width="44"/>
+					<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect1.png`} height="44" width="44"/>
 					</g>
 				</g>
 				<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.109;0.884;1" values="none;inline;none;none"/>
@@ -409,7 +409,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 						<animateTransform attributeName="transform" additive="sum" type="scale" begin=".75s" repeatDur="1.667s" dur="0.667s" keyTimes="0;.5;.937;1" values="1,1;.614,.614;1,1;1,1" fill="freeze"/>
 						<animateTransform attributeName="transform" additive="sum" type="translate" begin=".75s" repeatDur="1.667s" dur="0.667s" keyTimes="0;.5;.937;1" values="-27.5,-27.5;-27.7,-27.7;-27.5,-27.5;-27.5,-27.5" fill="freeze"/>
 						<animate attributeName="opacity" begin=".75s" repeatDur="1.667s" dur="0.667s" keyTimes="0;.5;.937;1" values="1;.61;1;1" fill="freeze"/>
-						<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect2.png`} height="55" width="55"/>
+						<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect2.png`} height="55" width="55"/>
 					</g>
 				</g>
 				<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.15;0.884;1" values="none;inline;none;none"/>
@@ -418,7 +418,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 			<g transform="translate(-44 107.95)" style={{mixBlendMode: 'screen',}} opacity="0">
 				<animateTransform attributeName="transform" additive="replace" type="translate" dur="5s" keyTimes="0;0.158;0.317;1" values="113.55,107.95;113.55,107.95;-44,107.95;-44,107.95" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.158;0.317;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect3.png`} height="23" width="11"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect3.png`} height="23" width="11"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.158;0.884;1" values="none;inline;none;none"/>
 			</g>
@@ -426,14 +426,14 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 			<g transform="translate(8.6 181.3)" style={{mixBlendMode: 'screen',}} opacity="0">
 				<animateTransform attributeName="transform" additive="replace" type="translate" dur="5s" keyTimes="0;0.175;0.334;1" values="115.75,151;115.75,151;8.6,181.3;8.6,181.3" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.175;0.334;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible"  xlinkHref={`${_digenglish_lib_}team/pad_result/effect3.png`} height="23" width="11" transform="matrix(.8 0 0 .8 0 0)"/>
+				<image overflow="visible"  xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect3.png`} height="23" width="11" transform="matrix(.8 0 0 .8 0 0)"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.175;0.884;1" values="none;inline;none;none"/>
 			</g>
 			<g display="none">
 			<g transform="translate(502.95 80.8)" style={{mixBlendMode: 'screen',}} opacity="0">
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.167;0.325;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect3.png`} height="23" width="11" transform="matrix(.559 .573 -.573 .559 13.15 0)"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect3.png`} height="23" width="11" transform="matrix(.559 .573 -.573 .559 13.15 0)"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.167;0.884;1" values="none;inline;none;none"/>
 			</g>
@@ -441,7 +441,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 			<g transform="translate(506.25 136.05)" style={{mixBlendMode: 'screen',}} opacity="0">
 				<animateTransform attributeName="transform" additive="replace" type="translate" dur="5s" keyTimes="0;0.184;0.341;1" values="410.1,160.05;410.1,160.05;506.25,136.05;506.25,136.05" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.184;0.341;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect6.png`} height="32" width="16"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect6.png`} height="32" width="16"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.184;0.884;1" values="none;inline;none;none"/>
 			</g>
@@ -451,7 +451,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 				<animateTransform attributeName="transform" additive="sum" type="scale" dur="5s" keyTimes="0;0.167;0.325;1" values=".6,.6;.6,.6;1,1;1,1" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animateTransform attributeName="transform" additive="sum" type="translate" dur="5s" keyTimes="0;0.167;0.325;1" values="-12.1,-22.6;-12.1,-22.6;-12,-22.5;-12,-22.5" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.167;0.325;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect7.png`} height="45" width="24"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect7.png`} height="45" width="24"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.167;0.884;1" values="none;inline;none;none"/>
 			</g>
@@ -459,7 +459,7 @@ class TeamPadResult extends React.Component<ITeamPadResult> {
 			<g transform="translate(417.8 -11)" style={{mixBlendMode: 'screen',}} opacity="0">
 				<animateTransform attributeName="transform" additive="replace" type="translate" dur="5s" keyTimes="0;0.191;0.35;1" values="379.8,86.95;379.8,86.95;417.8,-11;417.8,-11" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
 				<animate attributeName="opacity" dur="5s" keyTimes="0;0.191;0.35;1" values="1;1;0;0" keySplines=".25 .5 .5 1;.25 .5 .5 1;.1 .1 .9 .9" calcMode="spline" fill="freeze"/>
-				<image overflow="visible" xlinkHref={`${_digenglish_lib_}team/pad_result/effect7.png`} height="45" width="24" transform="matrix(.797 .604 -.604 .797 27.2 0)"/>
+				<image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/pad_result/effect7.png`} height="45" width="24" transform="matrix(.797 .604 -.604 .797 27.2 0)"/>
 			</g>
 			<animate attributeName="display" fill="freeze" repeatCount="1" dur="5s" keyTimes="0;0.191;0.884;1" values="none;inline;none;none"/>
 			</g>

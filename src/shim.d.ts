@@ -15,7 +15,7 @@ declare const cfg_dist: boolean;
 declare const p_base_template_t: boolean;
 declare const p_base_template_s: boolean;
 
-declare const _digenglish_lib_:string;
+declare const _digenglishCB_lib_:string;
 declare const _project_:string;
 
 declare const d_word_english_t: boolean;

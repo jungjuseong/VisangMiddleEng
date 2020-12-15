@@ -8,7 +8,7 @@ const Loading = ({ view }: {view: boolean}) => {
 	style.height = '100%';
 	style.backgroundPosition = '50% 50%';
 	style.backgroundRepeat = 'no-repeat';
-	style.backgroundImage = `url("${_digenglish_lib_}images/loading.svg")`;
+	style.backgroundImage = `url("${_digenglishCB_lib_}images/loading.svg")`;
 	style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
 	style.zIndex = 101;
 	if(!view) {

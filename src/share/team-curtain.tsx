@@ -70,7 +70,7 @@ class TeamCurtain extends React.Component<ITeamCurtain> {
 	public render() {
 		return (
 			<div className={this._className}>
-				<audio ref={this._refAudio} controls={false} autoPlay={false} src={`${_digenglish_lib_}team/curtain/curtain.mp3`}/>
+				<audio ref={this._refAudio} controls={false} autoPlay={false} src={`${_digenglishCB_lib_}team/curtain/curtain.mp3`}/>
 <svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="1280" height="800" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <g overflow="visible">
     <g>
@@ -78,7 +78,7 @@ class TeamCurtain extends React.Component<ITeamCurtain> {
         <animateTransform attributeName="transform" additive="replace" type="translate" dur="1.125s" keyTimes="0;.074;.778;1" values="318.517,392.5;318.517,392.5;-77.055,382.5;-77.055,382.5" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="scale" dur="1.125s" keyTimes="0;.074;.778;1" values="1.492,1;1.492,1;.351,1;.351,1" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="translate" dur="1.125s" keyTimes="0;.074;.778;1" values="-213.5,-392.5;-213.5,-392.5;-213.2,-392.5;-213.2,-392.5" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/curtain/curtain_02_l.png`} height="785" width="427"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/curtain/curtain_02_l.png`} height="785" width="427"/>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.125s" keyTimes="0;.074;1" values="none;inline;inline"/>
     </g>
@@ -87,13 +87,13 @@ class TeamCurtain extends React.Component<ITeamCurtain> {
         <animateTransform attributeName="transform" additive="replace" type="translate" dur="1.125s" keyTimes="0;.074;.778;1" values="958.967,392.5;958.967,392.5;1365.595,392.5;1365.595,392.5" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="scale" dur="1.125s" keyTimes="0;.074;.778;1" values="1.459,1;1.459,1;.357,1;.357,1" fill="freeze"/>
         <animateTransform attributeName="transform" additive="sum" type="translate" dur="1.125s" keyTimes="0;.074;.778;1" values="-220,-392.5;-220,-392.5;-220.15,-392.5;-220.15,-392.5" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/curtain/curtain_02_r.png`} height="785" width="440"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/curtain/curtain_02_r.png`} height="785" width="440"/>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.125s" keyTimes="0;.074;1" values="none;inline;inline"/>
     </g>
     <g display="none">
       <g>
-        <image overflow="visible" xlinkHref={`${_digenglish_lib_}team/curtain/curtain_01.png`} height="784" width="1280"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}team/curtain/curtain_01.png`} height="784" width="1280"/>
       </g>
       <animate attributeName="display" fill="freeze" repeatCount="1" dur="1.125s" keyTimes="0;.074;1" values="inline;none;none"/>
     </g>

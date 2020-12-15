@@ -24,11 +24,11 @@
 				position: relative;
 				top: -3px;
 				@include btn_down_on(
-					resolve('digenglish_lib/images/grouping/btn_resort.png'),
-					resolve('digenglish_lib/images/grouping/btn_resort_on.png'),
-					resolve('digenglish_lib/images/grouping/btn_resort_on.png'),
-					width('digenglish_lib/images/grouping/btn_resort.png'),
-					height('digenglish_lib/images/grouping/btn_resort.png')
+					resolve('digenglishCB_lib/images/grouping/btn_resort.png'),
+					resolve('digenglishCB_lib/images/grouping/btn_resort_on.png'),
+					resolve('digenglishCB_lib/images/grouping/btn_resort_on.png'),
+					width('digenglishCB_lib/images/grouping/btn_resort.png'),
+					height('digenglishCB_lib/images/grouping/btn_resort.png')
 				);
 				&.rotate{
 					transition: transform 1s;
@@ -100,11 +100,11 @@
 			bottom: -90px;
 			transform: translateX(-50%);
 			@include btn_down_dis(
-				resolve('digenglish_lib/images/grouping/btn_start.png'),
-				resolve('digenglish_lib/images/grouping/btn_start_down.png'),
-				resolve('digenglish_lib/images/grouping/btn_start.png'),
-				width('digenglish_lib/images/grouping/btn_start.png'),
-				height('digenglish_lib/images/grouping/btn_start.png')
+				resolve('digenglishCB_lib/images/grouping/btn_start.png'),
+				resolve('digenglishCB_lib/images/grouping/btn_start_down.png'),
+				resolve('digenglishCB_lib/images/grouping/btn_start.png'),
+				width('digenglishCB_lib/images/grouping/btn_start.png'),
+				height('digenglishCB_lib/images/grouping/btn_start.png')
 			);
 
 			&:disabled{

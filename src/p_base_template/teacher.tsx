@@ -29,7 +29,7 @@ const SVGBgHoc = useTeacher((store: TeacherContext) => (
 	<Observer>{() => (
 		<SVGBg 
 			className="bg_svg" 
-			data="/content/digenglish_lib/images/theme0_bg.svg" 
+			data="/content/digenglishCB_lib/images/theme0_bg.svg" 
 			{...store.state.svg_bg}
 		/>
 	)}</Observer>

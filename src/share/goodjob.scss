@@ -2,9 +2,9 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	background-image: resolve("digenglish_lib/images/goodjob.png");
-	width: width("digenglish_lib/images/goodjob.png");
-	height: height("digenglish_lib/images/goodjob.png");
+	background-image: resolve("digenglishCB_lib/images/goodjob.png");
+	width: width("digenglishCB_lib/images/goodjob.png");
+	height: height("digenglishCB_lib/images/goodjob.png");
 	
 	transform: translate(-50%, -50%) scale(0.8, 0.8);
 	visibility: hidden;

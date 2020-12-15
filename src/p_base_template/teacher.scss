@@ -10,7 +10,7 @@ body{
 	background-color: transparent;
 }
 #wrap{
-	background-image:resolve("digenglish_lib/images/theme2_bg.png");
+	background-image:resolve("digenglishCB_lib/images/theme2_bg.png");
 	&>.page_direction{
 		@include page_direction;
 		&>div{

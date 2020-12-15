@@ -91,22 +91,22 @@
 			}
 		
 			&.key_back{
-				background-image:resolve('digenglish_lib/images/keyboard/key_back.png');
+				background-image:resolve('digenglishCB_lib/images/keyboard/key_back.png');
 				background-repeat : no-repeat;
 				background-position:center;
 
 				&.down{
-					background-image: resolve('digenglish_lib/images/keyboard/key_back_down.png');
+					background-image: resolve('digenglishCB_lib/images/keyboard/key_back_down.png');
 				}
 			}
 
 			&.key_hide{
-				background-image:resolve('digenglish_lib/images/keyboard/key_hide.png');
+				background-image:resolve('digenglishCB_lib/images/keyboard/key_hide.png');
 				background-repeat : no-repeat;
 				background-position:center;
 
 				&.down{
-					background-image:resolve('digenglish_lib/images/keyboard/key_hide_down.png');
+					background-image:resolve('digenglishCB_lib/images/keyboard/key_hide_down.png');
 				}
 			}
 		}
@@ -124,68 +124,68 @@
 
 			&.s{
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/keyboard/key_num.png'),
-					resolve('digenglish_lib/images/keyboard/key_num_down.png'),
-					resolve('digenglish_lib/images/keyboard/key_num.png'),
-					width('digenglish_lib/images/keyboard/key_num.png'),
-					height('digenglish_lib/images/keyboard/key_num.png')
+					resolve('digenglishCB_lib/images/keyboard/key_num.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_num_down.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_num.png'),
+					width('digenglishCB_lib/images/keyboard/key_num.png'),
+					height('digenglishCB_lib/images/keyboard/key_num.png')
 				);
 
 				&.key_back {
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/keyboard/key_back.png'),
-						resolve('digenglish_lib/images/keyboard/key_back_down.png'),
-						resolve('digenglish_lib/images/keyboard/key_back.png'),
-						width('digenglish_lib/images/keyboard/key_back.png'),
-						height('digenglish_lib/images/keyboard/key_back.png')
+						resolve('digenglishCB_lib/images/keyboard/key_back.png'),
+						resolve('digenglishCB_lib/images/keyboard/key_back_down.png'),
+						resolve('digenglishCB_lib/images/keyboard/key_back.png'),
+						width('digenglishCB_lib/images/keyboard/key_back.png'),
+						height('digenglishCB_lib/images/keyboard/key_back.png')
 					);
 				}
 			}			
 			&.m{
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/keyboard/key_alpha.png'),
-					resolve('digenglish_lib/images/keyboard/key_alpha_down.png'),
-					resolve('digenglish_lib/images/keyboard/key_alpha.png'),
-					width('digenglish_lib/images/keyboard/key_alpha.png'),
-					height('digenglish_lib/images/keyboard/key_alpha.png')
+					resolve('digenglishCB_lib/images/keyboard/key_alpha.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_alpha_down.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_alpha.png'),
+					width('digenglishCB_lib/images/keyboard/key_alpha.png'),
+					height('digenglishCB_lib/images/keyboard/key_alpha.png')
 				);
 				/*
 				&.key_tab {
 					@include btn_down_dis(
-						resolve('digenglish_lib/images/keyboard/key_tab.png'),
-						resolve('digenglish_lib/images/keyboard/key_tab_down.png'),
-						resolve('digenglish_lib/images/keyboard/key_tab.png'),
-						width('digenglish_lib/images/keyboard/key_tab.png'),
-						height('digenglish_lib/images/keyboard/key_tab.png')
+						resolve('digenglishCB_lib/images/keyboard/key_tab.png'),
+						resolve('digenglishCB_lib/images/keyboard/key_tab_down.png'),
+						resolve('digenglishCB_lib/images/keyboard/key_tab.png'),
+						width('digenglishCB_lib/images/keyboard/key_tab.png'),
+						height('digenglishCB_lib/images/keyboard/key_tab.png')
 					);
 				}
 				*/
 			}
 			&.key_shift {
 				@include btn_on_dis(
-					resolve('digenglish_lib/images/keyboard/key_shift.png'),
-					resolve('digenglish_lib/images/keyboard/key_shift_down.png'),
-					resolve('digenglish_lib/images/keyboard/key_shift.png'),
-					width('digenglish_lib/images/keyboard/key_shift.png'),
-					height('digenglish_lib/images/keyboard/key_shift.png')
+					resolve('digenglishCB_lib/images/keyboard/key_shift.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_shift_down.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_shift.png'),
+					width('digenglishCB_lib/images/keyboard/key_shift.png'),
+					height('digenglishCB_lib/images/keyboard/key_shift.png')
 				);
 			}
 			&.key_enter {
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/keyboard/key_enter.png'),
-					resolve('digenglish_lib/images/keyboard/key_enter_down.png'),
-					resolve('digenglish_lib/images/keyboard/key_enter.png'),
-					width('digenglish_lib/images/keyboard/key_enter.png'),
-					height('digenglish_lib/images/keyboard/key_enter.png')
+					resolve('digenglishCB_lib/images/keyboard/key_enter.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_enter_down.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_enter.png'),
+					width('digenglishCB_lib/images/keyboard/key_enter.png'),
+					height('digenglishCB_lib/images/keyboard/key_enter.png')
 				);
 			}
 			&.done {
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/keyboard/key_done.png'),
-					resolve('digenglish_lib/images/keyboard/key_done.png'),
-					resolve('digenglish_lib/images/keyboard/key_done.png'),
-					width('digenglish_lib/images/keyboard/key_done.png'),
-					height('digenglish_lib/images/keyboard/key_done.png')
+					resolve('digenglishCB_lib/images/keyboard/key_done.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_done.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_done.png'),
+					width('digenglishCB_lib/images/keyboard/key_done.png'),
+					height('digenglishCB_lib/images/keyboard/key_done.png')
 				);
 
 				&.dis{
@@ -195,11 +195,11 @@
 			}
 			&.key_space {
 				@include btn_down_dis(
-					resolve('digenglish_lib/images/keyboard/key_space.png'),
-					resolve('digenglish_lib/images/keyboard/key_space_down.png'),
-					resolve('digenglish_lib/images/keyboard/key_space.png'),
-					width('digenglish_lib/images/keyboard/key_space.png'),
-					height('digenglish_lib/images/keyboard/key_space.png')
+					resolve('digenglishCB_lib/images/keyboard/key_space.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_space_down.png'),
+					resolve('digenglishCB_lib/images/keyboard/key_space.png'),
+					width('digenglishCB_lib/images/keyboard/key_space.png'),
+					height('digenglishCB_lib/images/keyboard/key_space.png')
 				);
 			}
 		}
@@ -214,11 +214,11 @@
 		left:20px;
 		top:-80px;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/keyboard/key_view.png'),
-			resolve('digenglish_lib/images/keyboard/key_view_down.png'),
-			resolve('digenglish_lib/images/keyboard/key_view.png'),
-			width('digenglish_lib/images/keyboard/key_view.png'),
-			height('digenglish_lib/images/keyboard/key_view.png')
+			resolve('digenglishCB_lib/images/keyboard/key_view.png'),
+			resolve('digenglishCB_lib/images/keyboard/key_view_down.png'),
+			resolve('digenglishCB_lib/images/keyboard/key_view.png'),
+			width('digenglishCB_lib/images/keyboard/key_view.png'),
+			height('digenglishCB_lib/images/keyboard/key_view.png')
 		);
 	}
 	.key_hide {
@@ -230,11 +230,11 @@
 		top: -55px;
 		left: 20px;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/keyboard/key_hide.png'),
-			resolve('digenglish_lib/images/keyboard/key_hide_down.png'),
-			resolve('digenglish_lib/images/keyboard/key_hide.png'),
-			width('digenglish_lib/images/keyboard/key_hide.png'),
-			height('digenglish_lib/images/keyboard/key_hide.png')
+			resolve('digenglishCB_lib/images/keyboard/key_hide.png'),
+			resolve('digenglishCB_lib/images/keyboard/key_hide_down.png'),
+			resolve('digenglishCB_lib/images/keyboard/key_hide.png'),
+			width('digenglishCB_lib/images/keyboard/key_hide.png'),
+			height('digenglishCB_lib/images/keyboard/key_hide.png')
 		);
 	}
 

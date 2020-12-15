@@ -28,11 +28,11 @@
 				display: inline-block;
 				vertical-align: top;
 				@include btn_on_dis(
-					resolve('digenglish_lib/images/result/btn_Q.png'),
-					resolve('digenglish_lib/images/result/btn_Q_on.png'),
-					resolve('digenglish_lib/images/result/btn_Q_on.png'),
-					width('digenglish_lib/images/result/btn_Q.png'),
-					height('digenglish_lib/images/result/btn_Q.png')
+					resolve('digenglishCB_lib/images/result/btn_Q.png'),
+					resolve('digenglishCB_lib/images/result/btn_Q_on.png'),
+					resolve('digenglishCB_lib/images/result/btn_Q_on.png'),
+					width('digenglishCB_lib/images/result/btn_Q.png'),
+					height('digenglishCB_lib/images/result/btn_Q.png')
 				);
 			}
 			.btn_s{
@@ -40,11 +40,11 @@
 				display: inline-block;
 				vertical-align: top;
 				@include btn_on_dis(
-					resolve('digenglish_lib/images/result/btn_S.png'),
-					resolve('digenglish_lib/images/result/btn_S_on.png'),
-					resolve('digenglish_lib/images/result/btn_S_on.png'),
-					width('digenglish_lib/images/result/btn_S.png'),
-					height('digenglish_lib/images/result/btn_S.png')
+					resolve('digenglishCB_lib/images/result/btn_S.png'),
+					resolve('digenglishCB_lib/images/result/btn_S_on.png'),
+					resolve('digenglishCB_lib/images/result/btn_S_on.png'),
+					width('digenglishCB_lib/images/result/btn_S.png'),
+					height('digenglishCB_lib/images/result/btn_S.png')
 				);
 			}
 
@@ -53,25 +53,25 @@
 			position: absolute;
 			top: 40px;
 			left: 61px;
-			background: resolve('digenglish_lib/images/result/icon_team_info.png');
-			width:  width('digenglish_lib/images/result/icon_team_info.png');
-			height:  height('digenglish_lib/images/result/icon_team_info.png');
+			background: resolve('digenglishCB_lib/images/result/icon_team_info.png');
+			width:  width('digenglishCB_lib/images/result/icon_team_info.png');
+			height:  height('digenglishCB_lib/images/result/icon_team_info.png');
 		}
 		.icon_inclass_info {
 			position: absolute;
 			top: 40px;
 			left: 61px;
-			background: resolve('digenglish_lib/images/result/result_inclass_info.png');
-			width:  width('digenglish_lib/images/result/result_inclass_info.png');
-			height:  height('digenglish_lib/images/result/result_inclass_info.png');
+			background: resolve('digenglishCB_lib/images/result/result_inclass_info.png');
+			width:  width('digenglishCB_lib/images/result/result_inclass_info.png');
+			height:  height('digenglishCB_lib/images/result/result_inclass_info.png');
 		}
 		.icon_result_info {
 			position: absolute;
 			top: 40px;
 			left: 61px;
-			background: resolve('digenglish_lib/images/result/result_info.png');
-			width:  width('digenglish_lib/images/result/result_info.png');
-			height:  height('digenglish_lib/images/result/result_info.png');
+			background: resolve('digenglishCB_lib/images/result/result_info.png');
+			width:  width('digenglishCB_lib/images/result/result_info.png');
+			height:  height('digenglishCB_lib/images/result/result_info.png');
 		}
 
 		.question{
@@ -200,9 +200,9 @@
 				position:absolute;
 				opacity: 0;
 
-				width: width("digenglish_lib/images/result/icon_team_info.png");
-				height: height("digenglish_lib/images/result/icon_team_info.png");
-				background-image: resolve("digenglish_lib/images/result/icon_team_info.png");
+				width: width("digenglishCB_lib/images/result/icon_team_info.png");
+				height: height("digenglishCB_lib/images/result/icon_team_info.png");
+				background-image: resolve("digenglishCB_lib/images/result/icon_team_info.png");
 			}
 			.list{
 				height: 57px;
@@ -212,7 +212,7 @@
 					vertical-align: top;
 					text-align: center;
 					width: 40px;
-					height: height("digenglish_lib/images/result/icon_gold.png");
+					height: height("digenglishCB_lib/images/result/icon_gold.png");
 					background-repeat: no-repeat;
 					margin-right: 10px;
 					&.grade{	 /* 19-02-08 190125_검수사항 p.15 수정*/
@@ -222,15 +222,15 @@
 					}
 					&.grade1{
 						color: transparent;
-						background-image: resolve("digenglish_lib/images/result/icon_gold.png");
+						background-image: resolve("digenglishCB_lib/images/result/icon_gold.png");
 					}
 					&.grade2{
 						color: transparent;
-						background-image: resolve("digenglish_lib/images/result/icon_silver.png");
+						background-image: resolve("digenglishCB_lib/images/result/icon_silver.png");
 					}
 					&.grade3{
 						color: transparent;
-						background-image: resolve("digenglish_lib/images/result/icon_bronze.png");
+						background-image: resolve("digenglishCB_lib/images/result/icon_bronze.png");
 					}
 				}
 				&>span:nth-child(2){
@@ -339,9 +339,9 @@
 					&>.icon_average {
 						position: absolute;
 						margin-left: -23px;
-						background-image: resolve('digenglish_lib/images/result/icon_average.png');
-						width: width('digenglish_lib/images/result/icon_average.png');
-						height: height('digenglish_lib/images/result/icon_average.png');
+						background-image: resolve('digenglishCB_lib/images/result/icon_average.png');
+						width: width('digenglishCB_lib/images/result/icon_average.png');
+						height: height('digenglishCB_lib/images/result/icon_average.png');
 						font-size: 12px;
 						&>span:nth-child(1) {
 							display: inline-block;
@@ -443,9 +443,9 @@
 		}
 		.question_g{
 			@include page;
-				background: resolve('digenglish_lib/images/result/bg_group_result.png');
+				background: resolve('digenglishCB_lib/images/result/bg_group_result.png');
 				width: 100%;
-				height: height('digenglish_lib/images/result/bg_group_result.png');
+				height: height('digenglishCB_lib/images/result/bg_group_result.png');
 			.point{
 				position: absolute;
 				width: 130px;height:70px;
@@ -467,9 +467,9 @@
 				position:absolute;
 				top: 58px;
 
-				background: resolve('digenglish_lib/images/result/icon_crown.png');
-				width: width('digenglish_lib/images/result/icon_crown.png');
-				height: height('digenglish_lib/images/result/icon_crown.png');
+				background: resolve('digenglishCB_lib/images/result/icon_crown.png');
+				width: width('digenglishCB_lib/images/result/icon_crown.png');
+				height: height('digenglishCB_lib/images/result/icon_crown.png');
 
 				&.ga{
 					left: 246px;

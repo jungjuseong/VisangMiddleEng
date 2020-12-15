@@ -30,7 +30,7 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 		const leftOffset = viewDiv === 'direction' ? 0 : -1280;
 
 		const videoProps = {
-			video_url: _digenglish_lib_ + 'direction/ls_comprehension.webp',
+			video_url: _digenglishCB_lib_ + 'direction/ls_comprehension.webp',
 			video_frame: 125
 		};
 		const modeProps = {	qsMode,	scriptMode,	questionView, questionProg, scriptProg,	state, actions };
@@ -47,8 +47,8 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 				<div>
 					<SContent view={viewDiv === 'content'} {...modeProps} />
 					<Loading view={loading}/>
-					<SVGAni className="goodjob-svg" view={goodjob} delay={3000}	data={`${_digenglish_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
-					<SVGEmbed className="eyeon_svg" data={`${_digenglish_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
+					<SVGAni className="goodjob-svg" view={goodjob} delay={3000}	data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
 				</div>
 			</div></div>
 

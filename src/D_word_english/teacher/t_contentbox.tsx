@@ -131,7 +131,7 @@ class ContentBox extends React.Component<IContentBoxProps> {
 							view={state.viewDiv === 'direction'} 
 							on={state.directionON} 
 							isTeacher={true}
-							video_url={_digenglish_lib_ + 'direction/ls_rw_voca.webp'}
+							video_url={_digenglishCB_lib_ + 'direction/ls_rw_voca.webp'}
 							video_frame={125}
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}

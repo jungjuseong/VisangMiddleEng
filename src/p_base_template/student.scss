@@ -6,7 +6,7 @@
 @import "./student/s_sample.scss";
 
 #wrap{
-	background-image:resolve("digenglish_lib/images/theme2_p_bg.png");
+	background-image:resolve("digenglishCB_lib/images/theme2_p_bg.png");
 	font-family: NotoSans;
 	&>.eyeon_svg{
 		@include page;

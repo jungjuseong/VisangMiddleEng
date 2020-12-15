@@ -9,20 +9,20 @@
 		visibility: hidden;
 		overflow:hidden; 
 		z-index:-1;
-		content: 	resolve('digenglish_lib/team/board/spindle_bg_on.png') 
-					resolve('digenglish_lib/team/board/pointer_on.png')
-					resolve('digenglish_lib/team/board/spindle_result_10.png')
-					resolve('digenglish_lib/team/board/spindle_result_20.png')
-					resolve('digenglish_lib/team/board/spindle_result_30.png')
-					resolve('digenglish_lib/team/board/spindle_result_40.png')
-					resolve('digenglish_lib/team/board/spindle_result_50.png')
+		content: 	resolve('digenglishCB_lib/team/board/spindle_bg_on.png') 
+					resolve('digenglishCB_lib/team/board/pointer_on.png')
+					resolve('digenglishCB_lib/team/board/spindle_result_10.png')
+					resolve('digenglishCB_lib/team/board/spindle_result_20.png')
+					resolve('digenglishCB_lib/team/board/spindle_result_30.png')
+					resolve('digenglishCB_lib/team/board/spindle_result_40.png')
+					resolve('digenglishCB_lib/team/board/spindle_result_50.png')
 		;
 	}
 	position: absolute;
 	left: 0px; top: 0px;
-	background-image: resolve('digenglish_lib/team/board/spindle_background.png');
-	width: width('digenglish_lib/team/board/spindle_background.png');
-	height: height('digenglish_lib/team/board/spindle_background.png');
+	background-image: resolve('digenglishCB_lib/team/board/spindle_background.png');
+	width: width('digenglishCB_lib/team/board/spindle_background.png');
+	height: height('digenglishCB_lib/team/board/spindle_background.png');
 
 	.quizbox{
 		position: absolute;
@@ -37,9 +37,9 @@
 			font-size: 22px;
 			font-weight: normal;
 			color: rgba(255, 255, 255, 0.6);
-			background: resolve('digenglish_lib/team/board/bg_num.png') no-repeat;
-			width: width('digenglish_lib/team/board/bg_num.png');
-			height: height('digenglish_lib/team/board/bg_num.png');
+			background: resolve('digenglishCB_lib/team/board/bg_num.png') no-repeat;
+			width: width('digenglishCB_lib/team/board/bg_num.png');
+			height: height('digenglishCB_lib/team/board/bg_num.png');
 			&>div{
 				position: relative;
 				top: 0px;
@@ -56,16 +56,16 @@
 					background-color: rgba(255, 252, 0, 0.302);
 				}
 				&.ga>div{
-					background-image: resolve("digenglish_lib/team/board/icon_ga_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_ga_on.png");
 				}
 				&.na>div{
-					background-image: resolve("digenglish_lib/team/board/icon_na_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_na_on.png");
 				}
 				&.tie>div{
-					background-image: resolve("digenglish_lib/team/board/icon_gana_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_gana_on.png");
 				}
 				&.zero>div{
-					background-image: resolve("digenglish_lib/team/board/icon_zero_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_zero_on.png");
 				}
 			}
 			&.complete{
@@ -74,16 +74,16 @@
 					background-color: transparent;	
 				}
 				&.ga>div{
-					background-image: resolve("digenglish_lib/team/board/icon_ga_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_ga_on.png");
 				}
 				&.na>div{
-					background-image: resolve("digenglish_lib/team/board/icon_na_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_na_on.png");
 				}
 				&.tie>div{
-					background-image: resolve("digenglish_lib/team/board/icon_gana_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_gana_on.png");
 				}
 				&.zero>div{
-					background-image: resolve("digenglish_lib/team/board/icon_zero_on.png");
+					background-image: resolve("digenglishCB_lib/team/board/icon_zero_on.png");
 				}
 			}
 		}
@@ -94,19 +94,19 @@
 				font-size: 18px;
 				line-height: 35px;
 				margin: 0px;
-				background: resolve('digenglish_lib/team/board/bg_num_s.png') no-repeat;
-				width: width('digenglish_lib/team/board/bg_num_s.png');
-				height: height('digenglish_lib/team/board/bg_num_s.png');
+				background: resolve('digenglishCB_lib/team/board/bg_num_s.png') no-repeat;
+				width: width('digenglishCB_lib/team/board/bg_num_s.png');
+				height: height('digenglishCB_lib/team/board/bg_num_s.png');
 				&>div { width: 50px; height: 50px; }
 				&.current{
-					&.ga>div{ background-image: resolve("digenglish_lib/team/board/icon_ga_s_on.png"); }
-					&.na>div{ background-image: resolve("digenglish_lib/team/board/icon_na_s_on.png"); }
-					&.tie>div{ background-image: resolve("digenglish_lib/team/board/icon_gana_s_on.png"); }
+					&.ga>div{ background-image: resolve("digenglishCB_lib/team/board/icon_ga_s_on.png"); }
+					&.na>div{ background-image: resolve("digenglishCB_lib/team/board/icon_na_s_on.png"); }
+					&.tie>div{ background-image: resolve("digenglishCB_lib/team/board/icon_gana_s_on.png"); }
 				}
 				&.complete{
-					&.ga>div{ background-image: resolve("digenglish_lib/team/board/icon_ga_s_on.png"); }
-					&.na>div{ background-image: resolve("digenglish_lib/team/board/icon_na_s_on.png"); }
-					&.tie>div{ background-image: resolve("digenglish_lib/team/board/icon_gana_s_on.png"); }
+					&.ga>div{ background-image: resolve("digenglishCB_lib/team/board/icon_ga_s_on.png"); }
+					&.na>div{ background-image: resolve("digenglishCB_lib/team/board/icon_na_s_on.png"); }
+					&.tie>div{ background-image: resolve("digenglishCB_lib/team/board/icon_gana_s_on.png"); }
 				}
 			}
 		}
@@ -131,13 +131,13 @@
 		left: 392px;
 		top: 216px;
 
-		background-image: resolve('digenglish_lib/team/board/spindle_bg.png');
+		background-image: resolve('digenglishCB_lib/team/board/spindle_bg.png');
 		background-repeat: no-repeat;
-		width: width('digenglish_lib/team/board/spindle_bg.png');
-		height: height('digenglish_lib/team/board/spindle_bg.png');
+		width: width('digenglishCB_lib/team/board/spindle_bg.png');
+		height: height('digenglishCB_lib/team/board/spindle_bg.png');
 
 		&.on{
-			background-image: resolve('digenglish_lib/team/board/spindle_bg_on.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle_bg_on.png');
 			background-repeat: no-repeat;
 		}
 
@@ -145,10 +145,10 @@
 			position: absolute;
 			left: 65px;
 			top: 55px;
-			background-image: resolve('digenglish_lib/team/board/spindle.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle.png');
 			background-repeat: no-repeat;
-			width: width('digenglish_lib/team/board/spindle.png');
-			height: height('digenglish_lib/team/board/spindle.png');
+			width: width('digenglishCB_lib/team/board/spindle.png');
+			height: height('digenglishCB_lib/team/board/spindle.png');
 
 			transition: transform 1.3s cubic-bezier(0.165, 0.840, 0.235, 0.995);
 
@@ -157,11 +157,11 @@
 				left: 126px;
    				top: 126px;
 				@include btn_down_dis(
-					resolve('digenglish_lib/team/board/btn_spindle.png'),
-					resolve('digenglish_lib/team/board/btn_spindle_on.png'),
-					resolve('digenglish_lib/team/board/btn_spindle.png'),
-					width('digenglish_lib/team/board/btn_spindle.png'),
-					height('digenglish_lib/team/board/btn_spindle.png')
+					resolve('digenglishCB_lib/team/board/btn_spindle.png'),
+					resolve('digenglishCB_lib/team/board/btn_spindle_on.png'),
+					resolve('digenglishCB_lib/team/board/btn_spindle.png'),
+					width('digenglishCB_lib/team/board/btn_spindle.png'),
+					height('digenglishCB_lib/team/board/btn_spindle.png')
 				);
 
 				&.on{
@@ -176,9 +176,9 @@
 		left: 457px;
 		top: 271px;
 		
-		background-image: resolve('digenglish_lib/team/board/spindle_result_10.png');
-		width: width('digenglish_lib/team/board/spindle.png');
-		height: height('digenglish_lib/team/board/spindle.png');
+		background-image: resolve('digenglishCB_lib/team/board/spindle_result_10.png');
+		width: width('digenglishCB_lib/team/board/spindle.png');
+		height: height('digenglishCB_lib/team/board/spindle.png');
 		background-size: cover;		
 
 
@@ -204,11 +204,11 @@
 			z-index: 2;
 			margin-top: 20px;
 			@include btn_down_dis(
-				resolve('digenglish_lib/team/board/btn_reselect.png'),
-				resolve('digenglish_lib/team/board/btn_reselect_down.png'),
-				resolve('digenglish_lib/team/board/btn_reselect.png'),
-				width('digenglish_lib/team/board/btn_reselect.png'),
-				height('digenglish_lib/team/board/btn_reselect.png')
+				resolve('digenglishCB_lib/team/board/btn_reselect.png'),
+				resolve('digenglishCB_lib/team/board/btn_reselect_down.png'),
+				resolve('digenglishCB_lib/team/board/btn_reselect.png'),
+				width('digenglishCB_lib/team/board/btn_reselect.png'),
+				height('digenglishCB_lib/team/board/btn_reselect.png')
 			);
 		}
 		.point{
@@ -224,10 +224,10 @@
 			.icon{
 				margin-top: 25px;
 				display: inline-block;
-				background-image: resolve('digenglish_lib/team/board/point.png');
+				background-image: resolve('digenglishCB_lib/team/board/point.png');
 				background-repeat: no-repeat;
-				width: width('digenglish_lib/team/board/point.png');
-				height: height('digenglish_lib/team/board/point.png');					
+				width: width('digenglishCB_lib/team/board/point.png');
+				height: height('digenglishCB_lib/team/board/point.png');					
 			}
 			&>div{
 				font-size: 35px;
@@ -238,23 +238,23 @@
 		}
 
 		&.p10{
-			background-image: resolve('digenglish_lib/team/board/spindle_result_10.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle_result_10.png');
 			background-size: cover;	
 		}
 		&.p20{
-			background: resolve('digenglish_lib/team/board/spindle_result_20.png') no-repeat;
+			background: resolve('digenglishCB_lib/team/board/spindle_result_20.png') no-repeat;
 			background-size: cover;	
 		}
 		&.p30{
-			background-image: resolve('digenglish_lib/team/board/spindle_result_30.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle_result_30.png');
 			background-size: cover;	
 		}
 		&.p40{
-			background-image: resolve('digenglish_lib/team/board/spindle_result_40.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle_result_40.png');
 			background-size: cover;	
 		}
 		&.p50{
-			background-image: resolve('digenglish_lib/team/board/spindle_result_50.png');
+			background-image: resolve('digenglishCB_lib/team/board/spindle_result_50.png');
 			background-size: cover;	
 		}
 	}
@@ -262,12 +262,12 @@
 		position: absolute;
 		left: 595px;
 		top: 212px;
-		background-image: resolve('digenglish_lib/team/board/pointer.png');
-		width: width('digenglish_lib/team/board/pointer.png');
-		height: height('digenglish_lib/team/board/pointer.png');
+		background-image: resolve('digenglishCB_lib/team/board/pointer.png');
+		width: width('digenglishCB_lib/team/board/pointer.png');
+		height: height('digenglishCB_lib/team/board/pointer.png');
 
 		&.on{
-			background-image: resolve('digenglish_lib/team/board/pointer_on.png');
+			background-image: resolve('digenglishCB_lib/team/board/pointer_on.png');
 		}
 	}
 	.cover{
@@ -291,11 +291,11 @@
 		.btn_done {
 			position: absolute; top: 102px; left: 13px;
 			@include btn_down_dis(
-				resolve('digenglish_lib/team/board/btn_done.png'),
-				resolve('digenglish_lib/team/board/btn_done.png'),
-				resolve('digenglish_lib/team/board/btn_done_dis.png'),
-				width('digenglish_lib/team/board/btn_done.png'),
-				height('digenglish_lib/team/board/btn_done.png')
+				resolve('digenglishCB_lib/team/board/btn_done.png'),
+				resolve('digenglishCB_lib/team/board/btn_done.png'),
+				resolve('digenglishCB_lib/team/board/btn_done_dis.png'),
+				width('digenglishCB_lib/team/board/btn_done.png'),
+				height('digenglishCB_lib/team/board/btn_done.png')
 			);
 		}
 	}
@@ -434,7 +434,7 @@
 
 @keyframes share-btn-start-blinker{
 	50% {
-		background-image: resolve('digenglish_lib/team/board/btn_spindle_on.png');
+		background-image: resolve('digenglishCB_lib/team/board/btn_spindle_on.png');
 	}
 }
 @keyframes share-all-zero-percent{

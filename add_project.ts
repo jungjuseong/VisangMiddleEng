@@ -15,7 +15,7 @@ const project = argv[nproject + 1];
 const PREFIX = prefix.toUpperCase();
 
 const CONTENT = path.resolve(__dirname, './output/resources/app/public/content');
-const FEL_LIB = path.resolve(CONTENT, './digenglish_lib');
+const FEL_LIB = path.resolve(CONTENT, './digenglishCB_lib');
 
 function _check_folder() {
 	let checkFdr = path.resolve(__dirname, `./src/${prefix}_${project}`);

@@ -27,7 +27,7 @@ const SVGBgHoc = useStudent((store: StudentContext) => (
 	<Observer>{() => (
 		<SVGBg 
 			className="bg_svg" 
-			data="/content/digenglish_lib/images/theme0_bg.svg" 
+			data="/content/digenglishCB_lib/images/theme0_bg.svg" 
 			{...store.state.svg_bg}
 		/>
 	)}</Observer>
@@ -47,7 +47,7 @@ const EyeOnHoc = useStudent((store: StudentContext) => (
 	<Observer>{() => (
 		<SVGEmbed 
 			className="eyeon_svg" 
-			data="/content/digenglish_lib/images/eyeon2.svg"
+			data="/content/digenglishCB_lib/images/eyeon2.svg"
 			view={store.state.viewDiv === 'eyeon'}
 			bPlay={false}
 		/>

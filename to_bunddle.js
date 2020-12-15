@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const sass = require('node-sass');
 
-const TGTJS = path.join(__dirname, 'output/resources/app/public/content/digenglish_lib/bunddle.js');
-const TGTCSS = path.join(__dirname, 'output/resources/app/public/content/digenglish_lib/bunddle.css');
+const TGTJS = path.join(__dirname, 'output/resources/app/public/content/digenglishCB_lib/bunddle.js');
+const TGTCSS = path.join(__dirname, 'output/resources/app/public/content/digenglishCB_lib/bunddle.css');
 const MODULES =  path.join(__dirname, 'node_modules');
 
 let isProd = true;

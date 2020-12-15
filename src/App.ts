@@ -6,8 +6,8 @@ function _initStudent<T extends IStudent|null>(student: T): T {
 	student.displayMode = ('' + student.displayMode) === '2' ? '2' : '1';
 	let thumb = student.thumb ? student.thumb : '';
 	if(thumb.startsWith('static/') || thumb === '') {
-		if(thumb.endsWith('w.jpg')) thumb = `${_digenglish_lib_}/images/default_member_w.jpg`;
-		else thumb = `${_digenglish_lib_}/images/default_member_m.jpg`;
+		if(thumb.endsWith('w.jpg')) thumb = `${_digenglishCB_lib_}/images/default_member_w.jpg`;
+		else thumb = `${_digenglishCB_lib_}/images/default_member_m.jpg`;
 	}
 	student.thumb = thumb;
 	return student;

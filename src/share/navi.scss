@@ -43,11 +43,11 @@
 		margin-top:40px;
 		margin-bottom:40px;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/page_left_L.png'), 
-			resolve('digenglish_lib/images/page_left_L_down.png'),
-			resolve('digenglish_lib/images/page_left_L_dis.png'),
-			width('digenglish_lib/images/page_left_L.png'),
-			height('digenglish_lib/images/page_left_L.png')			
+			resolve('digenglishCB_lib/images/page_left_L.png'), 
+			resolve('digenglishCB_lib/images/page_left_L_down.png'),
+			resolve('digenglishCB_lib/images/page_left_L_dis.png'),
+			width('digenglishCB_lib/images/page_left_L.png'),
+			height('digenglishCB_lib/images/page_left_L.png')			
 		);
 	}
 	button.right{
@@ -56,11 +56,11 @@
 		margin-bottom:40px;
 		pointer-events: auto;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/page_right_L.png'), 
-			resolve('digenglish_lib/images/page_right_L_down.png'),
-			resolve('digenglish_lib/images/page_right_L_dis.png'),
-			width('digenglish_lib/images/page_right_L.png'),
-			height('digenglish_lib/images/page_right_L.png')			
+			resolve('digenglishCB_lib/images/page_right_L.png'), 
+			resolve('digenglishCB_lib/images/page_right_L_down.png'),
+			resolve('digenglishCB_lib/images/page_right_L_dis.png'),
+			width('digenglishCB_lib/images/page_right_L.png'),
+			height('digenglishCB_lib/images/page_right_L.png')			
 		);
 	}
 }
@@ -81,11 +81,11 @@
 		margin-top:40px;
 		margin-bottom:40px;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/page_left_R.png'), 
-			resolve('digenglish_lib/images/page_left_R_down.png'),
-			resolve('digenglish_lib/images/page_left_R_dis.png'),
-			width('digenglish_lib/images/page_left_R.png'),
-			height('digenglish_lib/images/page_left_R.png')			
+			resolve('digenglishCB_lib/images/page_left_R.png'), 
+			resolve('digenglishCB_lib/images/page_left_R_down.png'),
+			resolve('digenglishCB_lib/images/page_left_R_dis.png'),
+			width('digenglishCB_lib/images/page_left_R.png'),
+			height('digenglishCB_lib/images/page_left_R.png')			
 		);
 	}
 	button.right{
@@ -94,11 +94,11 @@
 		margin-bottom:40px;
 		pointer-events: auto;
 		@include btn_down_dis(
-			resolve('digenglish_lib/images/page_right_R.png'), 
-			resolve('digenglish_lib/images/page_right_R_down.png'),
-			resolve('digenglish_lib/images/page_right_R_dis.png'),
-			width('digenglish_lib/images/page_right_R.png'),
-			height('digenglish_lib/images/page_right_R.png')			
+			resolve('digenglishCB_lib/images/page_right_R.png'), 
+			resolve('digenglishCB_lib/images/page_right_R_down.png'),
+			resolve('digenglishCB_lib/images/page_right_R_dis.png'),
+			width('digenglishCB_lib/images/page_right_R.png'),
+			height('digenglishCB_lib/images/page_right_R.png')			
 		);
 	}
 }

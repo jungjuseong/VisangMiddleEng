@@ -105,11 +105,11 @@
 			line-height: 120%;
 			.btn_answer{	/* 정답 화살표 대신 answer버튼으로 변경해야함 */
 				@include btn_on_dis(
-					resolve('digenglish_lib/images/quiz/icon_answer.png'),
-					resolve('digenglish_lib/images/quiz/icon_answer.png'),
-					resolve('digenglish_lib/images/quiz/icon_answer.png'),
-					width('digenglish_lib/images/quiz/icon_answer.png'),
-					height('digenglish_lib/images/quiz/icon_answer.png')
+					resolve('digenglishCB_lib/images/quiz/icon_answer.png'),
+					resolve('digenglishCB_lib/images/quiz/icon_answer.png'),
+					resolve('digenglishCB_lib/images/quiz/icon_answer.png'),
+					width('digenglishCB_lib/images/quiz/icon_answer.png'),
+					height('digenglishCB_lib/images/quiz/icon_answer.png')
 				);
 				background-size: cover;
 				position: absolute;	left: -10px; top: -55px;		
