@@ -1,10 +1,10 @@
 @import '../../../share/CoverPopup.scss';
 @mixin pop_trans {
     .btn_pop_trans {
-        @include btn_on_dis( resolve('teacher/images/btn_trans.png'), resolve('teacher/images/btn_trans_down.png'), resolve('teacher/images/btn_trans_down.png'), width('teacher/images/btn_trans.png'), height('teacher/images/btn_trans.png'), );
+        @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_trans_down.png'), resolve('teacher/images/btn_trans_down.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'), );
         position: absolute;
-        left: 85px;
-        top: 155px;
+        left: 80px;
+        top: 130px;
         z-index: 100;
     }
     .pop_trans {
