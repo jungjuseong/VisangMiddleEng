@@ -4,26 +4,23 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
-
 import { App } from '../../../App';
-
 import { CoverPopup } from '../../../share/CoverPopup';
 import { ILetstalk } from '../../common';
-
 import { BtnAudio } from '../../../share/BtnAudio';
 import ImgPopup from './_img_popup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface ILetsTalk {
+interface ILetsTalkProps {
 	view: boolean;
 	onClosed: () => void;
 	data: ILetstalk;
 }
 
 @observer
-class LetsTalk extends React.Component<ILetsTalk> {
+class LetsTalk extends React.Component<ILetsTalkProps> {
 	@observable private _view = false;
 	@observable private _hint = false;
 	@observable private _zoom = false;
@@ -49,7 +46,7 @@ class LetsTalk extends React.Component<ILetsTalk> {
 
 	private _btnAudio?: BtnAudio;
 	
-	public constructor(props: ILetsTalk) {
+	public constructor(props: ILetsTalkProps) {
 		super(props);
 		
 		this._jsx_sentence = _getJSX(props.data.sentence);
@@ -100,17 +97,19 @@ class LetsTalk extends React.Component<ILetsTalk> {
 	}
 
 	private _clickZoom1 = () => {
-		if(!this._view) return;
-		App.pub_playBtnTab();
-		this._zoomImgUrl = App.data_url + this.props.data.img1;
-		this._zoom = true;
+		if(this._view) {
+			App.pub_playBtnTab();
+			this._zoomImgUrl = App.data_url + this.props.data.img1;
+			this._zoom = true;
+		}
 	}
 
 	private _clickZoom2 = () => {
-		if(!this._view) return;
-		App.pub_playBtnTab();
-		this._zoomImgUrl = App.data_url + this.props.data.img2;
-		this._zoom = true;
+		if(this._view) {
+			App.pub_playBtnTab();
+			this._zoomImgUrl = App.data_url + this.props.data.img2;
+			this._zoom = true;
+		}
 	}
 
 	private _closedZoom = () => {
@@ -118,8 +117,9 @@ class LetsTalk extends React.Component<ILetsTalk> {
 		this._zoomImgUrl = '';
 	}
 
- 	public componentDidUpdate(prev: ILetsTalk) {
-		if(this.props.view && !prev.view) {
+ 	public componentDidUpdate(prev: ILetsTalkProps) {
+		const { view } = this.props;
+		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
 			this._zoom = false;
@@ -137,7 +137,7 @@ class LetsTalk extends React.Component<ILetsTalk> {
 				}				
 			}, 300);
 
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._view = false;	
 			this._zoom = false;
 			this._zoomImgUrl = '';
@@ -158,9 +158,7 @@ class LetsTalk extends React.Component<ILetsTalk> {
 				<div className="pop_bg">
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosepop}/>
 					<ToggleBtn className="btn_hint" on={this._hint} onClick={this._viewHint}/>
-
 						<div className="popbox">
-
 							<div className="image_box">
 								<img  src={App.data_url + data.img1} draggable={false}/>
 								{img2}

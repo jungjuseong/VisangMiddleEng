@@ -37,19 +37,21 @@ class NItem extends React.Component<{ idx: number, on: boolean, onClick: (idx: n
 }
 
 function _isSendingProgram(state: IStateCtx): boolean {
-    return (state.questionProg === SENDPROG.SENDED || state.questionProg === SENDPROG.SENDING || state.qnaProg >= SENDPROG.SENDING);
+    return (state.questionProg === SENDPROG.SENDED || 
+        state.questionProg === SENDPROG.SENDING || 
+        state.qnaProg >= SENDPROG.SENDING);
 }
 
-interface IComprehension {
+interface IComprehensionProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class Comprehension extends React.Component<IComprehension> {
+class Comprehension extends React.Component<IComprehensionProps> {
     private m_player = new MPlayer(new MConfig(true));
-    private m_player_inittime = 0; // 비디오 시작시간 
+    private m_player_inittime = 0; // 비디오 시작 시간 
 	private m_swiper: SwiperComponent|null = null;
 	private m_data: IData;
 	
@@ -59,7 +61,6 @@ class Comprehension extends React.Component<IComprehension> {
 
 	private _tab_save: 'QUESTION'|'SCRIPT' = 'QUESTION';
 	@observable private _hint = false;
-
 	@observable private _view = false;
 	@observable private _curQidx = 0;
 	@observable private _viewClue = false;
@@ -75,16 +76,16 @@ class Comprehension extends React.Component<IComprehension> {
 	@observable private _qselected: number[] = [];
 
 	private _selected: number[] = [];
-
 	private _lastFocusIdx = -1;
-
 	private _countdown = new TimerState(3);
 
 	// private _rollProg: SENDPROG = SENDPROG.READY;
 	private _scontainer?: ScriptContainer;
 	
-	public constructor(props: IComprehension) {
+	public constructor(props: IComprehensionProps) {
         super(props);
+
+        const { actions } = props;
         this.m_data = props.actions.getData();
         this.m_player_inittime = this.m_data.video_start;
 
@@ -98,13 +99,13 @@ class Comprehension extends React.Component<IComprehension> {
             this._focusIdx = -1;
             this.m_player.setMutedTemp(false);
             this._sendDialogueEnd();
-            if (this._title === 'DIALOGUE' && this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
+            if (this._title === 'DIALOGUE' && this._roll === '' && !this._shadowing) actions.setNavi(true, true);
             else if(this._title === 'DIALOGUE' && this._shadowing) this._isShadowPlay = false;
         });
         this.m_player.addOnState((newState, oldState) => {
             let msgtype: 'playing'|'paused';
             if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
-            else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
+            else msgtype = (newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused');
             const msg: IMsg = {
                 msgtype,
             };
@@ -123,7 +124,8 @@ class Comprehension extends React.Component<IComprehension> {
 		for(let i = 0; i < quizs.length; i++) {
 			this._qselected[i] = -1;
 		}
-	}
+    }
+    
 	private onSend = () => {
         const {state, actions} = this.props;
 
@@ -143,7 +145,7 @@ class Comprehension extends React.Component<IComprehension> {
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
             let msg: IMsg;
-            if(	this._title === 'COMPREHENSION' ) {
+            if(this._title === 'COMPREHENSION' ) {
                 actions.clearReturnUsers();
                 actions.setRetCnt(0);
                 actions.setNumOfStudent(App.students.length);
@@ -186,12 +188,9 @@ class Comprehension extends React.Component<IComprehension> {
             _.delay(() => {
                 if(	this._title !== 'COMPREHENSION' || state.qnaProg !== SENDPROG.SENDING) return;
                 state.qnaProg = SENDPROG.SENDED;
-            }, 300);
-            
-            
+            }, 300);           
         } else if(this.c_popup === 'ROLE PLAY') {
-            if(this._title !== 'DIALOGUE' || state.dialogueProg !== SENDPROG.SENDED) return;
-            if(this._roll !== '' || roll === '') return;
+            if(this._title !== 'DIALOGUE' || state.dialogueProg !== SENDPROG.SENDED || this._roll !== '' || roll === '') return;
 
             if(this.m_player.currentTime !== this.m_player_inittime
                 || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
@@ -232,7 +231,7 @@ class Comprehension extends React.Component<IComprehension> {
                 this._shadowing = true;
             }, 300);
         }
-        this.props.actions.setNavi(false, false);
+        actions.setNavi(false, false);
     }
 
 	private _goToIntro = () => {
@@ -243,30 +242,18 @@ class Comprehension extends React.Component<IComprehension> {
 
     /* Hint Bubble */
 	private _clickTranslate = () => {
-        if(this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;	
-        	
+        if(this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;        	
         App.pub_playBtnTab();
         this._viewTrans = !this._viewTrans;
     }
     
 	/* Hint Bubble */
-	private _clickClue = () => {
-		const {state, actions} = this.props;
-		if(this._title !== 'COMPREHENSION') return;
-		else if(this._tab !== 'SCRIPT') return;
+	private _clickViewClue = () => {
+		if(this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;
 		
-		App.pub_playBtnTab();
-		if(this._viewClue) {
-			this._viewClue = false;
-			
-			let msg: IMsg = {msgtype: 'hide_clue',};
-			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-		} else {
-			this._viewClue = true;
-			
-			let msg: IMsg = {msgtype: 'view_clue',};
-			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        }
+        App.pub_playBtnTab();
+        felsocket.sendPAD($SocketType.MSGTOPAD,{msgtype:  (this._viewClue) ? 'hide_clue': 'view_clue'});
+        this._viewClue = !this._viewClue;
     }    
 
 	private _clickCloseHint = () => {
@@ -318,17 +305,17 @@ class Comprehension extends React.Component<IComprehension> {
         else this._curQidx = idx;
 
         if(this._tab === 'QUESTION' && this._curQidx === 0) actions.setNavi(false, true);
-            else actions.setNavi(true, true);
+        else actions.setNavi(true, true);
         this._hint = (this._tab === 'SCRIPT');
     }
     
 	private _clearAll() {
+        const { actions } = this.props;
         App.pub_stop();
         this._title = 'COMPREHENSION';
         this._tab = 'QUESTION';
 
-        const quizs = this.m_data.quizs;
-        for(let i = 0; i < quizs.length; i++) {
+        for(let i = 0; i < this.m_data.quizs.length; i++) {
             this._qselected[i] = -1;
         }
         this._curQidx = 0;
@@ -340,16 +327,15 @@ class Comprehension extends React.Component<IComprehension> {
         this._roll = '';
         this._isShadowPlay = false;
         this._shadowing = false;
-
         this._lastFocusIdx = -1;
         this._focusIdx = -1;
 
-        this.props.actions.setNavi(true, true);
+        actions.setNavi(true, true);
         this.m_player.setMutedTemp(false);
         if(this.m_player.currentTime !== this.m_player_inittime
             || this.m_player.currentTime < this.m_player_inittime) this.m_player.gotoAndPause(this.m_player_inittime * 1000);
                     
-        this.props.actions.init();
+        actions.init();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 	}
 
@@ -713,7 +699,7 @@ class Comprehension extends React.Component<IComprehension> {
         );
 	}
 
-	public componentDidUpdate(prev: IComprehension) {
+	public componentDidUpdate(prev: IComprehensionProps) {
         const { view } = this.props;
         if (view && !prev.view) {
             this._clearAll();
@@ -832,7 +818,7 @@ class Comprehension extends React.Component<IComprehension> {
                     </div>
                     <ToggleBtn className="btn_answer" on={isQComplete} onClick={this._clickAnswer} view={isViewAnswer}/>
                     <ToggleBtn className="btn_trans" onClick={this._clickTranslate} on={this._viewTrans} view={isViewTrans}/>
-                    <ToggleBtn className="btn_clue" onClick={this._clickClue} on={this._viewClue} view={isViewClue}/>
+                    <ToggleBtn className="btn_clue" onClick={this._clickViewClue} on={this._viewClue} view={isViewClue}/>
                 </div>	
                 <div className="right_box">
                     <div className="btn_page_box">
