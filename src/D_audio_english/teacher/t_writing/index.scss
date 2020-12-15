@@ -13,7 +13,7 @@
     .t_writing {
         background: resolve('teacher/images/bg_write.png') no-repeat;
         width: width('teacher/images/bg_write.png');
-        height: height('teacher/images/bg_write.png');
+        height: 613px;
         margin: 117px 66px 47px 69px;
         @include intro_quiz;
         @include confirm_quiz;
@@ -273,7 +273,7 @@
                     position: absolute;
                     top: 10px;
                     right: 20px;
-                    @include btn_down_dis( resolve('teacher/images/btn_script_show.png'), resolve('teacher/images/btn_script_show_down.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_script_show.png'), height('teacher/images/btn_script_show.png'));
+                    @include btn_down_dis( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_show.png'));
                     &.on {
                         background: resolve('teacher/images/btn_script_show_down.png')
                     }
@@ -388,7 +388,7 @@
                     position: absolute;
                     top: 10px;
                     right: 20px;
-                    @include btn_down_dis( resolve('teacher/images/btn_script_show.png'), resolve('teacher/images/btn_script_show_down.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_script_show.png'), height('teacher/images/btn_script_show.png'));
+                    @include btn_down_dis( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_script_show_down.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_script_show.png'));
                 }
                 .video_container {
                     /*수정 필요*/
@@ -396,8 +396,8 @@
                 }
                 .btn_audio {
                     display: block;
-                    margin: 0 auto;
-                    @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                    margin-left: 512px;
+                    @include btn_on( resolve('teacher/images/btn_headset.png'), resolve('teacher/images/btn_headset.png'), width('teacher/images/btn_headset.png'), height('teacher/images/btn_headset.png'), );
                 }
                 .swiper-container {
                     height: 100%;
@@ -428,7 +428,6 @@
         .bottom {
             .btn_QA {
                 position: absolute;
-                bottom: -142px;
                 left: 30%;
                 transform: translateX(-50%);
                 z-index: 1000;
@@ -439,7 +438,6 @@
             }
             .btn_role {
                 position: absolute;
-                bottom: -142px;
                 left: 50%;
                 transform: translateX(-50%);
                 z-index: 1000;
@@ -447,7 +445,6 @@
             }
             .btn_shadowing {
                 position: absolute;
-                bottom: -142px;
                 left: 70%;
                 transform: translateX(-50%);
                 z-index: 1000;

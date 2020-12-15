@@ -53,7 +53,8 @@ class Warmup extends React.Component<IWarmup> {
 		this.props.actions.setNaviFnc(
 			() => {
 				if(this._curIdx_tgt === 0) {
-					this.props.actions.gotoDirection();
+					this.props.actions.gotoDirection()
+					
 				} else {
 					App.pub_stop();
 					App.pub_playBtnPage();
