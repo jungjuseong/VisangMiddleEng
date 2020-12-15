@@ -37,7 +37,7 @@ export interface IQuizStringReturn {
 	answer3: string;
 }
 
-export interface IRollMsg extends IMsg {
+export interface IRollMsg extends IIndexMsg {
 	roll: 'A'|'B';
 }
 

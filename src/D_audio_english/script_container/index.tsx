@@ -4,9 +4,7 @@ import { observer } from 'mobx-react';
 import { IScript,IRolePlay,IQnaReturn } from '../common';
 import ScriptBox from './_script_box';
 
-const SwiperComponent = require('react-id-swiper').default;
-
-interface IScriptContainer {
+export interface IScriptContainerProps {
 	role: IRolePlay;
 	script: IScript[];
 	focusIdx: number;
@@ -27,7 +25,7 @@ interface IScriptContainer {
 }
 
 @observer
-class ScriptContainer extends React.Component<IScriptContainer> {
+class ScriptContainer extends React.Component<IScriptContainerProps> {
 	private m_soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
@@ -51,7 +49,7 @@ class ScriptContainer extends React.Component<IScriptContainer> {
 		// if(fidx < 0) fidx = 0;
 		this.m_swiper.slideTo((fidx - 1) < 0 ? 0 : fidx - 1, dur);
 	}
-	public componentDidUpdate(prev: IScriptContainer) {
+	public componentDidUpdate(prev: IScriptContainerProps) {
 		// console.log(this.props.selected);
 		const { view, shadowing, noSwiping, focusIdx, viewTrans, roll } = this.props;
 

@@ -4037,10 +4037,10 @@ body {
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box {
-    overflow: hidden;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 40px;
+    margin-top: 6px;
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .video {
@@ -4249,11 +4249,11 @@ body {
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control {
-    position: relative;
-    left: 0px;
+    position: absolute;
+    right: 170px;
     bottom: 0px;
-    width: 490px;
-    height: 60px;
+    width: 370px;
+    height: 40px;
     background-color: #333333;
     border-radius: 15px;
 }
@@ -4263,16 +4263,17 @@ body {
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_over .brake_point {
-    position: relative;
-    float: left;
+    position: absolute;
     width: 20px;
     height: 20px;
+    top: -6px;
     background-color: purple;
     margin-right: 13px;
     text-align: center;
     border-radius: 20px;
     color: #fff;
     line-height: 15px;
+    z-index: 3;
 }
 
 #wrap .t_writing .writing_content_box .script_container .video_container .video_box .control .control_left {

@@ -11,7 +11,7 @@ import { IStateCtx, IActionsCtx } from '../t_store';
 import { IWordData,IDrillMsg } from '../../common';
 import { CoverPopup } from '../../../share/CoverPopup';
 import VocaDetail from '../t_voca_detail';
-import { POPUPTYPE } from '../t_voca_detail';
+import { POPUP_TYPE } from '../t_voca_detail';
 
 import * as felsocket from '../../../felsocket';
 
@@ -74,7 +74,7 @@ const _soption: SwiperOptions = {
       },
 };
 
-interface IStudyPopup {
+interface IStudyPopupProps {
 	study: ''|'watch'|'learn'|'speak';
 	idx: number;
 	state: IStateCtx;
@@ -83,11 +83,11 @@ interface IStudyPopup {
 	onClosed: () => void;
 }
 @observer
-class StudyPopup extends React.Component<IStudyPopup> {
+class StudyPopup extends React.Component<IStudyPopupProps> {
 	@observable private m_view = false;
 	@observable private _curIdx = -1;
 	@observable private _curIdx_tgt = -1;
-	@observable private _popup: POPUPTYPE = '';
+	@observable private _popup: POPUP_TYPE = '';
 
 	@observable private _speak_complete = false;
 	@observable private _speak_auto = false;
@@ -106,6 +106,7 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		this._swiper = swiper;
 		this._swiperEvent(swiper);
 	}
+
 	private _swiperEvent(swiper: Swiper) {
 		swiper.on('transitionStart', () => {
 			/* 19-02-11 검수사항 빠르게 지나가도 모두 활성화 되게 하기 추가 수정  */
@@ -134,7 +135,6 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		});
 	}
 
-
 	private _onClose = () => {
 		this.m_view = false;
 		App.pub_stop();
@@ -144,6 +144,7 @@ class StudyPopup extends React.Component<IStudyPopup> {
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 		}	
 	}
+
 	private _onPage = (idx: number) => {
 		if(!this._swiper || this._speak_auto || this.props.state.speak_audio || this.props.state.speak_video) return;
 
@@ -151,7 +152,8 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		this._swiper.slideTo(idx);
 		this._curIdx_tgt = idx;
 	}
-	private _onDetailPopup = (word: IWordData, type: POPUPTYPE) => {
+
+	private _onDetailPopup = (word: IWordData, type: POPUP_TYPE) => {
 		App.pub_stop();
 		App.pub_playPopup();
 		this._word = word;
@@ -159,6 +161,7 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		this.props.actions.setNaviView(false);
 		// console.log('_onDetailPopup', type, word);
 	}
+
 	private _onPopupClosed = () => {
 		App.pub_stop();
 		// App.pub_playBtnTab(); // 효과음 추가 2018-12-26
@@ -167,29 +170,32 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		//
 	}
 	private _speakComplete = () => {
-		if(this.props.study !== 'speak' || this._curIdx < 0) return;
+		const {study, words} = this.props;
+		if(study !== 'speak' || this._curIdx < 0) return;
 		this._speak_complete = true;
 		if(this._speak_auto && this._swiper) {
-			if(this._swiper.activeIndex >= this.props.words.length - 1) {
+			if(this._swiper.activeIndex >= words.length - 1) {
 				this._speak_auto = false;
 			} else {
 				_.delay(() => {
-					if(this._swiper && this.props.study === 'speak') {
+					if(this._swiper && study === 'speak') {
 						this._swiper.slideNext();
 					}
 				}, 1000);
 			}
 		}
 	}
+
 	private _onVideo = () => {
-		if(this.props.study !== 'speak') return;
+		const {study, words, state,actions} = this.props;
+
+		if(study !== 'speak') return;
 		App.pub_playBtnTab();
-		const words = this.props.words;
 		if(this._curIdx < 0 || this._curIdx >= words.length) return;
 
-		this.props.state.speak_video = !this.props.state.speak_video;
-		this.props.state.speak_audio = false;
-		if(this.props.state.speak_video) {
+		state.speak_video = !state.speak_video;
+		state.speak_audio = false;
+		if(state.speak_video) {
 			// this.props.actions.setNaviView(false);
 			felsocket.startStudentReportProcess($ReportType.VIDEO, null, 'C');
 			App.pub_reloadStudents(() => {
@@ -198,8 +204,8 @@ class StudyPopup extends React.Component<IStudyPopup> {
 					word_idx: words[this._curIdx].idx,
 				};
 				felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-				this.props.actions.setRetCnt(0);
-				this.props.actions.setNumOfStudent(App.students.length);
+				actions.setRetCnt(0);
+				actions.setNumOfStudent(App.students.length);
 			});
 		} else {
 			// this.props.actions.setNaviView(true);
@@ -233,6 +239,7 @@ class StudyPopup extends React.Component<IStudyPopup> {
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);			
 		}
 	}
+
 	private _onReturn = () => {
 		const { state } = this.props;
 		App.pub_playBtnTab();
@@ -241,11 +248,11 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		}
 		this._setNavi();
 	}
+
 	private _onAuto = () => {
 		const { study,actions } = this.props;
 
-		if(study !== 'speak' || this._curIdx < 0) return;
-		
+		if(study !== 'speak' || this._curIdx < 0) return;		
 		App.pub_playBtnTab();
 		this._speak_auto = !this._speak_auto;
 
@@ -291,10 +298,10 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		);
 	}
 
-	public componentWillUpdate(next: IStudyPopup) {
+	public componentWillUpdate(next: IStudyPopupProps) {
 		const { study } = next;
-		const nextView = study !== '';
-		const view = study !== '';
+		const nextView = (study !== '');
+		const view = (study !== '');
 
 		if(!view && nextView) {
 			const effect = (study === 'watch') ? 'cube' : 'slide';
@@ -310,11 +317,11 @@ class StudyPopup extends React.Component<IStudyPopup> {
 		}
 	}
 
-	public componentDidUpdate(prev: IStudyPopup) {
+	public componentDidUpdate(prev: IStudyPopupProps) {
 		const { study, state, idx } = this.props;
-
 		const view = study !== '';
 		const prevView = prev.study !== '';
+
 		if(view && !prevView) {
 			if(this._swiper) {
 				const swiper = this._swiper;
@@ -371,7 +378,7 @@ class StudyPopup extends React.Component<IStudyPopup> {
 			App.pub_stop();			
 		}
 	}
-	 // 영상 자동재생 추가 2018-12-06 수정
+
 	private _watchEnd = (idx: number) => {
 		if(this._curIdx === idx && this._swiper)  this._swiper.slideNext();
 	}
@@ -410,9 +417,9 @@ class StudyPopup extends React.Component<IStudyPopup> {
 						<div className="return_cnt_box white" onClick={this._onReturn}>
 							<div>{state.retCnt}/{state.numOfStudent}</div>
 						</div>					
-					<ToggleBtn className="btn_t_video"  disabled={!this._speak_complete || this._speak_auto || state.speak_audio} on={state.speak_video} onClick={this._onVideo}/>
-					<ToggleBtn className="btn_t_voice"  disabled={!this._speak_complete || this._speak_auto || state.speak_video} on={state.speak_audio} onClick={this._onAudio}/>
-					<ToggleBtn className="btn_t_auto"  on={this._speak_auto} disabled={isRecording} onClick={this._onAuto}/>
+					<ToggleBtn className="btn_t_video" disabled={!this._speak_complete || this._speak_auto || state.speak_audio} on={state.speak_video} onClick={this._onVideo}/>
+					<ToggleBtn className="btn_t_voice" disabled={!this._speak_complete || this._speak_auto || state.speak_video} on={state.speak_audio} onClick={this._onAudio}/>
+					<ToggleBtn className="btn_t_auto" on={this._speak_auto} disabled={isRecording} onClick={this._onAuto}/>
 				</div>		
 				<SwiperComponent 
 					ref={this._refSwiper}

@@ -225,20 +225,20 @@ class GraphicOrganizer extends React.Component<IGraphicProps> {
 		}
 	}
 	private _setNavi() {
-		this.props.actions.setNaviView(true);
-		if (this._prog === SENDPROG.SENDING || this._prog === SENDPROG.SENDED) this.props.actions.setNavi(false, false);
-		else this.props.actions.setNavi(true, true);
+		const { state, actions, onSetNavi } = this.props;
+		actions.setNaviView(true);
+		if (this._prog === SENDPROG.SENDING || this._prog === SENDPROG.SENDED) actions.setNavi(false, false);
+		else actions.setNavi(true, true);
 
-		this.props.actions.setNaviFnc(
+		actions.setNaviFnc(
 			() => {
-				this.props.state.isNaviBack = true;
-				this.props.onSetNavi('Compreshension', 'Question');
+				state.isNaviBack = true;
+				onSetNavi('Compreshension', 'Question');
 			},
-			() => {
-				this.props.onSetNavi('SUMMARIZING', 'Summary');
-			}
+			() => onSetNavi('SUMMARIZING', 'Summary')
 		);
 	}
+	
 	private _init() {
 		if (this.m_swiper) {
 			this.m_swiper.slideTo(0, 0);

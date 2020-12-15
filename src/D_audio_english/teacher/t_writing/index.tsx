@@ -9,7 +9,7 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
 
-import * as common from '../../common';
+import { IMsg } from '../../common';
 
 import SendUINew from '../../../share/sendui_new';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
@@ -24,7 +24,18 @@ import HardDictationQuizBox from './_hard_dictation_quiz_box';
 import PopTrans from './_pop_trans';
 import ScriptAudio from './script_audio';
 
-type ITabType ='INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT'
+function falsySended(state: IStateCtx): boolean {
+    return (state.confirmBasicProg === SENDPROG.SENDED ||
+        state.confirmSupProg === SENDPROG.SENDED || 
+        state.confirmHardProg === SENDPROG.SENDED || 
+        state.additionalBasicProg === SENDPROG.SENDED ||
+        state.additionalSupProg === SENDPROG.SENDED ||
+        state.additionalHardProg === SENDPROG.SENDED ||
+        state.dictationProg.indexOf(SENDPROG.SENDED) !== -1||
+        state.qnaProg >= SENDPROG.SENDING);
+}
+
+type ITabType = 'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
 
 /* 페이지 관련 class */
 class NItemW extends React.Component<{ idx: number, on: boolean, tab: ITabType, onClick: (idx: number) => void }> {
@@ -34,9 +45,11 @@ class NItemW extends React.Component<{ idx: number, on: boolean, tab: ITabType, 
 	}
 	public render() {
         const { idx, on, tab } = this.props;
-        return (<span className={on ? 'on' : ''} onClick={this._click}>
-            {(['CONFIRM','ADDITIONAL','DICTATION'].includes(tab)) ? NItemW.SUB_TAB_MENU[idx] : idx + 1}
-        </span>);        
+        return (
+            <span className={on ? 'on' : ''} onClick={this._click}>
+                {(['CONFIRM','ADDITIONAL','DICTATION'].includes(tab)) ? NItemW.SUB_TAB_MENU[idx] : idx + 1}
+            </span>
+            );        
     }
 }
 
@@ -92,7 +105,7 @@ class Writing extends React.Component<IWritingProps> {
             let msgtype: 'playing'|'paused';
             if(this._shadowing) msgtype = this._isShadowPlay ? 'playing' : 'paused';
             else msgtype = newState !== MPRState.PAUSED && this.m_player.bPlay ? 'playing' : 'paused';
-            const msg: common.IMsg = {
+            const msg: IMsg = {
                 msgtype,
             };
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -131,29 +144,43 @@ class Writing extends React.Component<IWritingProps> {
 	private onSend = () => {
         const { actions, state } = this.props;
 
-        if(this._tab === 'INTRODUCTION') return;
-        if(this._tab === 'CONFIRM' && this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.READY) return;
-        if(this._tab === 'CONFIRM' && this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.READY) return;
-        if(this._tab === 'CONFIRM' && this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.READY) return;
-        if(this._tab === 'ADDITIONAL' && this._curQidx === 0 && state.additionalSupProg !==  SENDPROG.READY) return;
-        if(this._tab === 'ADDITIONAL' && this._curQidx === 1 && state.additionalBasicProg !==  SENDPROG.READY) return;
-        if(this._tab === 'ADDITIONAL' && this._curQidx === 2 && state.additionalHardProg !==  SENDPROG.READY) return;
-        for(let i = 0 ; i < 3 ; i++) {
-            if(this._tab === 'DICTATION' && this._curQidx === i && state.dictationProg[i] !==  SENDPROG.READY) return;
+        switch (this._tab) {
+        case 'INTRODUCTION':
+            return;
+        case 'CONFIRM':
+            if (this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.READY ||
+                this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.READY ||
+                this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.READY) return;
+                
+            if (this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
+            else if(this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
+            else if(this._curQidx === 2) {
+                state.confirmHardProg = SENDPROG.SENDED; 
+                this._viewpop = true; 
+                return;
+            }
+            break;
+        case 'ADDITIONAL':
+            if (this._curQidx === 0 && state.additionalSupProg !==  SENDPROG.READY || 
+                this._curQidx === 1 && state.additionalBasicProg !==  SENDPROG.READY ||
+                this._curQidx === 2 && state.additionalHardProg !==  SENDPROG.READY) return;
+            
+            if(this._curQidx === 0) state.additionalSupProg = SENDPROG.SENDING;
+            else if(this._curQidx === 1) state.additionalBasicProg = SENDPROG.SENDING;
+            else if(this._curQidx === 2) state.additionalHardProg = SENDPROG.SENDING;
+            break;
+        case 'DICTATION':
+            for(let i = 0 ; i < 3 ; i++) {
+                if(this._curQidx === i && state.dictationProg[i] !==  SENDPROG.READY) return;
+            }
+            state.dictationProg[this._curQidx] = SENDPROG.SENDING;
+            break;
+        case 'SCRIPT':
+            if(state.scriptProg[this._curQidx] !==  SENDPROG.READY) return;
+            state.scriptProg[this._curQidx] = SENDPROG.SENDING;
+            break;
+        default: return;    
         }
-        if(this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY) return;
-        
-        if(this._tab === 'CONFIRM' && this._curQidx === 0) state.confirmSupProg = SENDPROG.SENDING;
-        else if(this._tab === 'CONFIRM' && this._curQidx === 1) state.confirmBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'CONFIRM' && this._curQidx === 2) {
-            state.confirmHardProg = SENDPROG.SENDED; this._viewpop = true; return;
-        } 
-        if(this._tab === 'ADDITIONAL' && this._curQidx === 0) state.additionalSupProg = SENDPROG.SENDING;
-        else if(this._tab === 'ADDITIONAL' && this._curQidx === 1) state.additionalBasicProg = SENDPROG.SENDING;
-        else if(this._tab === 'ADDITIONAL' && this._curQidx === 2) state.additionalHardProg = SENDPROG.SENDING;
-        else if(this._tab === 'DICTATION') state.dictationProg[this._curQidx] = SENDPROG.SENDING;
-        else if(this._tab === 'SCRIPT') state.scriptProg = SENDPROG.SENDING;
-        else return;
 
         App.pub_playToPad();
         App.pub_reloadStudents(() => {
@@ -205,8 +232,8 @@ class Writing extends React.Component<IWritingProps> {
                 state.dictationProg[this._curQidx] = SENDPROG.SENDED;
                 msg = {msgtype: 'dictation_send', idx : this._curQidx};
             } else {
-                if(state.scriptProg !==  SENDPROG.SENDING) return;
-                state.scriptProg = SENDPROG.SENDED;
+                if(state.scriptProg[this._curQidx] !==  SENDPROG.SENDING) return;
+                state.scriptProg[this._curQidx] = SENDPROG.SENDED;
                 msg = {msgtype: 'script_send', idx : this._curQidx};
             }             
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -244,14 +271,10 @@ class Writing extends React.Component<IWritingProps> {
                 default:
                     return;                
             }
-        } else {
-            if(state.scriptProg !==  SENDPROG.SENDING) return;
-            state.scriptProg = SENDPROG.SENDED;
-            msg = {msgtype: 'script_send', idx : 0};
-            state.scriptProg = SENDPROG.COMPLETE;
-        } 
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        actions.setNavi(true,true);
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+            actions.setNavi(true,true);
+        }
+        
     }
     
     private _clickAdditionalAnswer = () => {
@@ -279,14 +302,10 @@ class Writing extends React.Component<IWritingProps> {
                 default:
                     return;
             }
-        } else {
-            if(state.scriptProg !==  SENDPROG.SENDING) return;
-            state.scriptProg = SENDPROG.SENDED;
-            msg = {msgtype: 'script_send', idx : 0};
-            state.scriptProg = SENDPROG.COMPLETE;
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+            actions.setNavi(true,true);
         } 
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        actions.setNavi(true,true);
+        
 	}
 
     private _clickDictationAnswer = () => {
@@ -298,81 +317,12 @@ class Writing extends React.Component<IWritingProps> {
             if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDED) return;
             state.dictationProg[this._curQidx] = SENDPROG.COMPLETE;
             msg = {msgtype: 'dictation_end', idx : this._curQidx};
-        } else {
-            if(state.scriptProg !==  SENDPROG.SENDING) return;
-            state.scriptProg = SENDPROG.SENDED;
-            msg = {msgtype: 'script_send', idx : 0};
-            state.scriptProg = SENDPROG.COMPLETE;
-        } 
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        actions.setNavi(true,true);
-	}
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+            actions.setNavi(true,true);
+	    }
+    }
 
-    private _clickAnswer = () => {
-        const {state, actions} = this.props;
-        if(this._tab === 'CONFIRM') {
-            if(this._curQidx === 0 && state.confirmSupProg !==  SENDPROG.SENDED ||
-                this._curQidx === 1 && state.confirmBasicProg !==  SENDPROG.SENDED ||
-                this._curQidx === 2 && state.confirmHardProg !==  SENDPROG.SENDED) return;
-        }
-
-        App.pub_playBtnTab();
-        let msg: IIndexMsg;
-        if(this._tab === 'CONFIRM') {
-            switch(this._curQidx) {
-                case 0 :
-                    if(state.confirmSupProg !==  SENDPROG.SENDED) return;
-                    state.confirmSupProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'confirm_end', idx : 0};
-                    break;                
-                case 1 :
-                    if(state.confirmBasicProg !==  SENDPROG.SENDED) return;
-                    state.confirmBasicProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'confirm_end', idx : 1};
-                    // actions.quizComplete();
-                    break;                
-                case 2 :
-                    if(state.confirmHardProg !==  SENDPROG.SENDED) return;
-                    state.confirmHardProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'confirm_end', idx : 2};
-                    break;                
-                default:
-                    return;                
-            }
-        } else if(this._tab === 'ADDITIONAL') {
-            switch(this._curQidx) {
-                case 0:
-                    if(state.additionalSupProg !==  SENDPROG.SENDED) return;
-                    state.additionalSupProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'additional_end', idx : 0};
-                    break;                
-                case 1:
-                    if(state.additionalBasicProg !==  SENDPROG.SENDED) return;
-                    state.additionalBasicProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'additional_end', idx : 1};
-                    break;                
-                case 2:
-                    if(state.additionalHardProg !==  SENDPROG.SENDED) return;
-                    state.additionalHardProg = SENDPROG.COMPLETE;
-                    msg = {msgtype: 'additional_end', idx : 2};
-                    break;                
-                default:
-                    return;
-            }
-        } else if(this._tab === 'DICTATION') {
-            if(state.dictationProg[this._curQidx] !==  SENDPROG.SENDED) return;
-            state.dictationProg[this._curQidx] = SENDPROG.COMPLETE;
-            msg = {msgtype: 'dictation_end', idx : this._curQidx};
-        } else {
-            if(state.scriptProg !==  SENDPROG.SENDING) return;
-            state.scriptProg = SENDPROG.SENDED;
-            msg = {msgtype: 'script_send', idx : 0};
-            this.props.state.scriptProg = SENDPROG.COMPLETE;
-        } 
-        felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-        this.props.actions.setNavi(true,true);
-	}
-
+    // 인트로 페이지로 이동
 	private _goToIntro = () => {
         alert('go to Intro page');
         this.props.actions.gotoDirection();
@@ -383,24 +333,17 @@ class Writing extends React.Component<IWritingProps> {
 	private _onPage = (idx: number) => {
         const { actions , state} = this.props;
 
-        if(state.confirmBasicProg === SENDPROG.SENDED) return;
-        else if(state.confirmSupProg === SENDPROG.SENDED) return;
-        else if(state.confirmHardProg === SENDPROG.SENDED) return;
-        else if(state.additionalBasicProg === SENDPROG.SENDED) return;
-        else if(state.additionalSupProg === SENDPROG.SENDED) return;
-        else if(state.additionalHardProg === SENDPROG.SENDED) return;
-        else if(state.dictationProg.indexOf(SENDPROG.SENDED) != -1) return;
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
+        if (falsySended(state)) return;
+        if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
+            state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
-        }  
+        } 
+
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = idx;
         actions.setNavi((this._tab !== 'INTRODUCTION' || this._curQidx !== 0), true);
-        // if(this._tab === 'QUESTION' && this._curQidx === 0) actions.setNavi(false, true);
-        // else actions.setNavi(true, true);
         
         this._hint = (this._tab === 'SCRIPT');
     }
@@ -430,42 +373,28 @@ class Writing extends React.Component<IWritingProps> {
         this._focusIdx = -1;
 
         actions.setNavi(true, true);
-
         actions.init();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-
-    }
-    
-    private _falsySended = (state: IStateCtx):boolean => 
-        (state.confirmBasicProg === SENDPROG.SENDED ||
-        state.confirmSupProg === SENDPROG.SENDED ||
-        state.confirmHardProg === SENDPROG.SENDED ||
-        state.additionalBasicProg === SENDPROG.SENDED ||
-        state.additionalSupProg === SENDPROG.SENDED || 
-        state.additionalHardProg === SENDPROG.SENDED ||
-        state.dictationProg.indexOf(SENDPROG.SENDED) !== -1);
+	}
     
 	private _clickIntroduction = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions,state } = this.props;
 
         if(this._tab === 'INTRODUCTION') return;
-        if(this._falsySended(state)) return;
-
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
+        if (falsySended(state)) return;
+        
+        if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
+            state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
         }  
         App.pub_stop();
+
         App.pub_playBtnTab();
         this._curQidx = 0;
         this._hint = false;
         this._tab = 'INTRODUCTION';
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
-            felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-
-            actions.clearQnaReturns();
-        }
+        felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
+        actions.clearQnaReturns();
         if(this._curQidx === 0) actions.setNavi(false, true);
     }
 
@@ -473,10 +402,10 @@ class Writing extends React.Component<IWritingProps> {
         const { actions ,state} = this.props;
 
         if (this._tab === 'CONFIRM') return;
-        if(this._falsySended(state)) return;
+        if (falsySended(state)) return;
 
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
+        if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
+            state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
         } 
         App.pub_stop();
@@ -491,10 +420,11 @@ class Writing extends React.Component<IWritingProps> {
     private _clickAdditional = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
 
-        if (this._tab === 'ADDITIONAL' || this._falsySended(state)) return;
+        if (this._tab === 'ADDITIONAL') return;
+        if (falsySended(state)) return;
 
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
+        if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
+            state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
         } 
         App.pub_stop();
@@ -509,12 +439,13 @@ class Writing extends React.Component<IWritingProps> {
     private _clickDictation = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
 
-        if (this._tab === 'DICTATION' || this._falsySended(state)) return;
+        if (this._tab === 'DICTATION') return;
+        if (falsySended(state)) return;       
 
-        if(state.scriptProg > SENDPROG.READY) {
-            state.scriptProg = SENDPROG.READY;
+        if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
+            state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
-        }
+        } 
         App.pub_stop();
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
@@ -527,7 +458,8 @@ class Writing extends React.Component<IWritingProps> {
     private _clickScript = (ev: React.MouseEvent<HTMLElement>) => {
         const { actions ,state} = this.props;
 
-        if (this._tab === 'SCRIPT' || this._falsySended(state)) return;
+        if (this._tab === 'SCRIPT') return;
+        if (falsySended(state)) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
@@ -538,15 +470,8 @@ class Writing extends React.Component<IWritingProps> {
         actions.setNavi(true, true);
     }
     
-	private _clickReturn = () => {
-        const { actions } = this.props;
-
-        App.pub_playBtnTab();
-        felsocket.startStudentReportProcess($ReportType.JOIN, (this._tab === 'INTRODUCTION') ? actions.getReturnUsersForQuiz() : actions.getReturnUsers());
-    }
-
     private _sendDialogueEnd() {
-		const msg: common.IMsg = {
+		const msg: IMsg = {
 			msgtype: 'script_end',
 		};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
@@ -554,15 +479,14 @@ class Writing extends React.Component<IWritingProps> {
 
 	/* 누른 학생만 보이게 하는 런쳐결과  수정안됨*/
 	private _clickPerson = (idx: number) => {
-		App.pub_playBtnTab();
-		const quizResults = this.props.actions.getResult();
-		const quizResult = quizResults[this._curQidx];
-		if(!quizResult) return;
+        const quizResults = this.props.actions.getResult();
+        App.pub_playBtnTab();
+        if(!quizResults[this._curQidx]) return;
 
-        if(idx === 1) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u1);
-        else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResult.u2);
+        if(idx === 1) felsocket.startStudentReportProcess($ReportType.JOIN, quizResults[this._curQidx].u1);
+        else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResults[this._curQidx].u2);
 	}
-
+    
     private _onPopTrans = () => {
 		App.pub_playBtnTab();
 		this._popTrans = true;
@@ -616,13 +540,14 @@ class Writing extends React.Component<IWritingProps> {
                 }
             }
         };
-
         const __rightNaviFunc = () => {
             const tabIndex = this._TabSequence.indexOf(this._tab);
             if (tabIndex >= 0) {
                 this._hint = false;
                 if(this._curQidx === this.m_data.introduction.length - 1) {
-                    if(state.confirmBasicProg === SENDPROG.SENDED || state.confirmBasicProg === SENDPROG.SENDING || state.qnaProg >= SENDPROG.SENDING) return;
+                    if(state.confirmBasicProg === SENDPROG.SENDED || 
+                        state.confirmBasicProg === SENDPROG.SENDING || 
+                        state.qnaProg >= SENDPROG.SENDING) return;
                     this._hint = false;
                     this._tab = this._TabSequence[tabIndex + 1];
                     this._curQidx = 0;
@@ -631,7 +556,7 @@ class Writing extends React.Component<IWritingProps> {
                     this._setNavi();
                 }
             }
-        }
+        };
         actions.setNaviFnc(__leftNaviFunc, __rightNaviFunc);
 	}
 
@@ -675,7 +600,7 @@ class Writing extends React.Component<IWritingProps> {
                             (isCompA && this._curQidx === 1 && state.additionalBasicProg < SENDPROG.SENDED) ||
                             (isCompA && this._curQidx === 2 && state.additionalHardProg < SENDPROG.SENDED) ||
                             (isCompD && state.dictationProg[this._curQidx] < SENDPROG.SENDED) ||
-                            (isCompS && state.scriptProg < SENDPROG.SENDED);
+                            (isCompS && state.scriptProg[this._curQidx] < SENDPROG.SENDED);
         const style: React.CSSProperties = {};
     
         return (
@@ -694,7 +619,7 @@ class Writing extends React.Component<IWritingProps> {
                 <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
                 <PopTrans 
                     view={this._popTrans} 
-                    data={this.m_data.script} 
+                    data={this.m_data.scripts[this._curQidx]} 
                     onClosed={this._PopTransClosed}
                 />
                 <div className="writing_content_box">
@@ -718,12 +643,12 @@ class Writing extends React.Component<IWritingProps> {
                                 );
                             })}
                     </div>
-                    <div className={'question' } style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
+                    <div className={'question'} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
                             <ConfirmQuiz index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickConfirmAnswer} view={view} actions={actions} state={state}  />                          
                         </div>              
                     </div>
-                    <div className={'question' } style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
+                    <div className={'question'} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
                         <div key={1} >
                             <AdditionalQuiz view={view} actions={actions} state={state} index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickAdditionalAnswer}/>                          
                         </div>               
@@ -740,13 +665,13 @@ class Writing extends React.Component<IWritingProps> {
                     {this.m_data.scripts.map((script, idx) => {
                         return (
                             <div key={idx} className={'script_container' + (this._tab === 'SCRIPT' && idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
-                                <ScriptAudio view={view && idx === this._curQidx&&this._tab === 'SCRIPT'} state={state} actions={actions} idx={idx} script={script} />
+                                <ScriptAudio view={view && idx === this._curQidx && this._tab === 'SCRIPT'} state={state} actions={actions} idx={idx} script={script} />
                             </div>
                         );
                     })}
                 </div>
                 <SendUINew view={isViewSend} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
-                <CoverPopup className="pop_hint" view={this._viewpop}  onClosed={() => {}}>
+                <CoverPopup className="pop_hint" view={this._viewpop} onClosed={() => {/**/}}>
 					<div className="pop_bg">
 						<ToggleBtn className="btn_close" onClick={() => this._onClosepop(null)}/>
 						<ToggleBtn className="btn_no" onClick={() => this._onClosepop(false)}/>

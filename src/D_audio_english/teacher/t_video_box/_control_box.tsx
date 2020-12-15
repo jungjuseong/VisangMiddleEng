@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { MPlayer } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
 
-import ProgBox from './ProgBox';
+import ProgBox from './_prog_box';
 /*
 	roll: ''|'A'|'B';
 	shadowing: boolean;
@@ -16,27 +16,24 @@ interface IControlBox {
 	disable: boolean;
 	isPlay: boolean;
 	togglePlay: () => void;
+	view: boolean;
 }
 @observer
 class ControlBox extends React.Component<IControlBox> {
 	public render() {
-		const brake_point: Array<number> = [1,2,3];
-		const player = this.props.player;
+		const {player, view, disable, isPlay, togglePlay} = this.props;
 		return (
-			<div className="control">
+			<div className="control" style={{display : (view ? '' : 'none')}}>
 				<div className="control_over">
-					{brake_point.map((num, idx)=>{
-						return(
-							<div className="brake_point">{num}</div>
-						);
-					})}
+					<div className="brake_point" style={{left: '134px'}}>1</div>
+					<div className="brake_point" style={{left: '233px'}}>2</div>
 				</div>
 				<div className="control_left">
-					<ToggleBtn className="btn_play_pause" on={this.props.isPlay} onClick={this.props.togglePlay} />
+					<ToggleBtn className="btn_play_pause" on={isPlay} onClick={togglePlay} />
 				</div>
 				<div className="control_top">
 					<div>
-						<ProgBox player={player} disable={this.props.disable}/>
+						<ProgBox player={player} disable={disable}/>
 					</div>
 				</div>
 			</div>

@@ -8,9 +8,9 @@ import { ToggleBtn } from '@common/component/button';
 import * as butil from '@common/component/butil';
 import { App } from '../../../App';
 import { IStateCtx, IActionsCtx } from '../t_store';
-import * as common from '../../common';
+import { IWordData,IDrillMsg } from '../../common';
 import { CoverPopup } from '../../../share/CoverPopup';
-import { POPUPTYPE } from '../t_voca_detail';
+import { POPUP_TYPE } from '../t_voca_detail';
 import { BtnAudio } from '../../../share/BtnAudio';
 import SendUINew from '../../../share/sendui_new';
 import * as felsocket from '../../../felsocket';
@@ -18,9 +18,9 @@ import * as felsocket from '../../../felsocket';
 import WrapTextNew from '@common/component/WrapTextNew';
 
 interface IDrillItem {
-	type: POPUPTYPE;
+	type: POPUP_TYPE;
 	view: boolean; 
-	word: common.IWordData|null;
+	word: IWordData|null;
 	state: IStateCtx;
 	actions: IActionsCtx;
 	onClosed: () => void;
@@ -49,36 +49,34 @@ class DrillPopup extends React.Component<IDrillItem> {
 	}
 	
 	private _onSend = () => {
-		if(!this.props.word || !this.props.view || !this.m_view || this.props.type !== 'spelling') return;
+        const { word, view, type, state, actions } = this.props;
+		if(!word || !view || !this.m_view || type !== 'spelling') return;
 		App.pub_reloadStudents(() => {
-			if(!this.props.word || !this.props.view || !this.m_view) return;
-			const msg: common.IDrillMsg = {
-				msgtype: this.props.type as 'spelling',
-				word_idx: this.props.word.idx,
-			};
-			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-			while(this.props.state.returnUsers.length > 0) this.props.state.returnUsers.pop();
-			this.props.actions.setRetCnt(0);
-			this.props.actions.setNumOfStudent(App.students.length);
+			if(!word || !view || !this.m_view) return;
+			felsocket.sendPAD($SocketType.MSGTOPAD, {
+				msgtype: type as 'spelling',
+				word_idx: word.idx,
+			});
+			while(state.returnUsers.length > 0) state.returnUsers.pop();
+			actions.setRetCnt(0);
+			actions.setNumOfStudent(App.students.length);
 		});
 		this.m_sended = true;
 		App.pub_playToPad();
 	}
 
 	public componentDidUpdate(prev: IDrillItem) {
-		if(this.props.view && !prev.view) {
+        const { view, state, actions } = this.props;
+		if(view && !prev.view) {
 			this.m_view = true;
 			this.m_sended = false;
+			actions.setNumOfStudent(App.students.length);
 
-			this.props.actions.setNumOfStudent(App.students.length);
-
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this.m_view = false;
 			this.m_sended = false;
-
-
-			this.props.state.speaking_audio = false;
-			this.props.state.speaking_video = false;
+			state.speaking_audio = false;
+			state.speaking_video = false;
 		}
 	}
 
@@ -92,13 +90,11 @@ class DrillPopup extends React.Component<IDrillItem> {
         state.speaking_audio = false;
         if(state.speaking_video) {
             felsocket.startStudentReportProcess($ReportType.VIDEO, null, 'C');
-
             App.pub_reloadStudents(() => {
-                const msg: common.IDrillMsg = {
+                felsocket.sendPAD($SocketType.MSGTOPAD, {
                     msgtype: 'speaking_video',
                     word_idx: word.idx,
-                };
-                felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+                });
                 actions.setRetCnt(0);
                 actions.setNumOfStudent(App.students.length);
             });
@@ -118,11 +114,10 @@ class DrillPopup extends React.Component<IDrillItem> {
         if(state.speaking_audio) {
             felsocket.startStudentReportProcess($ReportType.AUDIO, null, 'C');
             App.pub_reloadStudents(() => {
-                const msg: common.IDrillMsg = {
+                felsocket.sendPAD($SocketType.MSGTOPAD, {
                     msgtype: 'speaking_audio',
                     word_idx: word.idx,
-                };
-                felsocket.sendPAD($SocketType.MSGTOPAD, msg);                
+                });                
                 actions.setRetCnt(0);
                 actions.setNumOfStudent(App.students.length);
             });
@@ -132,14 +127,15 @@ class DrillPopup extends React.Component<IDrillItem> {
     }
     
 	private _onReturn = () => {
+        const { type, state } = this.props;
         App.pub_playBtnTab();
-        if(this.props.type === 'spelling') {
+        if(type === 'spelling') {
             const users: string[] = [];
-            for(let i = 0; i < this.props.state.returnUsers.length; i++) {
-                users[i] = this.props.state.returnUsers[i];
+            for(let i = 0; i < state.returnUsers.length; i++) {
+                users[i] = state.returnUsers[i];
             }
             felsocket.startStudentReportProcess($ReportType.JOIN, users);
-        } else if(this.props.type === 'speak') {
+        } else if(type === 'speak') {
             felsocket.showStudentReportListPage();
         }
 	}
@@ -151,7 +147,7 @@ class DrillPopup extends React.Component<IDrillItem> {
 		this._nPlay = -1;
 	}
 	private _onSentenceSound = () => {
-		const {  word } = this.props;
+		const { word } = this.props;
 		if(!word) return;
 		let audio = word.sentence_audio;
 
@@ -174,8 +170,7 @@ class DrillPopup extends React.Component<IDrillItem> {
                     <ToggleBtn className="btn_close" onClick={this._onClose}/>
                 </div>
                 <div className={'content ' + type}>
-                    <BtnAudio className="btn_audio" url={App.data_url + audio} onStop={this._onStop} nPlay={this._nPlay}/> 
-                    
+                    <BtnAudio className="btn_audio" url={App.data_url + audio} onStop={this._onStop} nPlay={this._nPlay}/>                     
                     <div className="p_btns">
                         <div className="return_cnt_box white" onClick={this._onReturn} hidden={(type === 'spelling') ? !this.m_sended : !speaking_video && !speaking_audio}>
                             <div>{retCnt}/{numOfStudent}</div>
