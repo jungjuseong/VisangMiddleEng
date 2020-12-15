@@ -1,8 +1,7 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as _ from 'lodash';
-import { observer, Observer } from 'mobx-react';
-import { observable, observe } from 'mobx';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 
@@ -21,26 +20,10 @@ interface IQuizBoxProps {
 @observer
 class PopTranslation extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _hint = false;
 	
 	private _swiper?: Swiper;
 
-	private _soption: SwiperOptions = {
-		direction: 'vertical',
-		observer: true,
-		slidesPerView: 'auto',
-		freeMode: true,
-		mousewheel: true,			
-		noSwiping: false,
-		followFinger: true,
-		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
-	};
-
     private _jsx_sentences: Array<{eng: JSX.Element, kor: JSX.Element}> = [];
-	// private _jsx_kor_sentences: JSX.Element[] = [];
-
-	private readonly _Characters = ['letstalk_bear.png','letstalk_boy.png','letstalk_girl.png'];
-	private _character: string = _project_ + 'teacher/images/' + this._Characters[Math.floor(Math.random() * 3)];
 	private _btnAudio?: BtnAudio;
 
 	public constructor(props: IQuizBoxProps) {
@@ -51,37 +34,9 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 		}
 	}
 
-	private _viewHint = () => {
-		App.pub_playBtnTab();
-		this._hint = !this._hint;
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
-	}
-
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
-	}
-
-	private _onClosepop = () => {
+	private _onClosePopup = () => {
 		App.pub_playBtnTab();
 		this._view = false;
-	}
-
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
 	}
 
 	private _onClick = () => {
@@ -92,7 +47,6 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
@@ -119,7 +73,7 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 			<>
 			<CoverPopup className="pop_trans" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosepop}/>
+					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
 						<div className="popbox">
 							<div className="sentence_box">
 								<div>
@@ -133,7 +87,6 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 								</div>
 							</div>
 						</div>
-					{/* </SwiperComponent> */}
 				</div>
 			</CoverPopup>
 			</>

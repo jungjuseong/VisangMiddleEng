@@ -31,16 +31,16 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	
 	private _swiper?: Swiper;
 
-	private readonly _soption: SwiperOptions = {
-		direction: 'vertical',
-		observer: true,
-		slidesPerView: 'auto',
-		freeMode: true,
-		mousewheel: true,			
-		noSwiping: false,
-		followFinger: true,
-		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
-	};
+	// private readonly _soption: SwiperOptions = {
+	// 	direction: 'vertical',
+	// 	observer: true,
+	// 	slidesPerView: 'auto',
+	// 	freeMode: true,
+	// 	mousewheel: true,			
+	// 	noSwiping: false,
+	// 	followFinger: true,
+	// 	scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
+	// };
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;

@@ -4,15 +4,15 @@ import { observer } from 'mobx-react';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
-import * as common from '../../common';
+import { IScript,IQnaReturn } from '../../common';
 
 interface IScriptItem {
-	script: common.IScript;
+	script: IScript;
 	curSeq: number;
 	retCnt: number;
-	qnaRet: common.IQnaReturn;
+	qnaRet: IQnaReturn;
 	viewReturn: boolean;
-	onChoose: (script: common.IScript) => void;
+	onChoose: (script: IScript) => void;
 }
 
 @observer
@@ -24,8 +24,7 @@ class ScriptItem extends React.Component<IScriptItem> {
 			felsocket.startStudentReportProcess($ReportType.JOIN, this.props.qnaRet.users);	
 		}
 	}
-	private _onClick = (evt: React.MouseEvent) => {
-		
+	private _onClick = (evt: React.MouseEvent) => {		
 		if(evt.target && evt.target instanceof HTMLElement) {
 			const el = evt.target as HTMLElement;
 			if(el.classList && el.classList.contains('ret-num')) return; 

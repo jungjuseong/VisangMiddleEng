@@ -196,12 +196,8 @@ class Summary extends React.Component<ISummary> {
 		else actions.setNavi(true, true);
 
 		actions.setNaviFnc(
-			() => {
-				onSetNavi('VISUALIZING','GraphicOrganizer');
-			},
-			() => {
-				actions.gotoNextBook();
-			}
+			() => onSetNavi('VISUALIZING','GraphicOrganizer'),
+			() => actions.gotoNextBook()
 		);
 	}
 

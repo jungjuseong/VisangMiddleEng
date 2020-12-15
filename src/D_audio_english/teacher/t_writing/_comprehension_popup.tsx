@@ -47,21 +47,24 @@ class ComprehensionPopup extends React.Component<IComprehensionPopup> {
 		this.m_sendView = true;
 	}
 	public componentDidUpdate(prev: IComprehensionPopup) {
-		if (this.props.view && !prev.view) {
+		const { view, type } = this.props;
+		if (view && !prev.view) {
 			this.m_view = true;
-			this.m_sendView = this.props.type !== 'ROLE PLAY' ;
+			this.m_sendView = (type !== 'ROLE PLAY');
 			this.m_roll = '';
-		} else if (!this.props.view && prev.view) {
+		} else if (!view && prev.view) {
 			this.m_view = false;
 			this.m_sendView = false;
 			this.m_roll = '';
 		}
 	}
+
 	public render() {
-		const { view, onClosed, imgA, imgB } = this.props;
+		const { view, type, onClosed, imgA, imgB } = this.props;
 		return (
-			<CoverPopup className={'compre_popup ' + this.props.type} view={view && this.m_view} onClosed={this.props.onClosed} >
-				<span>{this.props.type === 'SHADOWING' ? 'LISTEN & REPEAT' : this.props.type}</span><ToggleBtn className="btn_close" onClick={this._onClose} />
+			<CoverPopup className={'compre_popup ' + type} view={view && this.m_view} onClosed={onClosed} >
+				<span>{type === 'SHADOWING' ? 'LISTEN & REPEAT' : type}</span>
+				<ToggleBtn className="btn_close" onClick={this._onClose}/>
 				<div className="popup_content">
 					<span>Do you have any questions?</span>
 					<span>Choose the role.</span>
@@ -77,14 +80,7 @@ class ComprehensionPopup extends React.Component<IComprehensionPopup> {
 						</div>
 					</div>
 				</div>
-				<SendUINew
-					view={this.m_sendView}
-					preventUpWhenView={true}
-					type={'teacher'}
-					sended={false}
-					originY={0}
-					onSend={this.onSend}
-				/>
+				<SendUINew view={this.m_sendView} preventUpWhenView={true} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
 			</CoverPopup>
 		);
 	}

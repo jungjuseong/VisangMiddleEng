@@ -24,7 +24,7 @@ import HardDictationQuizBox from './_hard_dictation_quiz_box';
 import PopTrans from './_pop_trans';
 import ScriptAudio from './script_audio';
 
-function falseySended(state: IStateCtx): boolean {
+function falsySended(state: IStateCtx): boolean {
     return (state.confirmBasicProg === SENDPROG.SENDED ||
         state.confirmSupProg === SENDPROG.SENDED || 
         state.confirmHardProg === SENDPROG.SENDED || 
@@ -333,7 +333,7 @@ class Writing extends React.Component<IWritingProps> {
 	private _onPage = (idx: number) => {
         const { actions , state} = this.props;
 
-        if (falseySended(state)) return;
+        if (falsySended(state)) return;
         if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
             state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
             actions.clearQnaReturns();
@@ -381,7 +381,7 @@ class Writing extends React.Component<IWritingProps> {
         const { actions,state } = this.props;
 
         if(this._tab === 'INTRODUCTION') return;
-        if (falseySended(state)) return;
+        if (falsySended(state)) return;
         
         if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
             state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
@@ -402,7 +402,7 @@ class Writing extends React.Component<IWritingProps> {
         const { actions ,state} = this.props;
 
         if (this._tab === 'CONFIRM') return;
-        if (falseySended(state)) return;
+        if (falsySended(state)) return;
 
         if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
             state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
@@ -421,7 +421,7 @@ class Writing extends React.Component<IWritingProps> {
         const { actions ,state} = this.props;
 
         if (this._tab === 'ADDITIONAL') return;
-        if (falseySended(state)) return;
+        if (falsySended(state)) return;
 
         if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
             state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
@@ -440,7 +440,7 @@ class Writing extends React.Component<IWritingProps> {
         const { actions ,state} = this.props;
 
         if (this._tab === 'DICTATION') return;
-        if (falseySended(state)) return;       
+        if (falsySended(state)) return;       
 
         if(state.scriptProg.find(it => it>SENDPROG.READY) != undefined) {
             state.scriptProg = [SENDPROG.READY,SENDPROG.READY,SENDPROG.READY];
@@ -459,7 +459,7 @@ class Writing extends React.Component<IWritingProps> {
         const { actions ,state} = this.props;
 
         if (this._tab === 'SCRIPT') return;
-        if (falseySended(state)) return;
+        if (falsySended(state)) return;
 
         App.pub_stop();
         App.pub_playBtnTab();
