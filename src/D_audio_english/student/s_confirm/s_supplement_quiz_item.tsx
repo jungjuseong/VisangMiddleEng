@@ -9,6 +9,33 @@ import { observable } from 'mobx';
 
 import { _getJSX } from '../../../get_jsx';
 
+
+let _current: SSupplementQuizItem | null = null;
+export async function quizCapture() {
+	if (!_current) return;
+
+	const dialog = _current.quizCapture;
+  
+	let url: any = '';
+	dialog?.classList.add("capture");
+	
+  
+	// domtoimage 라이브러리 필요 -> student의 index.html 안에 scirpt 태그로 넣어주기.
+	url = await domtoimage.toPng(dialog!, {
+		cacheBust: false,
+		height: 485,
+		style: {
+		top: 0,
+		left: 0
+		}
+	});
+	dialog?.classList.remove("capture");
+  
+	return url;
+}
+ 
+
+
 interface IQuizItemProps {
 	view: boolean;
 	idx: number;
@@ -31,6 +58,14 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 	private _jsx_question1_answer: number;
 	private _jsx_question2_answer: number;
 	private _jsx_question3_answer: number;
+
+
+	quizCapture!: HTMLElement;
+	private _refQuiz = (el: HTMLElement | null) => {
+	  if (this.quizCapture || !el) return;
+	  this.quizCapture = el;
+	};
+  
 
 	public constructor(props: IQuizItemProps) {
 		super(props);
@@ -127,6 +162,8 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	public render() {
+		_current = this;
+
 		const {view, confirmProg, data} = this.props;
 		const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
 		let OXs: Array<''|'O'|'X'> = ['','',''];
@@ -145,7 +182,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 
 		return (
 			<>
-				<div className="quiz_box" style={{display : view ? '' : 'none' }}>
+				<div className="quiz_box" style={{display : view ? '' : 'none' }} ref={this._refQuiz}>
 					<div className="sup_question">
 						<div className="quiz">
 							<WrapTextNew view={view}>

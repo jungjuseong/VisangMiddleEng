@@ -46,6 +46,10 @@ export interface IQuizReturnMsg extends IIndexMsg {
 	returns: IQuizReturn;
 }
 
+export interface IQuizUrlReturnMsg extends IQuizReturnMsg{
+	imgUrl : string;
+}
+
 export interface IAdditionalQuizReturnMsg extends IIndexMsg {
 	id: string;
 	returns: IQuizStringReturn[];

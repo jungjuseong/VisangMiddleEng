@@ -1,5 +1,6 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/Progress_bar.scss';
+@import '../t_video_box/index.scss';
 @mixin confirm_quiz {
     .confirm_question_bg {
         margin: 0 auto;
@@ -104,6 +105,13 @@
                         display: inline-block;
                         transform: translateY(-50%);
                         margin-top: 75px;
+                        .video_container {
+                            position: absolute;
+                            bottom: -3px;
+                            right: -33px;
+                            z-index: 2;
+                            @include t_video_box;
+                        }
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
                             position: absolute;

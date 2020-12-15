@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg, IQuizStringReturn } from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg, IQuizStringReturn ,IQuizUrlReturnMsg} from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 
 const enum SENDPROG {
@@ -28,6 +28,7 @@ interface IQuizNumResult {
 	c2: number[];
 	c3: number[];
 	uid: string[];
+	url : string[];
 } 
 interface IQuizStringResult {
 	c1: string[];
@@ -105,14 +106,16 @@ class TeacherContext extends TeacherContextBase {
 			c1: [],
 			c2: [],
 			c3: [],
-			uid: []
+			uid: [],
+			url: []
 		};
 		this.state.resultConfirmBasic = {
 			arrayOfCorrect: [],
 			c1: [],
 			c2: [],
 			c3: [],
-			uid: []
+			uid: [],
+			url: []
 		};
 		this.state.resultConfirmHard = {
 			c1: [],
@@ -197,7 +200,7 @@ class TeacherContext extends TeacherContextBase {
 			switch(msg.msgtype) {
 				case 'confirm_return':
 					if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
-						const qmsg = msg as IQuizReturnMsg;
+						const qmsg = msg as IQuizUrlReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
 							if(App.students[i].id === qmsg.id) {
@@ -219,6 +222,8 @@ class TeacherContext extends TeacherContextBase {
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
+							console.log(qmsg.imgUrl)
 						}
 					} else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;

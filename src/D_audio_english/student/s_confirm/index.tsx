@@ -8,12 +8,13 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg } from '../../common';
+import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg ,IQuizUrlReturnMsg} from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
 import SBasicQuizItem from './s_basic_quiz_item';
-import SSupplementQuizItem from './s_supplement_quiz_item';
+import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
 import SHardQuizItem from './s_hard_quiz_item';
+
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -96,14 +97,21 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		this._writings = { answer1: '', answer2: '', answer3: ''};
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};
+
+
+		const url = await quizCapture();
+		console.log('url',url)
+
+
 		if(state.idx === 0) {
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: IQuizReturnMsg = {
+				const msg: IQuizUrlReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 0,
 					id: App.student.id,
-					returns: choices
+					returns: choices,
+					imgUrl:url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);

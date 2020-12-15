@@ -96,6 +96,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 			else qResult = 0;
 			if(qResult > 100) qResult = 100;
 		}
+		console.log('tsetset',state.resultConfirmSup.url)
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>

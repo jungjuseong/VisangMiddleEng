@@ -265,7 +265,7 @@ var b_rw_comprehension = {
 	visualizing_type: {_type:obj_e.TYPE_INT, _excel:"C"},	
 	warmup_type: {_type:obj_e.TYPE_INT, _excel:"D"},	
 	warmup_video: {_type:obj_e.TYPE_MOVIE, _excel:"E", _default: ''},
-	summary_audio: {_type:obj_e.TYPE_SOUND, _excel:"F"},
+	summary_audio: {_type:obj_e.TYPE_SOUND, _excel:"F", _default: ''},
     warmup_video_start: {_type:obj_e.TYPE_SECOND, _excel:"G", default: 0},
     video_start: {_type:obj_e.TYPE_SECOND, _excel:"H", default: 0},
 	scripts: {
@@ -286,6 +286,24 @@ var b_rw_comprehension = {
 			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"I"},
 			dms_passage: {_type:obj_e.TYPE_TEXT, _excel:"J"},
 			dms_kor: {_type:obj_e.TYPE_MULTI_LANG, _excel:"K", _langs:["ko"]},
+		}		
+	},additional_quiz: {
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"추가문제",
+		_startRow:2,
+		_key:"seq",	
+		_item: {
+			_type: obj_e.TYPE_OBJECT,
+			seq: {_type:obj_e.TYPE_INT, _excel:"A"},	
+			directive_kor: {_type:obj_e.TYPE_TEXT, _excel:"B"},
+			directive_eng: {_type:obj_e.TYPE_TEXT, _excel:"C"},
+			audio: {_type:obj_e.TYPE_SOUND, _excel:"D"},
+			question:{_type:obj_e.TYPE_TEXT, _excel:"E"},
+			answer: {_type:obj_e.TYPE_INT, _excel:"F"},
+			choice1: {_type:obj_e.TYPE_TEXT, _excel:"G"},
+			choice2: {_type:obj_e.TYPE_TEXT, _excel:"H"},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"I", _column: 'SC_SAVE'},
+			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"J"}
 		}		
 	},
 	warmup_scripts: {
@@ -1094,10 +1112,10 @@ var audio_english ={
 
 
 var area = document.getElementById('area');
-alert('audio_english');
-area.value = JSON.stringify(audio_english);
+alert('b_rw_comprehension');
+area.value = JSON.stringify(b_rw_comprehension);
 // document.write(JSON.stringify(korea_speak_quiz ))
-console.log(JSON.stringify(audio_english));
+console.log(JSON.stringify(b_rw_comprehension));
 	</script>
  </body>
 </html>

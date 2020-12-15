@@ -6,11 +6,14 @@ import { action, observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+
 import { CorrectBar } from '../../../../share/Progress_bar';
 import { SENDPROG } from '../../t_store';
 import { BtnAudio } from '../../../../share/BtnAudio';
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import { IConfirmNomal } from '../../../common';
+import VideoBox from '../../t_video_box';
 
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
 
@@ -18,6 +21,7 @@ import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
 class ConfirmBasicQuizBox extends ConfirmQuizBox {
 	
 	private _jsx_hints: number[] = [0,0,0];
+	private m_player = new MPlayer(new MConfig(true));
 
 	public constructor(props: IConfirmQuizBoxProps) {
 		super(props);
@@ -37,7 +41,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 	}
 
 	public render() {
-		const { state, data } = this.props;
+		const { state, data ,actions} = this.props;
 		const basic_data = data as IConfirmNomal;
 
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
@@ -66,7 +70,20 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-									<BtnAudio className={'btn_audio'} url={App.data_url + this.props.data.main_sound}/>	
+									<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
