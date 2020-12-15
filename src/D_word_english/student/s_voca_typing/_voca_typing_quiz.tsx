@@ -22,7 +22,7 @@ const enum MYSTATE {
 	COMPLETE,
 }
 
-interface IVocaTypingQuiz {
+interface IVocaTypingQuizProps {
 	view: boolean;
 	entry: string;
 	state: IStateCtx;
@@ -30,7 +30,7 @@ interface IVocaTypingQuiz {
 }
 
 @observer
-class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
+class VocaTypingQuiz extends React.Component<IVocaTypingQuizProps> {
 	@observable private _focusIdx: number = -1;
 	@observable private _result: ''|'correct'|'wrong' = '';
 
@@ -43,18 +43,18 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 
 	private _stime = 0;
 
-	constructor(props: IVocaTypingQuiz) {
+	constructor(props: IVocaTypingQuizProps) {
 		super(props);
 		keyBoardState.state = 'on';
 	}
-	public componentWillUpdate(next: IVocaTypingQuiz) {
+	public componentWillUpdate(next: IVocaTypingQuizProps) {
 		if(next.entry !== this.props.entry) {
 			while(this._inputs.length > 0) this._inputs.pop();
 			while(this._results.length > 0) this._results.pop();
 			while(this._inputWrong.length > 0) this._inputWrong.pop();
 		}
 	}	
-	public componentDidUpdate(prev: IVocaTypingQuiz) {
+	public componentDidUpdate(prev: IVocaTypingQuizProps) {
 		const { view } = this.props;
 
 		if(view && !prev.view) {
@@ -81,11 +81,13 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 		if(!this.props.view) return;
 		this._inputs[idx] = input;
 	}
+
 	private _onFocus = (idx: number) => {
 		if(!this.props.view) return;
 
 		if(this._focusIdx !== idx) this._focusIdx = idx;
 	}
+
 	private _onPrev = (idx: number) => {
 		if(!this.props.view) return;
 		else if(idx <= 0) return;
@@ -99,6 +101,7 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 			
 		}
 	}
+
 	private _onNext = (idx: number) => {
 		if(!this.props.view) return;
 		else if(idx >= this._inputs.length - 1) return;
@@ -111,12 +114,14 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 			input.ipt.focus();			
 		}		
 	}
+
 	private _onDone = async (idx: number) => {
 		if(!this.props.view) return;
 		App.pub_playCorrect();
 		keyBoardState.state = 'hide';
 		this._state = MYSTATE.DONE;		
 	}
+
 	private _onChange = (idx: number, value: string) => {
 		if(this._stime === 0) this._stime = Date.now();
 
@@ -213,28 +218,29 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 	}
 	
 	public render() {
-		let spell: string[];
-		let style: React.CSSProperties|undefined;
-		if(this.props.view) {
-			spell = this.props.entry.split('');
+		const { entry, view } = this.props;
+		let spells: string[] = [];
+		let style: React.CSSProperties = {};
+
+		if(view) {
+			spells = entry.split('');
 		} else {
-			spell = [];
-			style = {};
-			style.zIndex = -1;
-			style.visibility = 'hidden';
-			style.pointerEvents = 'none';
-			style.color = 'rgb(250,0,0)';
+			style = {
+				zIndex: -1,
+				visibility: 'hidden',
+				pointerEvents: 'none',
+				color: 'rgb(250,0,0)'
+			};
 		}
-		const total = spell.length;
-		let cName = 'underline_L';
-		if(total > 13) cName = 'underline_XS';
-		else if(total > 10) cName = 'underline_S';
-		else if(total > 7) cName = 'underline_M';
+		let class_name = 'underline_L';
+		if(spells.length > 13) class_name = 'underline_XS';
+		else if(spells.length > 10) class_name = 'underline_S';
+		else if(spells.length > 7) class_name = 'underline_M';
 
 		return (
 			<div className="s_voca_typing" style={style}>
 				<div className={'typing_box ' + keyBoardState.state}>	
-					{spell.map((char, idx) => {
+					{spells.map((char, idx) => {
 						let classWrong = '';
 						if(this._result === 'wrong' && idx < this._results.length) {
 							if(!this._results[idx]) classWrong = ' wrong';
@@ -244,7 +250,7 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 							<KTextInput 
 								key={idx}
 								tabIndex={idx}
-								className={cName + classWrong} 
+								className={class_name + classWrong} 
 								on={idx === this._focusIdx}
 								maxLength={1}
 								disabled={this._result !== ''}
@@ -265,7 +271,7 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 								if(!this._results[idx]) classWrong = ' wrong';
 							}
 							return (
-								<span key={idx} className={cName + classWrong}>{char}</span>
+								<span key={idx} className={class_name + classWrong}>{char}</span>
 							);
 						})}
 					</div>
@@ -274,14 +280,7 @@ class VocaTypingQuiz extends React.Component<IVocaTypingQuiz> {
 				</div>
 				
 				<Keyboard/>
-
-				<SendUINew 
-					type="pad"
-					view={this._state === MYSTATE.DONE}
-					sended={this._state === MYSTATE.SENDED}
-					originY={0}
-					onSend={this._onSend}
-				/>
+				<SendUINew type="pad" view={this._state === MYSTATE.DONE} sended={this._state === MYSTATE.SENDED} originY={0} onSend={this._onSend}/>
 			</div>
 		);
 	}

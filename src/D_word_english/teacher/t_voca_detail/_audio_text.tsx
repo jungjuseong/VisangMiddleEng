@@ -10,7 +10,7 @@ interface IAudioTextProps {
 
 function AudioText(props: React.PropsWithChildren<IAudioTextProps>) {
 	let _btn: BtnAudio| null = null;
-	let _refBtn = (btn: BtnAudio) => {
+	const _refBtn = (btn: BtnAudio) => {
 		if(_btn || !btn) return;
 		_btn = btn;
 	}
@@ -18,11 +18,10 @@ function AudioText(props: React.PropsWithChildren<IAudioTextProps>) {
 		if(!_btn) return;		
 		_btn.toggle();
 	}
-	const {audio_url, audio_className, text_className} = props;
 	return (
 		<>
-			<BtnAudio ref={_refBtn} className={audio_className} url={audio_url}/>
-			<div className={text_className} onClick={_clickText}>
+			<BtnAudio ref={_refBtn} className={props.audio_className} url={props.audio_url}/>
+			<div className={props.text_className} onClick={_clickText}>
 				{props.children}
 			</div>
 		</>

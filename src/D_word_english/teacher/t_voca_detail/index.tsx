@@ -9,7 +9,7 @@ import { ResponsiveText } from '../../../share/ResponsiveText';
 import * as butil from '@common/component/butil';
 import AudioText from './_audio_text';
 
-export type POPUPTYPE = ''|'sound'|'meaning'|'usage'|'main video'|'spelling'|'speak';
+export type POPUP_TYPE = ''|'sound'|'meaning'|'usage'|'main video'|'spelling'|'speak';
 
 function DetailItem(props: {word: IWordData}) {
 	const word = props.word;
@@ -26,21 +26,11 @@ function DetailItem(props: {word: IWordData}) {
 							{word.pumsa_kor}. {word.meaning}
 						</ResponsiveText>
 					</AudioText>
-					{/*  19-02-11 190211 LS_voca 검수 p.8 수정
-					<ResponsiveText className="re_entry" maxSize={100} minSize={75} lineHeight={120} length={word.entry.length}>
-						{word.entry}
-					</ResponsiveText>
-					*/}
 				</div>					
 				<div className="meaning_eng">
 					<AudioText audio_className="btn_audio" audio_url={App.data_url + word.meaning_audio} text_className="re_meaning">
 						{word.pumsa}. {word.meaning_eng}
 					</AudioText>
-					{/*  19-02-11 190211 LS_voca 검수 p.8 수정
-					<ResponsiveText className="re_meaning" maxSize={40} minSize={30} lineHeight={120} length={word.entry.length}>
-						{word.pumsa}. {word.meaning_eng}
-					</ResponsiveText>
-					*/}
 				</div>
 			</div>
 			<div className="sentence_box">
@@ -51,28 +41,23 @@ function DetailItem(props: {word: IWordData}) {
 						{butil.parseBlock(word.sentence_meaning, 'block')}
 					</ResponsiveText>
 					</AudioText>
-					{/*  19-02-11 190211 LS_voca 검수 p.8 수정	
-					<ResponsiveText className="re_sentence" maxSize={55} minSize={40} lineHeight={120} length={word.entry.length}>
-						{butil.parseBlock(word.sentence, 'block')}
-					</ResponsiveText>
-					*/}
 				</div>
 			</div>
 		</div>
 	);
 }
 
-interface IVocaDetail {
+interface IVocaDetailProps {
 	view: boolean;
 	idx: number;
 	current: number;
 	hasPreview: boolean;
 	word: IWordData;
-	onPopup: (word: IWordData, type: POPUPTYPE) => void;
+	onPopup: (word: IWordData, type: POPUP_TYPE) => void;
 }
 
 @observer
-class VocaDetail extends React.Component<IVocaDetail> {
+class VocaDetail extends React.Component<IVocaDetailProps> {
 	private _onSoundClick = () => this.props.onPopup(this.props.word, 'sound');
 	private _onMeaningClick = () => this.props.onPopup(this.props.word, 'meaning');
 	private _onSentenceClick = () => this.props.onPopup(this.props.word, 'usage');
@@ -80,7 +65,7 @@ class VocaDetail extends React.Component<IVocaDetail> {
 	private _onSpellingClick = () => this.props.onPopup(this.props.word, 'spelling');
 	private _onSpeakingClick = () => this.props.onPopup(this.props.word, 'speak');
 	
-	public componentDidUpdate(prev: IVocaDetail) {
+	public componentDidUpdate(prev: IVocaDetailProps) {
 		const on = this.props.current === this.props.idx;
 		const prevOn = prev.current === prev.idx;
 		const view = this.props.view;

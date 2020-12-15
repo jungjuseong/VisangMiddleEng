@@ -7,21 +7,21 @@ import { observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 
 import { App } from '../../../App';
-import * as common from '../../common';
+import { IWordData } from '../../common';
 import { CoverPopup } from '../../../share/CoverPopup';
-import { POPUPTYPE } from '../t_voca_detail';
+import { POPUP_TYPE } from '../t_voca_detail';
 import { ResponsiveText } from '../../../share/ResponsiveText';
 import { MPlayer, MConfig, IMedia } from '@common/mplayer/mplayer';
 
-interface ILectureItem {
-	type: POPUPTYPE;
+interface ILecturePopupProps {
+	type: POPUP_TYPE;
 	view: boolean; 
-	word: common.IWordData|null;
+	word: IWordData|null;
 	onClosed: () => void;
 }
 
 @observer
-class LecturePopup extends React.Component<ILectureItem> {
+class LecturePopup extends React.Component<ILecturePopupProps> {
 	@observable private _view = false;
 	private _player: MPlayer = new MPlayer(new MConfig(true));
 
@@ -44,10 +44,10 @@ class LecturePopup extends React.Component<ILectureItem> {
 	private _onPlay = () => {
 		if(!this._player.bPlay) this._player.play();
 	}
-	public componentDidUpdate(prev: ILectureItem) {
-		if(this.props.view && !prev.view) {
+	public componentDidUpdate(prev: ILecturePopupProps) {
+		const { view, word, type} = this.props;
+		if(view && !prev.view) {
 			this._view = true;
-			const {word, type} = this.props;
 			if(word) {
 				let url = '';
 				let start = -1;
@@ -77,17 +77,17 @@ class LecturePopup extends React.Component<ILectureItem> {
 				}
 				// this._player.play();
 			}
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._player.unload();
 			this._view = false;
 		}
 	}
+
 	public render() {
-		const { type, view, onClosed, word } = this.props;
+		const { type, view, word, onClosed } = this.props;
 		const entry = word ? word.entry : '';
-		const usage_script = word ? word.usage_script : '';
 		return (
-			<CoverPopup className="lecture_popup"  view={view && this._view} onClosed={this.props.onClosed} >
+			<CoverPopup className="lecture_popup"  view={view && this._view} onClosed={onClosed} >
 				<div className="nav">
 					<span className="type">{type.toUpperCase()}</span>
 					<div className="entry">{entry}</div>
@@ -97,7 +97,7 @@ class LecturePopup extends React.Component<ILectureItem> {
 					<video ref={this._refVideo} onClick={this._onPause}/>
 					<ToggleBtn className={'btn_play' + (this._player.bPlay ? ' play' : '')}  onClick={this._onPlay}/>
 					<ResponsiveText className={'USAGE_script ' + type} maxSize={32} minSize={32} lineHeight={120} length={entry.length}>
-						<span>{usage_script}</span>
+						<span>{word ? word.usage_script : ''}</span>
 					</ResponsiveText>
 				</div>
 			</CoverPopup>
