@@ -23,17 +23,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 	
 	private _swiper?: Swiper;
 
-	private readonly _soption: SwiperOptions = {
-		direction: 'vertical',
-		observer: true,
-		slidesPerView: 'auto',
-		freeMode: true,
-		mousewheel: true,			
-		noSwiping: false,
-		followFinger: true,
-		scrollbar: {el: '.swiper-scrollbar',draggable: true, hide: false},	
-	};
-
 	private _jsx_sentence: JSX.Element;
 	private _jsx_hint: JSX.Element;
 	private _character: string;
@@ -100,7 +89,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 	}
 	
 	public render() {
-		const { data, } = this.props;
+		const { data } = this.props;
 		return (
 			<>
 			<div className="intro_question_bg" style={{ display: this._view ? '' : 'none' }}>
