@@ -13,7 +13,7 @@ import { IScript, IFocusMsg, IRollMsg, IData, IMsg, IIndexMsg } from '../../comm
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 
 import ComprehensionPopup from './_comprehension_popup';
-import ScriptContainer from '../../script_container';
+import ScriptContainer, { IScriptContainerProps } from '../../script_container';
 import VideoBox from '../t_video_box';
 import { ToggleBtn } from '@common/component/button';
 
@@ -94,6 +94,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 		App.pub_playBtnTab();
 		felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);	
     }
+
     private _clickItem = (idx: number, script: IScript) => {
 		if(this._roll !== '' || this._shadowing) {
 			/*
@@ -166,15 +167,20 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 	}
 	private _setNavi() {
-        const { state,actions } = this.props;
-        const { confirmBasicProg,qnaProg } = state;
+        const { state,actions,idx } = this.props;
+        const { confirmBasicProg } = state;
 
         actions.setNaviView(true);
-        if(this.props.idx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
-        else if(confirmBasicProg === SENDPROG.SENDED) actions.setNavi(this.props.idx === 0 ? false : true, this.props.idx === this.m_data.introduction.length - 1 ? false : true);
-		else actions.setNavi(true, true);
-		
+
+        let enableLeft = true, enableRight = true;
+        if(idx === 0 && this._tab === 'INTRODUCTION') enableLeft = false;
+        else if(confirmBasicProg === SENDPROG.SENDED) {
+            if(idx === 0) enableLeft = false;
+            if(idx === (this.m_data.introduction.length - 1)) enableRight = false;
+        }
+        actions.setNavi(enableLeft, enableRight);		
     }
+
     private _toggleScript = () => {
 		App.pub_playBtnTab();
 		this._viewScript = !this._viewScript;

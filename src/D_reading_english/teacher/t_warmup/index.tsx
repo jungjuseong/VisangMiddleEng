@@ -47,50 +47,54 @@ class Warmup extends React.Component<IWarmup> {
 	private _onVideoZoomed = () => {
 		this._video_zoom = true;
 	}
+
 	private _setNavi() {
-		this.props.actions.setNaviView(true);
-		this.props.actions.setNavi(true, true);
-		this.props.actions.setNaviFnc(
+		const { actions, data, onStudy, onSetNavi } = this.props;
+		actions.setNaviView(true);
+		actions.setNavi(true, true);
+		actions.setNaviFnc(
 			() => {
 				if(this._curIdx_tgt === 0) {
-					this.props.actions.gotoDirection();
+					actions.gotoDirection();
 				} else {
 					App.pub_stop();
 					App.pub_playBtnPage();
 					this._curIdx_tgt = this._curIdx_tgt - 1;
-					this.props.actions.setWarmupFnc(null);
+					actions.setWarmupFnc(null);
 					felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-					this.props.onStudy('');
+					onStudy('');
 				}
 			},
 			() => {
-				if(this._curIdx_tgt >= this.props.data.warmup.length - 1) {
-					this.props.onSetNavi('Compreshension','Passage');
+				if(this._curIdx_tgt >= data.warmup.length - 1) {
+					onSetNavi('Compreshension','Passage');
 				} else {
 					App.pub_stop();
 					App.pub_playBtnPage();
 					this._curIdx_tgt = this._curIdx_tgt + 1;
-					this.props.actions.setWarmupFnc(null);
+					actions.setWarmupFnc(null);
 					felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
-					this.props.onStudy('');
+					onStudy('');
 				}
 			}
 		);
 	}
 
 	public componentDidUpdate(prev: IWarmup) {
-		if(this.props.view && !prev.view) {
+		const { state, actions, onStudy, videoPopup, viewStoryBook, view,inview } = this.props;
+
+		if(view && !prev.view) {
 			// this._curIdx_tgt = 0;
 			this._setNavi();
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			// this.props.actions.setWarmupFnc(null);
 		}
-		if(this.props.inview && !prev.inview) {
+		if(inview && !prev.inview) {
 			this._curIdx_tgt = 0;
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 			this.props.onStudy('');
 			this._setNavi();
-			if(this.props.state.isNaviBack) {
+			if(state.isNaviBack) {
 				this._curIdx_tgt = this.props.data.warmup.length - 1;
 				this.props.state.isNaviBack = false;
 			}
@@ -107,9 +111,9 @@ class Warmup extends React.Component<IWarmup> {
 			this._video_zoom = true;
 		}
 		 
-		if(this.props.inview && prev.inview) {
-			if (!this.props.videoPopup && prev.videoPopup) this._setNavi();
-			else if(!this.props.viewStoryBook && prev.viewStoryBook) this._setNavi();
+		if(inview && prev.inview) {
+			if (!videoPopup && prev.videoPopup) this._setNavi();
+			else if(!viewStoryBook && prev.viewStoryBook) this._setNavi();
 		}
 	}
 	public render() {

@@ -11,8 +11,6 @@ import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 
-const SwiperComponent = require('react-id-swiper').default;
-
 export interface IConfirmQuizBoxProps {
 	view: boolean;
 	actions: IActionsCtx;

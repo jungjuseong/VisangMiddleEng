@@ -154,6 +154,7 @@ export interface IPassage {
 	end: number;
 	image: string;
 }
+
 export interface IQuestion extends IInClassStudyProps {
 	seq: number;
 	question: string;
