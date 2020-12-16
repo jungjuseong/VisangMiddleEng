@@ -9,6 +9,8 @@ import { App } from '../../../App';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IDictation } from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import VideoBox from '../t_video_box';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { CorrectBar } from '../../../share/Progress_bar';
@@ -28,6 +30,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	@observable private _hint = false;
 	@observable private _trans = false;
 	@observable private _sended = false;
+	private m_player = new MPlayer(new MConfig(true));
 	
 	private _swiper?: Swiper;
 
@@ -155,7 +158,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { data, state, index} = this.props;
+		const { data, state, index, actions} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
 		const isQComplete = state.dictationProg[index] >= SENDPROG.COMPLETE;
@@ -181,7 +184,20 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-								<BtnAudio className={'btn_audio'} url={App.data_url + data[0].main_sound}/>	
+								<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

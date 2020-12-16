@@ -101,12 +101,16 @@
                         display: inline-block;
                         transform: translateY(-50%);
                         margin-top: 75px;
-                        .btn_audio {
-                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                        .video_container {
                             position: absolute;
                             bottom: -3px;
                             right: -33px;
                             z-index: 2;
+                            @include t_video_box;
+                        }
+                        .btn_audio {
+                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                            margin-top: 5px;
                         }
                         .question_box {
                             text-align: left;

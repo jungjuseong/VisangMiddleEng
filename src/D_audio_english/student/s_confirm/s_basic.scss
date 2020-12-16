@@ -1,13 +1,12 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin s_basic {
-    .quiz_box{
+    .basic_question{
         position: relative;
-        display: inline-flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 100%;
+        height: 800px;
         
         .basic_place {
             position: relative;
@@ -16,6 +15,7 @@
             top: 100px;
             border-radius: 20px;
             background: #fff;
+            left: 40px;
             
             .quiz {
                 position: relative;

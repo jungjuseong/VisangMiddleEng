@@ -6,7 +6,8 @@ import { observable } from 'mobx';
 import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../../App';
 import { IAdditionalSup } from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import VideoBox from '../../t_video_box';
 import TableItem from './table-item';
 import { CorrectBar } from '../../../../share/Progress_bar';
 
@@ -21,6 +22,7 @@ class SupplementQuizBox extends QuizBox {
 	@observable private _renderCnt = 0;
 	@observable private _prog = SENDPROG.READY;
 
+	private m_player = new MPlayer(new MConfig(true));
 	private _done: string = '';
 
 	public constructor(props: IQuizBoxProps) {
@@ -37,7 +39,7 @@ class SupplementQuizBox extends QuizBox {
 	}
 
 	public render() {
-		const { data ,view,state} = this.props;
+		const { data ,view,state, actions} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_kor_sentence;
 		let qResult = -1;
 		const supplement_data = data as IAdditionalSup[];
@@ -64,7 +66,20 @@ class SupplementQuizBox extends QuizBox {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-									<BtnAudio className={'btn_audio'} url={App.data_url + data[0].main_sound}/>	
+									<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

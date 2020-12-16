@@ -240,8 +240,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		}
 		
 		return (
-			<>
-				<div className="quiz_box" style={{ display: view ? '' : 'none' }} ref={this._refQuiz}>
+			<div className="quiz_box" style={{ display: view ? '' : 'none' }} ref={this._refQuiz}>
+				<div className="basic_question">
 					<div className="basic_place">
 						<div className="quiz">
 							<WrapTextNew view={view}>
@@ -279,7 +279,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 						</div>
 					</div>
 				</div>
-			</>
+			</div>
 		);
 	}
 }

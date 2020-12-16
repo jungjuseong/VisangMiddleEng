@@ -11,10 +11,12 @@ import { CorrectBar } from '../../../../share/Progress_bar';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
 import { IProblemSup,IConfirmSup } from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
+
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import VideoBox from '../../t_video_box';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -30,6 +32,8 @@ interface IQuizBox {
 class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 
 	@observable private _toggle: Array<boolean|null> = [null,null,null];
+	
+	private m_player = new MPlayer(new MConfig(true));
 
 	private _jsx_questions: IProblemSup[] = [];
 	private _jsx_answers: number[] = [];
@@ -87,7 +91,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 	}
 	
 	public render() {
-		const { data, state } = this.props;
+		const { data, state ,actions } = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
 
@@ -114,7 +118,20 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-									<BtnAudio className={'btn_audio'} url={App.data_url + data.main_sound}/>
+									<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

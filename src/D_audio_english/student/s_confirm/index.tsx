@@ -106,6 +106,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 			state.confirmSupProg = QPROG.ON;
 			this.captureView = false
 			console.log('url',url)
+
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizUrlReturnMsg = {
@@ -127,10 +128,9 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
-			state.confirmBasicProg = QPROG.COMPLETE;
 			const url = await basicQuizCapture();
-			state.confirmBasicProg = QPROG.ON;
 			console.log('url',url)
+
 			state.confirmBasicProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizReturnMsg = {

@@ -7,7 +7,8 @@ import { App } from '../../../../App';
 
 import { SENDPROG } from '../../t_store';
 import { CorrectBar } from '../../../../share/Progress_bar';
-import { BtnAudio } from '../../../../share/BtnAudio';
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import VideoBox from '../../t_video_box';
 import { IAdditionalBasic } from '../../../common';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
@@ -17,8 +18,9 @@ import QuizBox, { IQuizBoxProps } from './_additional_quiz_box';
 @observer
 class BasicQuizBox extends QuizBox {
 
+	private m_player = new MPlayer(new MConfig(true));
 	public render() {
-		const { data, state} = this.props;
+		const { data, state, actions} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_kor_sentence;
 		let qResult = -1;
 		const basic_data = (data as IAdditionalBasic[]);
@@ -46,7 +48,20 @@ class BasicQuizBox extends QuizBox {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
-									<BtnAudio className={'btn_audio'} url={App.data_url + data[0].main_sound}/>	
+									<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

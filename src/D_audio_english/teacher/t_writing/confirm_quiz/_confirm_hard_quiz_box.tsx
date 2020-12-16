@@ -9,7 +9,8 @@ import { App } from '../../../../App';
 import * as butil from '@common/component/butil';
 
 import { IConfirmHard,IProblemHard } from '../../../common';
-import { BtnAudio } from '../../../../share/BtnAudio';
+import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import VideoBox from '../../t_video_box';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
@@ -19,7 +20,7 @@ import { SENDPROG } from 'src/D_video_english/teacher/t_store';
 class ConfirmHardQuizBox extends ConfirmQuizBox {
 
 	private _jsx_questions: IProblemHard[] = [];
-	
+	private m_player = new MPlayer(new MConfig(true));
 	public constructor(props: IConfirmQuizBoxProps) {
 		super(props);
 
@@ -37,7 +38,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 	}
 
 	public render() {
-		const { data, state} = this.props;
+		const { data, state, actions} = this.props;
 		let sentence = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let answerView = false
 		if(state.confirmHardProg >= SENDPROG.SENDED){
@@ -57,7 +58,20 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 							<div>
 								<div className="question_box" onClick={this._onClick}>
 									{sentence}
-								<BtnAudio className={'btn_audio'} url={App.data_url + data.main_sound}/>
+									<div className="video_container">
+										<VideoBox
+											data={actions.getData()}
+											idx={2}
+											isShadowPlay={false}
+											onChangeScript={()=>{}}
+											player={this.m_player} 
+											playerInitTime={0} 
+											roll={''}
+											setShadowPlay={(val: boolean) => {}}
+											shadowing={false}
+											stopClick={()=>{}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

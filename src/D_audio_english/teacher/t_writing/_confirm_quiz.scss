@@ -114,10 +114,7 @@
                         }
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
-                            position: absolute;
-                            bottom: -3px;
-                            right: -33px;
-                            z-index: 2;
+                            margin-top: 5px;
                         }
                         .question_box {
                             text-align: left;
