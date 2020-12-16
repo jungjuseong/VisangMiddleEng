@@ -456,18 +456,6 @@ class Unscramble extends React.Component<IUnscramble> {
 				{this._answer_jsx}
 			</>
 		);
-		/*
-	className?: string;
-	view: boolean;
-	maxSize?: number;
-	minSize?: number;
-	lineHeight?: number;
-	maxLineNum?: number;      					// minSize로 바꿀 최대 라인 수
-	textAlign?: 'left'|'center'|'right';
-	rcalcNum?: number;
-	onRef?: (el: HTMLElement) => void;
-	onClick?: () => void;
-		*/
 		return (
 			<>
 				<div className="target-container">
@@ -479,7 +467,7 @@ class Unscramble extends React.Component<IUnscramble> {
 							rcalcNum={this._recalcNum}
 							onRef={this._refTgtBox}
 							textAlign="left"
-							viewWhenInit={true}
+							viewOnInit={true}
 						>
 							{this._tgt_jsx}
 						</WrapTextNew>
@@ -489,7 +477,7 @@ class Unscramble extends React.Component<IUnscramble> {
 							className="answer-box" 
 							view={view} 
 							rcalcNum={viewAnswer ? 1 : 0}
-							viewWhenInit={true}
+							viewOnInit={true}
 							textAlign="left"
 							onRef={this._refAnswerBox}
 							onClick={this._onAnswerSound}

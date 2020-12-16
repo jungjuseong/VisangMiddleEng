@@ -77,20 +77,23 @@ class Speak extends React.Component<ISpeak> {
 			}
 		);
 	}
+
 	private _onEntry = () => {
 		if(this._prog < MYProg.COMPLETE) return;
 		App.pub_play(App.data_url + this.props.word.audio, (isEnd) => { /* */ });
 	}
+
 	private _onSentence = () => {
 		if(this._prog < MYProg.COMPLETE) return;
 		App.pub_play(App.data_url + this.props.word.sentence_audio, (isEnd) => { /* */ });		
 	}
+
 	public componentWillUpdate(next: ISpeak) {
 		if(next.word !== this.props.word) {
 			this._jsx = this._getJSX(next.word.sentence);
 		}
-
 	}
+
 	public componentDidUpdate(prev: ISpeak) {
 		const on = this.props.current === this.props.idx;
 		const prevOn = prev.current === prev.idx;

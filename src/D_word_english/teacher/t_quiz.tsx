@@ -10,7 +10,7 @@ import QuizSpelling from '../quiz_spelling';
 import QuizUsage from '../quiz_usage';
 import QuizTeacher from '../../share/QuizTeacher';
 
-interface ITQuiz {
+interface ITQuizProps {
 	view: boolean;
 	quizProg: TypeQuizProg;
 	numOfReturn: number;
@@ -19,24 +19,24 @@ interface ITQuiz {
 }
 
 @observer
-class TQuiz extends React.Component<ITQuiz> {
+class TQuiz extends React.Component<ITQuizProps> {
 	private _quizs: IWordData[] = [];
 	private _qtype: TypeQuiz = '';
 	private _qtime: number = 0;
 
-	public componentWillUpdate(next: ITQuiz) {
+	public componentWillUpdate(next: ITQuizProps) {
 		if(next.view && !this.props.view) {
 			while(this._quizs.length > 0) this._quizs.pop();
 
 			const words = next.actions.getWords();
 			let qtime = 60;
 			if(next.state.isGroup) {
-				const group = next.actions.getGroupInfo();
-				for(let i = 0; i < group.questions.length; i++) {
-					const q = group.questions[i];
-					this._quizs[i] = words[q.qidx];
+				const group_info = next.actions.getGroupInfo();
+				for(let i = 0; i < group_info.questions.length; i++) {
+					const group_question = group_info.questions[i];
+					this._quizs[i] = words[group_question.qidx];
 				}
-				qtime = group.qtime;
+				qtime = group_info.qtime;
 			} else {
 				const single = next.actions.getSingleInfo();
 				for(let i = 0; i < single.questions.length; i++) {

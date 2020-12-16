@@ -17,6 +17,7 @@ class QuizUsage extends React.Component<IQuizPage> {
 	@observable private _rcalcNum = 0;
 	private _jsx: JSX.Element;
 	private _div?: HTMLElement;
+
 	constructor(props: IQuizPage) {
 		super(props);
 
@@ -126,23 +127,22 @@ class QuizUsage extends React.Component<IQuizPage> {
 		if(bView && !block.classList.contains('view')) block.classList.add('view');
 		else if(!bView && block.classList.contains('view')) block.classList.remove('view');
 
-
 		block.innerHTML = choice;
 		this._rcalcNum++;
 	}	
 
 	public render() {
-		const { isTeacher, quizProg, hasPreview, percent }  = this.props;
-		const word = this.props.quiz;
-		const quiz = word.quiz_usage;
-		const correct = quiz.correct;
-		const choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3];
+		const { isTeacher, quizProg, hasPreview, percent, quiz }  = this.props;
+		// const word = this.props.quiz;
+		const quiz_usage = quiz.quiz_usage;
+		// const correct = quiz_usage.correct;
+		const choices: string[] = [quiz_usage.choice1, quiz_usage.choice2, quiz_usage.choice3];
 
 		return (
 			<>
 				<PreInBox
 					view={isTeacher && quizProg === 'result'}
-					preClass={hasPreview ? word.app_sentence : -1}
+					preClass={hasPreview ? quiz.app_sentence : -1}
 					inClass={percent}
 					top={150}
 					right={140}
@@ -150,9 +150,9 @@ class QuizUsage extends React.Component<IQuizPage> {
 
 				<div className="img_box">
 					{/*<CorrectBar className={p_type + ' sentence'}/>*/}
-					<img src={App.data_url + word.quiz_usage.image} draggable={false} />
+					<img src={App.data_url + quiz_usage.image} draggable={false} />
 					<div className={'quiz_usage' + (quizProg === 'result' ? ' result' : '')}><div ref={this._refSentence}>
-						<WrapTextNew view={this.props.view} maxSize={48} minSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewWhenInit={true}>{this._jsx}</WrapTextNew>
+						<WrapTextNew view={this.props.view} maxSize={48} minSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewOnInit={true}>{this._jsx}</WrapTextNew>
 					</div></div>
 				</div>
 				<div className="usage">{choices.map((choice, idx) => {
@@ -165,10 +165,10 @@ class QuizUsage extends React.Component<IQuizPage> {
 
 					if(quizProg === 'result') {
 						if(isTeacher) {
-							if(correct === idx + 1) arr.push('correct');
+							if(quiz_usage.correct === idx + 1) arr.push('correct');
 							selected = 0;
 						} else {
-							if(correct === idx + 1) arr.push('correct');
+							if(quiz_usage.correct === idx + 1) arr.push('correct');
 							else if(selected === idx + 1) arr.push('wrong');
 							selected = 0;
 							/* 정답일 경우 선태 모양 유지
@@ -192,7 +192,7 @@ class QuizUsage extends React.Component<IQuizPage> {
 							onClick={this._onMc} 
 							disabled={this.props.quizProg !== 'quiz'}
 						>
-							<WrapTextNew view={this.props.view} /*maxSize={36} minSize={36}*/ lineHeight={110} viewWhenInit={true}>{choice}</WrapTextNew>
+							<WrapTextNew view={this.props.view} /*maxSize={36} minSize={36}*/ lineHeight={110} viewOnInit={true}>{choice}</WrapTextNew>
 						</QuizMCBtn>
 					);
 				})}</div>

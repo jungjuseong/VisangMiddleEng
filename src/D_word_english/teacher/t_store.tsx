@@ -21,7 +21,6 @@ interface ISingleResult extends IQuizSingleResult {
 	qtype: common.TypeQuiz;
 }
 
-
 /** 1View 사전학습 데이터 관련 인터페이스 */
 interface IValArr {
 	avg: number;
@@ -29,7 +28,6 @@ interface IValArr {
 	sum: number;
 	txt: string;
 }
-
 
 /**
  * 싱글 결과물을 복제
@@ -60,7 +58,6 @@ interface IGroupResult extends IQuizGroupResult {
 	/** 설정된 문제 형식 */
 	qtype: common.TypeQuiz;
 }
-
 
 /**
  * 팀 결과물을 복제
@@ -446,13 +443,10 @@ class TeacherContext extends TeacherContextBase {
 				}
 			}
 			if(ret) {
-
 				this.state.qtype = qtype;
 				this.actions.setQuizProg('result');
 				this.state.isGroup = isGroup;
-				this.state.prog = 'quiz';
-
-			
+				this.state.prog = 'quiz';			
 			}
 			return ret;	
 		};
@@ -467,15 +461,12 @@ class TeacherContext extends TeacherContextBase {
 			if(this.state.prog === 'quiz-select') this._reset();
 			*/
 		};
-		this.actions.setQIdx = (idx: number) => {
-			
+		this.actions.setQIdx = (idx: number) => {			
 			let qlen = 0;
 			if(this.state.isGroup) qlen = this._r_group.questions.length;
 			else qlen = this._r_single.questions.length;
-
 			// console.log('setQIdx idx=' + idx, 'qlen = ' + qlen, 'this.state.quizProg = ' + this.state.quizProg);
 			if(idx < 0 || idx >= qlen) return;
-
 			this._qidx = idx;
 			this.state.numOfReturn = 0;
 		};
@@ -490,7 +481,6 @@ class TeacherContext extends TeacherContextBase {
 		this.state.speak_video = false;
 		this.state.speaking_audio = false;
 		this.state.speaking_video = false;
-
 		this.state.numOfReturn = 0;
 		while(this.state.gas.length > 0) this.state.gas.pop();
 		while(this.state.nas.length > 0) this.state.nas.pop();
@@ -646,8 +636,7 @@ class TeacherContext extends TeacherContextBase {
 							this.state.numOfReturn = tmp;
 						}
 					}					
-				}
-				
+				}				
 				// console.log('this.state.quizProp=' + this.state.quizProg, 'this.state.numOfReturn=' + this.state.numOfReturn);
 			} else if(msg.msgtype === 'recorded_return') {
 				if(this.state.prog === 'list' && 
@@ -771,12 +760,7 @@ class TeacherContext extends TeacherContextBase {
 			
 			}
 		}// 사전 학습 관련 데이터 셋팅 을 위한 함수 
-
-
-
-
 		const previewMsg: IPreviewClassMsg[] = [];
-
 		for(let i = 0; i < words.length; i++) {
 			const word = words[i];
 			word.app_idx = i;
@@ -785,11 +769,8 @@ class TeacherContext extends TeacherContextBase {
 			word.app_result = false;
 
 			if(!App.isDvlp && word.tmq_COD && word.tmq_COD[0] !== undefined) {
-				previewMsg.push({evalCode: '1',vsFromData: word.tmq_COD[0].codType,vsFromSeq: Number(word.tmq_COD[0].codSeq)});
-				
-			}
-
-			
+				previewMsg.push({evalCode: '1',vsFromData: word.tmq_COD[0].codType,vsFromSeq: Number(word.tmq_COD[0].codSeq)});				
+			}			
 		}
 		console.log('previewMsg~~~', previewMsg.length, previewMsg);
 		let previewResult;
@@ -814,9 +795,7 @@ class TeacherContext extends TeacherContextBase {
 		if(!App.isDvlp && App.lang === 'ko') {
 			previewResult =  await felsocket.getPreviewResultClass(previewMsg);
 			len = previewResult.length;
-			if(len > 0) {
-
-			
+			if(len > 0) {			
 				sound_result = previewResult.filter((item,idx) => {
 					return item.mttSeq === 6;
 				});
@@ -844,22 +823,19 @@ class TeacherContext extends TeacherContextBase {
 						return item.entry === val_arr_sound[i].txt;
 					});
 					words[idx].app_sound = val_arr_sound[i].avg;
-				}
-		
+				}		
 				for(let i = 0; i < val_arr_spelling.length; i++) {
 					let idx = words.findIndex((item) => {
 						return item.entry === val_arr_spelling[i].txt;
 					});
 					words[idx].app_spelling = val_arr_spelling[i].avg;
 				}
-
 				for(let i = 0; i < val_arr_meaning.length; i++) {
 					let idx = words.findIndex((item) => {
 						return item.entry === val_arr_meaning[i].txt;
 					});
 					words[idx].app_meaning = val_arr_meaning[i].avg;
 				}
-
 				for(let i = 0; i < val_arr_usage.length; i++) {
 					let idx = words.findIndex((item) => {
 						return item.entry === val_arr_usage[i].txt;
@@ -889,7 +865,6 @@ class TeacherContext extends TeacherContextBase {
 		}
 	}
 }
-
 
 const tContext = new TeacherContext();
 const  { Provider: TProvider, Consumer: TeacherConsumer } = React.createContext( tContext );
