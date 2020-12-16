@@ -101,14 +101,13 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 			}
 		} else if(!view && prev.view) {
 			this._tlen = 0;
-			keyBoardState.state = 'hide';
 		}
 		if(dictationProg === QPROG.COMPLETE && prev.dictationProg < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}
 		}
-		if (this.props.dictationProg >= QPROG.SENDED) {
+		if (this.props.dictationProg >= QPROG.SENDED && this.props.view) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
