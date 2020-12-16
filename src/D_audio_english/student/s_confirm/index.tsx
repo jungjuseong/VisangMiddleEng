@@ -104,6 +104,10 @@ class SConfirm extends React.Component<ISQuestionProps> {
 
 
 		if(state.idx === 0) {
+			state.confirmSupProg = QPROG.COMPLETE;
+			const url = await quizCapture();
+			state.confirmSupProg = QPROG.ON;
+			console.log('url',url)
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizUrlReturnMsg = {
@@ -293,12 +297,11 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		const {view, state, actions} = this.props;
 		const c_data = actions.getData();
 		const confirm_nomals = c_data.confirm_nomal;
-		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
 				<div className="question">
-					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
+					<div className={'q-item'}>
 						<SSupplementQuizItem
 							view={view && state.idx === 0} 
 							idx={0}
