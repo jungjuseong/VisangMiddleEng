@@ -30,6 +30,7 @@
                 @include page;
             }
             .q-item {
+                overflow: auto;
                 .dict_question {
                     position: relative;
                     text-align: center;
@@ -100,20 +101,20 @@
                             }
                         }
                         .s_typing {
-                            position: relative;
-                            display: flex;
+                            position: relative;                            
                             transition: margin-top 0.3s;
                             margin-top: 40px;
-                            justify-content: center;
                             padding: 0 40px;
+                            &>div{
+                                width: 500px;
+                                margin: 0 auto;
+                            }
                             .area-bnd{
                                 position: relative;
                                 display: flex;
                                 align-items: center;
                                 vertical-align: top;
-                                min-width: 300px;
                                 width: 100%;
-                                margin-right: 50px;
                                 color: #fff;
                                 font-family: NotoSans;
                                 font-size: 52px;

@@ -61,9 +61,9 @@ class BasicQuizBox extends QuizBox {
 									<div>
 										{
 											answers.map((answer, key) => (
-												<div key={key} className="answer_box" style={{ borderBottom: q.sentence_answer2 !== '' ? '' : 'none' }}>
-													<div className={'sample' + (this._hint ? ' hide' : '')}/>
-													<div className={'hint' + (this._hint ? '' : ' hide')}>
+												<div key={key} className="answer_box" >
+													<div className={'sample' + (this._hint ? ' hide' : '')} style={{ borderBottom: answer !== '' ? '' : 'none' }}/>
+													<div className={'hint' + (this._hint ? '' : ' hide')} style={{ borderBottom: answer !== '' ? '' : 'none' }}>
 														{answer}
 													</div>
 												</div>

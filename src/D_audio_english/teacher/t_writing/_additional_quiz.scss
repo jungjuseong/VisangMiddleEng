@@ -727,20 +727,22 @@
                             margin-bottom: 0px;
                         }
                         .answer_box {
-                            border-bottom: 4px solid #000;
                             width: 216px;
+                            height: calc(100% / 3);
                             margin-right: 45px;
                             .sample {
-                                min-height: 50px;
+                                min-height: 48px;
+                                border-bottom: 4px solid #000;
                             }
                             .hide {
                                 display: none;
                             }
                             .hint {
                                 text-align: center;
-                                min-height: 50px;
-                                line-height: 50px;
+                                min-height: 48px;
+                                line-height: height;
                                 color: rgb(0, 0, 255);
+                                border-bottom: 4px solid #000;
                                 .block {
                                     font-weight: bold;
                                 }

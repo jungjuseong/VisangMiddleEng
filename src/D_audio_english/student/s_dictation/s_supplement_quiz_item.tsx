@@ -155,25 +155,27 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 											{sentences.map((sentence, index) => {
 												if (sentence.answer1 === '') return;
 												return (
-													<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
-														<div className={"answer_box "+ corrects[idx][index]}>
-															{sentence.answer1}
+													<div>
+														<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
+															<div className={"answer_box "+ corrects[idx][index]}>
+																{sentence.answer1}
+															</div>
+															<div className={"OX_box " + corrects[idx][index]}></div>
+															<span className={"index"}>{alphabet[index]}.</span>
+															<KTextArea
+																ref={this._refArea[idx][index]}
+																view={view}
+																on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+																autoResize={true}
+																skipEnter={false}
+																onChange={(text: string) => {this._onChange(text, index)}}
+																onDone={this._onDone}
+																maxLength={60}
+																maxLineNum={3}
+																rows={1}
+															/>
 														</div>
-														<div className={"OX_box " + corrects[idx][index]}></div>
-														<span className={"index"}>{alphabet[index]}.</span>
-														<KTextArea
-															ref={this._refArea[idx][index]}
-															view={view}
-															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
-															autoResize={true}
-															skipEnter={false}
-															onChange={(text: string) => {this._onChange(text, index)}}
-															onDone={this._onDone}
-															maxLength={60}
-															maxLineNum={3}
-															rows={1}
-														/>
-													</div>														
+													</div>
 												);
 											})}
 										</div>
