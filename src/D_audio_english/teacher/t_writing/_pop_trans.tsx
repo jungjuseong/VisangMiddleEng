@@ -44,6 +44,10 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
+		this._jsx_sentences.length = 0
+		for(let sentence of this.props.data) {
+			this._jsx_sentences.push({eng: _getJSX(sentence.dms_eng), kor: _getJSX(sentence.dms_kor)});
+		}
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
