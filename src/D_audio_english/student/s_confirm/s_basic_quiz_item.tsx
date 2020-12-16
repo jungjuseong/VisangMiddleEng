@@ -9,6 +9,29 @@ import { IConfirmNomal } from '../../common';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { App } from '../../../App';
 
+let _current: SBasicQuizItem | null = null;
+export async function quizCapture() {
+	if (!_current) return;
+
+	const dialog = _current.quizCapture;
+  
+	let url: any = '';
+	dialog?.classList.add("capture");
+  
+	// domtoimage 라이브러리 필요 -> student의 index.html 안에 scirpt 태그로 넣어주기.
+	url = await domtoimage.toPng(dialog!, {
+		cacheBust: false,
+		height: 800,
+		style: {
+		top: 0,
+		left: 0
+		}
+	});
+	dialog?.classList.remove("capture");
+  
+	return url;
+}
+
 interface IQuizItemProps {
 	view: boolean;
 	idx: number;
@@ -24,6 +47,12 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _clicked_number: number = 0;
 	@observable private _sended: boolean;
 	@observable private _view_answer: boolean;
+
+	quizCapture!: HTMLElement;
+	private _refQuiz = (el: HTMLElement | null) => {
+	  if (this.quizCapture || !el) return;
+	  this.quizCapture = el;
+	};
 
 	public constructor(props: IQuizItemProps) {
 		super(props);
@@ -193,6 +222,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	public render() {
+		_current = this;
+
 		const { view, data, confirmProg } = this.props;
 		const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
 		let OXs: Array<''|'O'|'X'> = ['','',''];
@@ -210,7 +241,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		
 		return (
 			<>
-				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+				<div className="quiz_box" style={{ display: view ? '' : 'none' }} ref={this._refQuiz}>
 					<div className="basic_place">
 						<div className="quiz">
 							<WrapTextNew view={view}>

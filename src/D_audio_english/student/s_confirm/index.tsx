@@ -11,8 +11,8 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg ,IQuizUrlReturnMsg} from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasicQuizItem from './s_basic_quiz_item';
-import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
+import SBasicQuizItem, {quizCapture as basicQuizCapture} from './s_basic_quiz_item';
+import SSupplementQuizItem, {quizCapture as supQuizCapture} from './s_supplement_quiz_item';
 import SHardQuizItem from './s_hard_quiz_item';
 
 
@@ -47,6 +47,7 @@ interface ISQuestionProps {
 
 @observer
 class SConfirm extends React.Component<ISQuestionProps> {
+	@observable private captureView = false;
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: IQuizReturn = {
@@ -98,15 +99,12 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		this._writings = { answer1: '', answer2: '', answer3: ''};
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};
 
-
-		const url = await quizCapture();
-		console.log('url',url)
-
-
 		if(state.idx === 0) {
 			state.confirmSupProg = QPROG.COMPLETE;
-			const url = await quizCapture();
+			this.captureView = true
+			const url = await supQuizCapture();
 			state.confirmSupProg = QPROG.ON;
+			this.captureView = false
 			console.log('url',url)
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
@@ -129,6 +127,10 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
+			state.confirmBasicProg = QPROG.COMPLETE;
+			const url = await basicQuizCapture();
+			state.confirmBasicProg = QPROG.ON;
+			console.log('url',url)
 			state.confirmBasicProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizReturnMsg = {
@@ -300,7 +302,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
-				<div className="question">
+				<div className="question" >
+					<div className={'capture'} style={{display : (this.captureView? '' : 'none')}}/>
 					<div className={'q-item'}>
 						<SSupplementQuizItem
 							view={view && state.idx === 0} 
