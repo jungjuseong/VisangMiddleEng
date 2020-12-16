@@ -64,7 +64,6 @@ class ContentBox extends React.Component<IContentBoxProps> {
 
 	public componentDidUpdate(prev: IContentBoxProps) {
 		const { state,prog } = this.props;
-
 		if(prog !== prev.prog) {
 			let idx = 0;
 			let idx_sub = 0;
@@ -89,7 +88,6 @@ class ContentBox extends React.Component<IContentBoxProps> {
 			}
 
 			if(this._idx !== idx) {
-				const pidx = this._idx;
 				this._idx = idx;
 				if(this._idx_sub !== idx_sub) {
 					this._bRapid_sub = idx_sub > this._idx_sub;

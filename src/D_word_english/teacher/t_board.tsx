@@ -13,22 +13,21 @@ interface IBoardProps {
 }
 
 function Board(props: React.PropsWithChildren<IBoardProps>) {
+	const { view, numOfReturn, state, actions } = props;
 
 	const _getAudio = (idx: number) => {
-		const word = props.actions.getWords()[idx];
+		const word = actions.getWords()[idx];
 		if(word) return word.audio;
 		else return '';
-	}
+	};
 
 	const _gotoResult = async () => {
-		props.actions.prepareGroupResult();
-		props.actions.setQuizProg('wait-result');
-		props.state.prog = 'quiz';
+		actions.prepareGroupResult();
+		actions.setQuizProg('wait-result');
+		state.prog = 'quiz';
 		await kutil.wait(100);
-		props.actions.setQuizProg('result');
-	}
-
-	const { view, numOfReturn, state, actions } = props;
+		actions.setQuizProg('result');
+	};
 
 	return (
 		<TeamSpindle
@@ -50,48 +49,6 @@ function Board(props: React.PropsWithChildren<IBoardProps>) {
 		/>
 	);
 	
-}
-
-@observer
-class BoardClass extends React.Component<IBoardProps> {
-
-	private _getAudio = (idx: number) => {
-		const word = this.props.actions.getWords()[idx];
-		if(word) return word.audio;
-		else return '';
-	}
-
-	private _gotoResult = async () => {
-		this.props.actions.prepareGroupResult();
-		this.props.actions.setQuizProg('wait-result');
-		this.props.state.prog = 'quiz';
-		await kutil.wait(100);
-		this.props.actions.setQuizProg('result');
-	}
-
-	public render() {
-		const { view, numOfReturn, state, actions } = this.props;
-
-		return (
-			<TeamSpindle
-				view={view}
-				numOfReturn={numOfReturn}
-				numOfGa={state.gas.length}
-				numOfNa={state.nas.length}
-				hasAudio={state.qtype !== 'usage'}
-				getAudio={this._getAudio}
-				gotoResult={this._gotoResult}
-
-				getGroupInfo={actions.getGroupInfo}
-				setQIdx={actions.setQIdx}
-				gotoQuizSelect={actions.gotoQuizSelect}
-
-				setNaviView={actions.setNaviView}
-				setNaviFnc={actions.setNaviFnc}
-				setNavi={actions.setNavi}
-			/>
-		);
-	}
 }
 
 export default Board;

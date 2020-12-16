@@ -66,81 +66,51 @@ class QuizSound extends React.Component<common.IQuizPage> {
 	public render() {
 		const { view, isTeacher, quizProg, hasPreview, percent, quiz }  = this.props;
 		const quiz_sound = quiz.quiz_sound;
-		const correct = quiz_sound.correct;
 		let choices: string[] = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3, quiz_sound.choice4];
 		if(quiz_sound.choice4 === '') choices = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3];
 		
 		return (
 			<>
-				<PreInBox
-					view={isTeacher && quizProg === 'result'}
-					preClass={hasPreview ? quiz.app_sound : -1}
-					inClass={percent}
-					top={65}
-					right={110}
-				/>
+				<PreInBox view={isTeacher && quizProg === 'result'}	preClass={hasPreview ? quiz.app_sound : -1}	inClass={percent} top={65} right={110}/>
 
 				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + quiz.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
-				<div className={quiz_sound.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{choices.map((choice, idx) => {
-					const arr: string[] = ['quiz_box'];
-					let selected = this._selected;
-					const total = choice.length;
-					let wordClass;
+				<div className={quiz_sound.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{
+					choices.map((choice, idx) => {
+						let word_style = ' small';
+						let quiz_box_style = '';
 
-					if(total <= 10) wordClass = ' big';
-					else if(total <= 13) wordClass = ' middle';
-					else wordClass = ' small';
+						if(choice.length <= 10) word_style = ' big';
+						else if(choice.length <= 13) word_style = ' middle';
 
-					if(quizProg === 'result') {
-						if(isTeacher) {
-							if(correct === idx + 1) arr.push('correct');
-							selected = 0;
-						} else {
-							if(correct === idx + 1) arr.push('correct');
-							else if(selected === idx + 1) arr.push('wrong');
-							selected = 0;
-							/* 정답일 경우 선태 모양 유지
-							if(correct === selected) {
-								selected = this._selected;
-								// if(correct === idx + 1) arr.push('correct');
-							} else {
-								if(correct === idx + 1) arr.push('correct');
-								if(selected === idx + 1) arr.push('wrong');
-								selected = 0;
-							} 
-							*/
+						if(quizProg === 'result') {
+							if(quiz_sound.correct === idx + 1) quiz_box_style = 'quiz_box correct';
+							if(!isTeacher) {
+								if(this._selected === idx + 1) quiz_box_style = 'quiz_box wrong';							
+							}
+							this._selected = 0;
 						}
-					}
-					if(quiz_sound.choice4 === '') {
-						return (
-							<div key={idx}>
-								<QuizMCBtn 
-									key={idx}
-									className={arr.join(' ') + wordClass} 
-									num={idx + 1} 
-									on={selected === (idx + 1)} 
-									onClick={this._onMc} 
-									disabled={quizProg !== 'quiz'}
-								>
-									<WrapTextNew view={view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
+						if(quiz_sound.choice4 === '') {
+							return (
+								<div key={idx}>
+									<QuizMCBtn key={idx} className={quiz_box_style + word_style} num={idx + 1} on={this._selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
+										<WrapTextNew view={view} lineHeight={120} viewOnInit={true}>
+											<span className={word_style}>{choice}</span>
+										</WrapTextNew>
+									</QuizMCBtn>
+								</div>
+							);
+						} else { 
+							return (
+								<QuizMCBtn key={idx} className={quiz_box_style + word_style} num={idx + 1} on={this._selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
+									<WrapTextNew view={view} lineHeight={120} viewOnInit={true}>
+										<span className={word_style}>{choice}</span>
+									</WrapTextNew>
 								</QuizMCBtn>
-							</div>
-						);
-					} else { 
-						return (
-							<QuizMCBtn 
-								key={idx}
-								className={arr.join(' ') + wordClass} 
-								num={idx + 1} 
-								on={selected === (idx + 1)} 
-								onClick={this._onMc} 
-								disabled={quizProg !== 'quiz'}
-							>
-								<WrapTextNew view={view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewWhenInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
-							</QuizMCBtn>
-						);
-					}
-				})}</div>
+							);
+						}
+					})
+				}
+				</div>
 			</>
 		);
 	}

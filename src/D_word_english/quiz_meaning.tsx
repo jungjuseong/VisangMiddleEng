@@ -80,41 +80,24 @@ class QuizMeaning extends React.Component<IQuizPage> {
 				/>
 				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + quiz.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
 				<div className="word">{quiz.entry}</div>
-				<div className="mean">{choices.map((choice, idx) => {
-					const arr: string[] = ['quiz_box'];
-					let selected = this._selected;
-					if(quizProg === 'result') {
-						if(isTeacher) {
-							if(correct === idx + 1) arr.push('correct');
-							selected = 0;
-						} else {
-							if(correct === idx + 1) arr.push('correct');
-							else if(selected === idx + 1) arr.push('wrong');
-							selected = 0;
-							/*		정답일 경우 선태 모양 유지
-							if(correct === selected) {
-								selected = this._selected;
-								// if(correct === idx + 1) arr.push('correct');
+				<div className="mean">{
+					choices.map((choice, idx) => {
+						const arr: string[] = ['quiz_box'];
+						let selected = this._selected;
+						if(quizProg === 'result') {
+							if(isTeacher) {
+								if(correct === idx + 1) arr.push('correct');
 							} else {
 								if(correct === idx + 1) arr.push('correct');
-								if(selected === idx + 1) arr.push('wrong');
-								selected = 0;
-							} 
-							*/
+								else if(selected === idx + 1) arr.push('wrong');
+							}
+							selected = 0;
 						}
-					}
-					return (
-						<QuizMCBtn 
-							key={idx}
-							className={arr.join(' ')} 
-							num={idx + 1} 
-							on={selected === (idx + 1)} 
-							onClick={this._onMc} 
-							disabled={this.props.quizProg !== 'quiz'}
-						>
-							{choice}
-						</QuizMCBtn>
-					);
+						return (
+							<QuizMCBtn key={idx} className={arr.join(' ')} num={idx + 1} on={selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
+								{choice}
+							</QuizMCBtn>
+						);
 				})}</div>
 			</>
 		);

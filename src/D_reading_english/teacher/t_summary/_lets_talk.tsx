@@ -174,7 +174,7 @@ class LetsTalk extends React.Component<ILetsTalk> {
 									<BtnAudio className="btn_audio" url={App.data_url + data.audio} ref={this._refAudio} />
 									<div className="question_box" onClick={this._onClick}>
                                         {data.sentence.length > 170 ? (
-                                            <WrapTextNew lineHeight={120} maxLineNum={3} minSize={26}  maxSize={34} className={'text'} view={true} textAlign="left"     viewWhenInit={true}>
+                                            <WrapTextNew lineHeight={120} maxLineNum={3} minSize={26}  maxSize={34} className={'text'} view={true} textAlign="left" viewOnInit={true}>
                                                 {this._jsx_sentence}
                                             </WrapTextNew>
                                         ) : (

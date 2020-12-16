@@ -12,14 +12,14 @@ import { IQuizMsg } from '../common';
 
 const limit = 50;
 
-interface ITimer {
+interface ITimerProps {
 	view: boolean;
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
 
 @observer
-class Timer extends React.Component<ITimer> {
+class Timer extends React.Component<ITimerProps> {
 	private _numAll = 0;
 	private _numStudied = 0;
 	private _numAi = 0;
@@ -29,7 +29,7 @@ class Timer extends React.Component<ITimer> {
 		this.props.actions.setNavi(false, false);
 	}
 
-	public componentWillUpdate(next: ITimer) {
+	public componentWillUpdate(next: ITimerProps) {
 		const { view, actions} = this.props;
 
 		if(next.view && !view) {
@@ -53,7 +53,7 @@ class Timer extends React.Component<ITimer> {
 		}
 	}
 	
-	public componentDidUpdate(prev: ITimer) {
+	public componentDidUpdate(prev: ITimerProps) {
 		if(this.props.view && !prev.view) {
 			this._setNavi();
 		} 
@@ -67,27 +67,25 @@ class Timer extends React.Component<ITimer> {
 
 			const words = actions.getWords();
 			let arr: number[] = [];
-			const qtype = state.qtype;
 	
 			for(let i = 0; i < words.length; i++) {
-				const word = words[i];
 				if(nqType === 'ai') {
 					if( state.hasPreview 
-						&& (	(qtype === 'sound' && word.app_sound <= limit)
-							|| 	(qtype === 'meaning' && word.app_meaning <= limit)
-							|| 	(qtype === 'spelling' && word.app_spelling <= limit)
-							|| 	(qtype === 'usage' && word.app_sentence <= limit)
+						&& ((state.qtype === 'sound' && words[i].app_sound <= limit)
+							|| (state.qtype === 'meaning' && words[i].app_meaning <= limit)
+							|| (state.qtype === 'spelling' && words[i].app_spelling <= limit)
+							|| (state.qtype === 'usage' && words[i].app_sentence <= limit)
 						)
 					) arr.push(i);		
 				
-				} else if(nqType === 'studied' && word.app_studied) arr.push(i);
+				} else if(nqType === 'studied' && words[i].app_studied) arr.push(i);
 				else if(nqType === 'all') arr.push(i);
 			}
 			if(arr.length === 0) return;
 	
 			if(numOfQuiz <= arr.length) {
 				const selects: number[] = [];
-				while( selects.length < numOfQuiz) {
+				while(selects.length < numOfQuiz) {
 					const idx = Math.floor(arr.length * Math.random());
 					if(idx < arr.length && selects.indexOf(arr[idx]) < 0) selects.push(arr[idx]);
 				}
@@ -99,7 +97,7 @@ class Timer extends React.Component<ITimer> {
 				msgtype: 'quiz',
 				qidxs: arr,
 				qtime: timeOfQuiz,
-				qtype,
+				qtype: state.qtype,
 				isGroup: this.props.state.isGroup,
 			};
 			felsocket.sendPAD($SocketType.MSGTOPAD, msg);

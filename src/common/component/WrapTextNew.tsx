@@ -15,7 +15,7 @@ interface IWrapText {
 	maxLineNum?: number;      					// minSize로 바꿀 최대 라인 수
 	textAlign?: 'left'|'center'|'right';
 	rcalcNum?: number;
-	viewWhenInit?: boolean;
+	viewOnInit?: boolean;
 	onRef?: (el: HTMLElement) => void;
 	onClick?: (evt?: React.MouseEvent<HTMLElement>) => void;
 }
@@ -204,7 +204,6 @@ class WrapTextNew extends React.Component<IWrapText> {
 		} else if(cntIdx > 0) {
 			this._width = Math.ceil(right - left + 2);
 		}
-
 	}
 
 	private _resized = (w: number, h: number) => {
@@ -257,7 +256,7 @@ class WrapTextNew extends React.Component<IWrapText> {
 		} else {
 			style.width = '100%';
 			style.display = 'inline-block';
-			if(!this.props.viewWhenInit) style.opacity = 0.01;
+			if(!this.props.viewOnInit) style.opacity = 0.01;
 
 			if(this.props.textAlign) textAlign = this.props.textAlign;
 			else if(this._numOfLine <= 1) textAlign = 'center';
