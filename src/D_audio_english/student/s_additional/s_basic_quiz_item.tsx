@@ -99,14 +99,13 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 			}
 		} else if(!this.props.view && prev.view) {
 			this._tlen = 0;
-			keyBoardState.state = 'hide';
 		}
 		if(this.props.prog === QPROG.COMPLETE && prev.prog < QPROG.COMPLETE) {
 			if(this._swiper) {
 				this._swiper.slideTo(0);
 			}
 		}
-		if(this.props.prog >= QPROG.SENDED) {
+		if(this.props.prog >= QPROG.SENDED && this.props.view) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
