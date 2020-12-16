@@ -19,12 +19,12 @@
         "video_start": 0.1,
         "speakerA": {
             "name": "Woman",
-            "image_s": "woman_small.png",
+            "image_s": "woman_smaller.png",
             "image_l": "woman.png"
         },
         "speakerB": {
             "name": "Man",
-            "image_s": "man_small.png",
+            "image_s": "man_smaller.png",
             "image_l": "man.png"
         },
         "speakerC": {
