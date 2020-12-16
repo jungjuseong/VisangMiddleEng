@@ -176,15 +176,17 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		return (
 			<div className="video_box" ref={this._refBox}>
 				<video ref={this._refVideo} style={{display : 'none'}}/>
-				<ToggleBtn className="btn_audio" on={isPlay} onClick={this._playClick}/>
+				<div className="audio">
+					<ToggleBtn className="btn_audio" on={isPlay} onClick={this._playClick}/>
+					<ControlBox
+						player={player}
+						disable={this.m_viewCountDown || shadowing}
+						isPlay={isPlay}
+						togglePlay={this._togglePlay}
+						view={this._view_audio_box}
+					/>
+				</div>
 
-				<ControlBox
-					player={player}
-					disable={this.m_viewCountDown || shadowing}
-					isPlay={isPlay}
-					togglePlay={this._togglePlay}
-					view={this._view_audio_box}
-				/>
 			</div>
 		);
 	}

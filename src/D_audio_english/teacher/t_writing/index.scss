@@ -394,10 +394,14 @@
                     /*수정 필요*/
                     margin-top: 50px;
                 }
-                .btn_audio {
-                    display: block;
+                .audio{                    
+                    position: relative;
+                    display: inline-block;
                     margin-left: 512px;
-                    @include btn_on( resolve('teacher/images/btn_headset.png'), resolve('teacher/images/btn_headset.png'), width('teacher/images/btn_headset.png'), height('teacher/images/btn_headset.png'), );
+                    .btn_audio {
+                        display: block;
+                        @include btn_on( resolve('teacher/images/btn_headset.png'), resolve('teacher/images/btn_headset.png'), width('teacher/images/btn_headset.png'), height('teacher/images/btn_headset.png'), );
+                    }
                 }
                 .swiper-container {
                     height: 100%;

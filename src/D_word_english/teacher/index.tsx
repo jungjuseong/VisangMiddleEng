@@ -10,7 +10,7 @@ import { SVGBg, } from '../../share/svg_object';
 import { Navi } from '../../share/navi';
 
 import { tContext, TeacherContext, TeacherProvider, useTeacher, IStateCtx, IActionsCtx } from './t_store';
-import ContentBox from './t_contentbox';
+import ContentBox from './t_content_box';
 
 interface ITeacher {
 	state: IStateCtx;
