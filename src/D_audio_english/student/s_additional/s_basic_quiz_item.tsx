@@ -154,11 +154,11 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 											<div className="question_box">
 												<p>{idx + 1}.</p>
 												<p>{_getJSX(quiz.sentence)}</p>
-											</div>
-											<div>
-												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer1 !== '' ? '' : 'none',  }}/>
-												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer2 !== '' ? '' : 'none',  }}/>
-												<div className="blank_box" style={{ borderBottom: quiz.sentence_answer3 !== '' ? '' : 'none',  }}/>
+												<div>
+													<div className={"blank_box " + (quiz.sentence_answer1? '' : 'hide')} >a</div>
+													<div className={"blank_box " + (quiz.sentence_answer2? '' : 'hide')} >b</div>
+													<div className={"blank_box " + (quiz.sentence_answer3? '' : 'hide')} >c</div>
+												</div>
 											</div>
 										</div>
 										<div className="s_typing" >
