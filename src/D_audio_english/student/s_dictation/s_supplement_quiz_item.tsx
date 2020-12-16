@@ -115,7 +115,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 
 	public render() {
 		const { view, data, dictationProg } = this.props;
-		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
+		const keyon = keyBoardState.state === 'on' ? ' key-on' : ' key-off';
 		const alphabet = ['a', 'b', 'c'];
 		let corrects: Array<Array<'' | 'O' | 'X'>> = [['', '', ''], ['', '', ''], ['', '', '']];
 		if (dictationProg === QPROG.COMPLETE) {
