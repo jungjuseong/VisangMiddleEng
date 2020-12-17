@@ -8,6 +8,7 @@
 @import '_additional_quiz.scss';
 @import '_dictation_quiz.scss';
 @import '_pop_trans.scss';
+@import '_check_result.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin comprehension {
     .t_writing {
@@ -20,6 +21,7 @@
         @include additional_quiz;
         @include dictation_quiz;
         @include pop_trans;
+        @include check_result;
         .pop_hint {
             @include CoverPopup(10001);
             overflow: hidden;

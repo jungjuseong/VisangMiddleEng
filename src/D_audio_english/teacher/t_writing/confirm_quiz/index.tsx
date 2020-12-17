@@ -19,6 +19,7 @@ interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	mdata: IData;
+	viewResult: () => void;
 }
 @observer
 class ConfirmQuiz extends React.Component<IQuizBoxProps> {
@@ -59,12 +60,12 @@ class ConfirmQuiz extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick ,state, actions} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,state, actions, viewResult} = this.props;
 		return (
 			<>
-				<ConfirmSupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.confirm_sup[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<ConfirmBasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.confirm_nomal[0]} onClosed={onClosed}	onHintClick={onHintClick}/>
-				<ConfirmHardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick}/>
+				<ConfirmSupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.confirm_sup[0]} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
+				<ConfirmBasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.confirm_nomal[0]} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
+				<ConfirmHardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.confirm_hard[0]} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
 			</>
 		);
 	}
