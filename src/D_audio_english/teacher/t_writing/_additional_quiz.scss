@@ -144,6 +144,11 @@
                         text-align: left;
                         margin: 0 auto;
                         overflow: auto;
+                        span.word {
+                            display: inline-block;
+                            white-space: nowrap;
+                            margin: 10px 0px 15px 0px;
+                        }
                         .swiper-container {
                             overflow: visible;
                         }
@@ -726,6 +731,11 @@
                             justify-content: space-between;
                             p {
                                 display: inline-block;
+                                span.word {
+                                    white-space: nowrap;
+                                    padding: 0 10px 0 0;
+                                    margin: 10px 0 15px 0;
+                                }
                             }
                             .number {
                                 vertical-align: top;
@@ -777,6 +787,11 @@
                         p {
                             display: inline-block;
                             margin-bottom: 60px;
+                            span.word {
+                                white-space: nowrap;
+                                padding: 0 10px 0 0;
+                                margin: 10px 0 15px 0;
+                            }
                         }
                         .number {
                             vertical-align: top;
