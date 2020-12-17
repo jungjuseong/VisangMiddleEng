@@ -72,22 +72,33 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	
 	public render() {
 		const { onClosed } = this.props;
+		const arr = [1,2,3,4,5]
 
 		return (
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					{/* <div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>
+						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
+					</div> */}
 						<div className="popbox">
-							<div className="sentence_box">
-								<div>
-								{this._jsx_sentences.map((sentence, key) => 
-										(<>
-										<div className="question_box" onClick={this._onClick}>{sentence.eng}</div>
-										<div className="kor_question_box" onClick={this._onClick}>{sentence.kor}</div>
-										</>)
-									)
-								}
+							<div className="content">
+								<div className="table">
+									{arr.map(()=>{
+										return(
+											<div>
+												<img className="thumnail" src="#"></img>
+												<div className="status">
+													<div className="s_img">
+														<img src="#"></img>
+													</div>
+													<p className="s_name"></p>
+													<div className="score"></div>
+												</div>
+											</div>
+										);
+									})}
 								</div>
 							</div>
 						</div>

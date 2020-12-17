@@ -27,6 +27,7 @@ interface IQuizBox {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IConfirmSup;
+	viewResult: () => void;
 }
 @observer
 class ConfirmSupplementQuizBox extends ConfirmQuizBox {
