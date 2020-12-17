@@ -69,14 +69,12 @@ class HardQuizBox extends QuizBox {
 									<p>{_getJSX(question.sentence)}</p>
 									<div className="answer_bundle">
 										<div className="answer_box">
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
 												{question.sentence1.answer1}
 											</div>
 										</div>
 										{' → '}
 										<div className="answer_box">
-											<div className={'sample' + (this._hint ? ' hide' : '')}/>
 											<div className={'hint' + (this._hint ? '' : ' hide')}>
 												{question.sentence1.answer2}
 											</div>

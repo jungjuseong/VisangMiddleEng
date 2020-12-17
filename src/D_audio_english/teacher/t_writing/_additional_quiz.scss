@@ -72,7 +72,7 @@
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
-                    padding: 0px 10px 0px 0px;
+                    padding: 10px 10px 15px 0px;
                 }
                 .white_board {
                     display: inline-block;
@@ -121,6 +121,11 @@
                                 display: inline-block;
                                 vertical-align: top;
                                 max-width: 1000px;
+                                span.word {
+                                    display: inline-block;
+                                    white-space: nowrap;
+                                    padding: 0px 10px 0px 0px;
+                                }
                             }
                         }
                     }
@@ -144,11 +149,7 @@
                         text-align: left;
                         margin: 0 auto;
                         overflow: auto;
-                        span.word {
-                            display: inline-block;
-                            white-space: nowrap;
-                            margin: 10px 0px 15px 0px;
-                        }
+                        
                         .swiper-container {
                             overflow: visible;
                         }
@@ -731,11 +732,6 @@
                             justify-content: space-between;
                             p {
                                 display: inline-block;
-                                span.word {
-                                    white-space: nowrap;
-                                    padding: 0 10px 0 0;
-                                    margin: 10px 0 15px 0;
-                                }
                             }
                             .number {
                                 vertical-align: top;
@@ -749,7 +745,7 @@
                             height: calc(100% / 3);
                             margin-right: 45px;
                             .sample {
-                                min-height: 48px;
+                                height: 51px;
                                 border-bottom: 4px solid #000;
                             }
                             .hide {
@@ -757,8 +753,8 @@
                             }
                             .hint {
                                 text-align: center;
-                                min-height: 48px;
-                                line-height: height;
+                                height: 51px;
+                                line-height: 57px;
                                 color: rgb(0, 0, 255);
                                 border-bottom: 4px solid #000;
                                 .block {
@@ -787,11 +783,6 @@
                         p {
                             display: inline-block;
                             margin-bottom: 60px;
-                            span.word {
-                                white-space: nowrap;
-                                padding: 0 10px 0 0;
-                                margin: 10px 0 15px 0;
-                            }
                         }
                         .number {
                             vertical-align: top;
@@ -804,22 +795,16 @@
                             .answer_box {
                                 display: inline-block;
                                 width: 151px;
+                                height: 55px;
                                 border-bottom: 4px solid #000;
                                 margin-left: 55px;
-                                .sample {
-                                    min-height: 55px;
-                                    padding-bottom: 5px;
-                                }
+                                line-height: 47px;
+                                color: rgb(0, 0, 255);
                                 .hide {
                                     display: none;
                                 }
-                                .hint {
-                                    min-height: 0px;
-                                    padding-bottom: 12px;
-                                    color: rgb(0, 0, 255);
-                                    .block {
-                                        font-weight: bold;
-                                    }
+                                .block {
+                                    font-weight: bold;
                                 }
                             }
                         }
