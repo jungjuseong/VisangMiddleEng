@@ -18,6 +18,8 @@ export interface IConfirmQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IConfirmNomal | IConfirmHard | IConfirmSup;
+	viewResult : () => void;
+
 }
 
 @observer

@@ -16,6 +16,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IData, IIndexMsg ,IConfirmHardMsg } from '../../common';
 
 import { CoverPopup } from '../../../share/CoverPopup';
+import CheckResult from './_check_result';
 
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
@@ -79,6 +80,7 @@ class Writing extends React.Component<IWritingProps> {
 	@observable private _viewScript = false;
 	@observable private _letstalk = false;
 	@observable private _popTrans = false;
+	@observable private _viewResult = false;
     @observable private _viewQuiz = true;
     @observable private _viewpop = false;
 
@@ -501,6 +503,15 @@ class Writing extends React.Component<IWritingProps> {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
     }
+	private showResult = () => {
+		App.pub_playBtnTab();
+		this._viewResult = true;
+		this.props.actions.setNaviView(false);
+    }    
+	private _closeResult = () => {
+		this._viewResult = false;
+		this.props.actions.setNaviView(true);
+	}
     
     private _TabSequence: ITabType[] = ['INTRODUCTION','CONFIRM','ADDITIONAL','DICTATION','SCRIPT'];
 
@@ -622,6 +633,11 @@ class Writing extends React.Component<IWritingProps> {
                     data={this.m_data.scripts[this._curQidx]} 
                     onClosed={this._PopTransClosed}
                 />
+                <CheckResult 
+                    view={this._viewResult === true}
+                    data={this.m_data} 
+                    onClosed={this._closeResult}
+			    />
                 <div className="writing_content_box">
                     {/* index */}
                     <div className="btn_page_box">
@@ -645,7 +661,7 @@ class Writing extends React.Component<IWritingProps> {
                     </div>
                     <div className={'question'} style={{display: this._tab === 'CONFIRM' ? '' : 'none'}}>
                         <div key={1} >
-                            <ConfirmQuiz index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickConfirmAnswer} view={view} actions={actions} state={state}  />                          
+                            <ConfirmQuiz index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickConfirmAnswer} view={view} actions={actions} state={state} viewResult ={this.showResult} />                          
                         </div>              
                     </div>
                     <div className={'question'} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
@@ -672,15 +688,15 @@ class Writing extends React.Component<IWritingProps> {
                 </div>
                 <SendUINew view={isViewSend} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
                 <CoverPopup className="pop_hint" view={this._viewpop} onClosed={() => {/**/}}>
-					<div className="pop_bg">
-						<ToggleBtn className="btn_close" onClick={() => this._onClosepop(null)}/>
-						<ToggleBtn className="btn_no" onClick={() => this._onClosepop(false)}/>
-						<ToggleBtn className="btn_yes"onClick={() => this._onClosepop(true)}/>
-						<div className="pop_msg"/>
-					
-					{/* </SwiperComponent> */}
-				</div>
-			</CoverPopup>
+                    <div className="pop_bg">
+                        <ToggleBtn className="btn_close" onClick={() => this._onClosepop(null)}/>
+                        <ToggleBtn className="btn_no" onClick={() => this._onClosepop(false)}/>
+                        <ToggleBtn className="btn_yes"onClick={() => this._onClosepop(true)}/>
+                        <div className="pop_msg"/>
+                    
+                    {/* </SwiperComponent> */}
+                    </div>
+                </CoverPopup>
             </div>
         );
     }

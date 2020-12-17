@@ -41,7 +41,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 	}
 
 	public render() {
-		const { state, data ,actions} = this.props;
+		const { state, data ,actions, viewResult} = this.props;
 		const basic_data = data as IConfirmNomal;
 
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
@@ -54,9 +54,11 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		}
 
 		return (
-			<>
+			<>			
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>
+					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
+				</div>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
 					preview={-1} 
