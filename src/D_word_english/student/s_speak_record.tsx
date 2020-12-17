@@ -39,14 +39,7 @@ const enum MYSTATE {
 	SENDED,
 }
 
-// const notifyStartVoice = 'notifyStartVoice';
-// const notifyStopCamera = 'notifyStopCamera';
-
-// const notifyStartVideoRecord = 'notifyStartVideoRecord';
-// const notifyVideoRecordCanceled = 'notifyVideoRecordCanceled';
-// const notifyStopVideoRecord = 'notifyStopVideoRecord';
-
-const NOTIFICATION = {
+const _NOTIFICATION = {
 	startVoice: 'notifyStartVoice',
 	stopCamera: 'notifyStopCamera',
 	startVideoRecord: 'notifyStartVideoRecord',
@@ -68,6 +61,7 @@ interface IRecordSpeakProps {
 }
 @observer
 class RecordSpeak extends React.Component<IRecordSpeakProps> {
+	
 	private _video = new MPlayer(new MConfig(true));
 	private _audio = new MPlayer(new MConfig(true));
 
@@ -116,14 +110,14 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 	private _onStartRecord = () => {
 		const { view,actions,mediaType } = this.props;
 
-		if(!view) return;
-		else if(this._state !== MYSTATE.READY && this._state !== MYSTATE.RECORDED) return;
+		if(!view || (this._state !== MYSTATE.READY && this._state !== MYSTATE.RECORDED)) return;
 		this._video.pause();
 		this._audio.pause();
 		
 		this._time = 0;
 		this._state = MYSTATE.WAIT_START;
 		actions.onStartRecord();
+
 		if(!App.isDvlp) {
 			if(mediaType === 'video') felsocket.startVideoRecord();
 			else felsocket.startVoiceRecord();
@@ -134,16 +128,13 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 		const { view,actions,mediaType } = this.props;
 
 		if(!view) return;
-		if(this._state !== MYSTATE.RECORDING && this._state !== MYSTATE.WAIT_START) return;
-		if(this._time >= 0 && this._time <= 2.0) return;
+		if((this._state !== MYSTATE.RECORDING && this._state !== MYSTATE.WAIT_START) ||
+			(this._time >= 0 && this._time <= 2.0)) return;
 		
 		if(this._state === MYSTATE.RECORDING) {
 			this._state = MYSTATE.WAIT_END;
 			actions.onStopRecord();
-		} else {
-			if(this._recorded && this._recorded !== '') this._state = MYSTATE.RECORDED;
-			else this._state = MYSTATE.READY;
-		}
+		} else this._state = (this._recorded && this._recorded !== '') ? MYSTATE.RECORDED : MYSTATE.READY;
 		
 		if(!App.isDvlp) {
 			if(mediaType === 'video') felsocket.stopVideoRecord();
@@ -160,10 +151,9 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 		actions.onUploadMedia(recorded);
 		actions.setLoading(true);
 		App.pub_playToPad();
-		if(!App.isDvlp) {
-			felsocket.uploadFileToServer(recorded);
-		}
+		if(!App.isDvlp) felsocket.uploadFileToServer(recorded);
 	}
+
 	private _onPlayStop = () => {
 		if(!this.props.view || this._state < MYSTATE.RECORDED) return;
 
@@ -184,17 +174,14 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 	}
 
 	@action private _stopedRecord = () => {
-		if(!this.props.view) return;
-		else if(this._state !== MYSTATE.WAIT_END) return;
+		if(!this.props.view || this._state !== MYSTATE.WAIT_END) return;
 
-		if(this._recorded && this._recorded !== '') this._state = MYSTATE.RECORDED;
-		else this._state = MYSTATE.READY;
+		this._state = (this._recorded && this._recorded !== '')  ? MYSTATE.RECORDED : MYSTATE.READY;
 	}
 
 	private _refVideo = (video: HTMLVideoElement|null) => {
 		if(this._video.media || !video) return;
 		this._video.mediaInited(video as IMedia);
-
 		this._video.addOnState((newState, oldState) => {
 			// console.log(newState, oldState, this._video.bPlay);
 			if(newState === MPRState.READY) {
@@ -207,42 +194,42 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 		if(this._audio.media || !audio) return;
 		this._audio.mediaInited(audio as IMedia);
 	}
+
 	private _onContents = () => {
 		if(!this.props.view || this._state < MYSTATE.SENDED) return;
 		this._hideContents = !this._hideContents;
 	}
+
 	private _onEntry = () => {
 		if(!this.props.view) return;
 	}
+
 	private _onSentence = () => {
 		if(!this.props.view) return;
 	}
+
 	public componentWillReceiveProps(next: IRecordSpeakProps) {
 		if(next.word !== this.props.word) {
 			this._jsx = this._getJSX(next.word.sentence);
 		}
 	}
+
 	public componentDidUpdate(prev: IRecordSpeakProps) {	
 		const { view, notice, word, mediaType, recorded, actions, uploaded } = this.props;
 		if(view) {
 			if(notice !== prev.notice) {
 				switch(notice) {
-				case NOTIFICATION.startVoice:
-					if(mediaType === 'audio' && this._state === MYSTATE.WAIT_START) {
-						this._startedRecord();
-					}						
+				case _NOTIFICATION.startVoice:
+					if(mediaType === 'audio' && this._state === MYSTATE.WAIT_START) this._startedRecord();						
 					break;
-				case NOTIFICATION.startVideoRecord:
-					if(mediaType === 'video' && this._state === MYSTATE.WAIT_START) {
-						this._startedRecord();
-					}
+				case _NOTIFICATION.startVideoRecord:
+					if(mediaType === 'video' && this._state === MYSTATE.WAIT_START) this._startedRecord();
 					break;
-				case NOTIFICATION.stopCamera:
-					break;
-				case NOTIFICATION.videoRecordCancelled:
-				case NOTIFICATION.stopVideoRecord:
+				case _NOTIFICATION.videoRecordCancelled:
+				case _NOTIFICATION.stopVideoRecord:
 					_.delay(this._stopedRecord, 300);
 					break;
+				case _NOTIFICATION.stopCamera:
 				default:
 					break;
 				}					
@@ -267,7 +254,7 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 					actions.setLoading(false);
 
 					if(App.student) {
-						const msg: IRecordedMsg = {
+						const recordedMessage: IRecordedMsg = {
 							msgtype: 'recorded_return',
 							id: App.student.id,
 							url: uploaded,
@@ -275,12 +262,8 @@ class RecordSpeak extends React.Component<IRecordSpeakProps> {
 							etime: this._stime + (this._time * 1000),
 							word_idx: word.idx,
 						};
-						if (mediaType === 'video') {
-							felsocket.uploadStudentReport($ReportType.VIDEO, uploaded, '');
-						} else {
-							felsocket.uploadStudentReport($ReportType.AUDIO, uploaded, '');
-						}
-						felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
+						felsocket.uploadStudentReport((mediaType === 'video') ? $ReportType.VIDEO : $ReportType.AUDIO, uploaded, '');						
+						felsocket.sendTeacher($SocketType.MSGTOTEACHER, recordedMessage);
 					}
 					App.pub_playGoodjob();
 					actions.startGoodJob();

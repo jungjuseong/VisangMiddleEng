@@ -8,7 +8,7 @@ import { ToggleBtn } from '@common/component/button';
 import * as butil from '@common/component/butil';
 import { App } from '../../../App';
 import { IStateCtx, IActionsCtx } from '../t_store';
-import { IWordData,IDrillMsg } from '../../common';
+import { IWordData } from '../../common';
 import { CoverPopup } from '../../../share/CoverPopup';
 import { POPUP_TYPE } from '../t_voca_detail';
 import { BtnAudio } from '../../../share/BtnAudio';
@@ -17,7 +17,7 @@ import * as felsocket from '../../../felsocket';
 
 import WrapTextNew from '@common/component/WrapTextNew';
 
-interface IDrillItem {
+interface IDrillItemProps {
 	type: POPUP_TYPE;
 	view: boolean; 
 	word: IWordData|null;
@@ -27,7 +27,7 @@ interface IDrillItem {
 }
 
 @observer
-class DrillPopup extends React.Component<IDrillItem> {
+class DrillPopup extends React.Component<IDrillItemProps> {
 	@observable private m_view = false;
 	@observable private m_sended = false;	
 	@observable private _nPlay = -1;
@@ -50,6 +50,7 @@ class DrillPopup extends React.Component<IDrillItem> {
 	
 	private _onSend = () => {
         const { word, view, type, state, actions } = this.props;
+        
 		if(!word || !view || !this.m_view || type !== 'spelling') return;
 		App.pub_reloadStudents(() => {
 			if(!word || !view || !this.m_view) return;
@@ -65,7 +66,7 @@ class DrillPopup extends React.Component<IDrillItem> {
 		App.pub_playToPad();
 	}
 
-	public componentDidUpdate(prev: IDrillItem) {
+	public componentDidUpdate(prev: IDrillItemProps) {
         const { view, state, actions } = this.props;
 		if(view && !prev.view) {
 			this.m_view = true;

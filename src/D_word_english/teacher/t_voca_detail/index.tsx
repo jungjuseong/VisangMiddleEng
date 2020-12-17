@@ -61,7 +61,6 @@ class VocaDetail extends React.Component<IVocaDetailProps> {
 	private _onSoundClick = () => this.props.onPopup(this.props.word, 'sound');
 	private _onMeaningClick = () => this.props.onPopup(this.props.word, 'meaning');
 	private _onSentenceClick = () => this.props.onPopup(this.props.word, 'usage');
-	private _onUsageClick = () => this.props.onPopup(this.props.word, 'main video');
 	private _onSpellingClick = () => this.props.onPopup(this.props.word, 'spelling');
 	private _onSpeakingClick = () => this.props.onPopup(this.props.word, 'speak');
 	
@@ -84,12 +83,6 @@ class VocaDetail extends React.Component<IVocaDetailProps> {
 
 		return (
 			<>
-				{/* <div className="preview-box" style={{display: hasPreview && !(sum < 0) ? '' : 'none'}}>
-					<ProgItem name="SOUND" percent={word.app_sound} min={min}/>
-					<ProgItem name="MEANING" percent={word.app_meaning} min={min}/>
-					<ProgItem name="SPELLING" percent={word.app_spelling} min={min}/>
-					<ProgItem name="USAGE" percent={word.app_sentence} min={min}/>
-				</div> */}
 				<DetailItem word={word} />
 				<div className="lecture_btns">
 					<ToggleBtn className="btn_sound" onClick={this._onSoundClick} />	

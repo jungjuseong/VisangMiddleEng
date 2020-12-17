@@ -20,6 +20,7 @@ class QuizSound extends React.Component<common.IQuizPage> {
 		this._nPlay = 0;
 		this._selected = 0;
 	}
+	
 	public componentDidUpdate(prev: common.IQuizPage) {
 		const { view, isTeacher, quizProg, on } = this.props;
 		if(on && !prev.on) {

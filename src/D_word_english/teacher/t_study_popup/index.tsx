@@ -108,21 +108,20 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 	}
 
 	private _swiperEvent(swiper: Swiper) {
+		const { words, state, actions, study } = this.props;
 		swiper.on('transitionStart', () => {
 			/* 19-02-11 검수사항 빠르게 지나가도 모두 활성화 되게 하기 추가 수정  */
-			if(this.props.study !== '' && this._curIdx >= 0 ) {
-				const words = this.props.words;
+			if(study !== '' && this._curIdx >= 0 ) {
 				const idx = swiper.activeIndex;
 				if(this._loaded && idx >= 0 && idx < words.length) {
 					words[idx].app_studied = true;
 				}
 			}
 			/* 19-02-11 검수사항 빠르게 지나가도 모두 활성화 되게 하기 추가 수정 End */
-			if(this.props.study === 'speak') this._curIdx = -1;
+			if(study === 'speak') this._curIdx = -1;
 			App.pub_stop();
 		});
 		swiper.on('transitionEnd', () => {
-			const state = this.props.state;
 			state.speak_audio = false;
 			state.speak_video = false;
 			this._speak_complete = false;
@@ -130,23 +129,26 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 				this._curIdx = swiper.activeIndex;
 				this._curIdx_tgt = this._curIdx;
 
-				this.props.actions.setNavi(this._curIdx > 0, this._curIdx < this.props.words.length - 1);
+				actions.setNavi(this._curIdx > 0, this._curIdx < words.length - 1);
 			}
 		});
 	}
 
 	private _onClose = () => {
+		const { state } = this.props;
 		this.m_view = false;
 		App.pub_stop();
 		App.pub_playBtnTab();
 
-		if(this.props.state.speak_audio || this.props.state.speak_video) {
+		if(state.speak_audio || state.speak_video) {
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 		}	
 	}
 
 	private _onPage = (idx: number) => {
-		if(!this._swiper || this._speak_auto || this.props.state.speak_audio || this.props.state.speak_video) return;
+		const { state } = this.props;
+
+		if(!this._swiper || this._speak_auto || state.speak_audio || state.speak_video) return;
 
 		App.pub_playBtnPage();
 		this._swiper.slideTo(idx);
@@ -170,7 +172,7 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 		//
 	}
 	private _speakComplete = () => {
-		const {study, words} = this.props;
+		const { study, words } = this.props;
 		if(study !== 'speak' || this._curIdx < 0) return;
 		this._speak_complete = true;
 		if(this._speak_auto && this._swiper) {
@@ -199,11 +201,11 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 			// this.props.actions.setNaviView(false);
 			felsocket.startStudentReportProcess($ReportType.VIDEO, null, 'C');
 			App.pub_reloadStudents(() => {
-				const msg: IDrillMsg = {
+				const drillMessage: IDrillMsg = {
 					msgtype: 'speak_video',
 					word_idx: words[this._curIdx].idx,
 				};
-				felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+				felsocket.sendPAD($SocketType.MSGTOPAD, drillMessage);
 				actions.setRetCnt(0);
 				actions.setNumOfStudent(App.students.length);
 			});
@@ -213,11 +215,11 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 		}
 	}
 	private _onAudio = () => {
-		const { study, state, actions } = this.props;
+		const { study, state, words, actions } = this.props;
 
 		if(study !== 'speak') return;
 		App.pub_playBtnTab();
-		const words = this.props.words;
+
 		if(this._curIdx < 0 || this._curIdx >= words.length) return;
 
 		state.speak_audio = !state.speak_audio;
@@ -319,6 +321,7 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 
 	public componentDidUpdate(prev: IStudyPopupProps) {
 		const { study, state, idx } = this.props;
+
 		const view = study !== '';
 		const prevView = prev.study !== '';
 
@@ -380,7 +383,7 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 	}
 
 	private _watchEnd = (idx: number) => {
-		if(this._curIdx === idx && this._swiper)  this._swiper.slideNext();
+		if(this._curIdx === idx && this._swiper) this._swiper.slideNext();
 	}
 
 	public render() {
@@ -407,9 +410,8 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 					{words.map((word, idx) => {
 						if(idx >= (navcur * 10) && idx < (navcur * 10) + 10) { 
 							return (<NItem key={idx} on={idx === curIdx_tgt} idx={idx} onClick={this._onPage}/>);
-						} else {
-							return;
 						}
+						return <></>
 					})}
 					<NItemNavR maxidx={maxnav} curidx={navcur} on={false} onClick={this._onPage}/>	
 				</div>
@@ -432,13 +434,13 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 								<VocaDetail  view={this.m_view} word={word} idx={idx} current={curIdx} hasPreview={state.hasPreview} onPopup={this._onDetailPopup}/>
 							</div>);
 						}
-						if(study === 'watch') { 
+						else if(study === 'watch') { 
 							return (
 							<div key={word.idx + '_watch'} className="t_watch">
 								<Watch view={this.m_view} word={word} idx={idx} current={curIdx} onPlayEnd={this._watchEnd}/>
 							</div>);
 						}
-						if(study === 'speak') {
+						else if(study === 'speak') {
 							return (
 								<div key={word.idx + '_speak'} className="t_speak">
 									<Speak view={this.m_view} word={word} idx={idx} current={curIdx} onComplete={this._speakComplete} state={state} isAuto={this._speak_auto}/>

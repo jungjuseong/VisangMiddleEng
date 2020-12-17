@@ -32,6 +32,7 @@ class LecturePopup extends React.Component<ILecturePopupProps> {
 		this._player.pause();
 		this._player.unload();
 	}
+	
 	private _refVideo = (el: HTMLVideoElement|null) => {
 		if(this._player.media || !el) return;
 		this._player.mediaInited(el as IMedia);
