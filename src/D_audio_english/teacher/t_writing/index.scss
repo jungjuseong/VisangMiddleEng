@@ -12,7 +12,7 @@
 @import '../../../share/QuizMCBtn.scss';
 @mixin comprehension {
     .t_writing {
-        background: resolve('teacher/images/bg_write.png') no-repeat;
+        background: resolve('teacher/images/bg_frame.png') no-repeat;
         width: width('teacher/images/bg_write.png');
         height: 613px;
         margin: 117px 66px 47px 69px;
@@ -34,7 +34,7 @@
                 background-image: resolve('teacher/images/pop_bg.png');
                 width: width('teacher/images/pop_bg.png');
                 height: height('teacher/images/pop_bg.png');
-                margin: 0 auto;
+                margin: 200px 0 0 407px;
                 position: relative;
                 .btn_close {
                     @include btn_on_dis( resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), width('teacher/images/pop_close.png'), height('teacher/images/pop_close.png'), );
@@ -390,13 +390,13 @@
                     position: absolute;
                     top: 10px;
                     right: 20px;
-                    @include btn_down_dis( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_script_show_down.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_script_show.png'));
+                    @include btn_on( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_show_down.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_script_show.png'));
                 }
                 .video_container {
                     /*수정 필요*/
                     margin-top: 50px;
                 }
-                .audio{                    
+                .audio {
                     position: relative;
                     display: inline-block;
                     margin-left: 512px;
