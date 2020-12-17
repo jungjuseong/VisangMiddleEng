@@ -87,8 +87,8 @@ class QuestionItem extends React.Component<IQuestionItem> {
 					<WrapTextNew 
 						view={view}
 						maxLineNum={2}
-						maxSize={38}
-						minSize={36}
+						maxFontSize={38}
+						minFontSize={36}
 						lineHeight={120}
 						textAlign={'left'}
 						onClick={this._onQuestion}
@@ -104,7 +104,7 @@ class QuestionItem extends React.Component<IQuestionItem> {
 						disabled={false}
 						onClick={this._onClick}
 					>
-						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={28} maxSize={32} textAlign="left">
+						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={28} maxFontSize={32} textAlign="left">
 							{question.choice_1}
 						</WrapTextNew>
 					</QuizMCBtn>
@@ -118,7 +118,7 @@ class QuestionItem extends React.Component<IQuestionItem> {
 						disabled={false}
 						onClick={this._onClick}
 					>
-						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={28} maxSize={32} textAlign="left">
+						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={28} maxFontSize={32} textAlign="left">
 							{question.choice_2}
 						</WrapTextNew>
 					</QuizMCBtn>
@@ -132,7 +132,7 @@ class QuestionItem extends React.Component<IQuestionItem> {
 						disabled={false}
 						onClick={this._onClick}
 					>
-						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={28} maxSize={32} textAlign="left">
+						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={28} maxFontSize={32} textAlign="left">
 							{question.choice_3}
 						</WrapTextNew>
 					</QuizMCBtn>
@@ -146,7 +146,7 @@ class QuestionItem extends React.Component<IQuestionItem> {
 						disabled={false}
 						onClick={this._onClick}
 					>
-						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={28} maxSize={32} textAlign="left">
+						<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={28} maxFontSize={32} textAlign="left">
 							{question.choice_4}
 						</WrapTextNew>
 					</QuizMCBtn>

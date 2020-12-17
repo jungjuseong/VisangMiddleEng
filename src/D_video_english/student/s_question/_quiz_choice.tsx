@@ -35,7 +35,7 @@ class QuizChoice extends React.Component<IQuizChoice> {
 				onClick={this._click} 
 				disabled={questionProg !== QPROG.ON}
 			>
-				<WrapTextNew view={this.props.view} maxLineNum={1} minSize={38} maxSize={44} lineHeight={120} textAlign="left">
+				<WrapTextNew view={this.props.view} maxLineNum={1} minFontSize={38} maxFontSize={44} lineHeight={120} textAlign="left">
 					{this.props.children}
 				</WrapTextNew>
 			</QuizMCBtn>

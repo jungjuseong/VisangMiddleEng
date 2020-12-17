@@ -10,7 +10,7 @@ import QuizSpelling from '../quiz_spelling';
 import QuizUsage from '../quiz_usage';
 import QuizStudent from '../../share/QuizStudent';
 
-interface IQuiz {
+interface IQuizItemProps {
 	view: boolean;
 	quizProg: TypeQuizProg;
 	qidx: number;
@@ -20,14 +20,15 @@ interface IQuiz {
 	state: IStateCtx;
 	actions: IActionsCtx;
 }
+
 @observer
-class Comp extends React.Component<IQuiz> {
+class QuizItem extends React.Component<IQuizItemProps> {
 	private _quizs: IWordData[] = [];
 	private _qtype: TypeQuiz = '';
 	private _isGroup = false;
 	private _qtime = 60;
 
-	public componentWillUpdate(next: IQuiz) {
+	public componentWillUpdate(next: IQuizItemProps) {
 		let bReset = false;
 		if(next.view && !this.props.view) {
 			bReset = true;
@@ -53,7 +54,7 @@ class Comp extends React.Component<IQuiz> {
 	}
 
 	public render() {
-		const {view, quizProg, state, groupProg, actions, qidx, forceStopIdx, groupResult} = this.props;
+		const {view, state, groupProg, actions, qidx, forceStopIdx, groupResult} = this.props;
 
 		const points = actions.getQuizInfo().points;
 
@@ -84,14 +85,12 @@ class Comp extends React.Component<IQuiz> {
 				setQuizProg={actions.setQuizProg}
 			/>			
 		);
-
-
 	}
 }
 
-const Quiz = useStudent((store: StudentContext) => (
+const SQuiz = useStudent((store: StudentContext) => (
 	<Observer>{() => (
-		<Comp 
+		<QuizItem 
 			view={store.state.viewDiv === 'content' && store.state.prog === 'quiz'}
 			quizProg={store.state.quizProg}
 			forceStopIdx={store.state.forceStopIdx}
@@ -104,4 +103,4 @@ const Quiz = useStudent((store: StudentContext) => (
 	)}</Observer>
 ));
 
-export default Quiz;
+export default SQuiz;

@@ -173,8 +173,8 @@ class VPopup extends React.Component<IVPopup> {
 							<WrapTextNew 
 								view={type === 'CHECKUP'}
 								maxLineNum={2}
-								maxSize={44}
-								minSize={36}
+								maxFontSize={44}
+								minFontSize={36}
 								lineHeight={160}
 								textAlign={'left'}
 							>

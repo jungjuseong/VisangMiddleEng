@@ -138,7 +138,7 @@ class Speak extends React.Component<ISpeak> {
 				</div>
 				<div className="sentence_box" style={{opacity: (this._prog >= MYProg.SENTENCE ? 1 : 0)}} onClick={this._onSentence}>
 					<div className="speak_sentence">
-						<WrapTextNew maxSize={55} minSize={52} lineHeight={120} view={this._prog >= MYProg.ENTRY_PLAYING}>{this._jsx}</WrapTextNew>
+						<WrapTextNew maxFontSize={55} minFontSize={52} lineHeight={120} view={this._prog >= MYProg.ENTRY_PLAYING}>{this._jsx}</WrapTextNew>
 					</div>
 
 				</div>					

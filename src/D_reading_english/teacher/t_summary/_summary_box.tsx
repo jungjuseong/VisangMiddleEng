@@ -146,7 +146,7 @@ class SummaryBox extends React.Component<ISummaryBox> {
 				</div>
 				<div className={prog >= SENDPROG.COMPLETE ? 'view-correct' : 'view-summary'}>
 					<ToggleBtn className="btn_summary_audio" draggable={false} onClick={this._onClick}/>
-					<WrapTextNew lineHeight={160} maxLineNum={4} minSize={26}  maxSize={26} className={'text'} view={true} textAlign="left" viewOnInit={true}>
+					<WrapTextNew lineHeight={160} maxLineNum={4} minFontSize={26}  maxFontSize={26} className={'text'} view={true} textAlign="left" viewOnInit={true}>
 						{this._jsx}
 					</WrapTextNew>
 				</div>

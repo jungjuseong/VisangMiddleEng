@@ -16,8 +16,6 @@ import ReactResizeDetector from 'react-resize-detector';
 import * as _ from 'lodash';
 import { observable } from 'mobx';
 
-
-
 interface ISWarmup {
 	view: boolean;
 	state: IStateCtx;
@@ -175,7 +173,7 @@ class SWarmup extends React.Component<ISWarmup> {
 					<div className={'speaker'}>
 						{/* <img src={App.data_url + warmup.speaker} draggable={false}/>
 						<img src={_project_ + 'student/images/bubble_s.png'} draggable={false}/> */}
-						<div><WrapTextNew view={view} minSize={32} maxSize={52} maxLineNum={2}  lineHeight={120}>{warmup.question}</WrapTextNew></div>
+						<div><WrapTextNew view={view} minFontSize={32} maxFontSize={52} maxLineNum={2}  lineHeight={120}>{warmup.question}</WrapTextNew></div>
 					</div>
 					<div className={'s_typing'}>
 						<div className="area-bnd">

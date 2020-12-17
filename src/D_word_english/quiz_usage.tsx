@@ -152,7 +152,7 @@ class QuizUsage extends React.Component<IQuizPage> {
 					{/*<CorrectBar className={p_type + ' sentence'}/>*/}
 					<img src={App.data_url + quiz_usage.image} draggable={false} />
 					<div className={'quiz_usage' + (quizProg === 'result' ? ' result' : '')}><div ref={this._refSentence}>
-						<WrapTextNew view={this.props.view} maxSize={48} minSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewOnInit={true}>{this._jsx}</WrapTextNew>
+						<WrapTextNew view={this.props.view} maxFontSize={48} minFontSize={44} lineHeight={130} rcalcNum={this._rcalcNum} viewOnInit={true}>{this._jsx}</WrapTextNew>
 					</div></div>
 				</div>
 				<div className="usage">{choices.map((choice, idx) => {

@@ -17,12 +17,6 @@ import * as felsocket from '../../felsocket';
 import { IActionsCtx, useStudent, StudentContext } from './s_store';
 import WrapTextNew from '@common/component/WrapTextNew';
 
-const notifyStartVoice = 'notifyStartVoice';
-const notifyStopCamera = 'notifyStopCamera';
-
-const notifyStartVideoRecord = 'notifyStartVideoRecord';
-const notifyVideoRecordCanceled = 'notifyVideoRecordCanceled';
-const notifyStopVideoRecord = 'notifyStopVideoRecord';
 
 const MAX_TIME = 30;
 const MAX_TIME_STR = '00:30';
@@ -45,7 +39,22 @@ const enum MYSTATE {
 	SENDED,
 }
 
-interface IRecordSpeak {
+// const notifyStartVoice = 'notifyStartVoice';
+// const notifyStopCamera = 'notifyStopCamera';
+
+// const notifyStartVideoRecord = 'notifyStartVideoRecord';
+// const notifyVideoRecordCanceled = 'notifyVideoRecordCanceled';
+// const notifyStopVideoRecord = 'notifyStopVideoRecord';
+
+const NOTIFICATION = {
+	startVoice: 'notifyStartVoice',
+	stopCamera: 'notifyStopCamera',
+	startVideoRecord: 'notifyStartVideoRecord',
+	stopVideoRecord: 'notifyStopVideoRecord',
+	videoRecordCancelled: 'notifyVideoRecordCanceled',
+} as const
+
+interface IRecordSpeakProps {
 	view: boolean;
 	word: IWordData;
 	mediaType: 'audio'|'video';
@@ -58,7 +67,7 @@ interface IRecordSpeak {
 
 }
 @observer
-class RecordSpeak extends React.Component<IRecordSpeak> {
+class RecordSpeak extends React.Component<IRecordSpeakProps> {
 	private _video = new MPlayer(new MConfig(true));
 	private _audio = new MPlayer(new MConfig(true));
 
@@ -77,7 +86,7 @@ class RecordSpeak extends React.Component<IRecordSpeak> {
 	private _jsx: JSX.Element;
 	private _stime = 0;
 
-	constructor(props: IRecordSpeak) {
+	constructor(props: IRecordSpeakProps) {
 		super(props);
 		this._jsx = this._getJSX(props.word.sentence);
 	}
@@ -208,30 +217,30 @@ class RecordSpeak extends React.Component<IRecordSpeak> {
 	private _onSentence = () => {
 		if(!this.props.view) return;
 	}
-	public componentWillReceiveProps(next: IRecordSpeak) {
+	public componentWillReceiveProps(next: IRecordSpeakProps) {
 		if(next.word !== this.props.word) {
 			this._jsx = this._getJSX(next.word.sentence);
 		}
 	}
-	public componentDidUpdate(prev: IRecordSpeak) {	
+	public componentDidUpdate(prev: IRecordSpeakProps) {	
 		const { view, notice, word, mediaType, recorded, actions, uploaded } = this.props;
 		if(view) {
 			if(notice !== prev.notice) {
 				switch(notice) {
-				case notifyStartVoice:
+				case NOTIFICATION.startVoice:
 					if(mediaType === 'audio' && this._state === MYSTATE.WAIT_START) {
 						this._startedRecord();
 					}						
 					break;
-				case notifyStartVideoRecord:
+				case NOTIFICATION.startVideoRecord:
 					if(mediaType === 'video' && this._state === MYSTATE.WAIT_START) {
 						this._startedRecord();
 					}
 					break;
-				case notifyStopCamera:
+				case NOTIFICATION.stopCamera:
 					break;
-				case notifyVideoRecordCanceled:
-				case notifyStopVideoRecord:
+				case NOTIFICATION.videoRecordCancelled:
+				case NOTIFICATION.stopVideoRecord:
 					_.delay(this._stopedRecord, 300);
 					break;
 				default:
@@ -399,12 +408,12 @@ class RecordSpeak extends React.Component<IRecordSpeak> {
 				<div className={'content-box' + (mediaType === 'video' && this._state >= MYSTATE.WAIT_START ? ' hide-bg' : '')} >			
 					<div className="entry_box" style={{opacity: (this._hideContents ? 0 : 1)}} onClick={this._onEntry}>
 						<div className="speak_entry">{/*<div className="speak_entry" style={{fontSize}}>*/}
-							<WrapTextNew maxSize={100} minSize={60} view={view}>{word.entry}</WrapTextNew>
+							<WrapTextNew maxFontSize={100} minFontSize={60} view={view}>{word.entry}</WrapTextNew>
 						</div>
 					</div>
 					<div className="sentence_box" style={{opacity: (this._hideContents ? 0 : 1)}} onClick={this._onSentence}>
 						<div className="speak_sentence">
-							<WrapTextNew maxSize={55} minSize={52} view={view}>{this._jsx}</WrapTextNew>
+							<WrapTextNew maxFontSize={55} minFontSize={52} view={view}>{this._jsx}</WrapTextNew>
 						</div>
 					</div>	
 		

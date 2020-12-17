@@ -180,13 +180,13 @@ class DrillPopup extends React.Component<IDrillItem> {
                     </div>
 
                     <div className="entry_spell" onClick={this._onSound}>
-                        <WrapTextNew maxSize={80} minSize={70} view={type === 'spelling' || type === 'speak' && view && this.m_view}>
+                        <WrapTextNew maxFontSize={80} minFontSize={70} view={type === 'spelling' || type === 'speak' && view && this.m_view}>
                             {entry}
                         </WrapTextNew>
                     </div>
                     <span className="line" hidden={type === 'spelling'}/>
                     <div className="meaning_eng" hidden={type === 'spelling'}>
-                        <WrapTextNew maxSize={43} minSize={38} view={type === 'speak' && view && this.m_view} onClick={this._onSentenceSound}>
+                        <WrapTextNew maxFontSize={43} minFontSize={38} view={type === 'speak' && view && this.m_view} onClick={this._onSentenceSound}>
                             {sentence}
                         </WrapTextNew>
                     </div>

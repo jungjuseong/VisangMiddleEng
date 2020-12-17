@@ -11,7 +11,7 @@ import { sContext, StudentProvider, StudentContext, useStudent, IStateCtx, IActi
 
 import { Loading } from '../../share/loading';
 
-import Quiz from './s_quiz';
+import SQuiz from './s_quiz';
 import VocaTyping from './s_voca_typing';
 import SSpeakRecord from './s_speak_record';
 
@@ -24,7 +24,7 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 		const { actions } = this.props;
 		const { viewDiv,svg_bg,directionON,loading,goodjob } = this.props.state;
 		const leftOffset = viewDiv === 'direction' ? 0 : -1280;
-		const videoDirectionProps = {
+		const vdProps = {
 			view: viewDiv === 'direction',
 			on: directionON,
 			isTeacher: false,
@@ -39,13 +39,12 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 			<SVGBg className="bg_svg" data="/content/digenglishCB_lib/images/theme0_bg.svg" {...svg_bg} />
 			<div className="content-container"><div className="content-wrapper" style={{left: leftOffset + 'px',}}>
 				<div>
-					<VideoDirection className="video-direction" {...videoDirectionProps} />
+					<VideoDirection className="video-direction" {...vdProps} />
 				</div>
 				<div>
-					<Quiz/>
+					<SQuiz/>
 					<VocaTyping />
 					<SSpeakRecord />
-
 					<Loading view={loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={2000}	data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete} />
 					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}	/>
@@ -59,10 +58,7 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 
 const Student = useStudent((store: StudentContext) => (
 	<Observer>{() => (
-		<StudentComponent 
-			state={store.state} 
-			actions={store.actions}
-		/>
+		<StudentComponent state={store.state} actions={store.actions}/>
 	)}</Observer>
 ));
 export { StudentProvider as AppProvider, sContext as appContext };

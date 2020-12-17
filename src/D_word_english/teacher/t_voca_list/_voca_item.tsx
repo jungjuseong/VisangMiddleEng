@@ -49,7 +49,7 @@ function VocaItem(props: IVocaItemProps) {
 				<ToggleBtn className="btn_study" onClick={_onStudy}/>
 				<BtnAudio ref={_refAudio} className="btn_sound" url={App.data_url + props.word.audio}/>
 				<div onClick={_entryClick}>
-					<WrapTextNew view={props.state.prog >= 'list'} maxLineNum={1} minSize={16} maxSize={40} textAlign="left">
+					<WrapTextNew view={props.state.prog >= 'list'} maxLineNum={1} minFontSize={16} maxFontSize={40} textAlign="left">
 						{props.word.entry}
 					</WrapTextNew>
 				</div>

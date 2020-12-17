@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -9,10 +9,10 @@ import ReactResizeDetector from 'react-resize-detector';
 interface IWrapText {
 	className?: string;
 	view: boolean;
-	maxSize?: number;
-	minSize?: number;
+	maxFontSize?: number;
+	minFontSize?: number;
 	lineHeight?: number;
-	maxLineNum?: number;      					// minSize로 바꿀 최대 라인 수
+	maxLineNum?: number; // minSize로 바꿀 최대 라인 수
 	textAlign?: 'left'|'center'|'right';
 	rcalcNum?: number;
 	viewOnInit?: boolean;
@@ -22,58 +22,58 @@ interface IWrapText {
 
 @observer
 class WrapTextNew extends React.Component<IWrapText> {
-	private _div: HTMLDivElement|null = null;
-	private _bndW = 0;
-
 	@observable private _width = 0;
 	@observable private _fontSize = 0;
-	private _myW = 0;
+
+	private _div: HTMLDivElement|null = null;
+	private _myWidth = 0;
 	private _numOfLine = 0;
 
 	constructor(props: IWrapText) {
 		super(props);
-		this._fontSize = this.props.maxSize ? this.props.maxSize : 0;
+		this._fontSize = this.props.maxFontSize ? this.props.maxFontSize : 0;
 	}
+
 	public _ref = (div: HTMLDivElement) => {
+		const {onRef} = this.props;
+
 		if(this._div || !div) return;
 		this._div = div;
-		if(this.props.onRef) this.props.onRef(div);
+		if(onRef) onRef(div);
 	}
 
-	private _canCalc() {
-		if(!this.props.view) return false;
-		else if(this._myW <= 0) return false;
-		else if(!this._div) return false;
-		else if(this._width > 0) return false;
-		else return true;	
-	}
+	private _canCalc = () => (this.props.view && this._myWidth > 0 && this._div && this._width <= 0);
+	
 	private _aniFrame = (f: number) => {
-		if(!this._canCalc()) return;
+		if(this._canCalc()) {
+			this._calc();
+			window.requestAnimationFrame(this._aniFrame);
+		}
+	}
 
-		this._calc();
-		window.requestAnimationFrame(this._aniFrame);
+	private getComputedMargin = (computedStyle: CSSStyleDeclaration) => {
+		let computedMarginRight = computedStyle.marginRight ? parseInt(computedStyle.marginRight, 10) : 0;
+		let computedMarginLeft = computedStyle.marginLeft ? parseInt(computedStyle.marginLeft, 10) : 0;
+		
+		if(isNaN(computedMarginRight)) computedMarginRight = 0;
+		if(isNaN(computedMarginLeft)) computedMarginLeft = 0;
+
+		return ({ 
+			left: computedMarginLeft,
+			right: computedMarginRight
+		});
 	}
 
 	private _calc() {
-		if(!this._canCalc()) return;
-		else if(!this._div) return;
+		const { maxLineNum, minFontSize } = this.props;
+		
+		if(!this._canCalc() || !this._div) return;
 
-		const brect = this._div.getBoundingClientRect();
+		const boundingRect = this._div.getBoundingClientRect();
+		const gapWidth = (this._myWidth - boundingRect.width);
 
-		const gap = (this._myW - brect.width);
-
-
-		// console.log('calc gap', this._myW, brect);
-
-		if(gap < -1 || gap > 1) {
-			return;
-		}
-
-
-		const childs = this._div.childNodes;
-
-		const len = childs.length;
-		if(len === 0) return;
+		if(gapWidth < -1 || gapWidth > 1 ||
+			this._div.childNodes.length === 0) return;
 		
 		let numLine = 0;
 
@@ -82,122 +82,88 @@ class WrapTextNew extends React.Component<IWrapText> {
 		let right = Number.MIN_SAFE_INTEGER;
 		let cntIdx = 0;
 
-		childs.forEach((node, idx) => {
+		this._div.childNodes.forEach((node, idx) => {
 			let marginR = 0;
 			let marginL = 0;
 			if(node instanceof HTMLElement) {
 				const el = node as HTMLElement;
-				const s = window.getComputedStyle(el);
-				
-				if(s.position === 'absolute') {
+				const computedStyle = window.getComputedStyle(el);
+				let computedMargin = this.getComputedMargin(computedStyle);
+
+				const clientRects = el.getClientRects();
+				if(computedStyle.position === 'absolute') {
 					//
-				} else if(s.display === 'inline') {
-					let mr = s.marginRight ? parseInt(s.marginRight, 10) : 0;
-					let ml = s.marginLeft ? parseInt(s.marginLeft, 10) : 0;
-					if(isNaN(mr)) mr = 0;
-					if(isNaN(ml)) ml = 0;
+				} else if(computedStyle.display === 'inline') {
 
-					const rects = el.getClientRects();
-
-					for(let i = 0; i < rects.length; i++) {
-						const rect = rects.item(i);
+					for(let i = 0; i < clientRects.length; i++) {
+						const rect = clientRects.item(i);
 						if(!rect) continue;
-						const rtop = rect.top;
-						const rbottom = rect.bottom;
-						const rleft = rect.left - ml;
-						const rright = rect.right + mr;
-		
 					
 						if(cntIdx === 0) {
-							middle = (rtop + rbottom) / 2;
+							middle = (rect.top + rect.bottom) / 2;
 							numLine = 1;
 						} else {
-							if(middle < rtop || middle > rbottom) {
-								middle = (rtop + rbottom) / 2;
+							if(middle < rect.top || middle > rect.bottom) {
+								middle = (rect.top + rect.bottom) / 2;
 								numLine++;					
 							}
-						}
-					
-						left = Math.min(left, rleft);
-						right = Math.max(right, rright);
-
+						}					
+						left = Math.min(left, rect.left - computedMargin.left);
+						right = Math.max(right, rect.right + computedMargin.right);
 						cntIdx++;
-					}
-				
+					}				
 				} else {
 					let rect = el.getBoundingClientRect();
 
-					let mr = s.marginRight ? parseInt(s.marginRight, 10) : 0;
-					let ml = s.marginLeft ? parseInt(s.marginLeft, 10) : 0;
-					if(isNaN(mr)) mr = 0;
-					if(isNaN(ml)) ml = 0;
-					marginR = mr;
-					marginL = ml;
-
-					const rtop = rect.top;
-					const rbottom = rect.bottom;
-					const rleft = rect.left - marginL;
-					const rright = rect.right + marginR;
+					marginR = computedMargin.right;
+					marginL = computedMargin.left;
 	
-					if(rbottom - rtop > 0) {
+					if(rect.bottom - rect.top > 0) {
 						if(cntIdx === 0) {
-							middle = (rtop + rbottom) / 2;
+							middle = (rect.top + rect.bottom) / 2;
 							numLine = 1;
 						} else {
-							if(middle < rtop || middle > rbottom) {
-								middle = (rtop + rbottom) / 2;
+							if(middle < rect.top || middle > rect.bottom) {
+								middle = (rect.top + rect.bottom) / 2;
 								numLine++;					
 							}
-						}
-		
-						left = Math.min(left, rleft);
-						right = Math.max(right, rright);
-
+						}		
+						left = Math.min(left, rect.left - marginL);
+						right = Math.max(right, rect.right + marginR);
 						cntIdx++;
 					}
 				}
-
 			} else {
 				const range = document.createRange();
 				range.selectNodeContents(node);
-				const rects = range.getClientRects();
 
+				const rects = range.getClientRects();
 				for(let i = 0; i < rects.length; i++) {
 					const rect = rects.item(i);
 					if(!rect) continue;
-					const rtop = rect.top;
-					const rbottom = rect.bottom;
-					const rleft = rect.left;
-					const rright = rect.right;
-	
 				
 					if(cntIdx === 0) {
-						middle = (rtop + rbottom) / 2;
+						middle = (rect.top + rect.bottom) / 2;
 						numLine = 1;
 					} else {
-						if(middle < rtop || middle > rbottom) {
-							middle = (rtop + rbottom) / 2;
+						if(middle < rect.top || middle > rect.bottom) {
+							middle = (rect.top + rect.bottom) / 2;
 							numLine++;					
 						}
-					}
-	
-					left = Math.min(left, rleft);
-					right = Math.max(right, rright);
-
+					}	
+					left = Math.min(left, rect.left);
+					right = Math.max(right, rect.right);
 					cntIdx++;
 				}
-			}
-	
+			}	
 		});
 		this._numOfLine = numLine;
 
-		// console.log(this.props.maxLineNum, this.props.maxLineNum < 1); 
-		let maxLineNum = this.props.maxLineNum ? this.props.maxLineNum : 1;
-		if(maxLineNum < 1) maxLineNum = 1;
+		let real_maxLineNum = maxLineNum ? maxLineNum : 1;
+		if(real_maxLineNum < 1) real_maxLineNum = 1;
 
-		// console.log(' canc, numLine', this._fontSize, numLine);
-		if(numLine > maxLineNum) {
-			const minSize = this.props.minSize ? this.props.minSize : 0;
+		if(numLine > real_maxLineNum) {
+			const minSize = minFontSize ? minFontSize : 0;
 			if(this._fontSize > 0 && minSize > 0 && this._fontSize > minSize) {
 				this._fontSize--;
 			} else this._width = Math.ceil(right - left + 2);
@@ -206,29 +172,26 @@ class WrapTextNew extends React.Component<IWrapText> {
 		}
 	}
 
-	private _resized = (w: number, h: number) => {
-		this._myW = w;
+	private _resized = (width: number, h: number) => {
+		this._myWidth = width;
 		window.requestAnimationFrame(this._aniFrame);
 	}
 
 	public componentDidUpdate(prev: IWrapText) {
-		if(this.props.view && !prev.view) {
-			this._fontSize = this.props.maxSize ? this.props.maxSize : 0;
+		const { view, rcalcNum, maxFontSize } = this.props;
+
+		if(view && !prev.view) {
+			this._fontSize = maxFontSize ? maxFontSize : 0;
 			this._width = 0;
 			window.requestAnimationFrame(this._aniFrame);
-		} else if(!this.props.view && prev.view) {
-			this._width = 0;
-		}
-		if(this.props.view && this.props.rcalcNum && this.props.rcalcNum !== prev.rcalcNum) {
-			this._fontSize = this.props.maxSize ? this.props.maxSize : 0;
+		} else if(!view && prev.view) this._width = 0;
+		
+		if(view && rcalcNum && rcalcNum !== prev.rcalcNum) {
+			this._fontSize = maxFontSize ? maxFontSize : 0;
 			this._width = 0;
 			window.requestAnimationFrame(this._aniFrame);
 		}
-
-		if(this._fontSize === 0 && this.props.maxSize) {
-			this._fontSize = this.props.maxSize;
-		}
-
+		if(this._fontSize === 0 && maxFontSize) this._fontSize = maxFontSize;
 	}
 
 	public render() {

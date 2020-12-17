@@ -858,7 +858,7 @@ class Comprehension extends React.Component<IComprehensionProps> {
                                     <div key={idx} style={{ display: idx === this._curQidx ? '' : 'none' }}>
                                         <div className="quiz">
                                             {/*<span>{quiz.question}</span>*/}
-                                            <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minSize={24} maxSize={36} lineHeight={120} textAlign="left" onClick={this._onClickQuestion}>
+                                            <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minFontSize={24} maxFontSize={36} lineHeight={120} textAlign="left" onClick={this._onClickQuestion}>
                                                 {quiz.app_question}
                                             </WrapTextNew>
                                         </div>
@@ -872,7 +872,7 @@ class Comprehension extends React.Component<IComprehensionProps> {
                                                 onClick={this._onMc} 
                                                 disabled={isQComplete}
                                             >
-                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minSize={24} maxSize={33} lineHeight={120} textAlign="left">
+                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minFontSize={24} maxFontSize={33} lineHeight={120} textAlign="left">
                                                     {quiz.choice_1}
                                                 </WrapTextNew>
                                             </QuizMCBtn>
@@ -885,7 +885,7 @@ class Comprehension extends React.Component<IComprehensionProps> {
                                                 onClick={this._onMc} 
                                                 disabled={isQComplete}
                                             >
-                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minSize={24} maxSize={33} lineHeight={120} textAlign="left">
+                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minFontSize={24} maxFontSize={33} lineHeight={120} textAlign="left">
                                                     {quiz.choice_2}
                                                 </WrapTextNew>
                                             </QuizMCBtn>
@@ -897,7 +897,7 @@ class Comprehension extends React.Component<IComprehensionProps> {
                                                 onClick={this._onMc} 
                                                 disabled={isQComplete}
                                             >
-                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minSize={24} maxSize={33} lineHeight={120} textAlign="left">
+                                                <WrapTextNew view={this.props.view && idx === this._curQidx} maxLineNum={2} minFontSize={24} maxFontSize={33} lineHeight={120} textAlign="left">
                                                     {quiz.choice_3}
                                                 </WrapTextNew>
                                             </QuizMCBtn>

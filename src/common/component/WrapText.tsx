@@ -5,11 +5,11 @@ import { observer } from 'mobx-react';
 
 import * as _ from 'lodash';
 
-interface IWrapText {
+interface IWrapTextProps {
 	className?: string;
 	text: JSX.Element;
-	minSize?: number;
-	maxSize?: number;
+	minFontSize?: number;
+	maxFontSize?: number;
 	lineHeight?: number;
 	view: boolean;
 	rcalcNum?: number;
@@ -17,65 +17,62 @@ interface IWrapText {
 	disabled?: boolean;
 	textAlign?: 'left'|'center'|'right';
 	onRef?: (el: HTMLElement) => void;
-
 	onClick?: () => void;
 }
 
 @observer
-class WrapText extends React.Component<IWrapText> {
-	private _div: HTMLDivElement|null = null;
-	private _bndW = 0;
-
+class WrapText extends React.Component<IWrapTextProps> {
 	@observable private _width = 0;
 	@observable private _recalc = false;
+
+	private _div: HTMLDivElement|null = null;
 	private _numOfLine = 0;
 	private _fontSize = 0;
-	private _lineH = 0;
-	private _textAlign: 'left'|'center'|'right' = 'center';
+	private _lineHeight = 0;
+	// private _textAlign: 'left'|'center'|'right' = 'center';
 
-	constructor(props: IWrapText) {
+	constructor(props: IWrapTextProps) {
 		super(props);
-		if(props.maxSize && props.minSize)  this._fontSize = props.maxSize;
-		if(props.lineHeight)  this._lineH = props.lineHeight;
+		if(props.maxFontSize && props.minFontSize) this._fontSize = props.maxFontSize;
+		if(props.lineHeight) this._lineHeight = props.lineHeight;
 	}
+
 	public _ref = (div: HTMLDivElement) => {
 		if(this._div || !div) return;
 		this._div = div;
 		if(this.props.onRef) this.props.onRef(div);
 	}
-	private _calc = () => {
-		if(!this._div || !this.props.view || this.props.disabled) return;
-		// const rects = this._div.getClientRects();
-		const childs = this._div.childNodes;
 
-		const len = childs.length;
-		if(len === 0) {
+	private _calc = () => {
+		const { view, disabled, minFontSize, maxFontSize } = this.props;
+		if(!this._div || !view || disabled) return;
+
+		if(this._div.childNodes.length === 0) {
 			window.requestAnimationFrame((f) => {
 				this._calc();
 			});
 			return;
 		}
-		let numLine = 0;
 
+		let numLine = 0;
 		let middle = -100;
 		let left = Number.MAX_SAFE_INTEGER;
 		let right = Number.MIN_SAFE_INTEGER;
 		let cntIdx = 0;
 
-		// console.log('ssssssssssssssssssssss===>', left, right);
-
-		childs.forEach((node, idx) => {
-			let marginR = 0;
-			let marginL = 0;
+		this._div.childNodes.forEach((node, idx) => {
+			let rightMargin = 0;
+			let leftMargin = 0;
 			if(node instanceof HTMLElement) {
 				const el = node as HTMLElement;
-				const s = window.getComputedStyle(el);
+				const computedStyle = window.getComputedStyle(el);
 				
-				if(s.position === 'absolute') {
+				if(computedStyle.position === 'absolute') {
 					//
-				} else if(s.display === 'inline') {
-					let mr = s.marginRight ? parseInt(s.marginRight, 10) : 0;
-					let ml = s.marginLeft ? parseInt(s.marginLeft, 10) : 0;
+				} 
+				else if(computedStyle.display === 'inline') {
+					let mr = computedStyle.marginRight ? parseInt(computedStyle.marginRight, 10) : 0;
+					let ml = computedStyle.marginLeft ? parseInt(computedStyle.marginLeft, 10) : 0;
 					if(isNaN(mr)) mr = 0;
 					if(isNaN(ml)) ml = 0;
 
@@ -84,100 +81,78 @@ class WrapText extends React.Component<IWrapText> {
 					for(let i = 0; i < rects.length; i++) {
 						const rect = rects.item(i);
 						if(!rect) continue;
-						const rtop = rect.top;
-						const rbottom = rect.bottom;
-						const rleft = rect.left - ml;
-						const rright = rect.right + mr;
 		
-					
 						if(cntIdx === 0) {
-							middle = (rtop + rbottom) / 2;
+							middle = (rect.top + rect.bottom) / 2;
 							numLine = 1;
 						} else {
-							if(middle < rtop || middle > rbottom) {
-								middle = (rtop + rbottom) / 2;
+							if(middle < rect.top || middle > rect.bottom) {
+								middle = (rect.top + rect.bottom) / 2;
 								numLine++;					
 							}
-						}
-		
-						left = Math.min(left, rleft);
-						right = Math.max(right, rright);
+						}		
+						left = Math.min(left, rect.left - ml);
+						right = Math.max(right, rect.right + mr);
 						cntIdx++;
 					}
 				
 				} else {
 					let rect = el.getBoundingClientRect();
+					let mr = computedStyle.marginRight ? parseInt(computedStyle.marginRight, 10) : 0;
+					let ml = computedStyle.marginLeft ? parseInt(computedStyle.marginLeft, 10) : 0;
 
-					let mr = s.marginRight ? parseInt(s.marginRight, 10) : 0;
-					let ml = s.marginLeft ? parseInt(s.marginLeft, 10) : 0;
 					if(isNaN(mr)) mr = 0;
 					if(isNaN(ml)) ml = 0;
-					marginR = mr;
-					marginL = ml;
-
-					const rtop = rect.top;
-					const rbottom = rect.bottom;
-					const rleft = rect.left - marginL;
-					const rright = rect.right + marginR;
-	
+					rightMargin = mr;
+					leftMargin = ml;
 				
 					if(cntIdx === 0) {
-						middle = (rtop + rbottom) / 2;
+						middle = (rect.top + rect.bottom) / 2;
 						numLine = 1;
 					} else {
-						if(middle < rtop || middle > rbottom) {
-							middle = (rtop + rbottom) / 2;
+						if(middle < rect.top || middle > rect.bottom) {
+							middle = (rect.top + rect.bottom) / 2;
 							numLine++;					
 						}
-					}
-	
-					left = Math.min(left, rleft);
-					right = Math.max(right, rright);
+					}	
+					left = Math.min(left, rect.left - leftMargin);
+					right = Math.max(right, rect.right + rightMargin);
 					cntIdx++;
 				}
-
 			} else {
 				const range = document.createRange();
 				range.selectNodeContents(node);
-				const rects = range.getClientRects();
 
+				const rects = range.getClientRects();
 				for(let i = 0; i < rects.length; i++) {
 					const rect = rects.item(i);
 					if(!rect) continue;
-					const rtop = rect.top;
-					const rbottom = rect.bottom;
-					const rleft = rect.left;
-					const rright = rect.right;
-	
 				
 					if(cntIdx === 0) {
-						middle = (rtop + rbottom) / 2;
+						middle = (rect.top + rect.bottom) / 2;
 						numLine = 1;
 					} else {
-						if(middle < rtop || middle > rbottom) {
-							middle = (rtop + rbottom) / 2;
+						if(middle < rect.top || middle > rect.bottom) {
+							middle = (rect.top + rect.bottom) / 2;
 							numLine++;					
 						}
-					}
-	
-					left = Math.min(left, rleft);
-					right = Math.max(right, rright);
+					}	
+					left = Math.min(left, rect.left);
+					right = Math.max(right, rect.right);
 					cntIdx++;
 				}
-			}
-	
+			}	
 		});
 		this._numOfLine = numLine;
 		if(numLine > 1 || this._recalc) {
-			if(this.props.maxSize && this.props.minSize) {
-				if(this._fontSize !== this.props.minSize) {
-					this._fontSize = this.props.minSize;
-					this._recalc = true;
-					
+			if(maxFontSize && minFontSize) {
+				if(this._fontSize !== minFontSize) {
+					this._fontSize = minFontSize;
+					this._recalc = true;					
 					window.requestAnimationFrame((f) => {
 						this._calc();
 						return;
-					});					
+					});
 				} else {
 					this._recalc = false;
 					this._width = Math.ceil(right - left + 2);
@@ -189,47 +164,44 @@ class WrapText extends React.Component<IWrapText> {
 	}
 
 	private _onClick = () => {
-		//
 		if(this.props.onClick) this.props.onClick();
 	}
 
-	public componentWillReceiveProps(next: IWrapText) {
-		let bCalc = false;
-		if(next.view !== this.props.view) bCalc = next.view;
-		// if(next.text !== this.props.text) bCalc = next.view;
+	public componentWillReceiveProps(next: IWrapTextProps) {
+		const { view,rcalcNum, maxFontSize: maxSize, minFontSize: minSize } = this.props;
 
-		if(next.rcalcNum !== this.props.rcalcNum) bCalc = next.view;
-
-		if(next.maxSize !== this.props.maxSize) bCalc = next.view;
-		if(next.minSize !== this.props.minSize) bCalc = next.view;
-
-		if(bCalc) {
+		if(next.view !== view ||
+			next.rcalcNum !== rcalcNum||
+			next.maxFontSize !== maxSize ||
+			next.minFontSize !== minSize) {
 			this._recalc = false;
-			if(next.maxSize && next.minSize)  this._fontSize = next.maxSize;
-			if(next.lineHeight)  this._lineH = next.lineHeight;
+			if(next.maxFontSize && next.minFontSize) this._fontSize = next.maxFontSize;
+			if(next.lineHeight) this._lineHeight = next.lineHeight;
 		}
 	}
 
-	public componentDidUpdate(prev: IWrapText) {
+	public componentDidUpdate(prev: IWrapTextProps) {
+		const { view, disabled, rcalcNum, minFontSize, maxFontSize } = this.props;
+
 		if(!this._div) return;
+
 		let maxCnt = -1;
-
-		if(this.props.view && !this.props.disabled) {		
-			if(this.props.view !== prev.view) maxCnt = 5;
+		if(view && !disabled) {		
+			if(view !== prev.view) maxCnt = 5;
 			// if(this.props.text !== prev.text) bCalc = this.props.view;
-			if(this.props.rcalcNum !== prev.rcalcNum) maxCnt = 1;
+			if(rcalcNum !== prev.rcalcNum) maxCnt = 1;
 
-			if(prev.maxSize !== this.props.maxSize) maxCnt = 5;
-			if(prev.minSize !== this.props.minSize) maxCnt = 5;
+			if(prev.maxFontSize !== maxFontSize) maxCnt = 5;
+			if(prev.minFontSize !== minFontSize) maxCnt = 5;
 		}
 
-		if( !this.props.disabled && (maxCnt >= 0 || (!this._recalc && this._width === 0))) {
+		if( !disabled && (maxCnt >= 0 || (!this._recalc && this._width === 0))) {
 			if(maxCnt >= 0) this._recalc = false;
 			else maxCnt = 5;
 
 			this._width = 0;
 			let cnt  = 0;
-			let ff = (f: number) => {
+			const ff = (f: number) => {
 				if(!this._recalc && this._width === 0) {
 					if(cnt < maxCnt ) {
 						if(maxCnt === 1) {
@@ -237,27 +209,22 @@ class WrapText extends React.Component<IWrapText> {
 							this._width = 0;
 						}
 						window.requestAnimationFrame(ff);
-					} else {
-
-
-						this._calc();
-					}
+					} else this._calc();
+					
 					cnt++;
 				}
 			};
 			ff(-1);
 		}
 	}
+
 	public componentDidMount() {
 		if(!this.props.disabled && !this._recalc && this._width === 0) {
 			let cnt  = 0;
-			let ff = (f: number) => {
+			const ff = (f: number) => {
 				if(!this._recalc && this._width === 0) {
-					if(cnt < 10 ) {
-						window.requestAnimationFrame(ff);
-					} else {
-						this._calc();
-					}
+					if(cnt < 10 ) window.requestAnimationFrame(ff); 
+					else this._calc();
 				}
 				cnt++;
 			};
@@ -266,51 +233,52 @@ class WrapText extends React.Component<IWrapText> {
 	}
 
 	public render() {
-		const {className, text} = this.props; 
-		const style: React.CSSProperties = {
+		const {className, text, disabled, textAlign} = this.props;
+
+		let style: React.CSSProperties = {
+			display: 'inline-block',
 			whiteSpace: 'normal',
-			textAlign: this._textAlign,
+			textAlign,
+			fontSize: (this._fontSize > 0) ? this._fontSize + 'px' : '',
+			lineHeight: (this._lineHeight > 0) ? this._lineHeight + '%' : '',
 		};
 
-		if(this._fontSize > 0) style.fontSize = this._fontSize + 'px';
-		if(this._lineH > 0) style.lineHeight = this._lineH + '%';
-
-		if(this.props.disabled) {
-			style.width = '100%';
-			style.display = 'inline-block';
-			if(this.props.textAlign) {
-				this._textAlign = this.props.textAlign;
-				style.textAlign = this.props.textAlign;			
-
-				if(this._numOfLine <= 1) this._textAlign = 'center';
-				else this._textAlign = 'left';
-
-				style.textAlign = this._textAlign;
+		if(disabled) {
+			style = {
+				...style,
+				width: '100%',
+			};
+			if(textAlign) {
+				// this._textAlign = style.textAlign = textAlign;
+				style.textAlign = (this._numOfLine <= 1) ? 'center' : 'left';
 			}
-		} else if(!this._recalc && this._width > 0) {
-			style.width = this._width + 'px';
-			style.display = 'inline-block';
-
-			if(this._numOfLine <= 1) this._textAlign = 'center';
-			else this._textAlign = 'left';
-
-			style.textAlign = this._textAlign;
-		} else if(!this._recalc && this._width < 0) {
-			style.width = '100%';
-			style.display = 'inline-block';
-			style.textAlign = 'center';
-			this._textAlign = 'center';
 		} else {
-			style.width = '100%';
-			style.display = 'inline-block';
-			// style.color = 'rgba(0, 0, 0, 0.01)';
-
-			if(this._numOfLine <= 1) this._textAlign = 'center';
-			else this._textAlign = 'left';
-
-			style.textAlign = this._textAlign;
+			if (this._recalc) {
+				style = {
+					...style,
+					width: '100%',
+					textAlign: (this._numOfLine <= 1) ? 'center' : 'left',
+				};
+				// this._textAlign = style.textAlign;
+			}
+			else {
+				if (this._width > 0) {
+					style = {
+						...style,
+						width: this._width + 'px',
+						textAlign: (this._numOfLine <= 1) ? 'center' : 'left',
+					};
+					// this._textAlign = style.textAlign;
+				} else {
+					style = {
+						...style,
+						width: '100%',
+						textAlign: 'center',
+					};
+					// this._textAlign = 'center';
+				}
+			} 
 		}
-		// console.log(style, this._textAlign, this._numOfLine);
 
 		return (
 			<>
@@ -319,9 +287,7 @@ class WrapText extends React.Component<IWrapText> {
 				</div>
 			</>
 		);
-
 	}
-
 }
 
 export default WrapText;

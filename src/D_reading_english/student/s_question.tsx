@@ -1,6 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Observer, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import * as _ from 'lodash';
 
 import { IStateCtx, IActionsCtx, SENDPROG } from './s_store';
@@ -9,13 +8,11 @@ import { observable } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
 
-import { ResponsiveText } from '../../share/ResponsiveText';
 import { ToggleBtn } from '@common/component/button';
 import NItem from '@common/component/NItem';
 import WrapTextNew from '@common/component/WrapTextNew';
 import QuizMCBtn from '../../share/QuizMCBtn';
 import * as kutil from '@common/util/kutil';
-import * as StrUtil from '@common/util/StrUtil';
 
 import SendUI from '../../share/sendui_new';
 import * as style from '../../share/style';
@@ -71,6 +68,7 @@ class Script extends React.Component<IScript> {
 		if(this._swiper || !el) return;
 		this._swiper = el.swiper;
 	}
+
 	public componentDidUpdate(prev: IScript) {
 		if(this.props.view && !prev.view) {
 			if(this._swiper) {
@@ -87,14 +85,8 @@ class Script extends React.Component<IScript> {
 	public render() {
 		const scripts = this.props.scripts;
 		return (
-			<SwiperComponent
-				ref={this._refSwiper}
-				direction="vertical"
-				scrollbar={{ el: '.swiper-scrollbar', draggable: true,}}
-				observer={true}
-				slidesPerView="auto"
-				freeMode={true}						
-			>
+			<SwiperComponent ref={this._refSwiper} direction="vertical"	scrollbar={{ el: '.swiper-scrollbar', draggable: true,}} observer={true}
+				slidesPerView="auto" freeMode={true}>
 				<div className="script-wrap">{this._jsxs}</div>
 			</SwiperComponent>
 		);
@@ -112,52 +104,40 @@ interface IQuestion {
 @observer
 class Question extends React.Component<IQuestion> {
 	public render() {
-		const { view, question, prog, selected, onSelect } = this.props;
-		
-		const questionChoice = (question.choice_4 === '') ? [question.choice_1,question.choice_2,question.choice_3] : [question.choice_1,question.choice_2,question.choice_3,question.choice_4];
-		
+		const { view, question, prog, selected, onSelect } = this.props;		
+		const questionChoice = (question.choice_4 === '') ? 
+			[question.choice_1,question.choice_2,question.choice_3] : 
+			[question.choice_1,question.choice_2,question.choice_3,question.choice_4];		
 		return (
 			<>
 			<div className="question">
 			    <div>
-                    <WrapTextNew 
-                        view={view}
-                        maxLineNum={1}
-                        maxSize={38}
-                        minSize={34}
-                        lineHeight={120}
-                        textAlign={'left'}
-                    >
-                        {question.question}
+                    <WrapTextNew view={view} maxLineNum={1} maxFontSize={38} minFontSize={34} lineHeight={120} textAlign={'left'}>
+						{question.question}
                     </WrapTextNew>
 			    </div>
 			</div>
 			<div className="choice_box">
-			{questionChoice.map((value:string, idx:number) => {
-			    ++idx;
-                let arr = [];
-                if(prog >= SENDPROG.COMPLETE) {
-                    if(question.answer === idx) arr[idx] = 'correct';
-                    else if(selected === idx) arr[idx] = 'wrong';
-                    else arr[idx] = '';
-                }
-			    return(
-                    <QuizMCBtn
-                        key={value}
-                        className={`btn_choice ${arr[idx]}`}
-                        num={idx}
-                        on={selected === idx}
-                        disabled={prog >= SENDPROG.SENDED}
-                        onClick={onSelect.bind(idx)}
-                    >
-                        <div>
-                            <WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={29} maxSize={31} textAlign="left">
-                                {value}
-                            </WrapTextNew>
-                        </div>
-                    </QuizMCBtn>
-                )
-			})}
+				{
+					questionChoice.map((value:string, idx:number) => {
+						++idx;
+						let arr = [];
+						if(prog >= SENDPROG.COMPLETE) {
+							if(question.answer === idx) arr[idx] = 'correct';
+							else if(selected === idx) arr[idx] = 'wrong';
+							else arr[idx] = '';
+						}
+						return(
+							<QuizMCBtn key={value} className={`btn_choice ${arr[idx]}`}	num={idx} on={selected === idx} disabled={prog >= SENDPROG.SENDED} onClick={onSelect.bind(idx)}>
+								<div>
+									<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={29} maxFontSize={31} textAlign="left">
+										{value}
+									</WrapTextNew>
+								</div>
+							</QuizMCBtn>
+						)
+					})
+				}
 			</div>
 			</>
 		);

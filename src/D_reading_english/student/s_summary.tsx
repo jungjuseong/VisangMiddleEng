@@ -41,7 +41,7 @@ class SummaryChoice extends React.Component<ISummaryChoice> {
 		return (
 			<QuizMCBtn className={'btn_choice'} num={num} on={num === selected}	disabled={prog !== SENDPROG.READY} onClick={this._onClick}>
 				<div>
-					<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minSize={27} maxSize={30} textAlign="left">
+					<WrapTextNew view={view} maxLineNum={1} lineHeight={120} minFontSize={27} maxFontSize={30} textAlign="left">
 						{text}
 					</WrapTextNew>
 				</div>

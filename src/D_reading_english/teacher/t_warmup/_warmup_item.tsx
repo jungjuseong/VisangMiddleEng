@@ -241,7 +241,7 @@ class WarmupItem extends React.Component<IWarmupItemProps> {
 						<div>
 							<img src={_project_ + 'teacher/images/speaker_icon.png'} draggable={false} onClick={this._onSound}/>
 							<div className="audio">
-								<WrapTextNew minSize={28} maxSize={33} maxLineNum={2} rcalcNum={this._rcalNum} view={view} onClick={this._onSound} textAlign="left">
+								<WrapTextNew minFontSize={28} maxFontSize={33} maxLineNum={2} rcalcNum={this._rcalNum} view={view} onClick={this._onSound} textAlign="left">
 									{data.question}
 								</WrapTextNew>
 							</div>
