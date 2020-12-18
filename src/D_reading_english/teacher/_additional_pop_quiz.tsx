@@ -13,8 +13,6 @@ import { CoverPopup } from '../../share/CoverPopup';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { BtnAudio } from '../../share/BtnAudio';
 
-import ImgPopup from './t_summary/_img_popup';
-
 import { _getJSX, _getBlockJSX } from '../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;

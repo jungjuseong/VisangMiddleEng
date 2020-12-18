@@ -23,6 +23,7 @@ interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IDictation[];
+	viewResult : () => void;
 }
 @observer
 class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
@@ -158,7 +159,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { data, state, index, actions} = this.props;
+		const { data, state, index, actions, viewResult} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
 		const isQComplete = state.dictationProg[index] >= SENDPROG.COMPLETE;
@@ -170,7 +171,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 		return (
 			<>
 			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 

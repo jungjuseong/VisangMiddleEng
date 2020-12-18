@@ -55,46 +55,47 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	}
 
 	private _refVideo = (el: HTMLMediaElement | null) => {
-		const { data, idx, isShadowPlay, player, shadowing, onChangeScript } = this.props;
-
 		if (!el) return;
+		const { player } = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
-		player.load(App.data_url + data.role_play.main_sound);
-		
-		const scripts = data.scripts[idx];
+
+		player.load(App.data_url + this.props.data.role_play.main_sound);
+		const scripts = this.props.data.scripts[this.props.idx];
 		player.addOnTime((time: number) => {
-			const curIdx = _getCurrentIdx(scripts, time / 1000);
+			const {shadowing, isShadowPlay, onChangeScript} = this.props;
+			time = time / 1000;
+			const curIdx = _getCurrentIdx(scripts, time);
 			console.log(curIdx);
 			if(this.m_curIdx !== curIdx) {
 				if(shadowing) {
 					if(this.m_yourturn < 0) {
 						if(this.m_curIdx >= 0) {
 							this.m_ytNext = curIdx;
-							player.pause();
-							const script = scripts[this.m_curIdx];
+                            player.pause();
+                            const script = scripts[this.m_curIdx];
                             const delay = (script.audio_end - script.audio_start) * 2000;
-							this.m_yourturn = _.delay(() => {
-								if(this.m_yourturn >= 0 && isShadowPlay) {
+                            this.m_yourturn = _.delay(() => {
+                                if(this.m_yourturn >= 0 && isShadowPlay) {
 									this.m_curIdx = this.m_ytNext;
 									this.m_yourturn = -1;
-									if(curIdx !== -1) {
+									if(curIdx != -1){
 										onChangeScript(curIdx);
 										player.play();
-									} else {
+									}else{
 										player.play();
 										player.pause();
 										onChangeScript(curIdx);
 										return;
 									}				
-								}
+                                }
 							}, delay); 
-							return;
+                            return;
 						}
 					} else {
 						return;
 					}
-				}
+				}	
 				this.m_curIdx = curIdx;
 				console.log('onc',curIdx);
 				onChangeScript(curIdx);

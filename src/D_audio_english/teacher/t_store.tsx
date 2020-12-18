@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { observable, action } from 'mobx';
 import { App } from '../../App';
 import * as felsocket from '../../felsocket';
-import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg, IQuizStringReturn ,IQuizUrlReturnMsg} from '../common';
+import { IQuizReturnMsg,IQNAMsg,IData,IScript,IQnaReturn,IMsg,initData, IIndexMsg,IQuizStringReturnMsg, IQuizStringReturn} from '../common';
 import { TeacherContextBase, VIEWDIV, IStateBase, IActionsBase } from '../../share/tcontext';
 
 const enum SENDPROG {
@@ -28,19 +28,21 @@ interface IQuizNumResult {
 	c2: number[];
 	c3: number[];
 	uid: string[];
-	url : string[];
+	url : string[][];
 } 
 interface IQuizStringResult {
 	c1: string[];
 	c2: string[];
 	c3: string[];
 	uid: string[];
+	url : string[][];
 } 
 
 interface IQuizeStringArrayResult {
 	arrayOfCorrect: boolean[];
 	uid: string[];
 	c0: IQuizStringResult[];
+	url : string[][];
 }
 
 interface IStateCtx extends IStateBase {
@@ -121,38 +123,45 @@ class TeacherContext extends TeacherContextBase {
 			c1: [],
 			c2: [],
 			c3: [],
-			uid: []
+			uid: [],
+			url: []
 		};
 		this.state.resultAdditionalSup = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultAdditionalBasic = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultAdditionalHard = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultDictation = [
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			},
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			},
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			}
 		];
 		this.actions.init = () => {
@@ -200,7 +209,7 @@ class TeacherContext extends TeacherContextBase {
 			switch(msg.msgtype) {
 				case 'confirm_return':
 					if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
-						const qmsg = msg as IQuizUrlReturnMsg;
+						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
 							if(App.students[i].id === qmsg.id) {
@@ -246,6 +255,7 @@ class TeacherContext extends TeacherContextBase {
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizStringReturnMsg;
@@ -264,6 +274,7 @@ class TeacherContext extends TeacherContextBase {
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;				
@@ -284,7 +295,7 @@ class TeacherContext extends TeacherContextBase {
 							
 							let resultCorrect = true;
 							for(let i = 0 ; i < this._data.additional_sup.length; i++) {
-								result.c0[i] = {c1: [],c2: [],c3: [],uid: []};
+								result.c0[i] = {c1: [],c2: [],c3: [],uid: [], url:[]};
 								const answers = [this._data.additional_sup[i].app_drops[0].correct,this._data.additional_sup[i].app_drops[1].correct,this._data.additional_sup[i].app_drops[2].correct];
 								if(ret[i].answer1 !== answers[0] || ret[i].answer2 !== answers[1] || ret[i].answer3 !== answers[2]) resultCorrect = false;
 
@@ -299,6 +310,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.additionalBasicProg === SENDPROG.SENDED && msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -316,7 +328,7 @@ class TeacherContext extends TeacherContextBase {
 							
 							let resultCorrect = true;
 							for(let i = 0 ; i < this._data.additional_basic.length; i++) {
-								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: []	};
+								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: []	,url:[]};
 								const answers = [this._data.additional_basic[i].sentence_answer1,this._data.additional_basic[i].sentence_answer2,this._data.additional_basic[i].sentence_answer3];
 								if(ret[i].answer1 !== answers[0] || ret[i].answer2 !== answers[1] || ret[i].answer3 !== answers[2]) resultCorrect = false;
 								console.log('ret' , ret[i]);
@@ -330,6 +342,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.additionalHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -347,7 +360,7 @@ class TeacherContext extends TeacherContextBase {
 							
 							let resultCorrect = true;
 							for(let i = 0 ; i < this._data.additional_hard.length; i++) {
-								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: []	};
+								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: [],url:[]	};
 								const answers = [this._data.additional_hard[i].sentence1.answer1,this._data.additional_hard[i].sentence1.answer2];
 								if(ret[i].answer1 !== answers[0] || ret[i].answer2 !== answers[1]) resultCorrect = false;
 								console.log('ret' , ret[i]);
@@ -360,6 +373,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;				
@@ -381,7 +395,7 @@ class TeacherContext extends TeacherContextBase {
 							
 							let resultCorrect = true;
 							for(let i = 0 ; i < dic_data_array[msg.idx].length; i++) {
-								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: [] };
+								result.c0[i] = {c1: [],	c2: [],	c3: [],	uid: [],url:[] };
 								const dic_data = dic_data_array[msg.idx][i];
 								const answers = [dic_data.sentence1.answer1,dic_data.sentence2.answer1,dic_data.sentence3.answer1];
 								if(ret[i].answer1 !== answers[0] || ret[i].answer2 !== answers[1] || ret[i].answer3 !== answers[2]) resultCorrect = false;
@@ -396,6 +410,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;		
@@ -449,17 +464,17 @@ class TeacherContext extends TeacherContextBase {
 		this.state.hasPreview = true;
 		const dicdata_array = [this._data.dictation_sup,this._data.dictation_basic,this._data.dictation_hard];
 		for(let i = 0 ; i < this._data.additional_sup.length; i++) {
-			this.state.resultAdditionalSup.c0[i] = {c1: [],	c2: [],c3: [],uid: []};
+			this.state.resultAdditionalSup.c0[i] = {c1: [],	c2: [],c3: [],uid: [],url:[]};
 		}
 		for(let i = 0 ; i < this._data.additional_basic.length; i++) {
-			this.state.resultAdditionalBasic.c0[i] = {c1: [], c2: [],c3: [],uid: []};
+			this.state.resultAdditionalBasic.c0[i] = {c1: [], c2: [],c3: [],uid: [],url:[]};
 		}	
 		for(let i = 0 ; i < this._data.additional_hard.length; i++) {
-			this.state.resultAdditionalHard.c0[i] = {c1: [], c2: [],c3: [],uid: []};
+			this.state.resultAdditionalHard.c0[i] = {c1: [], c2: [],c3: [],uid: [],url:[]};
 		}
 		dicdata_array.map((dic_data: any, idx) => {
 			for(let i = 0 ; i < dic_data.length ; i++) {
-				this.state.resultDictation[idx].c0[i] = {c1: [], c2: [],c3: [],uid: []};
+				this.state.resultDictation[idx].c0[i] = {c1: [], c2: [],c3: [],uid: [],url:[]};
 			}
 		});
 

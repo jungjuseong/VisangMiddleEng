@@ -27,8 +27,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 	@observable protected _view = false;
 	@observable protected _hint = false;
 	@observable protected _trans = false;
-	@observable protected _zoom = false;
-	@observable protected _zoomImgUrl = '';
 	@observable protected _sended = false;
 	
 	protected _swiper?: Swiper;
@@ -63,27 +61,27 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 		this._characterImage = pathPrefix + characterImages[randomIndex];
 	}
 
-	protected _doSwipe = () => {
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
-	}
+	// protected _doSwipe = () => {
+	// 	if(this._swiper) {
+	// 		this._swiper.slideTo(0, 0);
+	// 		this._swiper.update();
+	// 		if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+	// 	}
+	// 	_.delay(() => {
+	// 		if(this._swiper) {
+	// 			this._swiper.slideTo(0, 0);
+	// 			this._swiper.update();
+	// 			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+	// 		}				
+	// 	}, 300);
+	// }
 
 	protected _viewTrans = () => {
 		App.pub_playBtnTab();
 		this._trans = !this._trans;
 		if(this._trans) this._trans = true;
 
-		this._doSwipe();
+		// this._doSwipe();
 	}
 
 	@action
@@ -91,11 +89,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 		/** */
 		this.props.onHintClick();
 		this._hint = !this._hint;
-	}
-
-	protected _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
 	}
 
 	protected _onClick = () => {
@@ -107,8 +100,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 		if(view && !prev.view) {
 			this._view = true;
 			this._trans = false;
-			this._zoom = false;
-			this._zoomImgUrl = '';
 
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
@@ -125,8 +116,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 
 		} else if(!view && prev.view) {
 			this._view = false;	
-			this._zoom = false;
-			this._zoomImgUrl = '';
 			App.pub_stop();
 		}
 		if(state.confirmBasicProg >= SENDPROG.SENDED ||

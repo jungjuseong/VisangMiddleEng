@@ -140,13 +140,6 @@ class VPopup extends React.Component<IVPopup> {
 
 		let question = '';
 		let answer = 0;
-		if(type === 'CHECKUP') {
-			const checkup = data.checkup[checkupIdx];
-			if(checkup) {
-				question = checkup.question;
-				answer = checkup.answer;
-			}
-		}
 
 		return (
 			<CoverPopup className="v_popup" view={this._view} onClosed={this.props.onClosed} >

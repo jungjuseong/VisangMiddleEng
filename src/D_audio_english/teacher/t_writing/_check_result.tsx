@@ -75,14 +75,30 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { onClosed, state} = this.props;
+		const { onClosed, state, idx, tap} = this.props;
+		const coarray = [state.resultConfirmSup,state.resultConfirmBasic,state.resultConfirmHard]
+		const adarray = [state.resultAdditionalSup,state.resultAdditionalBasic,state.resultAdditionalHard]
+		let arr :string[] = []
+		let result : string[][] = []
+		switch(tap){
+			case 'ADDITIONAL' :{
+				arr = adarray[idx].uid
+				result = adarray[idx].url
+				break
+			}
+			case 'CONFIRM' : {
+				arr = coarray[idx].uid
+				result = coarray[idx].url
+				break
+			}
+			case 'DICTATION': {
+				arr = state.resultDictation[idx].uid
+				result = state.resultDictation[idx].url
+				break
+			}
+			default : break
+		}
 		
-		const arr = state.resultConfirmSup.uid
-		console.log('uiduid',state.resultConfirmSup.uid.length)
-		console.log('uid',arr[0])
-		console.log(App.students[0]);
-		console.log("hihihihihihihihihih");
-		console.log(this._color);
 	
 		return (
 			<>
@@ -97,9 +113,13 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 							<ToggleBtn className="btn_total"/>
 								<div className="table">
 									{arr.map((uid , idx)=>{
+										let url = '';
+										if (result[idx] !== undefined){
+											url = result[idx][0];
+										}
 										return(
 											<div key={idx}>
-												<img className="thumnail" src={state.resultConfirmSup.url[idx]}></img>
+												<img className="thumnail" src={url}></img>
 												<div className="status">
 													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 													<div>

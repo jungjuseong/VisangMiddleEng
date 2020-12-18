@@ -44,20 +44,19 @@ export interface IRollMsg extends IIndexMsg {
 export interface IQuizReturnMsg extends IIndexMsg {
 	id: string;
 	returns: IQuizReturn;
-}
-
-export interface IQuizUrlReturnMsg extends IQuizReturnMsg{
-	imgUrl : string;
+	imgUrl : string[];
 }
 
 export interface IAdditionalQuizReturnMsg extends IIndexMsg {
 	id: string;
 	returns: IQuizStringReturn[];
+	imgUrl : string[];
 }
 
 export interface IQuizStringReturnMsg extends IIndexMsg {
 	id: string;
 	returns: IQuizStringReturn;
+	imgUrl : string[];
 }
 
 export interface IQNAMsg extends IIndexMsg {

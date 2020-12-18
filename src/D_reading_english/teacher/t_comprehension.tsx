@@ -10,8 +10,6 @@ import * as _ from 'lodash';
 import Warmup from './t_warmup';
 import Passage from './t_passage';
 import Question from './t_question';
-import GraphicOrganizer from './t_graphic_organizer';
-import Summary from './t_summary';
 import VideoPopup from './t_video_box';
 import TStoryBook from './t_storybook';
 import AdditionalQuiz from './_additional_pop_quiz';
@@ -130,8 +128,8 @@ class TComprehension extends React.Component<ITComprehension> {
 			<div className={'t_compre ' + this._Title}>
 				<div className="top">
 					<ToggleBtn className="btn_comprehension" on={this._Title === 'Compreshension'} disabled={this._btn_disable !== ''} onClick={this._clickComprension}/>
-					<ToggleBtn className="btn_visualizing" on={this._Title === 'VISUALIZING'} disabled={this._btn_disable !== ''} onClick={this._clickVisual}/>
-					<ToggleBtn className="btn_summarizing" on={this._Title === 'SUMMARIZING'} disabled={this._btn_disable !== ''} onClick={this._clickSummary}/>
+					{/* <ToggleBtn className="btn_visualizing" on={this._Title === 'VISUALIZING'} disabled={this._btn_disable !== ''} onClick={this._clickVisual}/>
+					<ToggleBtn className="btn_summarizing" on={this._Title === 'SUMMARIZING'} disabled={this._btn_disable !== ''} onClick={this._clickSummary}/> */}
 				</div>
 				<ToggleBtn disabled={this._btn_disable === 'all'} className={'btn_book' + (this._Title === 'Compreshension' ? '' : ' up')} onClick={this._onBook}/>
 				<ToggleBtn disabled={this._btn_disable === 'all'} className={'btn_video' + (this._Title === 'Compreshension' ? '' : ' up')} onClick={this._onVideo}/>
@@ -178,7 +176,7 @@ class TComprehension extends React.Component<ITComprehension> {
 					onSetNavi={this._onSetNavi}
 				/>
 
-				<GraphicOrganizer 
+				{/* <GraphicOrganizer 
 					view={view}
 					videoPopup={this.props.state.videoPopup}
 					viewStoryBook={this.props.state.viewStoryBook}
@@ -199,7 +197,7 @@ class TComprehension extends React.Component<ITComprehension> {
 					actions={actions}
 					onStudy={this._onStuding}
 					onSetNavi={this._onSetNavi}
-				/>
+				/> */}
 				
 				<VideoPopup 
 					view={this.props.state.videoPopup} 
@@ -216,12 +214,12 @@ class TComprehension extends React.Component<ITComprehension> {
 					actions={actions} 
 					onClosed={this._offStoryBook}
 				/>
-
+{/* 
 				<AdditionalQuiz 
                     view={state.viewAdditionalQuiz} 
                     data={data.letstalk} 
                     onClosed={this._letsTalkClosed}
-                />
+                /> */}
 			</div>
 		);
 	}

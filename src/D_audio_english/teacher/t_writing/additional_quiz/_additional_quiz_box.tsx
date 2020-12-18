@@ -17,6 +17,7 @@ export interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IAdditionalBasic[] | IAdditionalHard[] | IAdditionalSup[];
+	viewResult : () => void;
 }
 
 @observer

@@ -101,10 +101,6 @@ class StudentContext extends StudentContextBase {
 
 		this.actions.swapGraphicData = () => {
 			// Type6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
-			const { graphic} = this._data;
-			const lastGraphicData = graphic[2];
-			this._data.graphic[2] = graphic[1];
-			this._data.graphic[1] = lastGraphicData;
 		};
 
 		this.actions.setIsTableItemSwapped = () => {
@@ -145,10 +141,7 @@ class StudentContext extends StudentContextBase {
 	}
 	private _swapGraphicData = () => {
 		// Type 6일 경우 graphic의 1번, 2번 데이터 swap. Result는 원래의 데이터 순서로 반영.
-		const { graphic} = this._data;
-		const lastGraphicData = graphic[2];
-		this._data.graphic[2] = graphic[1];
-		this._data.graphic[1] = lastGraphicData;
+	
 	}
 
 	@action public receive(data: ISocketData) {

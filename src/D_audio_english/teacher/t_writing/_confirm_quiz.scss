@@ -65,14 +65,14 @@
             }
         }
         .quiz_box {
-            position: absolute;
+            position: relative;
             text-align: center;
             white-space: normal;
             bottom: 0px;
             left: 0px;
             right: 0px;
             letter-spacing: -0.6px;
-            padding: 44px;
+            margin-top: 64px;
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -216,6 +216,9 @@
                         }
                     }
                 }
+            }
+            .basic {
+                height: 433px;
             }
             .speechbubble_box {
                 position: relative;

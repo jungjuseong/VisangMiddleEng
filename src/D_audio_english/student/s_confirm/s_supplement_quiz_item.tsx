@@ -16,11 +16,10 @@ export async function quizCapture() {
 
 	const dialog = _current.quizCapture;
   
-	let url: any = '';
-	dialog?.classList.add("capture");
+	let urli: any = '';
   
 	// domtoimage 라이브러리 필요 -> student의 index.html 안에 scirpt 태그로 넣어주기.
-	url = await domtoimage.toPng(dialog!, {
+	urli = await domtoimage.toPng(dialog!, {
 		cacheBust: false,
 		height: 800,
 		style: {
@@ -28,7 +27,8 @@ export async function quizCapture() {
 		left: 0
 		}
 	});
-	dialog?.classList.remove("capture");
+	const url : any = []
+	url.push(urli)
   
 	return url;
 }

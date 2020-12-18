@@ -6,11 +6,8 @@
 @import './s_warmup.scss';
 @import './s_passage.scss';
 @import './s_question.scss';
-@import './s_graphic.scss';
 
-@import './s_summary.scss';
 @import './s_v_script.scss';
-@import './s_checkup.scss';
 
 #wrap{
 
@@ -75,14 +72,9 @@
 	@include s_warmup;
 	@include s_passage;
 	@include s_question;
-	@include s_graphic;
-
-	@include s_summary;
 
 	
-
 	@include s_v_script;
-	@include s_checkup;
 	.fel_toteacher{
 		@include fel_toteacher;
 	}

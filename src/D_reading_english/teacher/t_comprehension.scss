@@ -2,8 +2,6 @@
 @import './t_warmup/index.scss';
 @import './t_passage/index.scss';
 @import './t_question/index.scss';
-@import './t_graphic_organizer/index.scss';
-@import './t_summary/index.scss';
 @import './t_video_box/index.scss';
 @import './t_storybook.scss';
 @mixin t_comprehension {
@@ -235,13 +233,11 @@
             background-image: resolve('teacher/images/bg_visual.png');
             width: 100%;
             height: height('teacher/images/bg_visual.png');
-            @include GraphicOrganizer;
         }
         &.SUMMARIZING {
             background-image: resolve('teacher/images/bg_visual.png');
             width: 100%;
             height: height('teacher/images/bg_visual.png');
-            @include Summary;
         }
         .img_popup {
             @include CoverPopup(10001);

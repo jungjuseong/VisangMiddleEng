@@ -256,14 +256,8 @@ export interface IData {
 	summary_audio: string;
 	scripts: IScript[];
 	warmup: IWarmup[];
-	warmup_scripts: IScriptWarmup[];
 	passage: IPassage[];
 	question: IQuestion[];
-	checkup: ICheckup[];
-	graphic: IGraphicOrganizer[];
-	summarizing: ISummarizing[];
-	summarizing_scripts: IScriptSummarizing[];
-	letstalk: ILetstalk;
 	storybook: IStorybook[];
 
 	app_graphic_title: string;
@@ -301,38 +295,6 @@ function _getDrops(answer: number, c1: string, c2: string, c3: string, c4: strin
 	return ret;
 }
 export function initData(data: IData) {
-	data.app_graphic_title = data.graphic[0].title;
-	data.graphic.shift();
-
-	if(data.visualizing_type === VisualType.TYPE_1) {
-		while(data.graphic.length > 4) data.graphic.pop();
-	} else if(data.visualizing_type === VisualType.TYPE_4 || data.visualizing_type === VisualType.TYPE_7) {
-		while(data.graphic.length > 2) data.graphic.pop();
-	} else {
-		while(data.graphic.length > 3) data.graphic.pop();
-	}
-
-	for(let i = 0; i < data.graphic.length; i++) {
-		const grap = data.graphic[i];
-
-		grap.app_drops = [];
-
-		let drop = _getDrops(grap.answer, grap.choice_1, grap.choice_2, grap.choice_3, grap.choice_4);
-		if(drop) grap.app_drops[0] = drop;
-		else continue;
-
-		drop = _getDrops(grap.answer2, grap.choice2_1, grap.choice2_2, grap.choice2_3, grap.choice2_4);
-		if(drop) grap.app_drops[1] = drop;
-		else continue;
-
-		drop = _getDrops(grap.answer3, grap.choice3_1, grap.choice3_2, grap.choice3_3, grap.choice3_4);
-		if(drop) grap.app_drops[2] = drop;
-		else continue;
-
-		drop = _getDrops(grap.answer4, grap.choice4_1, grap.choice4_2, grap.choice4_3, grap.choice4_4);
-		if(drop) grap.app_drops[3] = drop;
-		else continue;
-	}
 
 	return data;
 }
