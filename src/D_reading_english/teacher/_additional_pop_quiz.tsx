@@ -29,7 +29,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	@observable private _toggle: Array<boolean|null> = [null,null,null,null,null,null,null];
 	
 	private _swiper?: Swiper;
-
+	private	_answer_dic: {};
 	private readonly _soption: SwiperOptions = {
 		direction: 'vertical',
 		observer: true,
@@ -50,36 +50,27 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	public constructor(props: ILetsTalk) {
         super(props);
         
-        this._jsx_sentence = _getJSX(props.data[0].directive_kor);
+		this._jsx_sentence = _getJSX(props.data[0].directive_kor);
 		this._disable_toggle = false;
 
         const rnd = Math.floor(Math.random() * 3);
         if(rnd === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
         else if(rnd === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-        else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
+		this._answer_dic = {1: true, 2: false};
+		
     }
     
 	private _viewAnswer = () => {
 		if (this._disable_toggle === false){
+			const {data} = this.props;
 			App.pub_playBtnTab();
-			// this._toggle[0] = this._answer_dic[`${this._jsx_question1_answer}`];
-			// this._toggle[1] = this._answer_dic[`${this._jsx_question2_answer}`];
-			// this._toggle[2] = this._answer_dic[`${this._jsx_question3_answer}`];
+			for(let i = 0; i<data.length; i++){
+
+				this._toggle[i] = this._answer_dic[`${this.props.data[i].answer}`];
+			}
 			this._disable_toggle = true;
 			this._answer = true;
-
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}
-			_.delay(() => {
-				if(this._swiper) {
-					this._swiper.slideTo(0, 0);
-					this._swiper.update();
-					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-				}				
-			}, 300);
 		}
 	}
 
@@ -150,7 +141,6 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	
 	public render() {
 		const { view, onClosed, data, } = this.props;
-		const quiz_list = [1,2,3,4,5,6,7]; // 임시
 
 		return (
 			<>
