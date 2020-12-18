@@ -189,7 +189,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 							</WrapTextNew>
 						</div>
 						<div>
-							<div className="white_box">
+							<div key={0} className="white_box">
 								<p>1. {this._jsx_question1.question}</p>
 								<span className={OXs[0]}/>
 								<div className={'toggle_bundle ' + this._getToggleState(0,OXs[0])}>
@@ -197,7 +197,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 									<div className="false" onClick={() => this._onClickFalse(0)}/>
 								</div>
 							</div>
-							<div className="white_box">
+							<div key={1} className="white_box">
 								<p>2. {this._jsx_question2.question}</p>
 								<span className={OXs[1]}/>
 								<div className={'toggle_bundle ' + this._getToggleState(1,OXs[1])}>
@@ -205,7 +205,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 									<div className="false" onClick={() => this._onClickFalse(1)}/>
 								</div>
 							</div>
-							<div className="white_box">
+							<div key={2} className="white_box">
 								<p>3. {this._jsx_question3.question}</p>
 								<span className={OXs[2]}/>
 								<div className={'toggle_bundle ' + this._getToggleState(2,OXs[2])}>

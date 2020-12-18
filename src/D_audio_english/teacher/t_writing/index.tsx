@@ -635,7 +635,9 @@ class Writing extends React.Component<IWritingProps> {
                 />
                 <CheckResult 
                     view={this._viewResult === true}
-                    data={this.m_data} 
+                    tap = {this._tab}
+                    idx = {this._curQidx}
+                    state={this.props.state}
                     onClosed={this._closeResult}
 			    />
                 <div className="writing_content_box">

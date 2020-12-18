@@ -585,4 +585,5 @@ export {
 	VIEWDIV,
 	SENDPROG,
 	IQuizNumResult,
+	IQuizStringResult
 };

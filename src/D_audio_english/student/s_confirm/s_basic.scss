@@ -49,8 +49,9 @@
                     .image {
                         float: left;
                         width: 324px;
-                        height: 350px;
+                        height: 300px;
                         margin: 30px;
+                        object-fit: contain;
                     }
                     .number_box{
                         position: absolute;

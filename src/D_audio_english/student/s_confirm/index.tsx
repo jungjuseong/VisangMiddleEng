@@ -11,9 +11,9 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg ,IQuizUrlReturnMsg} from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasicQuizItem, {quizCapture as basicQuizCapture} from './s_basic_quiz_item';
 import SSupplementQuizItem, {quizCapture as supQuizCapture} from './s_supplement_quiz_item';
-import SHardQuizItem from './s_hard_quiz_item';
+import SBasicQuizItem, {quizCapture as basicQuizCapture} from './s_basic_quiz_item';
+import SHardQuizItem, {quizCapture as hardQuizCaputre} from './s_hard_quiz_item';
 
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -47,7 +47,6 @@ interface ISQuestionProps {
 
 @observer
 class SConfirm extends React.Component<ISQuestionProps> {
-	@observable private captureView = false;
 	@observable private _curIdx = 0;
 	@observable private _curIdx_tgt = 0;
 	@observable private _choices: IQuizReturn = {
@@ -69,22 +68,6 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		super(props);
 	}
 
-	private _refSwiper = (el: SwiperComponent) => {
-		if(this._swiper || !el) return;
-
-		const swiper = el.swiper;
-		swiper.on('transitionStart', () => {
-			this._curIdx = -1;
-		});
-		swiper.on('transitionEnd', () => {
-			if(this.props.view) {
-				this._curIdx = swiper.activeIndex;
-				this._curIdx_tgt = this._curIdx;
-			}
-		});
-		this._swiper = swiper;
-	}
-
 	private _onSend = async () => {
 		const { state,actions } = this.props;
 		if(state.confirmSupProg !== QPROG.ON && state.idx === 0) return;
@@ -100,11 +83,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};
 
 		if(state.idx === 0) {
-			state.confirmSupProg = QPROG.COMPLETE;
-			this.captureView = true
 			const url = await supQuizCapture();
-			state.confirmSupProg = QPROG.ON;
-			this.captureView = false
 			console.log('url',url)
 
 			state.confirmSupProg = QPROG.SENDING;
@@ -303,7 +282,6 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		return (
 			<div className="s_question" style={{...this._style}}>
 				<div className="question" >
-					<div className={'capture'} style={{display : (this.captureView? '' : 'none')}}/>
 					<div className={'q-item'}>
 						<SSupplementQuizItem
 							view={view && state.idx === 0} 
@@ -332,7 +310,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 						/>
 					</div>
 				</div>
-				<SendUINew view={view && this._felView}	type={'pad'} sended={false}	originY={0}	onSend={this._onSend}/>
+				<SendUINew view={view}	type={'pad'} sended={false}	originY={0}	onSend={this._onSend}/>
 			</div>
 		);
 	}

@@ -107,7 +107,7 @@ class SScript extends React.Component<ISScriptProps> {
 					clickText: this._onTextClick,
 				};
 				return (
-				<div className={'s_script '+ (state.scriptProg[idx] > SPROG.UNMOUNT ? '' : 'hide')}>
+				<div key={idx} className={'s_script '+ (state.scriptProg[idx] > SPROG.UNMOUNT ? '' : 'hide')}>
 					<div className="script_container">
 						<ScriptContainer {...props}/>
 					</div>
