@@ -10,23 +10,28 @@ import { App } from '../../../App';
 import { CoverPopup } from '../../../share/CoverPopup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
+import { stat } from 'fs';
+
+export type COLOR = 'pink'|'green'|'orange'|'purple';
 
 interface IQuizBoxProps {
 	view: boolean;
 	state : IStateCtx;
 	onClosed: () => void;
-	tap :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT'
-	idx : number
+	tap :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
+	idx : number;
 }
 @observer
 class CheckResult extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
+	@observable private _color : COLOR[] = [];
 	// @observable private _result : result
 	
 	private _swiper?: Swiper;
 
 	public constructor(props: IQuizBoxProps) {
 		super(props);
+		this.setColor();
 	}
 
 	private _onClosePopup = () => {
@@ -54,6 +59,20 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		})
 		return re_num
 	}
+
+	private setColor(){	
+		let cidx = 0;
+		let color_list :COLOR[] = [];
+		const s_num = this.props.state.resultConfirmSup.uid;
+		console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + s_num);
+		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
+		for(let i = 0; i<s_num.length; i++) {
+			cidx = Math.floor(Math.random() * s_num.length);
+			color_list.push(colors[cidx]);
+		}
+		console.log(color_list);
+		this._color = color_list;
+	}
 	
 	public render() {
 		const { onClosed, state} = this.props;
@@ -61,29 +80,32 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		const arr = state.resultConfirmSup.uid
 		console.log('uiduid',state.resultConfirmSup.uid.length)
 		console.log('uid',arr[0])
-		console.log(App.students[0]?.name)
+		console.log(App.students[0]);
+		console.log("hihihihihihihihihih");
+		console.log(this._color);
 	
 		return (
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
-					{/* <div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>
+					<div className="subject_rate">
 						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
-					</div> */}
+					</div>
 						<div className="popbox">
 							<div className="content">
+							<ToggleBtn className="btn_total"/>
 								<div className="table">
 									{arr.map((uid , idx)=>{
 										return(
 											<div key={idx}>
 												<img className="thumnail" src={state.resultConfirmSup.url[idx]}></img>
 												<div className="status">
-													<div className="s_img">
-														<img src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<div>
+														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+														<div className="score">0</div>
 													</div>
-													<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
-													<div className="score"></div>
 												</div>
 											</div>
 										);
