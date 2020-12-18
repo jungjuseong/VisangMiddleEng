@@ -18,7 +18,7 @@ import QuizBox, { IQuizBoxProps } from './_additional_quiz_box';
 class HardQuizBox extends QuizBox {
 	private m_player = new MPlayer(new MConfig(true));
 	public render() {
-		const { data, state, actions} = this.props;
+		const { data, state, actions, viewResult} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_kor_sentence;
 		let qResult = -1;
 		const hard_data = data as IAdditionalHard[];
@@ -31,7 +31,7 @@ class HardQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 

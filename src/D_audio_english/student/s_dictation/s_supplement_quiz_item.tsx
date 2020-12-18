@@ -15,6 +15,22 @@ import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
 
+export async function quizCapture(type:string) {
+	const dialog = document.querySelectorAll(type)
+	const url: any[] = [];
+	for (let i = 0; i < dialog.length; i++) {
+		url.push(await domtoimage.toPng(dialog[i], {
+			cacheBust: false,
+			height: 800,
+			style: {
+				top: 0,
+				left: 0
+			}
+		}));
+	}
+	return url;
+}
+
 interface IQuizItemProps {
 	view: boolean;
 	state: IStateCtx;
@@ -132,7 +148,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		}
 		return (
 			<>
-				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+				<div className={"quiz_box" + (view ? '' : 'none')} style={{ display: view ? '' : 'none' }}>
 					<div className="dict_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {
