@@ -4,6 +4,7 @@
 @import './t_question/index.scss';
 @import './t_video_box/index.scss';
 @import './t_storybook.scss';
+@import '../../share/sendui.scss';
 @mixin t_comprehension {
     .t_compre {
         &>.top {

@@ -9,9 +9,11 @@ import { ToggleBtn } from '@common/component/button';
 import * as common from '../common';
 import { observable } from 'mobx';
 import { CoverPopup } from '../../share/CoverPopup';
+import { SENDPROG, IStateCtx, IActionsCtx } from './t_store';
 
 import WrapTextNew from '@common/component/WrapTextNew';
 import { BtnAudio } from '../../share/BtnAudio';
+import SendUINew from '../../share/sendui_new';
 
 import { _getJSX, _getBlockJSX } from '../../get_jsx';
 
@@ -88,6 +90,53 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 		else
 			return 'on_false';
 	}
+	private _onSend = () => {
+    //     const {state, actions} = this.props;
+
+    //     if(	this._title === 'COMPREHENSION' ) {
+    //         if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY ||  
+    //             this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY)
+    //             return;
+    //     } else {
+    //         if(state.dialogueProg !== SENDPROG.READY) return;
+    //     }
+
+    //     if (this._title === 'COMPREHENSION') {
+    //         if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
+    //         else state.scriptProg = SENDPROG.SENDING;
+    //     } else state.dialogueProg = SENDPROG.SENDING;
+
+    //     App.pub_playToPad();
+    //     App.pub_reloadStudents(() => {
+    //         let msg: IMsg;
+    //         if(this._title === 'COMPREHENSION' ) {
+    //             actions.clearReturnUsers();
+    //             actions.setRetCnt(0);
+    //             actions.setNumOfStudent(App.students.length);
+                
+    //             if(this._tab === 'QUESTION') {
+    //                 if(state.questionProg !==  SENDPROG.SENDING) return;
+    //                 state.questionProg = SENDPROG.SENDED;
+    //                 msg = {msgtype: 'quiz_send',};
+    //             } else {
+    //                 if(state.scriptProg !==  SENDPROG.SENDING) return;
+    //                 state.scriptProg = SENDPROG.SENDED;
+    //                 msg = {msgtype: 'script_send',};
+    //                 if(this._viewClue) {
+    //                     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    //                     msg = {msgtype: 'view_clue',};
+    //                 }
+    //             } 
+    //         } else {
+    //             if(state.dialogueProg !== SENDPROG.SENDING) return;
+    //             state.dialogueProg = SENDPROG.SENDED;
+    //             msg = {msgtype: 'dialogue_send',};
+    //         }
+    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+    //         this._setNavi();
+    //     });
+	}
+
 	private _onClickTrue = (param:number) =>{
 		if (this._disable_toggle) return;
 		this._toggle[param] = true;
@@ -171,6 +220,13 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 					</div>
     			</div>
 				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
+				<SendUINew
+					view={true}
+					type={'pad'}
+					sended={false}
+					originY={0}
+					onSend={this._onSend}
+				/>
 			</CoverPopup>
 			</>
 		);
