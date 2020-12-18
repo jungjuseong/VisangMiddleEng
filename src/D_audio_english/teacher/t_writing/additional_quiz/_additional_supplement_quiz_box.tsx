@@ -39,7 +39,7 @@ class SupplementQuizBox extends QuizBox {
 	}
 
 	public render() {
-		const { data ,view,state, actions} = this.props;
+		const { data ,view,state, actions ,viewResult} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_kor_sentence;
 		let qResult = -1;
 		const supplement_data = data as IAdditionalSup[];
@@ -52,7 +52,7 @@ class SupplementQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 

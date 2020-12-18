@@ -11,9 +11,9 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import { IQuizStringReturn,IAdditionalQuizReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SBasicQuizItem from './s_basic_quiz_item';
-import SSupplementQuizItem from './s_supplement_quiz_item';
-import SHardQuizItem from './s_hard_quiz_item';
+import SBasicQuizItem ,{quizCapture as basicQuizCapture} from './s_basic_quiz_item';
+import SSupplementQuizItem ,{quizCapture as supQuizCapture}from './s_supplement_quiz_item';
+import SHardQuizItem ,{quizCapture as hardQuizCapture} from './s_hard_quiz_item';
 
 interface INItem {
 	idx: number;
@@ -91,6 +91,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		const quizssup = actions.getData().additional_sup;
 		if(state.idx === 0) {
+			const url = await supQuizCapture('.s_additional .question .q-item .sup_question .table_box');
+			console.log(url)
 			state.additionalSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
@@ -98,7 +100,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					idx: 0,
 					id: App.student.id,
 					returns: choices,
-					imgUrl : []
+					imgUrl : url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -112,6 +114,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
+			const url = await basicQuizCapture('.s_additional .question .q-item .basic_question .q-item');
 			state.additionalBasicProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
@@ -119,7 +122,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					idx: 1,
 					id: App.student.id,
 					returns: choices,
-					imgUrl : []
+					imgUrl : url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -133,6 +136,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 2) {
+			const url = await hardQuizCapture('.s_additional .question .q-item .hard_question .q-item');
 			state.additionalHardProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
@@ -140,7 +144,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					idx: 2,
 					id: App.student.id,
 					returns: choices,
-					imgUrl : []
+					imgUrl : url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);

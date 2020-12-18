@@ -42,6 +42,7 @@ interface IQuizeStringArrayResult {
 	arrayOfCorrect: boolean[];
 	uid: string[];
 	c0: IQuizStringResult[];
+	url : string[][];
 }
 
 interface IStateCtx extends IStateBase {
@@ -128,33 +129,39 @@ class TeacherContext extends TeacherContextBase {
 		this.state.resultAdditionalSup = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultAdditionalBasic = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultAdditionalHard = {
 			arrayOfCorrect: [],
 			c0 : [],
-			uid : []
+			uid : [],
+			url :[]
 		};
 		this.state.resultDictation = [
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			},
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			},
 			{
 				arrayOfCorrect: [],
 				c0 : [],
-				uid : []
+				uid : [],
+				url :[]
 			}
 		];
 		this.actions.init = () => {
@@ -248,6 +255,7 @@ class TeacherContext extends TeacherContextBase {
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizStringReturnMsg;
@@ -266,6 +274,7 @@ class TeacherContext extends TeacherContextBase {
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;				
@@ -301,6 +310,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.additionalBasicProg === SENDPROG.SENDED && msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -332,6 +342,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					} else if(this.state.additionalHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -362,6 +373,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;				
@@ -398,6 +410,7 @@ class TeacherContext extends TeacherContextBase {
 							else result.arrayOfCorrect.push(false);
 							
 							result.uid.push(qmsg.id);
+							result.url.push(qmsg.imgUrl);
 						}
 					}
 					break;		

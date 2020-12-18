@@ -668,14 +668,14 @@ class Writing extends React.Component<IWritingProps> {
                     </div>
                     <div className={'question'} style={{display: this._tab === 'ADDITIONAL' ? '' : 'none'}}>
                         <div key={1} >
-                            <AdditionalQuiz view={view} actions={actions} state={state} index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickAdditionalAnswer}/>                          
+                            <AdditionalQuiz view={view} actions={actions} state={state} index={this._curQidx} mdata={this.m_data} onClosed={this._letstalkClosed} onHintClick={this._clickAdditionalAnswer} viewResult ={this.showResult}/>                          
                         </div>               
                     </div>
                     <div className={'question'} style={{display: this._tab === 'DICTATION' ? '' : 'none'}}>
                         {dictations.map((dictation, idx) => {
                             return (
                             <div key={idx}>
-                                <HardDictationQuizBox index={idx} data={dictation} onClosed={this._letstalkClosed} onHintClick={this._clickDictationAnswer} view={view && idx === this._curQidx} actions={actions} state={state} />                          
+                                <HardDictationQuizBox index={idx} data={dictation} onClosed={this._letstalkClosed} onHintClick={this._clickDictationAnswer} view={view && idx === this._curQidx} actions={actions} state={state} viewResult ={this.showResult} />                          
                             </div>
                             );
                         })}

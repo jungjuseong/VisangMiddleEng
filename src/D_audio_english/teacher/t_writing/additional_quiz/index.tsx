@@ -25,6 +25,7 @@ interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	mdata: IData;
+	viewResult: () => void;
 }
 @observer
 class AdditionalQuiz extends React.Component<IQuizBoxProps> {
@@ -78,12 +79,12 @@ class AdditionalQuiz extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { mdata, view,index, onClosed, onHintClick ,actions, state} = this.props;
+		const { mdata, view,index, onClosed, onHintClick ,actions, state, viewResult} = this.props;
 		return (
 			<>
-				<SupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.additional_sup} onClosed={onClosed} onHintClick={onHintClick}/>
-				<BasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.additional_basic} onClosed={onClosed} onHintClick={onHintClick}/>
-				<HardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.additional_hard} onClosed={onClosed} onHintClick={onHintClick}/>
+				<SupplementQuizBox view={view && index === 0} actions={actions} state={state} data={mdata.additional_sup} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
+				<BasicQuizBox view={view && index === 1} actions={actions} state={state} data={mdata.additional_basic} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
+				<HardQuizBox view={view && index === 2} actions={actions} state={state} data={mdata.additional_hard} onClosed={onClosed} onHintClick={onHintClick} viewResult={viewResult}/>
 			</>
 		);
 	}

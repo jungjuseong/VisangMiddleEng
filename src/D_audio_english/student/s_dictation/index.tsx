@@ -11,7 +11,7 @@ import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
 import { IQuizStringReturn,IAdditionalQuizReturnMsg } from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
-import SSupplementQuizItem from './s_supplement_quiz_item';
+import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
 
 interface INItem {
 	idx: number;
@@ -86,6 +86,8 @@ class SDictation extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		const data = actions.getData();
 		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
+		const url = await quizCapture('.quiz_box .dict_question .q-item');
+		console.log(url)
 		state.dictationProg[state.idx] = QPROG.SENDING;
 		if(App.student) {
 			const msg: IAdditionalQuizReturnMsg = {
@@ -93,7 +95,7 @@ class SDictation extends React.Component<ISQuestionProps> {
 				idx: state.idx,
 				id: App.student.id,
 				returns: choices,
-				imgUrl : []
+				imgUrl : url
 			};
 			felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 			await kutil.wait(600);
