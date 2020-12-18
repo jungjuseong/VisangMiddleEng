@@ -716,7 +716,7 @@ class Passage extends React.Component<IPassageProps> {
 	}
 
 	public render() {
-		const { inview } = this.props;
+		const { inview, data } = this.props;
 		const curIdx = this._curIdx;
 		const info = this._infos[curIdx];
 
@@ -739,7 +739,7 @@ class Passage extends React.Component<IPassageProps> {
 						>
 							<div>{this._retCnt}/{this._numOfStudent}</div>
 						</div>
-						<ToggleBtn disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/>
+						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickStructure}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickZoom}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_audio_drop" on={this._audioOn} onClick={this._onAudio}/>
@@ -831,7 +831,7 @@ class Passage extends React.Component<IPassageProps> {
 					/>
 					<SentenceStructure
 						view={this._view_structure === true} 
-						scripts={scripts} 
+						data={data.passage} 
 						onClosed={this._offStructure}
 					/>
 				</div>

@@ -10,14 +10,14 @@ import { CoverPopup } from '../../../share/CoverPopup';
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface ITrans {
+interface IStructure {
 	view: boolean;
-	scripts: common.IScript[];
+	data : common.IPassage[]
 	onClosed: () => void;
 }
 
 @observer
-class SentenceStructurePopup extends React.Component<ITrans> {
+class SentenceStructurePopup extends React.Component<IStructure> {
 	@observable private m_view = false;
 	@observable private _swiper: Swiper|null = null;
 
@@ -29,7 +29,7 @@ class SentenceStructurePopup extends React.Component<ITrans> {
 		App.pub_playBtnTab();
 		this.m_view = false;
 	}
-	public componentDidUpdate(prev: ITrans) {
+	public componentDidUpdate(prev: IStructure) {
 		if (this.props.view && !prev.view) {
 			this.m_view = true;
 			if(this._swiper) {
@@ -47,11 +47,11 @@ class SentenceStructurePopup extends React.Component<ITrans> {
 		}
 	}
 	public render() {
-		const { view, scripts } = this.props;
+		const { view, data } = this.props;
 		// 클래스 이름 변경 필요(*)
 		return (
 			<CoverPopup className="trans_popup" view={this.props.view && this.m_view} onClosed={this.props.onClosed} >
-				<span className="title">TRANSLATION</span><ToggleBtn className="btn_close" onClick={this._onClose} />
+				<span className="title">문장 구조</span><ToggleBtn className="btn_close" onClick={this._onClose} />
 				<div className="trans_script">
 					<SwiperComponent
 						ref={this._refSwiper}
@@ -61,14 +61,7 @@ class SentenceStructurePopup extends React.Component<ITrans> {
 						slidesPerView="auto"
 						freeMode={true}						
 					>
-						{scripts.map((script, idx) => {
-							return (
-							<div key={idx} className="script_eng">
-								{script.dms_eng}
-								<div>{script.dms_kor.ko}</div>
-							</div>
-							);
-						})}
+						<img src={App.data_url + data[0].structureimage}></img>
 					</SwiperComponent>
 				</div>
 			</CoverPopup>

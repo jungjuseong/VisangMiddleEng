@@ -153,6 +153,7 @@ export interface IPassage {
 	start: number;
 	end: number;
 	image: string;
+	structureimage: string;
 }
 export interface IQuestion extends IInClassStudyProps {
 	seq: number;

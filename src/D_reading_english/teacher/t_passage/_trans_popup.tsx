@@ -50,7 +50,7 @@ class TransPopup extends React.Component<ITrans> {
 		const { view, scripts } = this.props;
 		return (
 			<CoverPopup className="trans_popup" view={this.props.view && this.m_view} onClosed={this.props.onClosed} >
-				<span className="title">TRANSLATION</span><ToggleBtn className="btn_close" onClick={this._onClose} />
+				<span className="title">해석</span><ToggleBtn className="btn_close" onClick={this._onClose} />
 				<div className="trans_script">
 					<SwiperComponent
 						ref={this._refSwiper}

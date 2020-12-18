@@ -266,8 +266,7 @@ var b_rw_comprehension = {
 	warmup_type: {_type:obj_e.TYPE_INT, _excel:"D"},	
 	warmup_video: {_type:obj_e.TYPE_MOVIE, _excel:"E", _default: ''},
 	summary_audio: {_type:obj_e.TYPE_SOUND, _excel:"F", _default: ''},
-    warmup_video_start: {_type:obj_e.TYPE_SECOND, _excel:"G", default: 0},
-    video_start: {_type:obj_e.TYPE_SECOND, _excel:"H", default: 0},
+    video_start: {_type:obj_e.TYPE_SECOND, _excel:"G", default: 0},
 	scripts: {
 		_type:obj_e.TYPE_LIST,
 		_excelSheets:"script",
@@ -306,21 +305,6 @@ var b_rw_comprehension = {
 			kor_eng:{_type:obj_e.TYPE_YESORNO, _excel:"J"}
 		}		
 	},
-	warmup_scripts: {
-		_type:obj_e.TYPE_LIST,
-		_excelSheets:"warmup_script",
-		_startRow:2,
-		_key:"seq",	
-		_item: {
-			_type: obj_e.TYPE_OBJECT,
-			seq: {_type:obj_e.TYPE_INT, _excel:"A"},	
-			dms_seq: {_type:obj_e.TYPE_INT, _excel:"B"},
-			dms_start: {_type:obj_e.TYPE_SECOND, _excel:"C"},
-			dms_end: {_type:obj_e.TYPE_SECOND, _excel:"D"},
-			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"E"},
-			dms_kor: {_type:obj_e.TYPE_MULTI_LANG, _excel:"F", _langs:["ko"]},
-		}		
-	},
 	warmup: {
 		_type:obj_e.TYPE_LIST,
 		_excelSheets:"warmup",
@@ -346,6 +330,7 @@ var b_rw_comprehension = {
 			start: {_type:obj_e.TYPE_SECOND, _excel:"B"},
 			end: {_type:obj_e.TYPE_SECOND, _excel:"C"},
 			image: {_type:obj_e.TYPE_IMAGE, _excel:"D"},
+			structureimage: {_type:obj_e.TYPE_IMAGE, _excel:"E"},
 		}		
 	},
 	question: {
@@ -372,116 +357,6 @@ var b_rw_comprehension = {
 			hint: {_type:obj_e.TYPE_TEXT, _excel:"N"},
 			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}
 		}
-	},
-	checkup: {
-		_type:obj_e.TYPE_LIST,
-		_excelSheets:"checkup",
-		_startRow:2,
-		_typeOfQuiz: 'mc',
-		_key:"seq",	
-		_item: {
-			_type: obj_e.TYPE_OBJECT,
-			seq: {_type:obj_e.TYPE_INT, _excel:"A"},
-			question: {_type:obj_e.TYPE_TEXT, _excel:"B"},
-			answer: {_type:obj_e.TYPE_INT, _excel:"C"},
-			choice_1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
-			choice_2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
-			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"F", _column: 'SC_DIV1'},
-			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"G", _column: 'SC_DIV2'},
-			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"H", _column: 'SC_DIV3'},
-			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"I", _column: 'SC_DIV4'},
-			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"J", _column: 'SC_SAVE'},			
-			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}
-		}
-	},
-	graphic: {
-		_type:obj_e.TYPE_LIST,
-		_excelSheets:"visualizing",
-		_startRow:3,
-		_typeOfQuiz: 'mc',
-		_key:"seq",	
-		_item: {
-			_type: obj_e.TYPE_OBJECT,
-			seq: {_type:obj_e.TYPE_INT, _excel:"A", _column: 'tmq_key'},
-			title: {_type:obj_e.TYPE_TEXT, _excel:"B"},
-			question: {_type:obj_e.TYPE_TEXT, _excel:"C", _default: '', _column: 'tmq_sample_text1'},
-			answer: {_type:obj_e.TYPE_INT, _excel:"D", _default: 0},
-			choice_1: {_type:obj_e.TYPE_TEXT, _excel:"E", _default: ''},
-			choice_2: {_type:obj_e.TYPE_TEXT, _excel:"F", _default: ''},
-			choice_3: {_type:obj_e.TYPE_TEXT, _excel:"G", _default: ''},
-			choice_4: {_type:obj_e.TYPE_TEXT, _excel:"H", _default: ''},
-			answer2: {_type:obj_e.TYPE_INT, _excel:"I", _default: 0},
-			choice2_1: {_type:obj_e.TYPE_TEXT, _excel:"J", _default: ''},
-			choice2_2: {_type:obj_e.TYPE_TEXT, _excel:"K", _default: ''},
-			choice2_3: {_type:obj_e.TYPE_TEXT, _excel:"L", _default: ''},
-			choice2_4: {_type:obj_e.TYPE_TEXT, _excel:"M", _default: ''},
-			answer3: {_type:obj_e.TYPE_INT, _excel:"N", _default: 0},
-			choice3_1: {_type:obj_e.TYPE_TEXT, _excel:"O", _default: ''},
-			choice3_2: {_type:obj_e.TYPE_TEXT, _excel:"P", _default: ''},
-			choice3_3: {_type:obj_e.TYPE_TEXT, _excel:"Q", _default: ''},
-			choice3_4: {_type:obj_e.TYPE_TEXT, _excel:"R", _default: ''},
-			answer4: {_type:obj_e.TYPE_INT, _excel:"S", _default: 0},
-			choice4_1: {_type:obj_e.TYPE_TEXT, _excel:"T", _default: ''},
-			choice4_2: {_type:obj_e.TYPE_TEXT, _excel:"U", _default: ''},
-			choice4_3: {_type:obj_e.TYPE_TEXT, _excel:"V", _default: ''},
-			choice4_4: {_type:obj_e.TYPE_TEXT, _excel:"W", _default: ''},
-			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"X", _column: 'SC_DIV1'},
-			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"Y", _column: 'SC_DIV2'},
-			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"Z", _column: 'SC_DIV3'},
-			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"AA", _column: 'SC_DIV4'},
-			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"AB", _column: 'SC_SAVE'},			
-			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}
-		}
-	},
-	summarizing: {
-		_type:obj_e.TYPE_LIST,
-		_excelSheets:"summarizing",
-		_startRow:2,
-		_typeOfQuiz: 'mc',
-		_key:"seq",	
-		_item: {
-			_type: obj_e.TYPE_OBJECT,
-			seq: {_type:obj_e.TYPE_INT, _excel:"A"},
-			image: {_type:obj_e.TYPE_IMAGE, _excel:"B"},
-			question: {_type:obj_e.TYPE_TEXT, _excel:"C"},	
-			script_seq: {_type:obj_e.TYPE_INT, _excel:"D"},
-			answer: {_type:obj_e.TYPE_INT, _excel:"E"},
-			choice_1: {_type:obj_e.TYPE_TEXT, _excel:"F"},	
-			choice_2: {_type:obj_e.TYPE_TEXT, _excel:"G"},	
-			choice_3: {_type:obj_e.TYPE_TEXT, _excel:"H"},
-			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"I", _column: 'SC_DIV1'},
-			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"J", _column: 'SC_DIV2'},
-			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"K", _column: 'SC_DIV3'},
-			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"L", _column: 'SC_DIV4'},
-			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"M", _column: 'SC_SAVE'},			
-			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}		
-		}
-	},
-	summarizing_scripts: {
-		_type:obj_e.TYPE_LIST,
-		_excelSheets:"summarizing_script",
-		_startRow:2,
-		_key:"seq",	
-		_item: {
-			_type: obj_e.TYPE_OBJECT,
-			seq: {_type:obj_e.TYPE_INT, _excel:"A"},	
-			summary_seq: {_type:obj_e.TYPE_INT, _excel:"B"},
-			audio_start: {_type:obj_e.TYPE_SECOND, _excel:"C"},
-			audio_end: {_type:obj_e.TYPE_SECOND, _excel:"D"},
-			dms_eng: {_type:obj_e.TYPE_TEXT, _excel:"E"},
-		}
-	},
-	letstalk: {
-		_type:obj_e.TYPE_OBJECT,
-		_excelSheets:"lets_talk",
-		_startRow:2,
-		_type: obj_e.TYPE_OBJECT,
-        sentence: {_type:obj_e.TYPE_TEXT, _excel:"A", _default:''},
-        audio: {_type:obj_e.TYPE_SOUND, _excel:"B", _default:''},
-        img1: {_type:obj_e.TYPE_IMAGE, _excel:"C", _default:''},
-        img2: {_type:obj_e.TYPE_IMAGE, _excel:"D", _default: ''},
-        sample: {_type:obj_e.TYPE_TEXT, _excel:"E", _default:''},
-        hint: {_type:obj_e.TYPE_TEXT, _excel:"F", _default:''}
 	},
 	storybook: {
 		_type:obj_e.TYPE_LIST,

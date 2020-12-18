@@ -522,22 +522,26 @@
         "page": 1,
         "start": 0,
         "end": 31.43,
-        "image": "passage_01_02.jpg"
+        "image": "passage_01_02.jpg",
+        "structureimage": "popup_001.png"
     }, {
         "page": 2,
         "start": 30.44,
         "end": 63.72,
-        "image": "passage_01_02.jpg"
+        "image": "passage_01_02.jpg",
+        "structureimage": "popup_001.png"
     }, {
         "page": 3,
         "start": 62.69,
         "end": 99,
-        "image": "passage_01_02.jpg"
+        "image": "passage_01_02.jpg",
+        "structureimage": "popup_001.png"
     }, {
         "page": 4,
         "start": 99.01,
         "end": 129.69,
-        "image": "passage_01_02.jpg"
+        "image": "passage_01_02.jpg",
+        "structureimage": "popup_001.png"
     }],
     "question": [{
         "seq": 1,
@@ -554,7 +558,7 @@
         "choice_3": "It is filled with music every August.",
         "choice_4": "It is filled with music every December.",
         "hint": "Every August, Edinburgh is filled with music.",
-        "tmq_seq": 39358,
+        "tmq_seq": 39361,
         "tmq_CDC": [],
         "tmq_COD": []
     }, {
@@ -572,7 +576,7 @@
         "choice_3": "A car race takes place in Edinburgh in August.",
         "choice_4": "A free event takes place in Edinburh in August.",
         "hint": "An art festival takes place there.",
-        "tmq_seq": 39359,
+        "tmq_seq": 39362,
         "tmq_CDC": [],
         "tmq_COD": []
     }, {
@@ -590,7 +594,7 @@
         "choice_3": "Many poles are on the streets of Edinburgh in August.",
         "choice_4": "A lot of museums are on the streets of Edinburgh in August.",
         "hint": "There are a lot of shows on the streets.",
-        "tmq_seq": 39360,
+        "tmq_seq": 39363,
         "tmq_CDC": [],
         "tmq_COD": []
     }],
