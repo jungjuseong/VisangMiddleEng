@@ -27,7 +27,7 @@ interface IQuizBox {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IConfirmSup;
-	viewResult: () => void;
+	viewResult: (answerboolean : boolean) => void;
 }
 @observer
 class ConfirmSupplementQuizBox extends ConfirmQuizBox {
@@ -86,7 +86,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 			this._toggle[1] = this._answer_dic[`${this._jsx_answers[1]}`];
 			this._toggle[2] = this._answer_dic[`${this._jsx_answers[2]}`];
 			this._disable_toggle = this._hint = true;
-			this.props.viewResult();
+			this.props.viewResult(false);
 		}
 	}
 	
@@ -104,13 +104,13 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult} >{state.resultConfirmSup.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(true)}} >{state.resultConfirmSup.uid.length}/{App.students.length}</div>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
-				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

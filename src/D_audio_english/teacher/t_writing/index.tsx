@@ -66,6 +66,7 @@ class Writing extends React.Component<IWritingProps> {
     
     private m_player = new MPlayer(new MConfig(true));
     private m_player_inittime = 0; // 비디오 시작시간 
+    private answerboolean = false;
 	
 	@observable private c_popup: 'off'|'Q&A' |'ROLE PLAY'|'SHADOWING' = 'off';
 	@observable private _tab: ITabType = 'INTRODUCTION';
@@ -503,8 +504,9 @@ class Writing extends React.Component<IWritingProps> {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
     }
-	private showResult = () => {
-		App.pub_playBtnTab();
+	private showResult = (ansboolean : boolean) => {
+        App.pub_playBtnTab();
+        this.answerboolean = ansboolean
 		this._viewResult = true;
 		this.props.actions.setNaviView(false);
     }    
@@ -634,7 +636,8 @@ class Writing extends React.Component<IWritingProps> {
                     onClosed={this._PopTransClosed}
                 />
                 <CheckResult 
-                    view={this._viewResult === true}
+                    view={this._viewResult}
+                    answer={this.answerboolean}
                     tap = {this._tab}
                     idx = {this._curQidx}
                     state={this.props.state}
