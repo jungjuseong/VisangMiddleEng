@@ -255,11 +255,11 @@ export interface IData {
     warmup_video_start: number;
 	summary_audio: string;
 	scripts: IScript[];
+	additional_quiz : [];
 	warmup: IWarmup[];
 	passage: IPassage[];
 	question: IQuestion[];
 	storybook: IStorybook[];
-
 	app_graphic_title: string;
 }
 
