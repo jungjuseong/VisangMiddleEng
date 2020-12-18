@@ -6,7 +6,7 @@
     .s_dictation {
         @include page;
         z-index: 2;
-        background-image: resolve("student/images/bg_ls.png");
+        background-image: resolve("student/images/bg.png");
         .btn_SCRIPT {
             position: absolute;
             top: 19px;
@@ -20,7 +20,6 @@
             height: 100%;
             left: 0px;
             width: 100%;
-
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -38,17 +37,16 @@
                     top: 0px;
                     height: 800px;
                     width: 100%;
-
-                    .swiper-container{
+                    .swiper-container {
                         @include page;
                     }
                     .q-item {
                         overflow: auto;
-                        &.key-on { 
-                            top: -300px; 
+                        &.key-on {
+                            top: -300px;
                         }
-                        &.key-off { 
-                            top: 0px; 
+                        &.key-off {
+                            top: 0px;
                         }
                         .quiz {
                             position: relative;
@@ -62,14 +60,12 @@
                             color: rgb(0, 0, 0);
                             white-space: normal;
                             margin-bottom: 55px;
-
-                            &>div{
+                            &>div {
                                 position: absolute;
                                 top: 64px
                             }
                         }
-                        
-                        .sentence_box{
+                        .sentence_box {
                             position: relative;
                             display: inline-flex;
                             align-items: center;
@@ -77,8 +73,7 @@
                             height: 300px;
                             border-radius: 15px;
                             padding-left: 30px;
-    
-                            canvas{
+                            canvas {
                                 top: 0;
                                 left: 0;
                                 width: inherit;
@@ -87,16 +82,16 @@
                                 position: absolute;
                                 background: #fff;
                             }
-                            .question_box{
+                            .question_box {
                                 top: 0;
                                 left: 0;
                                 position: relative;
                                 font-size: 40px;
                                 line-height: 80px;
-                                &>p{
+                                &>p {
                                     color: #000;
                                     text-align: left;
-                                    .block{
+                                    .block {
                                         text-align: center;
                                         display: inline-block;
                                         border-bottom: 2px solid #000;
@@ -106,16 +101,16 @@
                             }
                         }
                         .s_typing {
-                            position: relative;                            
+                            position: relative;
                             transition: margin-top 0.3s;
                             margin-top: 40px;
                             padding: 0 40px;
-                            &>div{
+                            &>div {
                                 width: 500px;
                                 margin: 0 auto;
                                 margin-bottom: 30px;
                             }
-                            .area-bnd{
+                            .area-bnd {
                                 position: relative;
                                 display: flex;
                                 align-items: center;
@@ -126,8 +121,7 @@
                                 font-size: 52px;
                                 font-weight: bold;
                                 border-bottom: 3px solid #fff;
-
-                                .answer_box{
+                                .answer_box {
                                     position: absolute;
                                     display: block;
                                     font-size: 45px;
@@ -136,11 +130,11 @@
                                     top: 0px;
                                     line-height: 0px;
                                     visibility: hidden;
-                                    &.X{
+                                    &.X {
                                         visibility: visible;
                                     }
-                                }                                
-                                .OX_box{
+                                }
+                                .OX_box {
                                     position: absolute;
                                     display: inline-block;
                                     background-repeat: no-repeat;
@@ -151,43 +145,42 @@
                                     z-index: 101;
                                     line-height: 5 * height("common/icon_o.png") / 6;
                                     width: width("common/icon_o.png");
-                                    height:  height("common/icon_o.png");
-                                    &.O{
+                                    height: height("common/icon_o.png");
+                                    &.O {
                                         background-image: resolve("common/icon_o.png");
                                     }
-                                    &.X{
+                                    &.X {
                                         background-image: resolve("common/icon_x.png");
                                     }
                                 }
-                                .index{
+                                .index {
                                     flex: 0 0 auto;
                                 }
-                                .k-tarea{
+                                .k-tarea {
                                     position: relative;
                                     width: 100%;
                                     height: auto;
                                     min-height: 64px;
-                                    textarea{
+                                    textarea {
                                         box-sizing: border-box;
                                         font-size: 52px;
                                         padding: 30px 35px 30px 30px;
                                         color: #fff;
                                         font-family: NotoSans;
                                         font-weight: bold;
-                                        &::disabled{
+                                        &::disabled {
                                             color: #fff;
                                         }
                                     }
-                                    .k-tarea-bg{
+                                    .k-tarea-bg {
                                         height: 0px;
-                                        min-height: 100%; 
+                                        min-height: 100%;
                                     }
-                                    .k-tarea-bar{
+                                    .k-tarea-bar {
                                         display: none;
-                                    }				
+                                    }
                                 }
-                                
-                                &:last-child{
+                                &:last-child {
                                     margin-right: 0px;
                                 }
                             }

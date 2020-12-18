@@ -5,7 +5,7 @@
     .s_question {
         @include page;
         z-index: 2;
-        background-image: resolve("student/images/bg_ls.png");
+        background-image: resolve("student/images/bg.png");
         .btn_SCRIPT {
             position: absolute;
             top: 19px;
@@ -27,7 +27,7 @@
             .swiper-container {
                 @include page;
             }
-            .capture{
+            .capture {
                 z-index: 100;
                 width: 1280px;
                 height: 800px;
