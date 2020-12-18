@@ -35,7 +35,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		if(!this._hint) {
 			this.props.onHintClick();
 			this._hint = true;
-			
+			this.props.viewResult(false);
 			// this._doSwipe();
 		}
 	}
@@ -56,15 +56,15 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		return (
 			<>			
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>
+				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>
 					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
 				</div>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended[1] ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
-				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<ToggleBtn className={'btn_answer' + (this._sended[1] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board basic">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>

@@ -17,7 +17,7 @@ export interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IAdditionalBasic[] | IAdditionalHard[] | IAdditionalSup[];
-	viewResult : () => void;
+	viewResult: (answerboolean : boolean) => void;
 }
 
 @observer
@@ -25,7 +25,7 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 	@observable protected _view = false;
 	@observable protected _hint = false;
 	@observable protected _trans = false;
-	@observable protected _sended = false;
+	@observable protected _sended = [false,false,false];
 
 	protected _swiper?: Swiper;
 
@@ -92,6 +92,7 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 		this._hint = !this._hint;
 
 		this._doSwipe();
+		this.props.viewResult(false);
 	}
 
 	protected _onClick = () => {
@@ -111,10 +112,10 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 			this._view = false;	
 			App.pub_stop();
 		}
-
-		if(state.additionalBasicProg >= SENDPROG.SENDED || 
-			state.additionalHardProg >= SENDPROG.SENDED ||
-			state.additionalSupProg >= SENDPROG.SENDED) this._sended = true;
+		
+		if(state.additionalSupProg >= SENDPROG.SENDED) this._sended[0] = true;
+		if(state.additionalBasicProg >= SENDPROG.SENDED) this._sended[1] = true;
+		if(state.additionalHardProg >= SENDPROG.SENDED) this._sended[2] = true;
 
 	}
 	

@@ -25,7 +25,7 @@ interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	mdata: IData;
-	viewResult: () => void;
+	viewResult: (answerboolean : boolean) => void;
 }
 @observer
 class AdditionalQuiz extends React.Component<IQuizBoxProps> {

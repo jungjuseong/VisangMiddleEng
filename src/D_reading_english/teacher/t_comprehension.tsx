@@ -214,12 +214,12 @@ class TComprehension extends React.Component<ITComprehension> {
 					actions={actions} 
 					onClosed={this._offStoryBook}
 				/>
-{/* 
+
 				<AdditionalQuiz 
                     view={state.viewAdditionalQuiz} 
-                    data={data.letstalk} 
+                    data={data.additional_quiz} 
                     onClosed={this._letsTalkClosed}
-                /> */}
+                />
 			</div>
 		);
 	}

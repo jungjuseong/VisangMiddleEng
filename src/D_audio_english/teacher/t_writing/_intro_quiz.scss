@@ -43,13 +43,13 @@
                 }
             }
             .sentence_box {
-                height: 100px;
+                height: 80px;
                 font-size: 50px;
                 color: #fff;
                 &>div {
                     display: inline-block;
                     transform: translateY(-50%);
-                    margin-top: 50px;
+                    margin-top: 45px;
                     .btn_audio {
                         @include btn_on( resolve('teacher/images/btn_speaker.png'), resolve('teacher/images/btn_speaker_on.png'), width('teacher/images/btn_speaker.png'), height('teacher/images/btn_speaker.png'));
                         vertical-align: top;

@@ -33,7 +33,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		this.props.onHintClick();
 		this._hint = true;
-			
+		this.props.viewResult(true);
 		// this._doSwipe();
 	}
 
@@ -48,8 +48,8 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + ((this._sended && answerView) ? '' : ' hide')} onClick={viewResult}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={'btn_example' + ((this._sended && answerView) ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + ((this._sended[2] && answerView) ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_example' + ((this._sended[2] && answerView) ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				
 				<div className="quiz_box">
 					<div className="white_board">

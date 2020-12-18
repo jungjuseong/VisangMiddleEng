@@ -34,10 +34,10 @@ class BasicQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultAdditionalBasic.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultAdditionalBasic.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_answer' + (this._sended[1] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended[1] ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>

@@ -18,7 +18,7 @@ export interface IConfirmQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IConfirmNomal | IConfirmHard | IConfirmSup;
-	viewResult : () => void;
+	viewResult: (answerboolean : boolean) => void;
 
 }
 
@@ -27,7 +27,7 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 	@observable protected _view = false;
 	@observable protected _hint = false;
 	@observable protected _trans = false;
-	@observable protected _sended = false;
+	@observable protected _sended = [false,false,false];
 	
 	protected _swiper?: Swiper;
 
@@ -118,10 +118,14 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 			this._view = false;	
 			App.pub_stop();
 		}
-		if(state.confirmBasicProg >= SENDPROG.SENDED ||
-			state.confirmHardProg >= SENDPROG.SENDED ||
-			state.confirmSupProg >= SENDPROG.SENDED) {
-			this._sended = true;
+		if(state.confirmSupProg >= SENDPROG.SENDED){
+			this._sended[0] = true;
+		}
+		if(state.confirmBasicProg >= SENDPROG.SENDED){
+			this._sended[1] = true;
+		}
+		if(state.confirmHardProg >= SENDPROG.SENDED){
+			this._sended[2] = true;
 		}
 	}
 	
