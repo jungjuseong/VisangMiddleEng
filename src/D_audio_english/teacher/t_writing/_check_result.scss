@@ -77,9 +77,11 @@
                         @include btn_on_dis( resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), width('teacher/images/btn_result_wrong.png'), height('teacher/images/btn_result_wrong.png'), );
                     }
                     .table{
+                        position: relative;
                         display: table;
                         width: 1000px;
                         margin: 0 auto;
+                        left: 0;
                         &>div{
                             display: block;
                             float: left;
