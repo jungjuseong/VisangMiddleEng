@@ -34,7 +34,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 		this.props.onHintClick();
 		this._hint = true;
 			
-		this._doSwipe();
+		// this._doSwipe();
 	}
 
 	public render() {
