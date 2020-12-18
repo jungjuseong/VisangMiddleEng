@@ -61,6 +61,7 @@ class Question extends React.Component<IQuestion> {
 			App.pub_playBtnPage();
 			this._curIdx = idx;
 		}
+		this._setNavi();
 	}
 
 	private _clickClue = () => {
@@ -168,8 +169,13 @@ class Question extends React.Component<IQuestion> {
 	private _setNavi() {
 		this.props.actions.setNaviView(true);
 		if(this._prog === SENDPROG.SENDING || this._prog === SENDPROG.SENDED) this.props.actions.setNavi(false, false);
-		else this.props.actions.setNavi(true, true);
-
+		else {
+			if(this._curIdx === 2){
+				this.props.actions.setNavi(true, false);
+			}else{
+				this.props.actions.setNavi(true, true);
+			}
+		}
 		this.props.actions.setNaviFnc(
 			() => {
 				if(this._curIdx === 0) {
@@ -178,6 +184,7 @@ class Question extends React.Component<IQuestion> {
 				} else {
 					App.pub_playBtnPage();
 					this._curIdx = this._curIdx - 1;
+					this._setNavi();
 				}
 			},
 			() => {
@@ -186,6 +193,7 @@ class Question extends React.Component<IQuestion> {
 				} else {
 					App.pub_playBtnPage();
 					this._curIdx = this._curIdx + 1;
+					this._setNavi();
 				}
 			}
 		);
