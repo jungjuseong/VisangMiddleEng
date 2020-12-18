@@ -230,8 +230,8 @@ class TeacherContext extends TeacherContextBase {
 							result.c1.push(ret.answer1);
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 							console.log(qmsg.imgUrl)
 						}
 					} else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
@@ -254,8 +254,8 @@ class TeacherContext extends TeacherContextBase {
 							result.c1.push(ret.answer1);
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					} else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizStringReturnMsg;
@@ -273,8 +273,8 @@ class TeacherContext extends TeacherContextBase {
 							result.c1.push(ret.answer1);
 							result.c2.push(ret.answer2);
 							result.c3.push(ret.answer3);
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					}
 					break;				
@@ -309,8 +309,8 @@ class TeacherContext extends TeacherContextBase {
 							if(resultCorrect) result.arrayOfCorrect.push(true);
 							else result.arrayOfCorrect.push(false);
 							
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					} else if(this.state.additionalBasicProg === SENDPROG.SENDED && msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -341,8 +341,8 @@ class TeacherContext extends TeacherContextBase {
 							if(resultCorrect) result.arrayOfCorrect.push(true);
 							else result.arrayOfCorrect.push(false);
 							
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					} else if(this.state.additionalHardProg === SENDPROG.SENDED && msg.idx === 2) {
 						const qmsg = msg as IQuizReturnMsg;
@@ -372,8 +372,8 @@ class TeacherContext extends TeacherContextBase {
 							if(resultCorrect) result.arrayOfCorrect.push(true);
 							else result.arrayOfCorrect.push(false);
 							
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					}
 					break;				
@@ -409,8 +409,8 @@ class TeacherContext extends TeacherContextBase {
 							if(resultCorrect) result.arrayOfCorrect.push(true);
 							else result.arrayOfCorrect.push(false);
 							
-							result.uid.push(qmsg.id);
 							result.url.push(qmsg.imgUrl);
+							result.uid.push(qmsg.id);
 						}
 					}
 					break;		

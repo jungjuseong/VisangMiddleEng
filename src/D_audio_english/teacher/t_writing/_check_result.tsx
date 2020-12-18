@@ -62,8 +62,8 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 
 	private setColor(){	
 		let cidx = 0;
-		let color_list : COLOR[] = [];
-		const s_num = this.props.state.resultConfirmSup.uid;
+		let color_list :COLOR[] = [];
+		const s_num = App.students;
 		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
 		for(let i = 0; i<s_num.length; i++) {
 			cidx = Math.floor(Math.random() * s_num.length);
@@ -80,18 +80,18 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		let result : string[][] = []
 		switch(tap){
 			case 'ADDITIONAL' :{
-				arr = adarray[idx].uid
 				result = adarray[idx].url
+				arr = adarray[idx].uid
 				break
 			}
 			case 'CONFIRM' : {
-				arr = coarray[idx].uid
 				result = coarray[idx].url
+				arr = coarray[idx].uid
 				break
 			}
 			case 'DICTATION': {
-				arr = state.resultDictation[idx].uid
 				result = state.resultDictation[idx].url
+				arr = state.resultDictation[idx].uid
 				break
 			}
 			default : break
@@ -104,7 +104,7 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 				<div className="pop_bg">
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
 					<div className="subject_rate">
-						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
+						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
 							<div className="content">
@@ -116,7 +116,7 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 								<div className="table">
 									{arr.map((uid , idx)=>{
 										let url = '';
-										if (result[idx] !== undefined){
+										if(result[idx] !== undefined){
 											url = result[idx][0];
 										}
 										return(
