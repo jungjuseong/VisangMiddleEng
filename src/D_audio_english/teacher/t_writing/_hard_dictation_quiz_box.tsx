@@ -23,7 +23,7 @@ interface IQuizBoxProps {
 	onClosed: () => void;
 	onHintClick: () => void;
 	data: IDictation[];
-	viewResult : () => void;
+	viewResult: (answerboolean : boolean) => void;
 }
 @observer
 class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
@@ -122,6 +122,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 				});
 			}
 		});
+		this.props.viewResult(false);
 	}
 	
 	private _onClick = () => {
@@ -171,7 +172,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 		return (
 			<>
 			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 

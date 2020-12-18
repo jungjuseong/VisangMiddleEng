@@ -36,6 +36,7 @@ class SupplementQuizBox extends QuizBox {
 		this.props.onHintClick();
 		this._hint = !this._hint;
 		this._doSwipe();
+		this.props.viewResult(false);
 	}
 
 	public render() {
@@ -52,10 +53,10 @@ class SupplementQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>

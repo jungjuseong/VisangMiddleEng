@@ -31,10 +31,10 @@ class HardQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
-				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
+				<div className={'subject_rate' + (this._sended[2] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultAdditionalHard.uid.length}/{App.students.length}</div>
+				<ToggleBtn className={'btn_answer' + (this._sended[2] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._sended[2] ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
