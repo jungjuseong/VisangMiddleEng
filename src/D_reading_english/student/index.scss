@@ -8,6 +8,7 @@
 @import './s_question.scss';
 
 @import './s_v_script.scss';
+@import './s_add_quiz_item.scss';
 
 #wrap{
 
@@ -72,6 +73,7 @@
 	@include s_warmup;
 	@include s_passage;
 	@include s_question;
+	@include s_add_quiz_item;
 
 	
 	@include s_v_script;

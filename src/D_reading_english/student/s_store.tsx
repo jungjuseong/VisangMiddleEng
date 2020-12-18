@@ -21,13 +21,14 @@ const enum QnaProg {
 	SENDED,
 }
 
-type MYPROG = ''|'warmup'|'passage'|'question'|'graphic'|'summary'|'v_script'|'v_checkup';
+type MYPROG = ''|'warmup'|'passage'|'question'|'graphic'|'summary'|'v_script'|'v_checkup'|'add_quiz';
 interface IStateCtx extends IStateBase {
 	prog: MYPROG;
 	warmupidx: number;
 	/* Passage 에 관련됨 시작 */
 	passageidx: number;
 	qnaProg: QnaProg;
+	addquizProg : SENDPROG;
 	focusSeq: number;
 	focusIdx: number;
 	isPlay: boolean;
@@ -80,6 +81,7 @@ class StudentContext extends StudentContextBase {
 		this.state.viewSctiprFocusBG = false;
 
 		this.state.questionProg = SENDPROG.READY;
+		this.state.addquizProg = SENDPROG.READY;
 
 		this.state.graphicProg = SENDPROG.READY;
 		this.state.graphicSheet = '';
@@ -161,7 +163,13 @@ class StudentContext extends StudentContextBase {
 				this._setViewDiv('content');
 				this.state.passageidx = wmsg.idx;
 				this.state.prog = 'passage';
-			} else if(msg.msgtype === 'qna_send') {							// passage qna 전달
+			} else if(msg.msgtype === 'add_quiz_send') {						// addquiz 시작
+				this._setViewDiv('content');
+				this.state.prog = 'add_quiz';
+			} else if(msg.msgtype === 'add_quiz_end') {
+				if(this.state.prog !== 'add_quiz') return;
+				this.state.addquizProg = SENDPROG.COMPLETE;
+			}else if(msg.msgtype === 'qna_send') {							// passage qna 전달
 				if(this.state.prog !== 'passage') return;
 				else if(this.state.qnaProg > QnaProg.UNMOUNT) return;
 				this._clearPassage();

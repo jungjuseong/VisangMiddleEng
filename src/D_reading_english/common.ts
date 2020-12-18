@@ -38,7 +38,8 @@ export interface IMsg {
 			|'pentool_send'|'pentool_end'
 			|'summary_send'|'summary_end'|'summary_return'
 			|'v_readaloud_send'|'v_shadowing_send'|'v_dialogue_end'
-			|'v_checkup_send'|'v_checkup_end'|'v_checkup_return';
+			|'v_checkup_send'|'v_checkup_end'|'v_checkup_return'
+			|'add_quiz_send'|'add_quiz_end'|'add_quiz_return';
 }
 
 export interface IMsgForIdx extends IMsg {

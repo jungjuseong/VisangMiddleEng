@@ -14,7 +14,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from './t_store';
 import WrapTextNew from '@common/component/WrapTextNew';
 import { BtnAudio } from '../../share/BtnAudio';
 import SendUINew from '../../share/sendui_new';
-
+import * as felsocket from '../../felsocket';
 import { _getJSX, _getBlockJSX } from '../../get_jsx';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -23,6 +23,7 @@ interface ILetsTalk {
 	view: boolean;
 	onClosed: () => void;
 	data: common.IAdditionalQuiz[];
+	state : IStateCtx
 }
 @observer
 class AdditionalPopQuiz extends React.Component<ILetsTalk> {
@@ -65,7 +66,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
     
 	private _viewAnswer = () => {
 		if (this._disable_toggle === false){
-			const {data} = this.props;
+			const {data,state} = this.props;
 			App.pub_playBtnTab();
 			for(let i = 0; i<data.length; i++){
 
@@ -73,6 +74,16 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 			}
 			this._disable_toggle = true;
 			this._answer = true;
+
+			if(state.addQuizProg != SENDPROG.SENDED) return;
+			App.pub_playToPad();
+			App.pub_reloadStudents(() => {
+            let msg: common.IMsg;
+			state.addQuizProg = SENDPROG.COMPLETE;
+			msg = {msgtype: 'add_quiz_end',};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        });
+
 		}
 	}
 
@@ -91,50 +102,18 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 			return 'on_false';
 	}
 	private _onSend = () => {
-    //     const {state, actions} = this.props;
-
-    //     if(	this._title === 'COMPREHENSION' ) {
-    //         if(this._tab === 'QUESTION' && state.questionProg !==  SENDPROG.READY ||  
-    //             this._tab === 'SCRIPT' && state.scriptProg !==  SENDPROG.READY)
-    //             return;
-    //     } else {
-    //         if(state.dialogueProg !== SENDPROG.READY) return;
-    //     }
-
-    //     if (this._title === 'COMPREHENSION') {
-    //         if(this._tab === 'QUESTION') state.questionProg = SENDPROG.SENDING;
-    //         else state.scriptProg = SENDPROG.SENDING;
-    //     } else state.dialogueProg = SENDPROG.SENDING;
-
-    //     App.pub_playToPad();
-    //     App.pub_reloadStudents(() => {
-    //         let msg: IMsg;
-    //         if(this._title === 'COMPREHENSION' ) {
-    //             actions.clearReturnUsers();
-    //             actions.setRetCnt(0);
-    //             actions.setNumOfStudent(App.students.length);
-                
-    //             if(this._tab === 'QUESTION') {
-    //                 if(state.questionProg !==  SENDPROG.SENDING) return;
-    //                 state.questionProg = SENDPROG.SENDED;
-    //                 msg = {msgtype: 'quiz_send',};
-    //             } else {
-    //                 if(state.scriptProg !==  SENDPROG.SENDING) return;
-    //                 state.scriptProg = SENDPROG.SENDED;
-    //                 msg = {msgtype: 'script_send',};
-    //                 if(this._viewClue) {
-    //                     felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-    //                     msg = {msgtype: 'view_clue',};
-    //                 }
-    //             } 
-    //         } else {
-    //             if(state.dialogueProg !== SENDPROG.SENDING) return;
-    //             state.dialogueProg = SENDPROG.SENDED;
-    //             msg = {msgtype: 'dialogue_send',};
-    //         }
-    //         felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-    //         this._setNavi();
-    //     });
+		const {state} = this.props;
+		if(state.addQuizProg != SENDPROG.READY) return;
+		state.addQuizProg = SENDPROG.SENDING;
+        App.pub_playToPad();
+        App.pub_reloadStudents(() => {
+            let msg: common.IMsg;
+    
+			if(state.addQuizProg !== SENDPROG.SENDING) return;
+			state.addQuizProg = SENDPROG.SENDED;
+			msg = {msgtype: 'add_quiz_send',};
+            felsocket.sendPAD($SocketType.MSGTOPAD, msg);
+        });
 	}
 
 	private _onClickTrue = (param:number) =>{
@@ -153,6 +132,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 
 	private _onClosepop = () => {
 		App.pub_playBtnTab();
+		felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 		this._view = false;
 	}
 
@@ -222,7 +202,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
 				<SendUINew
 					view={true}
-					type={'pad'}
+					type={'teacher'}
 					sended={false}
 					originY={0}
 					onSend={this._onSend}

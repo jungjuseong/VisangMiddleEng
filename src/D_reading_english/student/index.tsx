@@ -24,6 +24,8 @@ import SWarmup from './s_warmup';
 import SPassage from './s_passage';
 import SQuestion from './s_question';
 import SVScript from './s_v_script';
+import SAddQuiz from './s_add_quiz_item';
+import { action } from 'mobx';
 
 @observer
 class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
@@ -45,7 +47,8 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SWarmup view={viewDiv === 'content' && prog === 'warmup'} state={state} actions={actions}/>
 					<SPassage view={viewDiv === 'content' && prog === 'passage'} viewTrans={viewTrans} qnaProg={qnaProg} focusSeq={focusSeq} state={state} actions={actions}/>
 					<SQuestion view={viewDiv === 'content' && prog === 'question'} state={state} actions={actions}/>
-					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>			
+					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>		
+					<SAddQuiz view={viewDiv === 'content' && prog === 'add_quiz'} state={state} actions={actions} data={actions.getData().additional_quiz}/>
 					<Loading view={state.loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
 					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>

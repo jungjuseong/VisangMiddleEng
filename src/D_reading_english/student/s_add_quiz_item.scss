@@ -1,0 +1,135 @@
+@import '../../share/sendui.scss';
+@import '../../share/QuizMCBtn.scss';
+
+@mixin s_add_quiz_item {
+
+    .sup_question {
+        position: relative;
+        text-align: left;
+        font-size: 28px;
+        padding: 0px 25px;
+        height: 800px;
+
+        &>div {
+            position: relative;
+        }
+
+        .quiz {
+            position: relative;
+            height: 120px;
+            width: 100%;
+            padding: 0px 30px;
+            font-size: 29px;
+            font-weight: bold;
+            word-break: normal;
+            color: rgb(0, 0, 0);
+            white-space: normal;
+            margin-bottom: 55px;
+
+            &>div {
+                position: absolute;
+                top: 64px
+            }
+        }
+
+        .white_box {
+            display: block;
+            width: 1150px;
+            height: 600px;
+            margin: 25px auto;
+            background: #fff;
+            border-radius: 15px;
+            line-height: 90px;
+            padding: 0 25px;
+            font-size: 30px;
+            overflow: auto;
+            &>div{
+                display: flex;
+                justify-content: space-between;
+                &>span {
+                    position: absolute;
+                    display: inline-block;
+                    vertical-align: top;
+                    width: width("common/icon_o.png");
+                    height: height("common/icon_o.png");
+                    background-repeat: no-repeat;
+                    background-position: 50% 50%;
+                    left: 4px;
+                    margin-top: 13px;
+                    line-height: 5 * height("common/icon_o.png") / 6;
+    
+                    &.O {
+                        background-image: resolve("common/icon_o.png");
+                    }
+    
+                    &.X {
+                        background-image: resolve("common/icon_x.png");
+                    }
+    
+                    font-size: 34px;
+                    font-weight: bold;
+                    color: rgba(255, 255, 255, 0.4);
+    
+                    &.on {
+                        color: rgb(248, 246, 77);
+                    }
+                }
+    
+                &.off {
+                    display: none;
+                }
+    
+                &>p {
+                    line-height: 90px;
+                }
+            }
+            .toggle_bundle {
+                width: width('teacher/images/TF.png');
+                height: height('teacher/images/TF.png');
+                background: resolve('teacher/images/TF.png');
+                padding: 0 5px 7px 5px;
+                margin: auto 0;
+
+                &>div {
+                    display: inline-block;
+                    width: 50%;
+                    height: 100%;
+                    z-index: 5;
+                    cursor: pointer;
+                }
+            }
+
+            .on_true {
+                background: resolve('teacher/images/TF_T_B.png');
+            }
+
+            .on_false {
+                background: resolve('teacher/images/TF_F_B.png');
+            }
+
+            .on_true_t {
+                background: resolve('teacher/images/TF_T_T.png');
+            }
+
+            .on_false_t {
+                background: resolve('teacher/images/TF_F_T.png');
+            }
+
+            .on_true_f {
+                background: resolve('teacher/images/TF_F_F.png');
+            }
+
+            .on_false_f {
+                background: resolve('teacher/images/TF_T_F.png');
+            }
+        }
+    }
+
+
+    .fel_toteacher {
+        position: absolute;
+        @include fel_toteacher;
+        bottom: 7px;
+        right: 7px;
+    }
+}

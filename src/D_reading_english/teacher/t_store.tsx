@@ -23,6 +23,7 @@ interface IStateCtx extends IStateBase {
 	warmup_returns: IWarmupReturn[][];
 	isNaviBack: boolean;
 	isVideoStudied: boolean;
+	addQuizProg : SENDPROG;
 }
 
 interface IActionsCtx extends IActionsBase {
@@ -53,7 +54,7 @@ class TeacherContext extends TeacherContextBase {
     private _graphSheetFnc: ((msg: IGraphSheetMsg) => void)|null = null;
 
 	private _summaryFnc: ((msg: IQuizReturnMsg) => void)|null = null;
-    private _checkupFnc: ((msg: IQNAMsg) => void)|null = null;
+	private _checkupFnc: ((msg: IQNAMsg) => void)|null = null;
 
 	constructor() {
 		super();
@@ -62,6 +63,7 @@ class TeacherContext extends TeacherContextBase {
 		this.state.warmup_returns = [];
 		this.state.isNaviBack = false;
 		this.state.isVideoStudied = false;
+		this.state.addQuizProg = SENDPROG.READY;
 		this.actions.getData = () => this._data;
 		this.actions.gotoDirection = () => this._setViewDiv('direction');
 		this.actions.gotoNextBook = () => {
