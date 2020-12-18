@@ -86,8 +86,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 			this._toggle[1] = this._answer_dic[`${this._jsx_answers[1]}`];
 			this._toggle[2] = this._answer_dic[`${this._jsx_answers[2]}`];
 			this._disable_toggle = this._hint = true;
-	
-			// this._doSwipe();
+			this.props.viewResult();
 		}
 	}
 	

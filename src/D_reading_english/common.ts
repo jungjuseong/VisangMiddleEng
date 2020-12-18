@@ -240,6 +240,19 @@ export interface ILetstalk {
 	hint: string;
 }
 
+export interface IAdditionalQuiz{
+	seq: number;
+	directive_kor: string;
+	directive_eng: string;
+	audio: string;
+	question:string;
+	answer:number;
+	choice1: string;
+	choice2: string;
+	SC_SAVE:boolean;
+	kor_eng:boolean;
+}
+
 export interface IStorybook {
 	seq: number;
 	image: string;
@@ -255,7 +268,7 @@ export interface IData {
     warmup_video_start: number;
 	summary_audio: string;
 	scripts: IScript[];
-	additional_quiz : [];
+	additional_quiz : IAdditionalQuiz[];
 	warmup: IWarmup[];
 	passage: IPassage[];
 	question: IQuestion[];

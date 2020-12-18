@@ -10,22 +10,28 @@ import { App } from '../../../App';
 import { CoverPopup } from '../../../share/CoverPopup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
+import { stat } from 'fs';
+
+export type COLOR = 'pink'|'green'|'orange'|'purple';
 
 interface IQuizBoxProps {
 	view: boolean;
 	state : IStateCtx;
 	onClosed: () => void;
-	tap :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT'
-	idx : number
+	tap :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
+	idx : number;
 }
 @observer
 class CheckResult extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
+	@observable private _color : COLOR[] = [];
+	// @observable private _result : result
 	
 	private _swiper?: Swiper;
 
 	public constructor(props: IQuizBoxProps) {
 		super(props);
+		this.setColor();
 	}
 
 	private _onClosePopup = () => {
@@ -53,6 +59,18 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		})
 		return re_num
 	}
+
+	private setColor(){	
+		let cidx = 0;
+		let color_list :COLOR[] = [];
+		const s_num = App.students;
+		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
+		for(let i = 0; i<s_num.length; i++) {
+			cidx = Math.floor(Math.random() * s_num.length);
+			color_list.push(colors[cidx]);
+		}
+		this._color = color_list;
+	}
 	
 	public render() {
 		const { onClosed, state, idx, tap} = this.props;
@@ -62,54 +80,54 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		let result : string[][] = []
 		switch(tap){
 			case 'ADDITIONAL' :{
-				arr = adarray[idx].uid
 				result = adarray[idx].url
+				arr = adarray[idx].uid
 				break
 			}
 			case 'CONFIRM' : {
-				arr = coarray[idx].uid
 				result = coarray[idx].url
+				arr = coarray[idx].uid
 				break
 			}
 			case 'DICTATION': {
-				arr = state.resultDictation[idx].uid
 				result = state.resultDictation[idx].url
+				arr = state.resultDictation[idx].uid
 				break
 			}
 			default : break
 		}
 		
-		
-		console.log('uiduid',state.resultConfirmSup.uid.length)
-		console.log('uid',arr[0])
-		console.log(App.students[0]?.name)
-		console.log('resulturl',result[0])
 	
 		return (
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
-					{/* <div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={viewResult}>
-						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
-					</div> */}
+					<div className="subject_rate">
+						{arr.length}/{App.students.length}
+					</div>
 						<div className="popbox">
 							<div className="content">
+								<div>
+									<ToggleBtn className="all_student"/>
+									<ToggleBtn className="correct_answer"/>
+									<ToggleBtn className="wrong_answer"/>
+								</div>
 								<div className="table">
 									{arr.map((uid , idx)=>{
-										let url = ''
-										if (result[idx] !== undefined){
-											url = result[idx][0]
+										let url = '';
+										if(result[idx] !== undefined){
+											url = result[idx][0];
 										}
 										return(
 											<div key={idx}>
 												<img className="thumnail" src={url}></img>
 												<div className="status">
-													<div className="s_img">
-														<img src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<div>
+														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+														<div className="score">0</div>
 													</div>
-													<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
-													<div className="score"></div>
 												</div>
 											</div>
 										);
