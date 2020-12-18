@@ -77,7 +77,7 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 									{arr.map((uid , idx)=>{
 										return(
 											<div key={idx}>
-												<img className="thumnail" src={state.resultConfirmSup.url[idx]}></img>
+												<img className="thumnail" src={state.resultConfirmSup.url[idx][0]}></img>
 												<div className="status">
 													<div className="s_img">
 														<img src={App.students[this.findStudentName(uid)]?.thumb}></img>

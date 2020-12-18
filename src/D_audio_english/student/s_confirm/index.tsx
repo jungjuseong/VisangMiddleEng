@@ -8,12 +8,12 @@ import { ToggleBtn } from '@common/component/button';
 import * as kutil from '@common/util/kutil';
 
 import { IStateCtx, IActionsCtx, QPROG, SPROG } from '../s_store';
-import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg ,IQuizUrlReturnMsg} from '../../common';
+import { IQuizReturn,IQuizStringReturn,IQuizReturnMsg,IQuizStringReturnMsg} from '../../common';
 import SendUINew from '../../../share/sendui_new';
 
 import SSupplementQuizItem, {quizCapture as supQuizCapture} from './s_supplement_quiz_item';
 import SBasicQuizItem, {quizCapture as basicQuizCapture} from './s_basic_quiz_item';
-import SHardQuizItem, {quizCapture as hardQuizCaputre} from './s_hard_quiz_item';
+import SHardQuizItem, {quizCapture as hardQuizCapture} from './s_hard_quiz_item';
 
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -88,7 +88,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 
 			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
-				const msg: IQuizUrlReturnMsg = {
+				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 0,
 					id: App.student.id,
@@ -116,7 +116,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 					msgtype: 'confirm_return',
 					idx: 1,
 					id: App.student.id,
-					returns: choices
+					returns: choices,
+					imgUrl:url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -130,13 +131,16 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 2) {
+			const url = await hardQuizCapture('.s_question .question .q-item .hard_question .q-item');
+			console.log('url',url)
 			state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizStringReturnMsg = {
 					msgtype: 'confirm_return',
 					idx: 2,
 					id: App.student.id,
-					returns: writings
+					returns: writings,
+					imgUrl:url
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -310,7 +314,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 						/>
 					</div>
 				</div>
-				<SendUINew view={view}	type={'pad'} sended={false}	originY={0}	onSend={this._onSend}/>
+				<SendUINew view={view && this._felView}	type={'pad'} sended={false}	originY={0}	onSend={this._onSend}/>
 			</div>
 		);
 	}

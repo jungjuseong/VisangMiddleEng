@@ -23,10 +23,7 @@ import './index.scss';
 import SWarmup from './s_warmup';
 import SPassage from './s_passage';
 import SQuestion from './s_question';
-import SGraphic from './s_graphic';
-import SSumary from './s_summary';
 import SVScript from './s_v_script';
-import SCheckup from './s_checkup';
 
 @observer
 class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
@@ -48,10 +45,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SWarmup view={viewDiv === 'content' && prog === 'warmup'} state={state} actions={actions}/>
 					<SPassage view={viewDiv === 'content' && prog === 'passage'} viewTrans={viewTrans} qnaProg={qnaProg} focusSeq={focusSeq} state={state} actions={actions}/>
 					<SQuestion view={viewDiv === 'content' && prog === 'question'} state={state} actions={actions}/>
-					<SGraphic view={viewDiv === 'content' && prog === 'graphic'} state={state} actions={actions}/>
-					<SSumary view={viewDiv === 'content' && prog === 'summary'}	state={state} actions={actions}/>
-					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>
-					<SCheckup view={viewDiv === 'content' && prog === 'v_checkup'} state={state} actions={actions}/>				
+					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>			
 					<Loading view={state.loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
 					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>

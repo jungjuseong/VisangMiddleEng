@@ -214,38 +214,7 @@ class TeacherContext extends TeacherContextBase {
 			} else if(msg.msgtype === 'graphic_return') {
 				const qmsg = msg as IGraphMsg;
 				if(this._graphFnc) {
-                    this._graphFnc(qmsg);
-
-                    const graphics = this._data.graphic;
-                    graphics.forEach((graphic, idx) => {
-                        const ret = qmsg.returns[idx];
-                        if(ret && graphic.tmq_seq) {
-
-                            stime = StrUtil._toStringTimestamp(new Date(ret.stime));
-                            etime = StrUtil._toStringTimestamp(new Date(ret.etime));
-
-                            let answer_str = graphic.answer.toString();
-                            if(graphic.answer2) answer_str += ',' + graphic.answer2.toString();
-                            if(graphic.answer3) answer_str += ',' + graphic.answer3.toString();
-                            if(graphic.answer4) answer_str += ',' + graphic.answer4.toString();
-
-                            userReports.push({
-                                std_cont_seq: graphic.tmq_seq,
-                                studentId: qmsg.id,
-                                ans_tf: ret.correct ? '1' : '0',
-                                ans_submit: '' + ret.answer,
-                                ans_starttime: stime ? stime : '',
-                                ans_endtime: etime ? etime : '',
-                                sc_div1: graphic.SC_DIV1 ? graphic.SC_DIV1 : '',
-                                sc_div2: graphic.SC_DIV2 ? graphic.SC_DIV2 : '',
-                                sc_div3: graphic.SC_DIV3 ? graphic.SC_DIV3 : '',
-                                sc_div4: graphic.SC_DIV4 ? graphic.SC_DIV4 : '',
-                                files: null,
-                                ans_correct: '' + answer_str,
-                                tab_index: ''
-                            });	
-                        }
-                    });
+                    this._graphFnc(qmsg);              
 
 				}				
         	} else if(msg.msgtype === 'sheet_return') {
@@ -285,32 +254,7 @@ class TeacherContext extends TeacherContextBase {
             } else if(msg.msgtype === 'summary_return') {
 				const qmsg = msg as IQuizReturnMsg;
 				if(this._summaryFnc) {
-                    this._summaryFnc(qmsg);
-                    
-                    const summarizings = this._data.summarizing;
-                    summarizings.forEach((summarizing, idx) => {
-                        const ret = qmsg.returns[idx];
-                        if(ret && summarizing.tmq_seq) {
-                            stime = StrUtil._toStringTimestamp(new Date(ret.stime));
-                            etime = StrUtil._toStringTimestamp(new Date(ret.etime));
-
-                            userReports.push({
-                                std_cont_seq: summarizing.tmq_seq,
-                                studentId: qmsg.id,
-                                ans_tf: ret.answer === summarizing.answer ? '1' : '0',
-                                ans_submit: '' + ret.answer,
-                                ans_starttime: stime ? stime : '',
-                                ans_endtime: etime ? etime : '',
-                                sc_div1: summarizing.SC_DIV1 ? summarizing.SC_DIV1 : '',
-                                sc_div2: summarizing.SC_DIV2 ? summarizing.SC_DIV2 : '',
-                                sc_div3: summarizing.SC_DIV3 ? summarizing.SC_DIV3 : '',
-                                sc_div4: summarizing.SC_DIV4 ? summarizing.SC_DIV4 : '',
-                                files: null,
-                                ans_correct: '' + summarizing.answer.toString(),
-                                tab_index: ''
-                            });	
-                        }
-                    });
+                    this._summaryFnc(qmsg);              
                     
 				}				
 			} else if(msg.msgtype === 'v_checkup_return') {
@@ -324,24 +268,7 @@ class TeacherContext extends TeacherContextBase {
                     if(qmsg.returns.length !== 1) return;
                     
                     const answer = qmsg.returns[0];
-                    const checkup = _.find(this._data.checkup, {seq: qmsg.seq});
-                    if(!checkup) return;
 
-                    userReports.push({
-                        std_cont_seq: checkup.tmq_seq ? checkup.tmq_seq : 0,
-                        studentId: qmsg.id,
-                        ans_tf: answer === checkup.answer ? '1' : '0',
-                        ans_submit: '' + answer,
-                        ans_starttime: stime ? stime : '',
-                        ans_endtime: etime ? etime : '',
-                        sc_div1: checkup.SC_DIV1 ? checkup.SC_DIV1 : '',
-                        sc_div2: checkup.SC_DIV2 ? checkup.SC_DIV2 : '',
-                        sc_div3: checkup.SC_DIV3 ? checkup.SC_DIV3 : '',
-                        sc_div4: checkup.SC_DIV4 ? checkup.SC_DIV4 : '',
-                        files: null,
-                        ans_correct: '' + checkup.answer,
-                        tab_index: ''
-                    });	
                 }
 			}
 			

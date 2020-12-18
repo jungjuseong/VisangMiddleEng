@@ -92,7 +92,8 @@ class SDictation extends React.Component<ISQuestionProps> {
 				msgtype: 'dictation_return',
 				idx: state.idx,
 				id: App.student.id,
-				returns: choices
+				returns: choices,
+				imgUrl : []
 			};
 			felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 			await kutil.wait(600);

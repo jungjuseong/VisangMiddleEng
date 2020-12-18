@@ -97,7 +97,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					msgtype: 'additional_return',
 					idx: 0,
 					id: App.student.id,
-					returns: choices
+					returns: choices,
+					imgUrl : []
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -117,7 +118,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					msgtype: 'additional_return',
 					idx: 1,
 					id: App.student.id,
-					returns: choices
+					returns: choices,
+					imgUrl : []
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
@@ -137,7 +139,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 					msgtype: 'additional_return',
 					idx: 2,
 					id: App.student.id,
-					returns: choices
+					returns: choices,
+					imgUrl : []
 				};
 	
 				felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);

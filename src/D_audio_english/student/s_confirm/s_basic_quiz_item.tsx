@@ -15,8 +15,8 @@ export async function quizCapture() {
 
 	const dialog = _current.quizCapture;
   
-	let url: any = '';
-	url = await domtoimage.toPng(dialog!, {
+	let urli: any = '';
+	urli = await domtoimage.toPng(dialog!, {
 		cacheBust: false,
 		height: 800,
 		style: {
@@ -24,6 +24,8 @@ export async function quizCapture() {
 		// left: 0
 		}
 	});
+	const url : any = []
+	url.push(urli)
   
 	return url;
 }

@@ -1,4 +1,3 @@
-@import './_warmup_video.scss';
 
 @mixin Warmup {
 	.warmup{
@@ -424,7 +423,6 @@
 			width: 640px;
 			height: 515px;
 			z-index:2;
-			@include left_video_box;
 		}
 	}
 }

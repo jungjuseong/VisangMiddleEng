@@ -13,8 +13,6 @@ import * as felsocket from '../../../felsocket';
 import * as style from '../../../share/style';
 
 import { MPlayer, MConfig } from '@common/mplayer/mplayer';
-
-import WarmupVideo from './_warmup_video';
 import WarmupItem from './_warmup_item';
 
 interface IWarmup {
@@ -126,12 +124,12 @@ class Warmup extends React.Component<IWarmup> {
 			className = ' video';
 			video_jsx = (
 				<div className="video_container">
-					<WarmupVideo 
+					{/* <WarmupVideo 
 						view={view && inview}
 						player={this.m_player} 
 						data={data}
 						onZoomed={this._onVideoZoomed}
-					/>
+					/> */}
 				</div>
 			);
 		} else className = ' image';
