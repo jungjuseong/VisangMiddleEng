@@ -55,12 +55,12 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 						className="goodjob-svg" 
 						view={state.goodjob} 
 						delay={3000}
-						data={`${_digenglishCB_lib_}images/goodjob_ls.svg`}
+						data={`${_digenglishCB_lib_}images/goodjob.png`}
 						onComplete={actions.goodjobComplete}
 					/>
 					<SVGEmbed 
 						className="eyeon_svg" 
-						data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}
+						data={`${_digenglishCB_lib_}images/attention.png`}
 						view={state.viewDiv === 'eyeon' || state.viewDiv === 'direction'}
 						bPlay={false}
 					/>

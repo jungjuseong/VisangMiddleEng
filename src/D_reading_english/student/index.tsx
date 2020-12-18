@@ -50,8 +50,8 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>		
 					<SAddQuiz view={viewDiv === 'content' && prog === 'add_quiz'} state={state} actions={actions} data={actions.getData().additional_quiz}/>
 					<Loading view={state.loading}/>
-					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob_ls.svg`} onComplete={actions.goodjobComplete}/>
-					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/eyeon_ls.svg`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
+					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob_ls.png`} onComplete={actions.goodjobComplete}/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
 				</div>
 			</div>
 			</div>

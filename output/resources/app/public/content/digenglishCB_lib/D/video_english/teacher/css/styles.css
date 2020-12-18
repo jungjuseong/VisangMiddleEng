@@ -965,7 +965,7 @@ body {
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_question.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_confirm_down.png");
     background-repeat: no-repeat;
     width: 149px;
     height: 42px;
@@ -974,7 +974,7 @@ body {
 }
 
 #wrap .t_comprehension .btn_tabs .btn_tab_question.on {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_question_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_confirm.png");
 }
 
 #wrap .t_comprehension .btn_tabs .btn_tab_question:before {
@@ -985,7 +985,7 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_question.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_question_down.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_confirm_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_confirm.png");
 }
 
 #wrap .t_comprehension .btn_tabs .btn_tab_script {
@@ -995,7 +995,7 @@ body {
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script_down.png");
     background-repeat: no-repeat;
     width: 149px;
     height: 42px;
@@ -1004,7 +1004,7 @@ body {
 }
 
 #wrap .t_comprehension .btn_tabs .btn_tab_script.on {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script.png");
 }
 
 #wrap .t_comprehension .btn_tabs .btn_tab_script:before {
@@ -1015,7 +1015,7 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script_down.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tab_script.png");
 }
 
 #wrap .t_comprehension .info_box {
@@ -1102,22 +1102,22 @@ body {
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png");
     background-repeat: no-repeat;
-    width: 65px;
-    height: 59px;
+    width: 84px;
+    height: 32px;
     pointer-events: unset;
     cursor: pointer;
 }
 
 #wrap .t_comprehension .info_box .btn_trans:disabled {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
     pointer-events: none;
     cursor: auto;
 }
 
 #wrap .t_comprehension .info_box .btn_trans.on {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
 }
 
 #wrap .t_comprehension .info_box .btn_trans:before {
@@ -1128,7 +1128,7 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_translate_down.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
 }
 
 #wrap .t_comprehension .info_box .btn_clue {
@@ -1139,22 +1139,22 @@ body {
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png");
     background-repeat: no-repeat;
-    width: 63px;
-    height: 59px;
+    width: 59px;
+    height: 54px;
     pointer-events: unset;
     cursor: pointer;
 }
 
 #wrap .t_comprehension .info_box .btn_clue:disabled {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png");
     pointer-events: none;
     cursor: auto;
 }
 
 #wrap .t_comprehension .info_box .btn_clue.on {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png");
 }
 
 #wrap .t_comprehension .info_box .btn_clue:before {
@@ -1165,7 +1165,7 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_down.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_clue_n.png");
 }
 
 #wrap .t_comprehension .left_box {
@@ -2345,28 +2345,29 @@ body {
     display: none;
     position: absolute;
     top: 10px;
-    right: 103px;
+    right: 100px;
+    margin-right: 300px;
     touch-action: none;
     padding: 0px;
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png");
     background-repeat: no-repeat;
-    width: 86px;
-    height: 34px;
+    width: 84px;
+    height: 32px;
     pointer-events: unset;
     cursor: pointer;
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_trans:disabled {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans_dis.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png");
     pointer-events: none;
     cursor: auto;
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_trans.down {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png");
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_trans:before {
@@ -2377,7 +2378,7 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_trans_dis.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_tranz.png");
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_show {
@@ -2390,10 +2391,10 @@ body {
     border: none;
     background-color: transparent;
     outline: none;
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show.png");
     background-repeat: no-repeat;
-    width: 86px;
-    height: 34px;
+    width: 84px;
+    height: 32px;
     pointer-events: unset;
     cursor: pointer;
     /*
@@ -2404,13 +2405,13 @@ body {
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_show:disabled {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show_dis.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
     pointer-events: none;
     cursor: auto;
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_show.down {
-    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show_down.png");
+    background-image: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_show:before {
@@ -2421,11 +2422,11 @@ body {
     visibility: hidden;
     overflow: hidden;
     z-index: -1;
-    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show_dis.png");
+    content: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png") url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
 }
 
 #wrap .t_comprehension .right_box .right_top .btn_script_show.on {
-    background: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_script_show_down.png");
+    background: url("/content/digenglishCB_lib/D/video_english/teacher/images/btn_show_down.png");
 }
 
 #wrap .t_comprehension .right_box .question {
@@ -2904,7 +2905,7 @@ body {
 }
 
 #wrap .t_comprehension .right_box .script_container .swiper-container .script_box .ballon > span.view-trans {
-    font-size: 28px;
+    font-size: 35px;
     padding: 18px 2px 6px 24px;
 }
 
@@ -3706,15 +3707,19 @@ body {
     top: 150px;
 }
 
-#wrap .t_comprehension.DIALOGUE .btn_tab_question, #wrap .t_comprehension.DIALOGUE .btn_tab_script {
+#wrap .t_comprehension.DIALOGUE .btn_tab_question,
+#wrap .t_comprehension.DIALOGUE .btn_tab_script {
     display: none;
 }
 
-#wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_lets_talk, #wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_script_trans, #wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_script_show {
+#wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_lets_talk,
+#wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_script_trans,
+#wrap .t_comprehension.DIALOGUE > .right_box > .right_top .btn_script_show {
     display: unset;
 }
 
-#wrap .t_comprehension.DIALOGUE > .right_box > .question, #wrap .t_comprehension.DIALOGUE .btn_page_box {
+#wrap .t_comprehension.DIALOGUE > .right_box > .question,
+#wrap .t_comprehension.DIALOGUE .btn_page_box {
     display: none;
 }
 

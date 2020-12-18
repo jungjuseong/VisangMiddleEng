@@ -2,17 +2,15 @@
 @import "../../config.scss";
 @import "../../share/video-direction.scss";
 @import "../../share/sendui.scss";
-
 @import './s_warmup.scss';
 @import './s_passage.scss';
 @import './s_question.scss';
-
 @import './s_v_script.scss';
 @import './s_add_quiz_item.scss';
 
 #wrap{
 
-	background-image:resolve("student/images/bg_ls.png");
+	background-image:resolve("student/images/bg.png");
 	font-family: NotoSans;
 	.eyeon_svg{
 		@include page;

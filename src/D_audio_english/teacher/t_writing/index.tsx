@@ -638,7 +638,7 @@ class Writing extends React.Component<IWritingProps> {
                 <CheckResult 
                     view={this._viewResult}
                     answer={this.answerboolean}
-                    tap = {this._tab}
+                    tab = {this._tab}
                     idx = {this._curQidx}
                     state={this.props.state}
                     onClosed={this._closeResult}
