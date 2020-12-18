@@ -8,6 +8,7 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
 import { CoverPopup } from '../../../share/CoverPopup';
+import ResultScreenPopup from './_result_screen_popup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
 import { stat } from 'fs';
@@ -19,14 +20,16 @@ interface IQuizBoxProps {
 	state : IStateCtx;
 	answer : boolean;
 	onClosed: () => void;
-	tap :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
+	tab :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
 	idx : number;
 }
 @observer
 class CheckResult extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _color : COLOR[] = [];
-	@observable private _corfal : 0|1|2 = 0
+	@observable private _corfal : 0|1|2 = 0;
+	@observable private _viewResult : boolean = false;
+	@observable private _currentIdx : number = 0;
 	// @observable private _result : result
 	
 	private _swiper?: Swiper;
@@ -39,6 +42,15 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	private _onClosePopup = () => {
 		App.pub_playBtnTab();
 		this._view = false;
+	}
+
+	private _closeResultScreen = () => {
+		this._viewResult = false;
+	}
+	private _viewResultScreen = (idx : number) => {
+		App.pub_playBtnTab();
+		this._currentIdx = idx;
+		this._viewResult = true;
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
@@ -80,13 +92,13 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { onClosed, state, idx, tap, answer} = this.props;
+		const { onClosed, state, idx, tab, answer} = this.props;
 		const coarray = [state.resultConfirmSup,state.resultConfirmBasic,state.resultConfirmHard]
 		const adarray = [state.resultAdditionalSup,state.resultAdditionalBasic,state.resultAdditionalHard]
 		let arr :string[] = []
 		let result : string[][] = []
 		let correct :boolean[] = []
-		switch(tap){
+		switch(tab){
 			case 'ADDITIONAL' :{
 				result = adarray[idx].url
 				arr = adarray[idx].uid
@@ -148,7 +160,7 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
-												<img className="thumnail" src={url}></img>
+												<img className="thumnail" src={url} onClick={()=>this._viewResultScreen(idx)}></img>
 												<div className="status">
 													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 													<div>
@@ -162,6 +174,14 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 								</div>
 							</div>
 						</div>
+						<ResultScreenPopup
+							view={this._viewResult}
+							result={result}
+							answer={answer}
+							tab = {tab}
+							idx = {this._currentIdx}
+							onClosed={this._closeResultScreen}
+						/>
 				</div>
 			</CoverPopup>
 			</>
