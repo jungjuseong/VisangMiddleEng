@@ -404,8 +404,9 @@
                     display: none;
                     position: absolute;
                     top: 10px;
-                    right: 103px;
-                    @include btn_down_dis( resolve('teacher/images/btn_script_trans.png'), resolve('teacher/images/btn_script_trans_down.png'), resolve('teacher/images/btn_script_trans_dis.png'), width('teacher/images/btn_script_trans.png'), height('teacher/images/btn_script_trans.png'));
+                    right: 100px;
+                    margin-right: 300px;
+                    @include btn_down_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'));
                 }
                 /* 빈칸*/
                 .btn_script_show {
@@ -413,9 +414,9 @@
                     position: absolute;
                     top: 10px;
                     right: 20px;
-                    @include btn_down_dis( resolve('teacher/images/btn_script_show.png'), resolve('teacher/images/btn_script_show_down.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_script_show.png'), height('teacher/images/btn_script_show.png'));
+                    @include btn_down_dis( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_show_down.png'), resolve('teacher/images/btn_show_down.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_show.png'));
                     &.on {
-                        background: resolve('teacher/images/btn_script_show_down.png')
+                        background: resolve('teacher/images/btn_show_down.png')
                     }
                     /*
 					&:disabled{
