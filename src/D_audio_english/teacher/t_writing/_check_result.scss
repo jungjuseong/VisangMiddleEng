@@ -61,12 +61,20 @@
                     border-radius: 15px;
                     padding-top: 70px;
                     overflow: auto;
-                    .btn_total{
-                        @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
+                    &>div{
                         position: absolute;
                         left: 30px;
                         top: 24px;
                         z-index: 2;
+                    }
+                    .all_student{
+                        @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
+                    }
+                    .correct_answer{
+                        @include btn_on_dis( resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), width('teacher/images/btn_result_correct.png'), height('teacher/images/btn_result_correct.png'), );
+                    }
+                    .wrong_answer{
+                        @include btn_on_dis( resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), width('teacher/images/btn_result_wrong.png'), height('teacher/images/btn_result_wrong.png'), );
                     }
                     .table{
                         display: table;

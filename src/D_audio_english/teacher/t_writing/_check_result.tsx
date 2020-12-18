@@ -62,15 +62,13 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 
 	private setColor(){	
 		let cidx = 0;
-		let color_list :COLOR[] = [];
+		let color_list : COLOR[] = [];
 		const s_num = this.props.state.resultConfirmSup.uid;
-		console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + s_num);
 		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
 		for(let i = 0; i<s_num.length; i++) {
 			cidx = Math.floor(Math.random() * s_num.length);
 			color_list.push(colors[cidx]);
 		}
-		console.log(color_list);
 		this._color = color_list;
 	}
 	
@@ -110,7 +108,11 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 					</div>
 						<div className="popbox">
 							<div className="content">
-							<ToggleBtn className="btn_total"/>
+								<div>
+									<ToggleBtn className="all_student"/>
+									<ToggleBtn className="correct_answer"/>
+									<ToggleBtn className="wrong_answer"/>
+								</div>
 								<div className="table">
 									{arr.map((uid , idx)=>{
 										let url = '';
