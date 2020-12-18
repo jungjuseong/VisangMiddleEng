@@ -20,7 +20,7 @@ const SwiperComponent = require('react-id-swiper').default;
 interface ILetsTalk {
 	view: boolean;
 	onClosed: () => void;
-	data: common.ILetstalk;
+	data: common.IAdditionalQuiz[];
 }
 @observer
 class AdditionalPopQuiz extends React.Component<ILetsTalk> {
@@ -42,8 +42,6 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	};
 
 	private _jsx_sentence: JSX.Element;
-	private _jsx_sample: JSX.Element;
-	private _jsx_hint: JSX.Element;
 	private _character: string;
 	private _disable_toggle: boolean;
 
@@ -52,9 +50,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	public constructor(props: ILetsTalk) {
         super(props);
         
-        this._jsx_sentence = _getJSX(props.data.sentence);
-        this._jsx_sample = _getBlockJSX(props.data.sample);
-		this._jsx_hint = _getBlockJSX(props.data.hint);
+        this._jsx_sentence = _getJSX(props.data[0].directive_kor);
 		this._disable_toggle = false;
 
         const rnd = Math.floor(Math.random() * 3);
@@ -170,10 +166,10 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 							</div>
 						</div>
 						<div className="quiz_box">
-							{quiz_list.map((quiz, idx)=>{
+							{data.map((quiz, idx)=>{
 								return(
 									<div key={idx}>
-										<p>{idx + 1}. {this._jsx_sentence}</p>
+										<p>{idx + 1}. {quiz.question}</p>
 										<div className={"toggle_bundle " + this._getToggleState(idx)}>
 											<div className="true" onClick={()=>{this._onClickTrue(idx)}}></div>
 											<div className="false" onClick={()=>{this._onClickFalse(idx)}}></div>
