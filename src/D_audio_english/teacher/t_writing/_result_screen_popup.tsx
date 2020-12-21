@@ -76,12 +76,10 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
 					<div className="popbox">
-						<SwiperComponent ref={this._refSwiper}>
-			
-							{result[idx]?.map((url , idx)=>{
-									
+						<SwiperComponent ref={this._refSwiper}>			
+							{result[idx]?.map((url , idx)=>{									
 								return(
 									<div key={idx}>
 										<img className="thumnail" src={url}></img>												

@@ -3,52 +3,20 @@
 @import '../../script_container/index.scss';
 @import '../t_video_box/index.scss';
 @import '../../../share/QuizMCBtn.scss';
+@import "./rate_box.scss";
+
 @mixin dictation_quiz {
     .dict_question_bg {
         margin: 0 auto;
         position: relative;
         width: 1150px;
-        height: 600px;
+        height: 613px;
         .closed_hint {
             display: none;
         }
-        .subject_rate {
-            color: white;
-            text-align: right;
-            font-size: 12px;
-            padding-right: 25px;
-            line-height: 26px;
-            position: relative;
-            width: 87px;
-            height: 26px;
-            top: -80px;
-            left: 4px;
-            background-image: resolve('teacher/images/sub_rate.png');
-            &.hide {
-                display: none;
-            }
-        }
-        .correct_answer_rate {
-            width: 118px;
-            height: 26px;
-            background-image: resolve('teacher/images/correct_answer_rate.png');
-            @include compre_correct(-80px, 97px);
-            &.no-result {
-                padding-top: 7px;
-            }
-            &.hide {
-                display: none;
-            }
-            .title {
-                display: none;
-            }
-            &>.progress_bar {
-                width: 70px;
-                &>.data_percent {
-                    left: 75px;
-                }
-            }
-        }
+        
+        @include rate_box;
+
         .btn_answer {
             @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
             position: absolute;
@@ -63,11 +31,13 @@
             position: absolute;
             text-align: center;
             white-space: normal;
+            top: 0px;
             bottom: 0px;
             left: 0px;
             right: 0px;
             letter-spacing: -0.6px;
-            padding: 40px;
+            margin-top: 75px;
+            
             span.word {
                 display: inline-block;
                 white-space: nowrap;

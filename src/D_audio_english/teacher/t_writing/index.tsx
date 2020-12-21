@@ -22,7 +22,7 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import HardDictationQuizBox from './_hard_dictation_quiz_box';
-import PopTrans from './_pop_trans';
+import PopTrans from './_trans_popup';
 import ScriptAudio from './script_audio';
 
 function falsySended(state: IStateCtx): boolean {

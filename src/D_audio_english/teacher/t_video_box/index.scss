@@ -112,16 +112,20 @@
 				position: absolute;
 				.brake_point{
 					position: absolute;
-					width: 20px;
-					height: 20px;
+					width: width('digenglishCB_lib/images/mplayer/brake_point1.png');
+					height: height('digenglishCB_lib/images/mplayer/brake_point1.png');
 					top: -6px;
-					background-color: purple;
-					margin-right: 13px;
-					text-align: center;
-					border-radius: 20px;
 					color: #fff;
 					line-height: 15px;
-					z-index: 3;
+					z-index: 10;
+					&.one{
+						left: 134px;
+						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point1.png');
+					}
+					&.two{
+						left: 233px;
+						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point2.png');
+					}
 				}
 			}
 			.control_left{
@@ -213,7 +217,7 @@
 								left:0px;width:0%;
 								top:0px;height: $PH;
 								border-radius: $PH/2;
-								background-color:rgb(0, 135, 255);
+								background-color:rgb(0, 255, 192);
 							}
 							&>.prog_btn{
 								position:absolute;
@@ -221,11 +225,11 @@
 								z-index:2;
 								transform:translate(-50%, -50%);
 								@include btn_down_dis(
-									resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
-									resolve('digenglishCB_lib/images/mplayer/btn_play_bar_down.png'),
-									resolve('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
-									width('digenglishCB_lib/images/mplayer/btn_play_bar.png'),
-									height('digenglishCB_lib/images/mplayer/btn_play_bar.png')
+									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
+									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar_down.png'),
+									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
+									width('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
+									height('digenglishCB_lib/images/mplayer/btn_audio_bar.png')
 								);
 							}
 						}
