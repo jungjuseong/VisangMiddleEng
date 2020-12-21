@@ -25,7 +25,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_hint: JSX.Element;
-	private _character: string;
 
 	private _btnAudio?: BtnAudio;
 	
@@ -34,11 +33,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		
 		this._jsx_sentence = _getJSX(props.data.questions); // 문제
 		this._jsx_hint = _getJSX(props.data.ex_answer); // 답
-
-		const randomIndex = Math.floor(Math.random() * 3);
-		if(randomIndex === 0) this._character = _project_ + 'teacher/images/letstalk_bear.png';
-		else if(randomIndex === 1) this._character = _project_ + 'teacher/images/letstalk_boy.png';
-		else this._character = _project_ + 'teacher/images/letstalk_girl.png';
 	}
 
 	private _viewAnswer = () => {
@@ -82,7 +76,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 				}				
 			}, 300);
 
-		} else if(!this.props.view && prev.view) {
+		} else if(!view && prev.view) {
 			this._view = false;	
 			App.pub_stop();
 		}

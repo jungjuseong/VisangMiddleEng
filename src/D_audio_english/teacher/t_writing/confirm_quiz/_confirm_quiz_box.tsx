@@ -19,7 +19,6 @@ export interface IConfirmQuizBoxProps {
 	onHintClick: () => void;
 	data: IConfirmNomal | IConfirmHard | IConfirmSup;
 	viewResult: (answerboolean : boolean) => void;
-
 }
 
 @observer
