@@ -4,8 +4,8 @@
 @import '../../script_container/index.scss';
 @import '../t_video_box/index.scss';
 @import '_intro_quiz.scss';
-@import '_confirm_quiz.scss';
-@import '_additional_quiz.scss';
+@import './confirm_quiz/index.scss';
+@import './additional_quiz/index.scss';
 @import '_dictation_quiz.scss';
 @import '_pop_trans.scss';
 @import '_check_result.scss';

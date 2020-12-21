@@ -1,6 +1,6 @@
-@import '../../../share/sendui.scss';
-@import '../../../share/Progress_bar.scss';
-@import '../t_video_box/index.scss';
+@import '../../../../share/sendui.scss';
+@import '../../../../share/Progress_bar.scss';
+@import '../../t_video_box/index.scss';
 @mixin confirm_quiz {
     .confirm_question_bg {
         margin: 0 auto;
