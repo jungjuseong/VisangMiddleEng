@@ -1,0 +1,364 @@
+    @import '../../../../share/sendui.scss';
+    @import '../../../../share/Progress_bar.scss';
+    @import '../../../script_container/index.scss';
+    @import '../../t_video_box/index.scss';
+    @import '../../../../share/QuizMCBtn.scss';
+    @import "./../additional_quiz/table-item/index.scss";
+    @mixin additional_quiz {
+        .additional_question_bg {
+            margin: 0 auto;
+            position: relative;
+            width: 1150px;
+            height: 600px;
+            .closed_hint {
+                display: none;
+            }
+            .subject_rate {
+                color: white;
+                text-align: right;
+                font-size: 12px;
+                padding-right: 25px;
+                line-height: 26px;
+                position: relative;
+                width: 87px;
+                height: 26px;
+                top: -80px;
+                left: 4px;
+                background-image: resolve('teacher/images/sub_rate.png');
+                &.hide {
+                    display: none;
+                }
+            }
+            .correct_answer_rate {
+                width: 118px;
+                height: 26px;
+                background-image: resolve('teacher/images/correct_answer_rate.png');
+                @include compre_correct(-80px, 97px);
+                &.no-result {
+                    padding-top: 7px;
+                }
+                &.hide {
+                    display: none;
+                }
+                .title {
+                    display: none;
+                }
+                &>.progress_bar {
+                    width: 70px;
+                    &>.data_percent {
+                        left: 75px;
+                    }
+                }
+            }
+            .btn_answer {
+                @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+                position: absolute;
+                right: 15px;
+                top: 15px;
+                z-index: 2;
+                &.hide {
+                    display: none;
+                }
+            }
+            .quiz_box {
+                position: absolute;
+                text-align: center;
+                white-space: normal;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                letter-spacing: -0.6px;
+                padding: 40px;
+                span.word {
+                    display: inline-block;
+                    white-space: nowrap;
+                    padding: 10px 10px 15px 0px;
+                }
+                .white_board {
+                    display: inline-block;
+                    position: relative;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    width: 1027px;
+                    height: 492px;
+                    padding-left: 31px;
+                    overflow: hidden;
+                    font-family: NanumGothic;
+                    font-weight: bold;
+                    .btn_trans {
+                        @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                        position: absolute;
+                        left: 25px;
+                        top: 20px;
+                        z-index: 2;
+                    }
+                    .sentence_box {
+                        height: 100px;
+                        position: relative;
+                        font-size: 22px;
+                        font-weight: bold;
+                        text-align: left;
+                        margin-bottom: 10px;
+                        margin-left: 25px;
+                        font-family: NanumGothic;
+                        &>div {
+                            display: inline-block;
+                            transform: translateY(-50%);
+                            margin-top: 75px;
+                            .video_container {
+                                position: absolute;
+                                bottom: -3px;
+                                right: -33px;
+                                z-index: 2;
+                                @include t_video_box;
+                            }
+                            .btn_audio {
+                                @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                                margin-top: 5px;
+                            }
+                            .question_box {
+                                text-align: left;
+                                display: inline-block;
+                                vertical-align: top;
+                                max-width: 1000px;
+                                span.word {
+                                    display: inline-block;
+                                    white-space: nowrap;
+                                    padding: 0px 10px 0px 0px;
+                                }
+                            }
+                        }
+                    }
+                    .table_box {
+                        width: 975px;
+                        height: 380px;
+                        text-align: left;
+                        margin: 0 auto;
+                        overflow: auto;
+                        .swiper-container {
+                            overflow: visible;
+                        }
+                        .table-item {
+                            &.type_1,
+                            &.type_2,
+                            &.type_3,
+                            &.type_4,
+                            &.type_5,
+                            &.type_6,
+                            &.type_7 {
+                                .content-box>div .content .select-box {
+                                    line-height: 43px;
+                                    vertical-align: middle;
+                                    text-indent: 0;
+                                    background: #fff;
+                                    &>.text-box {
+                                        height: 45px;
+                                    }
+                                    &>.btn-drop {
+                                        width: 45px;
+                                        height: 45px;
+                                        background-size: 48px;
+                                        background-position: center -2px;
+                                    }
+                                    &>.options-box.bottom {
+                                        position: absolute;
+                                        left: 0;
+                                        bottom: 1px;
+                                        overflow: hidden;
+                                        border-radius: 0 0 7px 7px;
+                                    }
+                                }
+                            }
+                        }
+                        .table-item {
+                            background: #fff;
+                        }
+                        .table-item {
+                            &>.head>span>em {
+                                width: 100%;
+                                font-style: normal;
+                            }
+                            &>.swiper-container>.swiper-wrapper>.swiper-slide>div>.content>li.add {
+                                margin-top: 0 !important;
+                                margin-bottom: 5px !important;
+                                padding-left: 15px;
+                                line-height: 1.2;
+                                &>div {
+                                    text-indent: 0 !important;
+                                }
+                                &:last-child {
+                                    margin-bottom: 20px !important;
+                                }
+                            }
+                            .content>li>div {
+                                text-indent: -35px;
+                                padding-left: 35px;
+                                &>.select-box {
+                                    text-indent: 0;
+                                    &>.options-box.top {
+                                        border-radius: 7px 7px 0 0;
+                                        left: -1px;
+                                        overflow: hidden;
+                                        top: 0 !important;
+                                    }
+                                }
+                            }
+                        }
+                        $min-height: 200px;
+                        $min-width: 500px;
+                        $head-font-size: 23px;
+                        $head-line-height: 40px;
+                        $content-font-size: 28px;
+                        $content-padding: 10px 15px 15px 15px;
+                        $radius: 10px;
+                        $normal: resolve("teacher/images/btn_dropdown_t_down.png");
+                        $on: resolve("teacher/images/btn_dropdown_t_up.png");
+                        $width: width("teacher/images/btn_dropdown_t_down.png");
+                        $height: height("teacher/images/btn_dropdown_t_down.png");
+                        $line-height: $height+5px;
+                        @include mixin_table_item( $min-height, $min-width, $head-font-size, $head-line-height, $content-font-size, $content-padding, $radius, $normal, $on, $width, $height, $line-height);
+                        .table-item {
+                            /*position: relative;*/
+                            &.type_3 {
+                                .table-item-btn {
+                                    top: 12px;
+                                    right: 8px;
+                                    width: 34px;
+                                    height: 34px;
+                                    background-size: cover;
+                                }
+                            }
+                        }
+                        &::-webkit-scrollbar {
+                            width: 7px;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: transparent;
+                        }
+                    }
+                    &.done {
+                        .select-box {
+                            &>.text-box {
+                                color: #1a40e1 !important;
+                            }
+                            &>.options-box.on {
+                                background-color: #cacaca !important;
+                                color: #878787 !important;
+                                &>div.on {
+                                    background-color: #249bfa !important;
+                                    color: #fff !important;
+                                }
+                            }
+                        }
+                    }
+                    .basic_question {
+                        overflow: auto;
+                        height: 385px;
+                        position: relative;
+                        text-align: left;
+                        font-size: 28px;
+                        padding: 30px 0 0 0;
+                        .block {
+                            border-bottom: 4px solid #000;
+                        }
+                        &>div {
+                            margin-bottom: 40px;
+                            display: flex;
+                            justify-content: space-between;
+                            p {
+                                display: inline-block;
+                            }
+                            .number {
+                                vertical-align: top;
+                            }
+                        }
+                        &>div:last-child {
+                            margin-bottom: 0px;
+                        }
+                        .answer_box {
+                            width: 216px;
+                            height: calc(100% / 3);
+                            margin-right: 45px;
+                            .sample {
+                                height: 51px;
+                                border-bottom: 4px solid #000;
+                            }
+                            .hide {
+                                display: none;
+                            }
+                            .hint {
+                                text-align: center;
+                                height: 51px;
+                                line-height: 57px;
+                                color: rgb(0, 0, 255);
+                                border-bottom: 4px solid #000;
+                                .block {
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                        &::-webkit-scrollbar {
+                            width: 7px;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: transparent;
+                        }
+                    }
+                    .hard_question {
+                        overflow: auto;
+                        position: relative;
+                        text-align: left;
+                        font-size: 28px;
+                        padding-top: 30px;
+                        height: 385px;
+                        p {
+                            display: inline-block;
+                            margin-bottom: 60px;
+                        }
+                        .number {
+                            vertical-align: top;
+                        }
+                        .answer_bundle {
+                            display: flex;
+                            align-items: center;
+                            text-align: center;
+                            margin-bottom: 90px;
+                            .answer_box {
+                                display: inline-block;
+                                width: 151px;
+                                height: 55px;
+                                border-bottom: 4px solid #000;
+                                margin-left: 55px;
+                                line-height: 47px;
+                                color: rgb(0, 0, 255);
+                                .hide {
+                                    display: none;
+                                }
+                                .block {
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                        &::-webkit-scrollbar {
+                            width: 7px;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+    }
