@@ -105,25 +105,25 @@
 		.control{
 			position: absolute;
 			left:45px; bottom:-6px; 
-			width: 350px; height:40px;
-			background-color: #333333;
-			border-radius: 15px;
+			width: 220px; height:33px;
+			background-color: #3e424d;
+			border-radius: 10px;
 			.control_over{
 				position: absolute;
 				.brake_point{
 					position: absolute;
 					width: width('digenglishCB_lib/images/mplayer/brake_point1.png');
 					height: height('digenglishCB_lib/images/mplayer/brake_point1.png');
-					top: -6px;
+					top: -4px;
 					color: #fff;
 					line-height: 15px;
 					z-index: 10;
 					&.one{
-						left: 134px;
+						left: 103px;
 						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point1.png');
 					}
 					&.two{
-						left: 233px;
+						left: 156px;
 						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point2.png');
 					}
 				}
@@ -184,7 +184,7 @@
 				display: flex;
 				align-items: center;
 				float: right;
-				width: 90%;
+				width: 179px;
 				padding:0 15px;
 				height: 100%;
 				font-size: 0px;
