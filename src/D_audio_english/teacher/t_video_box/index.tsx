@@ -8,6 +8,7 @@ import { MPlayer, IMedia } from '@common/mplayer/mplayer';
 
 import { App } from '../../../App';
 import { ToggleBtn } from '@common/component/button';
+import Yourturn from '../../../share/yourturn';
 
 import { IScript,IData } from '../../common';
 
@@ -175,6 +176,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		const isPlay = (!shadowing && player.bPlay) || (shadowing && isShadowPlay);
 
 		return (
+			<>
 			<div className="video_box" ref={this._refBox}>
 				<video ref={this._refVideo} style={{display : 'none'}}/>
 				<div className="audio">
@@ -189,6 +191,12 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 				</div>
 
 			</div>
+			<Yourturn 
+			className="yourturn" 
+			view={this.m_yourturn >= 0 && isShadowPlay}
+			start={this.m_yourturn >= 0}
+			/>
+			</>
 		);
 	}
 }
