@@ -174,10 +174,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 
         let enableLeft = true, enableRight = true;
         if(idx === 0 && this._tab === 'INTRODUCTION') enableLeft = false;
-        else if(confirmBasicProg === SENDPROG.SENDED) {
-            if(idx === 0) enableLeft = false;
-            if(idx === (this.m_data.introduction.length - 1)) enableRight = false;
-        }
+        else if(idx === 2 && this._tab === 'SCRIPT') enableRight = false;
         actions.setNavi(enableLeft, enableRight);		
     }
 
@@ -208,7 +205,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             state.qnaProg = SENDPROG.READY;	
             
             actions.clearQnaReturns();
-            actions.setNavi(true, true);
+            this._setNavi()
         }
     }
     private _onRollClick = () => {
@@ -225,7 +222,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
                 this.m_player.setMutedTemp(false);
                 this._roll = '';
                 this._sendDialogueEnd();
-                actions.setNavi(true, true);
+                this._setNavi()
             }
         }
     }
@@ -248,7 +245,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             this.c_popup = 'SHADOWING';
             this.m_player.pause();	
             this._sendDialogueEnd();
-            actions.setNavi(false, false);		
+            this._setNavi()	
         // }
         }
     }

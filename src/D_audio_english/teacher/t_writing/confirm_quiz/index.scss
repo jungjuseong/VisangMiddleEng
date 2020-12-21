@@ -116,6 +116,9 @@
                             z-index: 2;
                             @include t_video_box;
                         }
+                        .hide{
+                            display: none;
+                        }
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
                             margin-top: 5px;

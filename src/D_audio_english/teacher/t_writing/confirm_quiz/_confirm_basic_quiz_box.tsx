@@ -83,9 +83,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
-								<div style={{display : 'none'}}>
-									<BtnAudio className="btn_audio" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
-								</div>
+								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
 									<div className="video_container">

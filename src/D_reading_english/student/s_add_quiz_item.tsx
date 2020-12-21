@@ -49,7 +49,8 @@ class SAddQuizItem extends React.Component<IQuizItemProps> {
 	private _onSend = async () => {
 		const { state,actions } = this.props;
 		state.addquizProg = SENDPROG.SENDED
-		App.pub_playGoodjob()
+		App.pub_playGoodjob();
+		this.props.actions.startGoodJob();
 		// App.pub_playToPad();
 		// // 초기화 함수 만들어서 할것
 		// this._writings = { answer1: '', answer2: '', answer3: ''};

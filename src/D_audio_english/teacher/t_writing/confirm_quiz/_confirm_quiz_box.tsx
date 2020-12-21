@@ -91,10 +91,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 		this._hint = !this._hint;
 	}
 
-	protected _onClick = () => {
-		if(this._btnAudio) this._btnAudio.toggle();
-	}
-
  	public componentDidUpdate(prev: IConfirmQuizBoxProps) {
 		const { view , state } = this.props;
 		if(view && !prev.view) {
