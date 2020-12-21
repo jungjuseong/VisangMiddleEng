@@ -56,14 +56,16 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		return (
 			<>			
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>
-					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
+				<div className={"subject_status" + (this._sended[1] ? '' : ' hide')}>
+					<div className="subject_rate" onClick={()=>{viewResult(true)}}>
+						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
+					</div>
+					<CorrectBar 
+						className="correct_answer_rate"
+						preview={-1} 
+						result={qResult}
+					/>
 				</div>
-				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended[1] ? '' : ' hide')} 
-					preview={-1} 
-					result={qResult}
-				/>
 				<ToggleBtn className={'btn_answer' + (this._sended[1] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board basic">
