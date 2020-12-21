@@ -61,7 +61,9 @@ class SentenceStructurePopup extends React.Component<IStructure> {
 						slidesPerView="auto"
 						freeMode={true}						
 					>
-						<img src={App.data_url + data[0].structureimage}></img>
+						<div className="img_wrap">
+							<img src={App.data_url + data[0].structureimage}></img>
+						</div>
 					</SwiperComponent>
 				</div>
 			</CoverPopup>

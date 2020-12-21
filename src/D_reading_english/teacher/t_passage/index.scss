@@ -31,6 +31,17 @@
 					margin: 5px;
 					vertical-align: middle;
 				}
+				.btn_sentence {
+					@include btn_down_dis(
+						resolve('teacher/images/btn_sentence_structure.png'),
+						resolve('teacher/images/btn_sentence_structure.png'),
+						resolve('teacher/images/btn_sentence_structure.png'),
+						width('teacher/images/btn_sentence_structure.png'),
+						height('teacher/images/btn_sentence_structure.png')
+					);
+					margin: 5px;
+					vertical-align: middle;
+				}
 				.btn_img {
 					@include btn_down_dis(
 						resolve('teacher/images/btn_image.png'),
@@ -281,22 +292,26 @@
 		}
 		.trans_popup {
 			@include CoverPopup(10001);
-			background-image: resolve('teacher/images/bg_trans_popup.png');
-			width: width('teacher/images/bg_trans_popup.png'); height: height('teacher/images/bg_trans_popup.png');
+			background-image: resolve('teacher/images/bg_popup.png');
+			width: width('teacher/images/bg_popup.png'); height: height('teacher/images/bg_popup.png');
 			.title {
 				display: inline-block;
-				position: absolute;	top: 90px;	left: 90px;
+				position: absolute;	top: 109px;	left: 90px;
 				font-size: 18px; color: rgba(0, 0, 0, 0.5);
 				line-height: 1.2;
 			}
 			.trans_script {
-				width: 1115px; height: 590px;
-				position: absolute; top: 129px; left: 86px;
+				width: 1115px; height: 537px;
+				position: absolute; top: 153px; left: 86px;
 				text-align: center;	
 				.swiper-container{
 					width: 100%; height: auto; max-height: 100%;
 					position: absolute; top: 0px;
 					overflow: hidden;
+					.img_wrap{
+						padding-top: 30px;
+						margin-bottom: 200px;
+					}
 					.script_eng { 
 						width: 97%;	height: auto;
 						margin: 15px 10px 5px 10px;
@@ -325,7 +340,7 @@
 			}
 
 			.btn_close {
-				position: absolute; top: 90px; right: 90px;
+				position: absolute; top: 107px; right: 90px;
 				@include btn_down_dis(
 					resolve('teacher/images/btn_pop_close.png'),
 					resolve('teacher/images/btn_pop_close_down.png'),
