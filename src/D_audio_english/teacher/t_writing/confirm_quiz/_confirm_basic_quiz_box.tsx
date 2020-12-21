@@ -16,7 +16,6 @@ import { IConfirmNomal } from '../../../common';
 import VideoBox from '../../t_video_box';
 
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
-import { NONE } from 'src/share/style';
 
 @observer
 class ConfirmBasicQuizBox extends ConfirmQuizBox {
@@ -29,16 +28,6 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		
 		const basic_data = props.data as IConfirmNomal;
 		this._jsx_hints = [basic_data.item1.answer, basic_data.item2.answer, basic_data.item3.answer]; // 답
-	}
-
-	protected _onClick = () => {
-		if(this._trans && this._btnAudio){
-			this._btnAudio.toggle();
-		}
-	}
-	private _refAudio = (btn: BtnAudio) => {
-		if(this._btnAudio || !btn) return;
-		this._btnAudio = btn;
 	}
 
 	@action	
@@ -67,25 +56,20 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		return (
 			<>			
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={"subject_status" + (this._sended[1] ? '' : ' hide')}>
-					<div className="subject_rate" onClick={()=>{viewResult(true)}}>
-						{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
-					</div>
-					<CorrectBar 
-						className="correct_answer_rate"
-						preview={-1} 
-						result={qResult}
-					/>
+				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>
+					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
 				</div>
+				<CorrectBar 
+					className={'correct_answer_rate' + (this._sended[1] ? '' : ' hide')} 
+					preview={-1} 
+					result={qResult}
+				/>
 				<ToggleBtn className={'btn_answer' + (this._sended[1] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<div className="quiz_box">
 					<div className="white_board basic">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
-								<div style={{display : 'none'}}>
-									<BtnAudio className="btn_audio" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
-								</div>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
 									<div className="video_container">
