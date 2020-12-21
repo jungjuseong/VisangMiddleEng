@@ -60,13 +60,14 @@ class VideoBox extends React.Component<IVideoBox> {
 	private _refVideo = (el: HTMLMediaElement | null) => {
 		if (!el) return;
 
-		const { player,data,shadowing,isShadowPlay,onChangeScript } = this.props;
+		const { player,data} = this.props;
 		if (player.media) return;
 		player.mediaInited(el as IMedia);
 
 		player.load(App.data_url + data.video);
 		const scripts = data.scripts;
 		player.addOnTime((time: number) => {
+			const {shadowing, isShadowPlay, onChangeScript} = this.props;
 			time = time / 1000;
 			const curIdx = _getCurrentIdx(scripts, time);
 			console.log(curIdx);
