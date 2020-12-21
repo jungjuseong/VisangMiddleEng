@@ -7,7 +7,7 @@
 @import './confirm_quiz/index.scss';
 @import './additional_quiz/index.scss';
 @import '_dictation_quiz.scss';
-@import '_pop_trans.scss';
+@import '_trans_popup.scss';
 @import '_check_result.scss';
 @import '../../../share/QuizMCBtn.scss';
 @mixin comprehension {
@@ -20,7 +20,7 @@
         @include confirm_quiz;
         @include additional_quiz;
         @include dictation_quiz;
-        @include pop_trans;
+        @include trans_popup;
         @include check_result;
         .pop_hint {
             @include CoverPopup(10001);
