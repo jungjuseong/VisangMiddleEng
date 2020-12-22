@@ -139,7 +139,7 @@ class WarmupItem extends React.Component<IWarmupItemProps> {
 			actions.setWarmupFnc(this._onWarmup);
 			await kutil.wait(500);
 			if(!view || this._prog !== SENDPROG.SENDING) return;
-			this._prog = SENDPROG.SENDED;
+			this._prog = SENDPROG.SENT;
 		});
 	}
 
@@ -231,7 +231,7 @@ class WarmupItem extends React.Component<IWarmupItemProps> {
 
 		return (
 			<div className={'warmup ' + className} style={{ display: view ? '' : 'none' }}>
-				<div className="return_cnt_box white" onClick={this._clickReturn} style={{display: this._prog >= SENDPROG.SENDED ? '' : 'none'}}>
+				<div className="return_cnt_box white" onClick={this._clickReturn} style={{display: this._prog >= SENDPROG.SENT ? '' : 'none'}}>
 					<div>{this._retCnt}/{this._numOfStudent}</div>
 				</div>
 				<div className="speakerbox">
@@ -267,7 +267,7 @@ class WarmupItem extends React.Component<IWarmupItemProps> {
 					</SwiperComponent>
 				</div>
 				<SendUI
-					view={view && this._prog < SENDPROG.SENDED && !state.videoPopup && returns.length === 0}
+					view={view && this._prog < SENDPROG.SENT && !state.videoPopup && returns.length === 0}
 					type={'teacher'}
 					sended={false}
 					originY={0}

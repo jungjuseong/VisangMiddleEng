@@ -21,6 +21,7 @@ import SentenceStructure from './_sentence_struct_popup';
 import PassagePopup from './_passage_popup';
 import ImgPassage from './_img_passage';
 import ScriptItem from './_script_item';
+import { forEach } from 'lodash';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -76,7 +77,6 @@ class Passage extends React.Component<IPassageProps> {
 		super(props);
 		
 		const { passage, scripts } = props.data;
-		/* this._infos 초기화 */
 		for(let i = 0; i < passage.length; i++) {
 			const info: IInfo = {
 				passage: passage[i],
@@ -93,106 +93,87 @@ class Passage extends React.Component<IPassageProps> {
 			this._infos.push(info);
 		}
 	}
+
 	private _refAudio = (audio: HTMLAudioElement|null) => {
-		if(!audio || this._player.media) return;
-		this._player.mediaInited(audio as IMedia);
+		const { data } = this.props;
 
-		this._player.load(App.data_url + this.props.data.audio);
+		if(audio && !this._player.media) { 	
+			this._player.mediaInited(audio as IMedia);
+			this._player.load(App.data_url + data.audio);
+			this._player.addOnTime((time: number) => {
+				// console.log(time);
+				let script = _getScriptBetweenTime(this._infos[this._curIdx].scripts, time);
 
-		this._player.addOnTime((time: number) => {
-			// console.log(time);
-			if(this._studyDiv === 'READALOUD') {
-				const scrs = this._infos[this._curIdx].scripts;
-				time = time / 1000;
-				let seq = -1;
-				const len = scrs.length;
-				for(let i = 0; i < len; i++) {
-					const script = scrs[i];
-					if(time >= script.audio_start && time <= script.audio_end) {
-						seq = script.seq;
-						break;
-					}
-				}
-				if(seq >= 0 && seq !== this._curSeq) {
-					this._curSeq = seq;
-					const msg: IMsgForIdx = {msgtype: 'focusidx',idx: seq,};
-					felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-					this._transAt(seq);
-				}
-			} else if((this._studyDiv === 'off' || this._studyDiv === 'QNA') && this._audioOn) {
-				const scrs = this.props.data.scripts;
-				time = time / 1000;
-				let seq = -1;
-				let page = -1;
-				const len = scrs.length;
-				for(let i = 0; i < len; i++) {
-					const script = scrs[i];
-					if(time >= script.audio_start && time <= script.audio_end) {
-						seq = script.seq;
-						page = script.passage_page;
-						break;
-					}
-				}
-				if(seq >= 0 && seq !== this._curSeq) {
-					if(page >= 0 && page > (this._curIdx + 1)) {
-						// this._initAll();
-						this._curIdx = page - 1;
-						// await kutil.wait(300);
-						if(this._swiper) {
-							this._swiper.update();
-							if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+				if(script.seq >= 0 && script.seq !== this._curSeq) {
+					if(this._studyDiv === 'READALOUD') {
+						this._curSeq = script.seq;
+						felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'focusidx',idx: script.seq,});
+						this._transAt(script.seq);
+					} 
+					else if((this._studyDiv === 'off' || this._studyDiv === 'QNA') && this._audioOn) {
+						if(script.passage_page >= 0 && script.passage_page > (this._curIdx + 1)) {
+							this._curIdx = script.passage_page - 1;
+							if(this._swiper) {
+								this._swiper.update();
+								if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+							}
 						}
+						this._curSeq = script.seq;	
+						felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'focusidx',idx: script.seq,});
+						this._transAt(script.seq);
 					}
-					this._curSeq = seq;	
-					const msg: IMsgForIdx = {msgtype: 'focusidx',idx: seq,};
-					felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-					this._transAt(seq);
 				}
-			} 
-		});
+			});
 
-		this._player.addOnPlayEnd(() => {
-			if(this._studyDiv === 'READALOUD') {
-				// this.props.onStudy('');
-				const msg: IMsg = {msgtype: 'dialogue_end'};
-				felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
-			} else if(this._studyDiv === 'SHADOWING') {
-				if(this._handleYourTurn(true)) return;
-			}
-			
-			this._audioOn = false;
-			this._curSeq = -1;
-			// this._studyDiv = 'off';
-		});
-
-		this._player.addOnPlayEndTemp(() => {
-			if(this._studyDiv === 'READALOUD') {
+			this._player.addOnPlayEnd(() => {
+				if(this._studyDiv === 'READALOUD') felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});	
+				else if(this._studyDiv === 'SHADOWING') if(this._handleYourTurn(true)) return;
+				
+				this._audioOn = false;
 				this._curSeq = -1;
-				// this._studyDiv = 'off';	
-				// this.props.onStudy('');
-				const msg: IMsg = {msgtype: 'dialogue_end'};
-				felsocket.sendPAD($SocketType.MSGTOPAD, msg);		
-			} else if(this._studyDiv === 'SHADOWING') {
-				if(this._curSeq < 0) return;
-				this._handleYourTurn(false);
-			} else {
-				if(this._audioOn) this._audioOn = false;
-				this._curSeq = -1;
-			}
+			});
 
-		});
-		this._player.addOnState((newState: MPRState, oldState: MPRState) => {
-			if(this._studyDiv !== 'SHADOWING' && this._studyDiv !== 'READALOUD') return;
-			let msgtype: 'playing'|'paused';
-			if(this._studyDiv === 'SHADOWING' && this._yourturn >= 0) msgtype = 'playing';
-			else if(newState !== MPRState.PAUSED && this._player.bPlay) msgtype = 'playing';
-			else msgtype = 'paused';
-			const msg: IMsg = {
-				msgtype,
-			};
-			felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-		});
+			this._player.addOnPlayEndTemp(() => {
+				if(this._studyDiv === 'READALOUD') {
+					this._curSeq = -1;
+					felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});		
+				} else if(this._studyDiv === 'SHADOWING') {
+					if(this._curSeq < 0) return;
+					this._handleYourTurn(false);
+				} else {
+					if(this._audioOn) this._audioOn = false;
+					this._curSeq = -1;
+				}
+			});
+
+			this._player.addOnState((newState: MPRState, oldState: MPRState) => {
+				if(this._studyDiv !== 'SHADOWING' && this._studyDiv !== 'READALOUD') return;
+				let msgtype: 'playing'|'paused';
+				if(this._studyDiv === 'SHADOWING' && this._yourturn >= 0) msgtype = 'playing';
+				else if(newState !== MPRState.PAUSED && this._player.bPlay) msgtype = 'playing';
+				else msgtype = 'paused';
+
+				felsocket.sendPAD($SocketType.MSGTOPAD, {
+					msgtype,
+				});
+			});
+
+			function _getScriptBetweenTime(scripts: IScript[], time: number): IScript {
+				const emptyScript: IScript = {
+					...scripts[0],
+					seq: -1,
+				};
+
+				for(let i = 0; i < scripts.length; i++) {
+					if(time >= scripts[i].audio_start * 1000 && time <= scripts[i].audio_end * 1000) {
+						return scripts[i];
+					}
+				}
+				return emptyScript;
+			}
+		}
 	}
+
 	private _handleYourTurn(forceEnd: boolean) {
 		if(this._curSeq < 0) return false;
 		const scrs = this._infos[this._curIdx].scripts;
@@ -208,78 +189,70 @@ class Passage extends React.Component<IPassageProps> {
 		const next = (idx < scrs.length - 1) ? scrs[idx + 1] : null;
 		const delay = (cur.audio_end - cur.audio_start) * 1900;
 
-		const ymsg: IMsgForIdx = {msgtype: 'view_yourturn', idx: cur.seq};
-		felsocket.sendPAD($SocketType.MSGTOPAD, ymsg);
+		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'view_yourturn', idx: cur.seq});
 		
-		this._yourturn = _.delay(() => {
-			
+		this._yourturn = _.delay(() => {			
 			this._yourturn = -1;
-			if(this._studyDiv !== 'SHADOWING') return;
-
-			_.delay(() => {
-				if(this._studyDiv !== 'SHADOWING') return;
-
-				if(!next || forceEnd) {
-					this._curSeq = -1;
-					// this._studyDiv = 'off';
-					// this.props.onStudy('');
-					const dmsg: IMsg = {msgtype: 'dialogue_end'};
-					felsocket.sendPAD($SocketType.MSGTOPAD, dmsg);
-					
-					return;
-				}
-				this._curSeq = next.seq;
-
-				if(this._curSeq >= 0) this._transAt(this._curSeq);
-				const fmsg: IMsgForIdx = {msgtype: 'focusidx',idx: next.seq,};
-				felsocket.sendPAD($SocketType.MSGTOPAD, fmsg);
-				this._player.gotoAndPlay(next.audio_start * 1000, next.audio_end * 1000, 1);
-			}, 300);
+			if(this._studyDiv === 'SHADOWING') {
+				_.delay(() => {
+					if(!next || forceEnd) {
+						this._curSeq = -1;
+						felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});					
+					}
+					else {
+						this._curSeq = next.seq;
+						if(this._curSeq >= 0) this._transAt(this._curSeq);
+						felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'focusidx',idx: next.seq,});
+						this._player.gotoAndPlay(next.audio_start * 1000, next.audio_end * 1000, 1);
+					}					
+				}, 300);
+			}
 		}, delay);
 
-		const msg: IMsg = {
-			msgtype: 'playing',
-		};
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);	
+		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'playing'});	
 		return true;	
 	}
 
 	private _transAt(seq: number) {
-		if(!this._swiper || !this._swiper.wrapperEl)  return;
+		if(this._swiper && this._swiper.wrapperEl) {
+			const gap = 82;
+			const s_box = document.getElementById('script_box');
+			const s_bnd = document.getElementById('script-bnd');
+			const s_el = document.getElementById('script_' + seq);
+			
+			if(s_box && s_el && s_bnd) {
+				const boxRect = s_box.getBoundingClientRect();
+				const bndRect = s_bnd.getBoundingClientRect();
 
-		const gap = 82;
-		const s_box = document.getElementById('script_box');
-		const s_bnd = document.getElementById('script-bnd');
-		const s_el = document.getElementById('script_' + seq);
-		
-		if(!s_box || !s_el || !s_bnd) return;
-		const boxRect = s_box.getBoundingClientRect();
-		const bndRect = s_bnd.getBoundingClientRect();
+				const diff = (boxRect.bottom - boxRect.top) - (bndRect.bottom - bndRect.top);
+				if( diff < 0) {
+					const sRect = s_el.getBoundingClientRect();
 
-		const diff = (boxRect.bottom - boxRect.top) - (bndRect.bottom - bndRect.top);
-		if( diff >= 0) return;
-		const sRect = s_el.getBoundingClientRect();
-
-		if(sRect.top < boxRect.top + gap ) {
-			const cur = this._swiper.translate;
-			let trans = cur + (boxRect.top + gap - sRect.top);
-			if(trans > 0) trans = 0;
-			this._swiper.wrapperEl.style.transitionDuration = '300ms';
-			this._swiper.setTranslate(trans);
-		} else if(sRect.bottom > boxRect.bottom - gap) {
-			const cur = this._swiper.translate;
-			let trans = cur - (sRect.bottom - (boxRect.bottom - gap));
-			if(trans < diff) trans = diff;
-			this._swiper.wrapperEl.style.transitionDuration = '300ms';
-			this._swiper.setTranslate(trans);
-		}		
+					if(sRect.top < boxRect.top + gap ) {
+						const current = this._swiper.translate;
+						let trans = current + (boxRect.top + gap - sRect.top);
+						if(trans > 0) trans = 0;
+						this._swiper.wrapperEl.style.transitionDuration = '300ms';
+						this._swiper.setTranslate(trans);
+					} else if(sRect.bottom > boxRect.bottom - gap) {
+						const cur = this._swiper.translate;
+						let trans = cur - (sRect.bottom - (boxRect.bottom - gap));
+						if(trans < diff) trans = diff;
+						this._swiper.wrapperEl.style.transitionDuration = '300ms';
+						this._swiper.setTranslate(trans);
+					}
+				}
+			}
+		}	
 	}
+
 	private _initAll() {
 		this._pass_pop = 'off';
 		this._prog = SENDPROG.READY;
 		this._initStudy();
 		felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 	}
+
 	private _initStudy() {
 		this._zoom = false;
 		this._studyDiv = 'off';
@@ -287,6 +260,7 @@ class Passage extends React.Component<IPassageProps> {
 		this._view_structure = false;
 		this._studyProg = SENDPROG.READY;
 		this._retCnt = 0;
+
 		while(this._retUsers.length > 0) this._retUsers.pop();
 
 		this._audioOn = false;
@@ -305,6 +279,7 @@ class Passage extends React.Component<IPassageProps> {
 		this.props.onStudy('');
 		this.props.actions.setQNAFnc(null);
 	}
+
 	private _onPage = async (idx: number) => {
 		if(this.props.studying) return;
 		if(idx !== this._curIdx && idx >= 0 && idx < this._infos.length) {
@@ -335,6 +310,7 @@ class Passage extends React.Component<IPassageProps> {
 		if(this._swiper || !el) return;
 		this._swiper = el.swiper;
 	}
+
 	private _onSend = () => {
 		if(!this.props.view || !this.props.inview) return;
 		else if(this._prog !== SENDPROG.READY) return;
@@ -358,7 +334,7 @@ class Passage extends React.Component<IPassageProps> {
 			if(!this.props.view || !this.props.inview) return;
 			else if(this._prog !== SENDPROG.SENDING) return;
 
-			this._prog = SENDPROG.SENDED;
+			this._prog = SENDPROG.SENT;
 		});
 	}
 	private _clickTrans = () => {
@@ -395,7 +371,7 @@ class Passage extends React.Component<IPassageProps> {
 	}
 	private _onReadClick = () => {
 		if(!this.props.view || !this.props.inview) return;
-		else if(this._prog !== SENDPROG.SENDED) return;
+		else if(this._prog !== SENDPROG.SENT) return;
 
 		if(this._studyDiv === 'READALOUD') {
 			App.pub_playBtnTab();
@@ -415,7 +391,7 @@ class Passage extends React.Component<IPassageProps> {
 		const { actions, inview, view } = this.props;
 
 		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENDED) return;
+		else if(this._prog !== SENDPROG.SENT) return;
 
 		if(this._studyDiv === 'SHADOWING') {
 			App.pub_playBtnTab();
@@ -435,7 +411,7 @@ class Passage extends React.Component<IPassageProps> {
 	private _onQAClick = () => {
 		const { actions, inview, view } = this.props;
 		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENDED) return;
+		else if(this._prog !== SENDPROG.SENT) return;
 
 		if(this._studyDiv === 'QNA') {
 			App.pub_playBtnTab();
@@ -614,7 +590,7 @@ class Passage extends React.Component<IPassageProps> {
 	private _studySend = async () => {
 		const { actions, view, inview, onStudy } = this.props;
 		if(!view || !inview ||
-			this._prog !== SENDPROG.SENDED ||
+			this._prog !== SENDPROG.SENT ||
 			this._studyDiv !== 'off' ||
 			this._studyProg !== SENDPROG.READY) return;
 
@@ -643,16 +619,16 @@ class Passage extends React.Component<IPassageProps> {
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
 
 		await kutil.wait(500);
-		if(!view || !inview || this._prog !== SENDPROG.SENDED || this._studyProg !== SENDPROG.SENDING) return;
+		if(!view || !inview || this._prog !== SENDPROG.SENT || this._studyProg !== SENDPROG.SENDING) return;
 		
-		this._studyProg = SENDPROG.SENDED;
+		this._studyProg = SENDPROG.SENT;
 		this._pass_pop = 'off';
 		this._numOfStudent = App.students.length;
 		if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') {
 			this._viewCountDown = true;
 			this._countdown.reset();
 			await kutil.wait(300);
-			if(!view || !inview || this._prog !== SENDPROG.SENDED) return;
+			if(!view || !inview || this._prog !== SENDPROG.SENT) return;
 			if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') this._countdown.start();
 			
 		} else if(this._studyDiv === 'QNA') actions.setQNAFnc(this._onQNA);
@@ -694,11 +670,11 @@ class Passage extends React.Component<IPassageProps> {
 
 		this._viewCountDown = false;
 		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENDED) return;
+		else if(this._prog !== SENDPROG.SENT) return;
 
 		await kutil.wait(300);
 		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENDED) return;
+		else if(this._prog !== SENDPROG.SENT) return;
 
 		if(this._studyDiv === 'READALOUD') {
 			this._curSeq = -1;
@@ -734,7 +710,7 @@ class Passage extends React.Component<IPassageProps> {
 					<div className="right">
 						<div 
 							className="return_cnt_box white"
-							style={(this._studyDiv === 'QNA' && this._studyProg >= SENDPROG.SENDED) ? undefined : style.NONE}
+							style={(this._studyDiv === 'QNA' && this._studyProg >= SENDPROG.SENT) ? undefined : style.NONE}
 							onClick={this._clickReturn}
 						>
 							<div>{this._retCnt}/{this._numOfStudent}</div>
@@ -793,19 +769,19 @@ class Passage extends React.Component<IPassageProps> {
 				<div className="popup_btns">
 					<ToggleBtn 
 						className="btn_listen_repeat" 
-						disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'READALOUD' || this._studyDiv === 'QNA'} 
+						disabled={this._prog < SENDPROG.SENT || this._studyDiv === 'READALOUD' || this._studyDiv === 'QNA'} 
 						on={this._pass_pop === 'SHADOWING' || this._studyDiv === 'SHADOWING'} 
 						onClick={this._onShadowClick}
 					/>
 					<ToggleBtn 
 						className="btn_readalong"
-						disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'SHADOWING' || this._studyDiv === 'QNA'} 
+						disabled={this._prog < SENDPROG.SENT || this._studyDiv === 'SHADOWING' || this._studyDiv === 'QNA'} 
 						on={this._pass_pop === 'READALOUD' || this._studyDiv === 'READALOUD'} 
 						onClick={this._onReadClick}
 					/>
 					<ToggleBtn 
 						className="btn_qna"
-						disabled={this._prog < SENDPROG.SENDED || this._studyDiv === 'SHADOWING' || this._studyDiv === 'READALOUD'} 
+						disabled={this._prog < SENDPROG.SENT || this._studyDiv === 'SHADOWING' || this._studyDiv === 'READALOUD'} 
 						on={this._pass_pop === 'QNA' || this._studyDiv === 'QNA'} 
 						onClick={this._onQAClick}
 					/>

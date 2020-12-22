@@ -76,7 +76,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 			this._disable_toggle = true;
 			this._answer = true;
 
-			if(state.addQuizProg != SENDPROG.SENDED) return;
+			if(state.addQuizProg != SENDPROG.SENT) return;
 			App.pub_playToPad();
 			App.pub_reloadStudents(() => {
             let msg: common.IMsg;
@@ -111,7 +111,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
             let msg: common.IMsg;
     
 			if(state.addQuizProg !== SENDPROG.SENDING) return;
-			state.addQuizProg = SENDPROG.SENDED;
+			state.addQuizProg = SENDPROG.SENT;
 			msg = {msgtype: 'add_quiz_send',};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
         });
@@ -171,7 +171,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	
 	public render() {
 		const { view, onClosed, data, } = this.props;
-		if(this.props.state.addQuizProg >= SENDPROG.SENDED){
+		if(this.props.state.addQuizProg >= SENDPROG.SENT){
 			this._sended = true
 		}
 		return (
