@@ -4,13 +4,9 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
-
 import { App } from '../../../App';
-
 import { CoverPopup } from '../../../share/CoverPopup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
-import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
-import { stat } from 'fs';
 
 export type COLOR = 'pink'|'green'|'orange'|'purple';
 const SwiperComponent = require('react-id-swiper').default;
@@ -37,9 +33,6 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 		this._swiper = el.swiper;
 	}
 
-	public constructor(props: IQuizBoxProps) {
-		super(props);
-	}
 	private _onClosePopup = () => {
 		App.pub_playBtnTab();
 		this._view = false;
@@ -69,19 +62,16 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 	}
 
 	public render() {
-		const { onClosed, result, idx, tab, answer} = this.props;
-		
+		const { onClosed, result, idx } = this.props;		
 	
 		return (
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
 					<div className="popbox">
-						<SwiperComponent ref={this._refSwiper}>
-			
-							{result[idx]?.map((url , idx)=>{
-									
+						<SwiperComponent ref={this._refSwiper}>			
+							{result[idx]?.map((url , idx)=>{									
 								return(
 									<div key={idx}>
 										<img className="thumnail" src={url}></img>												

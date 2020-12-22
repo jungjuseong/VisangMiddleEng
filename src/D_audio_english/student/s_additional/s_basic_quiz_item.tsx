@@ -140,15 +140,17 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 			this.props.data.map((quiz,idx) => {
 				const answer_list = [quiz.sentence_answer1, quiz.sentence_answer2, quiz.sentence_answer3];
 				correct_count = 0;
+				let list_minus = 0
 				answer_list.map((answer,index) => {
-					if(answer === '') correct_count -= 1;
+					if(answer === '') list_minus += 1;
 					if (answer === this._tarea[idx][index]?.value) {
 						corrects[idx][index] = 'O';
 						correct_count += 1;
 					} else {
 						corrects[idx][index] = 'X';
 					}
-					OXs[idx] = (correct_count === answer_list.length) ? 'O' : 'X';
+					OXs[idx] = (correct_count === answer_list.length - list_minus) ? 'O' : 'X';
+					console.log('idx,corr,lis',idx,correct_count,answer_list.length, list_minus)
 				});
 			});
 		}

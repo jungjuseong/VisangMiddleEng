@@ -6,6 +6,7 @@ import { MPlayer } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
 
 import ProgBox from './_prog_box';
+import { App } from 'src/App';
 /*
 	roll: ''|'A'|'B';
 	shadowing: boolean;
@@ -25,8 +26,8 @@ class ControlBox extends React.Component<IControlBox> {
 		return (
 			<div className="control" style={{display : (view ? '' : 'none')}}>
 				<div className="control_over">
-					<div className="brake_point" style={{left: '134px'}}>1</div>
-					<div className="brake_point" style={{left: '233px'}}>2</div>
+					<div className="brake_point one"></div>
+					<div className="brake_point two"></div>
 				</div>
 				<div className="control_left">
 					<ToggleBtn className="btn_play_pause" on={isPlay} onClick={togglePlay} />

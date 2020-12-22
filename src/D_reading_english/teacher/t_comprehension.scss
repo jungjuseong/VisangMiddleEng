@@ -130,6 +130,9 @@
                     right: 20px;
                     top: 65px;
                     z-index: 2;
+                    &.hide{
+                        display: none;
+                    }
                 }
                 .popbox {
                     position: absolute;

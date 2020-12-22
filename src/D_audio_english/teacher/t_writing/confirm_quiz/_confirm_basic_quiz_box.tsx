@@ -29,7 +29,13 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		const basic_data = props.data as IConfirmNomal;
 		this._jsx_hints = [basic_data.item1.answer, basic_data.item2.answer, basic_data.item3.answer]; // 답
 	}
-
+	protected _onClick = () => {
+		if(this._btnAudio) this._btnAudio.toggle();
+	}
+	private _refAudio = (btn: BtnAudio) => {
+		if(this._btnAudio || !btn) return;
+		this._btnAudio = btn;
+	}
 	@action	
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		if(!this._hint) {
@@ -70,6 +76,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
+								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
 									<div className="video_container">

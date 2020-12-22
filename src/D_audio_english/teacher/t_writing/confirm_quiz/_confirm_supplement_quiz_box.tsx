@@ -11,6 +11,7 @@ import { CorrectBar } from '../../../../share/Progress_bar';
 import { SENDPROG, IStateCtx, IActionsCtx } from '../../t_store';
 
 import { IProblemSup,IConfirmSup } from '../../../common';
+import { BtnAudio } from '../../../../share/BtnAudio';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
 import ConfirmQuizBox, { IConfirmQuizBoxProps } from './_confirm_quiz_box';
@@ -77,6 +78,13 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 		if(this._toggle[num]) return 'on_true';
 		else return 'on_false';
 	}
+	protected _onClick = () => {
+		if(this._btnAudio) this._btnAudio.toggle();
+	}
+	private _refAudio = (btn: BtnAudio) => {
+		if(this._btnAudio || !btn) return;
+		this._btnAudio = btn;
+	}
 
 	@action
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
@@ -116,6 +124,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
+								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
 								<div className="question_box" onClick={this._onClick}>
 									{jsx}
 									<div className="video_container">

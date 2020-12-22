@@ -740,7 +740,7 @@ class Passage extends React.Component<IPassageProps> {
 							<div>{this._retCnt}/{this._numOfStudent}</div>
 						</div>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/>
-						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickStructure}/>
+						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_sentence" onClick={this._clickStructure}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickZoom}/>
 						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_audio_drop" on={this._audioOn} onClick={this._onAudio}/>
 						{/*

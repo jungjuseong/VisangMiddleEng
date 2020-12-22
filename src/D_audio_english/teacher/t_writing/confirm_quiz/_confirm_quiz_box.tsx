@@ -19,7 +19,6 @@ export interface IConfirmQuizBoxProps {
 	onHintClick: () => void;
 	data: IConfirmNomal | IConfirmHard | IConfirmSup;
 	viewResult: (answerboolean : boolean) => void;
-
 }
 
 @observer
@@ -89,10 +88,6 @@ class ConfirmQuizBox extends React.Component<IConfirmQuizBoxProps> {
 		/** */
 		this.props.onHintClick();
 		this._hint = !this._hint;
-	}
-
-	protected _onClick = () => {
-		if(this._btnAudio) this._btnAudio.toggle();
 	}
 
  	public componentDidUpdate(prev: IConfirmQuizBoxProps) {

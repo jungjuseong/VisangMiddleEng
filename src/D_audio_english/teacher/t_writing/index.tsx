@@ -22,7 +22,7 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import HardDictationQuizBox from './_hard_dictation_quiz_box';
-import PopTrans from './_pop_trans';
+import PopTrans from './_trans_popup';
 import ScriptAudio from './script_audio';
 
 function falsySended(state: IStateCtx): boolean {
@@ -72,7 +72,6 @@ class Writing extends React.Component<IWritingProps> {
 	@observable private _tab: ITabType = 'INTRODUCTION';
 
 	private _tab_save: ITabType = 'INTRODUCTION';
-	@observable private _hint = false;
 
 	@observable private _view = false;
 	@observable private _curQidx = 0;
@@ -346,9 +345,7 @@ class Writing extends React.Component<IWritingProps> {
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = idx;
-        actions.setNavi((this._tab !== 'INTRODUCTION' || this._curQidx !== 0), true);
-        
-        this._hint = (this._tab === 'SCRIPT');
+        this._setNavi()
     }
     
 	private _clearAll() {
@@ -365,7 +362,6 @@ class Writing extends React.Component<IWritingProps> {
             this._qselected[i] = -1;
         }
         this._curQidx = 0;
-        this._hint = false;
         this.c_popup = 'off';
         this._viewClue = false;
         this._viewTrans = false;
@@ -394,7 +390,6 @@ class Writing extends React.Component<IWritingProps> {
 
         App.pub_playBtnTab();
         this._curQidx = 0;
-        this._hint = false;
         this._tab = 'INTRODUCTION';
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         actions.clearQnaReturns();
@@ -415,7 +410,6 @@ class Writing extends React.Component<IWritingProps> {
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
-        this._hint = false;
         this._tab = 'CONFIRM';
         actions.setNavi(true, true);
     }
@@ -434,7 +428,6 @@ class Writing extends React.Component<IWritingProps> {
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
-        this._hint = false;
         this._tab = 'ADDITIONAL';
         actions.setNavi(true, true);
     }
@@ -453,7 +446,6 @@ class Writing extends React.Component<IWritingProps> {
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
-        this._hint = false;
         this._tab = 'DICTATION';
         actions.setNavi(true, true);
     }
@@ -468,9 +460,9 @@ class Writing extends React.Component<IWritingProps> {
         App.pub_playBtnTab();
         felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
         this._curQidx = 0;
-        this._hint = false;
         this._tab = 'SCRIPT';
         actions.setNavi(true, true);
+        if(this._curQidx === 2) actions.setNavi(true, false);
     }
     
     private _sendDialogueEnd() {
@@ -520,8 +512,11 @@ class Writing extends React.Component<IWritingProps> {
 	private _setNavi() {
         const { state,actions } = this.props;
         actions.setNaviView(true);
-        if(this._curQidx === 0 && this._tab === 'INTRODUCTION') actions.setNavi(false, true);
+        console.log('idx tab',this._curQidx,this._tab)
+        if(this._curQidx === 0 && this._tab === 'INTRODUCTION') {actions.setNavi(false, true); console.log('idx tab1',this._curQidx,this._tab)}
+        else if(this._curQidx === 2 && this._tab === 'SCRIPT') {actions.setNavi(true,false); console.log('idx tab2',this._curQidx,this._tab)}
         else {
+            console.log('idx tab3',this._curQidx,this._tab)
             if(state.confirmBasicProg === SENDPROG.SENDED ||
                 state.confirmSupProg === SENDPROG.SENDED ||
                 state.confirmHardProg === SENDPROG.SENDED ||
@@ -537,7 +532,6 @@ class Writing extends React.Component<IWritingProps> {
             if (tabIndex === 0) {
                 if(this._curQidx === 0) actions.gotoDirection();
                 else {
-                    this._hint = false;
                     this._curQidx -= 1;
                     this._setNavi();
                 }
@@ -548,7 +542,6 @@ class Writing extends React.Component<IWritingProps> {
                 } else {
                     this._curQidx -= 1;
                     this._setNavi();
-                    this._hint = false;
                     felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
                 }
             }
@@ -556,12 +549,7 @@ class Writing extends React.Component<IWritingProps> {
         const __rightNaviFunc = () => {
             const tabIndex = this._TabSequence.indexOf(this._tab);
             if (tabIndex >= 0) {
-                this._hint = false;
-                if(this._curQidx === this.m_data.introduction.length - 1) {
-                    if(state.confirmBasicProg === SENDPROG.SENDED || 
-                        state.confirmBasicProg === SENDPROG.SENDING || 
-                        state.qnaProg >= SENDPROG.SENDING) return;
-                    this._hint = false;
+                if(this._curQidx === 2) {
                     this._tab = this._TabSequence[tabIndex + 1];
                     this._curQidx = 0;
                 } else {

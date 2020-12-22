@@ -9,6 +9,7 @@ import * as kutil from '@common/util/kutil';
 import { App } from '../../../App';
 import SendUINew from '../../../share/sendui_new';
 import { CoverPopup } from '../../../share/CoverPopup';
+import ImageBox from './_image_box';
 
 /* 팝업 Page */
 interface IComprehensionPopupProps {
@@ -24,67 +25,64 @@ interface IComprehensionPopupProps {
 class ComprehensionPopup extends React.Component<IComprehensionPopupProps> {
 	@observable private m_view = false;
 	@observable private m_sendView = false;
-
 	@observable private m_roll: ''|'A'|'B' = '';
+
 	private onSend = async () => {
 		this.props.onSend(this.m_roll);
 		await kutil.wait(400);
 		this.m_view = false;
 	}
+
 	private _onClose = () => {
 		this.m_view = false;
 	}
+
 	private _onRollA = () => {
-		if(this.props.type !== 'ROLE PLAY') return;
-		App.pub_playBtnTab();
-		this.m_roll = 'A';
-		this.m_sendView = true;
+		if(this.props.type === 'ROLE PLAY') {
+			App.pub_playBtnTab();
+			this.m_roll = 'A';
+			this.m_sendView = true;
+		}
 	}
+
 	private _onRollB = () => {
-		if(this.props.type !== 'ROLE PLAY') return;
-		App.pub_playBtnTab();
-		this.m_roll = 'B';
-		this.m_sendView = true;
+		if(this.props.type === 'ROLE PLAY') {			
+			App.pub_playBtnTab();
+			this.m_roll = 'B';
+			this.m_sendView = true;
+		}
 	}
 
 	public componentDidUpdate(prev: IComprehensionPopupProps) {
 		const { type,view } = this.props;
+
 		if (view && !prev.view) {
 			this.m_view = true;
-			this.m_sendView = type !== 'ROLE PLAY' ;
-			this.m_roll = '';
-		} else if (!view && prev.view) {
+			this.m_sendView = (type !== 'ROLE PLAY') ;
+		} 
+		else if (!view && prev.view) {
 			this.m_view = false;
 			this.m_sendView = false;
-			this.m_roll = '';
 		}
+		this.m_roll = '';
 	}
 
 	public render() {
 		const { view, type, onClosed, imgA, imgB } = this.props;
 		return (
-			<CoverPopup className={'compre_popup ' + this.props.type} view={view && this.m_view} onClosed={onClosed} >
-				<span>{this.props.type === 'SHADOWING' ? 'LISTEN & REPEAT' : type}</span>
+			<CoverPopup className={'compre_popup ' + type} view={view && this.m_view} onClosed={onClosed} >
+				<span>{type === 'SHADOWING' ? 'LISTEN & REPEAT' : type}</span>
 				<ToggleBtn className="btn_close" onClick={this._onClose} />
 				<div className="popup_content">
 					<span>Do you have any questions?</span>
 					<span>Choose the role.</span>
 					<span>Listen and repeat.</span>
-					<div className="img_box">
-						<div className={'A' + (this.m_roll === 'A' ? ' on' : '')}>
-							<span className="icon_check A" />
-							<img src={App.data_url + imgA} onClick={this._onRollA}/>
-						</div>
-						<div className={'B' + (this.m_roll === 'B' ? ' on' : '')}>
-							<span className="icon_check B" />
-							<img src={App.data_url + imgB} onClick={this._onRollB}/>
-						</div>
-					</div>
+					<ImageBox role={this.m_roll} images={[App.data_url + imgA, App.data_url + imgB]} onRoleA={this._onRollA} onRoleB={this._onRollB}/>
 				</div>
 				<SendUINew view={this.m_sendView} preventUpWhenView={true} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
 			</CoverPopup>
 		);
-	}
+	} 
 }
 
 export default ComprehensionPopup;

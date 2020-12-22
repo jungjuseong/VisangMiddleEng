@@ -110,8 +110,8 @@
 		}
 		.clue_popup {
 			@include CoverPopup(10001);
-			background-image: resolve('teacher/images/bg_trans_popup.png');
-			width: width('teacher/images/bg_trans_popup.png'); height: height('teacher/images/bg_trans_popup.png');
+			background-image: resolve('teacher/images/bg_popup.png');
+			width: width('teacher/images/bg_popup.png'); height: height('teacher/images/bg_popup.png');
 			.title {
 				display: inline-block;
 				position: absolute;	top: 90px;	left: 90px;

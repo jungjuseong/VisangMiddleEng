@@ -10,6 +10,7 @@ import * as butil from '@common/component/butil';
 
 import { IConfirmHard,IProblemHard } from '../../../common';
 import { MPlayer, MConfig, MPRState } from '@common/mplayer/mplayer';
+import { BtnAudio } from '../../../../share/BtnAudio';
 import VideoBox from '../../t_video_box';
 
 import { _getJSX, _getBlockJSX } from '../../../../get_jsx';
@@ -36,6 +37,13 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 		this.props.viewResult(true);
 		// this._doSwipe();
 	}
+	protected _onClick = () => {
+		if(this._btnAudio) this._btnAudio.toggle();
+	}
+	private _refAudio = (btn: BtnAudio) => {
+		if(this._btnAudio || !btn) return;
+		this._btnAudio = btn;
+	}
 
 	public render() {
 		const { data, state, actions,viewResult} = this.props;
@@ -56,6 +64,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
+								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
 								<div className="question_box" onClick={this._onClick}>
 									{sentence}
 									<div className="video_container">

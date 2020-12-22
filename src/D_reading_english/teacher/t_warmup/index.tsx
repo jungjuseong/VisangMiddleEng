@@ -40,6 +40,7 @@ class Warmup extends React.Component<IWarmup> {
 			this.props.actions.setWarmupFnc(null);
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 			this.props.onStudy('');
+			this._setNavi();
 		}
 	}
 	private _onVideoZoomed = () => {
@@ -49,7 +50,11 @@ class Warmup extends React.Component<IWarmup> {
 	private _setNavi() {
 		const { actions, data, onStudy, onSetNavi } = this.props;
 		actions.setNaviView(true);
-		actions.setNavi(true, true);
+		if(this._curIdx_tgt === 0) {
+			actions.setNavi(false, true);
+		}else{
+			actions.setNavi(true, true);
+		}
 		actions.setNaviFnc(
 			() => {
 				if(this._curIdx_tgt === 0) {
@@ -61,6 +66,7 @@ class Warmup extends React.Component<IWarmup> {
 					actions.setWarmupFnc(null);
 					felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 					onStudy('');
+					this._setNavi();
 				}
 			},
 			() => {
@@ -73,6 +79,7 @@ class Warmup extends React.Component<IWarmup> {
 					actions.setWarmupFnc(null);
 					felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 					onStudy('');
+					this._setNavi();
 				}
 			}
 		);
@@ -91,11 +98,11 @@ class Warmup extends React.Component<IWarmup> {
 			this._curIdx_tgt = 0;
 			felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 			this.props.onStudy('');
-			this._setNavi();
 			if(state.isNaviBack) {
 				this._curIdx_tgt = this.props.data.warmup.length - 1;
 				this.props.state.isNaviBack = false;
 			}
+			this._setNavi();
 		} else if(!this.props.inview && prev.inview) {
 			this.props.actions.setWarmupFnc(null);
 		}

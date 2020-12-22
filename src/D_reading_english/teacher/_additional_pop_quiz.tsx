@@ -30,6 +30,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 	@observable private _view = false;
 	@observable private _answer = false;
 	@observable private _toggle: Array<boolean|null> = [null,null,null,null,null,null,null];
+	private _sended = false;
 	
 	private _swiper?: Swiper;
 	private	_answer_dic: {};
@@ -148,7 +149,6 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
  	public componentDidUpdate(prev: ILetsTalk) {
 		if(this.props.view && !prev.view) {
 			this._view = true;
-			this._answer = false;
 			if(this._swiper) {
 				this._swiper.slideTo(0, 0);
 				this._swiper.update();
@@ -166,16 +166,19 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 			this._view = false;	
 			App.pub_stop();
 		}
+		
 	}
 	
 	public render() {
 		const { view, onClosed, data, } = this.props;
-
+		if(this.props.state.addQuizProg >= SENDPROG.SENDED){
+			this._sended = true
+		}
 		return (
 			<>
 			<CoverPopup className="lets_talk" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_answer" on={this._answer} onClick={this._viewAnswer}/>
+					<ToggleBtn className={"btn_answer" + (this._sended ? '' : ' hide')} on={this._answer} onClick={this._viewAnswer}/>
 					<div className="popbox">
 						<div className="sentence_box">
 							<div>

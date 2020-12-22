@@ -1,49 +1,16 @@
-@import '../../../share/sendui.scss';
-@import '../../../share/Progress_bar.scss';
-@import '../t_video_box/index.scss';
+@import '../../../../share/sendui.scss';
+@import '../../../../share/Progress_bar.scss';
+@import '../../t_video_box/index.scss';
+@import "../rate_box.scss";
 @mixin confirm_quiz {
     .confirm_question_bg {
         margin: 0 auto;
-        position: relative;
+        position: absolute;
         width: 1150px;
         height: 600px;
-        .subject_rate {
-            color: white;
-            text-align: right;
-            font-size: 12px;
-            padding-right: 25px;
-            line-height: 26px;
-            position: relative;
-            width: 87px;
-            height: 26px;
-            top: -80px;
-            left: 4px;
-            background-image: resolve('teacher/images/sub_rate.png');
-            &.hide {
-                display: none;
-            }
-        }
-        .correct_answer_rate {
-            width: 118px;
-            height: 26px;
-            background-image: resolve('teacher/images/correct_answer_rate.png');
-            @include compre_correct(-80px, 97px);
-            &.no-result {
-                padding-top: 7px;
-            }
-            &.hide {
-                display: none;
-            }
-            .title {
-                display: none;
-            }
-            &>.progress_bar {
-                width: 70px;
-                &>.data_percent {
-                    left: 75px;
-                }
-            }
-        }
+        
+        @include rate_box;
+
         .btn_answer {
             @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
             position: absolute;
@@ -111,6 +78,9 @@
                             right: -33px;
                             z-index: 2;
                             @include t_video_box;
+                        }
+                        .hide{
+                            display: none;
                         }
                         .btn_audio {
                             @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
