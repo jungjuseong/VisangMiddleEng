@@ -40,6 +40,7 @@ interface IVideoBoxProps {
 	setShadowPlay: (val: boolean) => void;
 	stopClick: () => void;
 	onChangeScript: (idx: number) => void;
+	view? :boolean;
 }
 @observer
 class VideoBox extends React.Component<IVideoBoxProps> {

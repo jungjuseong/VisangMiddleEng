@@ -1,39 +1,44 @@
 @import '../../../share/Timer.scss';
-
-@mixin t_video_box{
-	@font-face {
-		font-family: NotoSans-Light;
-		font-weight:normal;
-		src: url(/content/digenglishCB_lib/font/NotoSans-Light.woff) format('woff');
-	}
-	.yourturn{
-		pointer-events: none;
-		position: absolute;
-		left:0px; width:1145px;
-		top:0px; height: 563px;
-		opacity: 1;
-		transition: opacity 0.3s;
-		&.hide{
-			opacity: 0;
-		}
-		&>svg{
-			width:100%;
-			height: 100%;
-		}
-	}
-	.video_box{
-		position: relative;
-		width: 100%;
-		height: 40px;
-		.video{
-			position: absolute;
-			left:0px; right: 0px;
-			top:0px; bottom: 135px;
-			&>video{
-				width:100%; height: 100%;
-				object-fit: fill;
-			}
-			/* 190215 LS Comprehension 수정 내용  p.3 수정
+@mixin t_video_box {
+    @font-face {
+        font-family: NotoSans-Light;
+        font-weight: normal;
+        src: url(/content/digenglishCB_lib/font/NotoSans-Light.woff) format('woff');
+    }
+    .yourturn {
+        pointer-events: none;
+        position: absolute;
+        left: 0px;
+        width: 1145px;
+        top: 0px;
+        height: 563px;
+        opacity: 1;
+        transition: opacity 0.3s;
+        &.hide {
+            display: none;
+            opacity: 0;
+        }
+        &>svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .video_box {
+        position: relative;
+        width: 100%;
+        height: 40px;
+        .video {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 135px;
+            &>video {
+                width: 100%;
+                height: 100%;
+                object-fit: fill;
+            }
+            /* 190215 LS Comprehension 수정 내용  p.3 수정
 			.playbtn{
 				position:absolute;
 				left: 50%; top: 50%;
@@ -48,317 +53,256 @@
 				);
 			}
 			*/
-			&>.caption_box {
-				position: absolute; 
-				bottom: -1px;
-				width: 100%;
-				padding: 8px;
-				background-color: rgba(41, 44, 50, 0.8);
-				
-				font-size: 22px; color: rgb(255, 255, 255);
-				line-height: 120%;
-				&>div {
-					position: relative;
-					width: 100%;
-					padding: 5px 5px 5px 10px;
-					min-height: 36px;
-					&>span {
-						display: block; 
-						margin-right: 70px;
-						text-align: left; 
-						white-space: normal;
-					}
-					&>.btn_eng {
-						position: absolute; 
-						top: 6px;
-						right: 0px; 
-						@include btn_on(
-							resolve('teacher/images/btn_eng.png'),
-							resolve('teacher/images/btn_eng_down.png'),
-							width('teacher/images/btn_eng.png'),
-							height('teacher/images/btn_eng.png')
-						);
-					}
-					&>.btn_trans {
-						position: absolute; 
-						top: 6px;
-						right: 0px; 
-						@include btn_on(
-							resolve('teacher/images/btn_trans.png'),
-							resolve('teacher/images/btn_trans_down.png'),
-							width('teacher/images/btn_trans.png'),
-							height('teacher/images/btn_trans.png')
-						);
-					}
-
-					&.caption_trans{
-						font-family: NotoSans-Light;
-						/* font-weight: bold; */
-					}
-				}
-
-			}
-
-			@include q_countdown2;
-		}
-		.control{
-			position: absolute;
-			left:45px; bottom:0px; 
-			width: 220px; height:33px;
-			background-color: #3e424d;
-			border-radius: 10px;
-			.control_over{
-				position: absolute;
-				.brake_point{
-					position: absolute;
-					width: width('digenglishCB_lib/images/mplayer/brake_point1.png');
-					height: height('digenglishCB_lib/images/mplayer/brake_point1.png');
-					top: -4px;
-					color: #fff;
-					line-height: 15px;
-					z-index: 10;
-					&.one{
-						left: 83px;
-						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point1.png');
-					}
-					&.two{
-						left: 137px;
-						background-image: resolve('digenglishCB_lib/images/mplayer/brake_point2.png');
-					}
-				}
-			}
-			.control_left{
-				position:absolute;
-				display:flex;
-				white-space:nowrap;
-				height: 100%;
-				.btn_play_pause{
-					display:block;
-					margin: auto 0 auto 7px;
-					background-size: 25px;
-					width: 25px;
-					height: 25px;
-					@include btn_on(
-						resolve('digenglishCB_lib/images/mplayer/btn_play.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_pause.png'),
-						width('digenglishCB_lib/images/mplayer/btn_play.png'),
-						height('digenglishCB_lib/images/mplayer/btn_play.png')
-					);
-				}
-				.btn_stop{
-					display:inline-block;
-					vertical-align: middle;
-					margin-left:21px;
-					@include btn_down_dis(
-						resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_stop_down.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_stop.png'),
-						width('digenglishCB_lib/images/mplayer/btn_stop.png'),
-						height('digenglishCB_lib/images/mplayer/btn_stop.png')
-					);							
-				}
-				.btn_prev {
-					display:inline-block;
-					vertical-align: middle;
-					margin-left:21px;
-					@include btn_down_dis(
-						resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_prev_down.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_prev.png'),
-						width('digenglishCB_lib/images/mplayer/btn_prev.png'),
-						height('digenglishCB_lib/images/mplayer/btn_prev.png')
-					);							
-				}
-				.btn_next{
-					display:inline-block;
-					vertical-align: middle;
-					margin-left:21px;
-					@include btn_down_dis(
-						resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_next_down.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_next.png'),
-						width('digenglishCB_lib/images/mplayer/btn_next.png'),
-						height('digenglishCB_lib/images/mplayer/btn_next.png')
-					);							
-				}
-			}
-			.control_top{
-				display: flex;
-				align-items: center;
-				float: right;
-				width: 168px;
-				height: 100%;
-				font-size: 0px;
-				margin-right: 12px;
-				&>div{
-					display:table;
-					width:100%;
-					.prog_box{
-						display: table-cell;
-						vertical-align: middle;
-						position: relative;
-						width: auto;
-						.prog_bg{
-							$PH: 6px;
-							position:relative; 
-							top: 0px;
-							vertical-align:middle;
-							height: $PH;
-							border-radius: $PH/2;
-							background-color: rgba(19, 18, 18, 0.7);
-							box-shadow: inset 0.7px 0.7px 0px 0px rgba(0, 0, 0, 0.15);
-							&>.prog_tmp{
-								position:absolute;
-								left:0px;right:0px;
-								top:-13px;bottom:-17px;
-								background-color:rgba(255, 0, 0, 0);
-							}
-							&>.prog_bar{
-								position:absolute;   
-								border-radius: 20px;
-								left:0px;width:0%;
-								top:0px;height: $PH;
-								border-radius: $PH/2;
-								background-color:rgb(0, 255, 192);
-							}
-							&>.prog_btn{
-								position:absolute;
-								left: 0%; top: 50%;
-								z-index:2;
-								transform:translate(-50%, -50%);
-								@include btn_down_dis(
-									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
-									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar_down.png'),
-									resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
-									width('digenglishCB_lib/images/mplayer/btn_audio_bar.png'),
-									height('digenglishCB_lib/images/mplayer/btn_audio_bar.png')
-								);
-							}
-						}
-					}
-					.video_time{
-						display: table-cell;
-						padding-left: 20px;
-						width: 100px;
-						text-align: left;
-						font-size: 15px;
-						color: rgb(189, 189, 189);
-						&>span:nth-child(1) {
-							color: rgb(0, 135, 255);
-						}
-					}
-				}
-			}
-			.control_right{
-				position:absolute;
-				display:inline-block;
-				right: 0px;
-				bottom: 8px;
-				.btn_subscript{
-					margin-right:19px;
-					@include btn_on (
-						resolve('digenglishCB_lib/images/mplayer/btn_subscript.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_subscript_down.png'),
-						width('digenglishCB_lib/images/mplayer/btn_subscript.png'),
-						height('digenglishCB_lib/images/mplayer/btn_subscript.png')
-					);
-				}
-				.btn_audio{
-					margin-right:19px;
-					@include btn_on(
-						resolve('digenglishCB_lib/images/mplayer/btn_sound.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_mute_down.png'),
-						width('digenglishCB_lib/images/mplayer/btn_sound.png'),
-						height('digenglishCB_lib/images/mplayer/btn_sound.png')
-					);
-				}
-				.btn_fullscreen{
-					margin-right:12px;
-					@include btn_down_dis(
-						resolve('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_fullscreen_down.png'),
-						'',
-						width('digenglishCB_lib/images/mplayer/btn_fullscreen.png'),
-						height('digenglishCB_lib/images/mplayer/btn_fullscreen.png')
-					);
-				}
-				.btn_fullscreen_off{
-					display: none;
-					@include btn_down_dis(
-						resolve('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
-						resolve('digenglishCB_lib/images/mplayer/btn_smallscreen_down.png'),
-						'',
-						width('digenglishCB_lib/images/mplayer/btn_smallscreen.png'),
-						height('digenglishCB_lib/images/mplayer/btn_smallscreen.png')
-					);
-				}
-			}
-		}
-		&:fullscreen{
-			&>.video{
-				bottom: 82px;
-				/* 190215 LS Comprehension 수정 내용  p.3 수정
+            &>.caption_box {
+                position: absolute;
+                bottom: -1px;
+                width: 100%;
+                padding: 8px;
+                background-color: rgba(41, 44, 50, 0.8);
+                font-size: 22px;
+                color: rgb(255, 255, 255);
+                line-height: 120%;
+                &>div {
+                    position: relative;
+                    width: 100%;
+                    padding: 5px 5px 5px 10px;
+                    min-height: 36px;
+                    &>span {
+                        display: block;
+                        margin-right: 70px;
+                        text-align: left;
+                        white-space: normal;
+                    }
+                    &>.btn_eng {
+                        position: absolute;
+                        top: 6px;
+                        right: 0px;
+                        @include btn_on( resolve('teacher/images/btn_eng.png'), resolve('teacher/images/btn_eng_down.png'), width('teacher/images/btn_eng.png'), height('teacher/images/btn_eng.png'));
+                    }
+                    &>.btn_trans {
+                        position: absolute;
+                        top: 6px;
+                        right: 0px;
+                        @include btn_on( resolve('teacher/images/btn_trans.png'), resolve('teacher/images/btn_trans_down.png'), width('teacher/images/btn_trans.png'), height('teacher/images/btn_trans.png'));
+                    }
+                    &.caption_trans {
+                        font-family: NotoSans-Light;
+                        /* font-weight: bold; */
+                    }
+                }
+            }
+            @include q_countdown2;
+        }
+        .control {
+            position: absolute;
+            left: 45px;
+            bottom: 0px;
+            width: 220px;
+            height: 33px;
+            background-color: #3e424d;
+            border-radius: 10px;
+            .control_over {
+                position: absolute;
+                .brake_point {
+                    position: absolute;
+                    width: width('digenglishCB_lib/images/mplayer/brake_point1.png');
+                    height: height('digenglishCB_lib/images/mplayer/brake_point1.png');
+                    top: -4px;
+                    color: #fff;
+                    line-height: 15px;
+                    z-index: 10;
+                    &.one {
+                        left: 83px;
+                        background-image: resolve('digenglishCB_lib/images/mplayer/brake_point1.png');
+                    }
+                    &.two {
+                        left: 137px;
+                        background-image: resolve('digenglishCB_lib/images/mplayer/brake_point2.png');
+                    }
+                }
+            }
+            .control_left {
+                position: absolute;
+                display: flex;
+                white-space: nowrap;
+                height: 100%;
+                .btn_play_pause {
+                    display: block;
+                    margin: auto 0 auto 7px;
+                    background-size: 25px;
+                    width: 25px;
+                    height: 25px;
+                    @include btn_on( resolve('digenglishCB_lib/images/mplayer/btn_play.png'), resolve('digenglishCB_lib/images/mplayer/btn_pause.png'), width('digenglishCB_lib/images/mplayer/btn_play.png'), height('digenglishCB_lib/images/mplayer/btn_play.png'));
+                }
+                .btn_stop {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 21px;
+                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_stop.png'), resolve('digenglishCB_lib/images/mplayer/btn_stop_down.png'), resolve('digenglishCB_lib/images/mplayer/btn_stop.png'), width('digenglishCB_lib/images/mplayer/btn_stop.png'), height('digenglishCB_lib/images/mplayer/btn_stop.png'));
+                }
+                .btn_prev {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 21px;
+                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_prev.png'), resolve('digenglishCB_lib/images/mplayer/btn_prev_down.png'), resolve('digenglishCB_lib/images/mplayer/btn_prev.png'), width('digenglishCB_lib/images/mplayer/btn_prev.png'), height('digenglishCB_lib/images/mplayer/btn_prev.png'));
+                }
+                .btn_next {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 21px;
+                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_next.png'), resolve('digenglishCB_lib/images/mplayer/btn_next_down.png'), resolve('digenglishCB_lib/images/mplayer/btn_next.png'), width('digenglishCB_lib/images/mplayer/btn_next.png'), height('digenglishCB_lib/images/mplayer/btn_next.png'));
+                }
+            }
+            .control_top {
+                display: flex;
+                align-items: center;
+                float: right;
+                width: 168px;
+                height: 100%;
+                font-size: 0px;
+                margin-right: 12px;
+                &>div {
+                    display: table;
+                    width: 100%;
+                    .prog_box {
+                        display: table-cell;
+                        vertical-align: middle;
+                        position: relative;
+                        width: auto;
+                        .prog_bg {
+                            $PH: 6px;
+                            position: relative;
+                            top: 0px;
+                            vertical-align: middle;
+                            height: $PH;
+                            border-radius: $PH/2;
+                            background-color: rgba(19, 18, 18, 0.7);
+                            box-shadow: inset 0.7px 0.7px 0px 0px rgba(0, 0, 0, 0.15);
+                            &>.prog_tmp {
+                                position: absolute;
+                                left: 0px;
+                                right: 0px;
+                                top: -13px;
+                                bottom: -17px;
+                                background-color: rgba(255, 0, 0, 0);
+                            }
+                            &>.prog_bar {
+                                position: absolute;
+                                border-radius: 20px;
+                                left: 0px;
+                                width: 0%;
+                                top: 0px;
+                                height: $PH;
+                                border-radius: $PH/2;
+                                background-color: rgb(0, 255, 192);
+                            }
+                            &>.prog_btn {
+                                position: absolute;
+                                left: 0%;
+                                top: 50%;
+                                z-index: 2;
+                                transform: translate(-50%, -50%);
+                                @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'), resolve('digenglishCB_lib/images/mplayer/btn_audio_bar_down.png'), resolve('digenglishCB_lib/images/mplayer/btn_audio_bar.png'), width('digenglishCB_lib/images/mplayer/btn_audio_bar.png'), height('digenglishCB_lib/images/mplayer/btn_audio_bar.png'));
+                            }
+                        }
+                    }
+                    .video_time {
+                        display: table-cell;
+                        padding-left: 20px;
+                        width: 100px;
+                        text-align: left;
+                        font-size: 15px;
+                        color: rgb(189, 189, 189);
+                        &>span:nth-child(1) {
+                            color: rgb(0, 135, 255);
+                        }
+                    }
+                }
+            }
+            .control_right {
+                position: absolute;
+                display: inline-block;
+                right: 0px;
+                bottom: 8px;
+                .btn_subscript {
+                    margin-right: 19px;
+                    @include btn_on ( resolve('digenglishCB_lib/images/mplayer/btn_subscript.png'), resolve('digenglishCB_lib/images/mplayer/btn_subscript_down.png'), width('digenglishCB_lib/images/mplayer/btn_subscript.png'), height('digenglishCB_lib/images/mplayer/btn_subscript.png'));
+                }
+                .btn_audio {
+                    margin-right: 19px;
+                    @include btn_on( resolve('digenglishCB_lib/images/mplayer/btn_sound.png'), resolve('digenglishCB_lib/images/mplayer/btn_mute_down.png'), width('digenglishCB_lib/images/mplayer/btn_sound.png'), height('digenglishCB_lib/images/mplayer/btn_sound.png'));
+                }
+                .btn_fullscreen {
+                    margin-right: 12px;
+                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_fullscreen.png'), resolve('digenglishCB_lib/images/mplayer/btn_fullscreen_down.png'), '', width('digenglishCB_lib/images/mplayer/btn_fullscreen.png'), height('digenglishCB_lib/images/mplayer/btn_fullscreen.png'));
+                }
+                .btn_fullscreen_off {
+                    display: none;
+                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_smallscreen.png'), resolve('digenglishCB_lib/images/mplayer/btn_smallscreen_down.png'), '', width('digenglishCB_lib/images/mplayer/btn_smallscreen.png'), height('digenglishCB_lib/images/mplayer/btn_smallscreen.png'));
+                }
+            }
+        }
+        &:fullscreen {
+            &>.video {
+                bottom: 82px;
+                /* 190215 LS Comprehension 수정 내용  p.3 수정
 				.playbtn{
 					position:absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
 				}
 				*/
-				&>.caption_box {
-					font-size: 40px;
-					&>div {
-						min-height: 58px;
-					}
-				}
-
-
-			}
-			&>.control{
-				height: 82px;
-				background-color: rgb(50, 50, 50);
-				.control_left{
-					width: 260px; left: 11px; bottom: 15px;
-					vertical-align: bottom;
-				}
-				.control_top{
-					margin-top: 6px; 
-					padding:0 30px;
-					&>div{
-						.prog_box {
-							$PH: 10px;
-							
-							.prog_bg{ 
-								height: $PH;
-								border-radius: $PH/2;
-								.prog_bar {
-									height: $PH;
-									border-radius: $PH/2;
-								}
-								.prog_btn {
-									@include btn_down_dis(
-										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
-										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L_down.png'),
-										resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
-										width('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'),
-										height('digenglishCB_lib/images/mplayer/btn_play_bar_L.png')
-									);
-								}
-							}
-							
-						}
-						.video_time{ top: 3px; right: 34px; }
-					}
-				}
-				.control_right{
-					width: 170px; bottom: 5px; right: -12px;
-					vertical-align: bottom;
-				}
-				.btn_fullscreen{
-					display: none;
-				}
-				.btn_fullscreen_off{
-					display: unset;
-				}
-			}
-		}
-
-	}
+                &>.caption_box {
+                    font-size: 40px;
+                    &>div {
+                        min-height: 58px;
+                    }
+                }
+            }
+            &>.control {
+                height: 82px;
+                background-color: rgb(50, 50, 50);
+                .control_left {
+                    width: 260px;
+                    left: 11px;
+                    bottom: 15px;
+                    vertical-align: bottom;
+                }
+                .control_top {
+                    margin-top: 6px;
+                    padding: 0 30px;
+                    &>div {
+                        .prog_box {
+                            $PH: 10px;
+                            .prog_bg {
+                                height: $PH;
+                                border-radius: $PH/2;
+                                .prog_bar {
+                                    height: $PH;
+                                    border-radius: $PH/2;
+                                }
+                                .prog_btn {
+                                    @include btn_down_dis( resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'), resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L_down.png'), resolve('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'), width('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'), height('digenglishCB_lib/images/mplayer/btn_play_bar_L.png'));
+                                }
+                            }
+                        }
+                        .video_time {
+                            top: 3px;
+                            right: 34px;
+                        }
+                    }
+                }
+                .control_right {
+                    width: 170px;
+                    bottom: 5px;
+                    right: -12px;
+                    vertical-align: bottom;
+                }
+                .btn_fullscreen {
+                    display: none;
+                }
+                .btn_fullscreen_off {
+                    display: unset;
+                }
+            }
+        }
+    }
 }

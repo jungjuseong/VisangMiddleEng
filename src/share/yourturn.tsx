@@ -54,13 +54,14 @@ class Yourturn extends React.Component<IYourturn> {
 	public render() {
 		return (
 			<div className={this._className}>
+        {/* <img src= {`${_digenglishCB_lib_}images/yourturn/yourturn.png`}/> */}
 
 <svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="460" height="560" viewBox="0 0 460 560" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <g overflow="visible">
     <g mask="url(#mask_ut)">
       <g transform="translate(58 62)" opacity="1">
         <animate attributeName="opacity" dur="2.533s" keyTimes="0;.25;1" values="0;1;1" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/girl.png`} height="632" width="357" transform="translate(0 -33.5)"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/yourturn.png`} height="100%" width="100%" transform="translate(0 -33.5)"/>
       </g>
     </g>
     <mask id="mask_ut">
@@ -83,13 +84,6 @@ class Yourturn extends React.Component<IYourturn> {
         </g>
       </g>
     </mask>
-    <g transform="translate(19.75 413.05)" opacity="1">
-      <animateTransform attributeName="transform" additive="replace" type="translate" dur="2.533s" keyTimes="0;.51299;.579;.63199;.632;.697;.74999;.75;1" values="225.1,483.05;225.1,483.05;225.009,483.051;225.009,483.051;225.1,483.05;225.009,483.051;225.009,483.051;225.1,483.05;225.1,483.05" fill="freeze"/>
-      <animateTransform attributeName="transform" additive="sum" type="scale" dur="2.533s" keyTimes="0;.51299;.579;.63199;.632;.697;.74999;.75;1" values="1,1;1,1;1.1,1.1;1.1,1.1;1,1;1.1,1.1;1.1,1.1;1,1;1,1" fill="freeze"/>
-      <animateTransform attributeName="transform" additive="sum" type="translate" dur="2.533s" keyTimes="0;.51299;.579;.63199;.632;.697;.74999;.75;1" values="-205.35,-70;-205.35,-70;-205.2,-70.05;-205.2,-70.05;-205.35,-70;-205.2,-70.05;-205.2,-70.05;-205.35,-70;-205.35,-70" fill="freeze"/>
-      <animate attributeName="opacity" dur="2.533s" keyTimes="0;.25;1" values="0;1;1" fill="freeze"/>
-      <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/ut.png`} height="140" width="410" transform="translate(0 .05)"/>
-    </g>
   </g>
 </svg>
 
