@@ -6,7 +6,7 @@ import { App } from '../../../App';
 import { ToggleBtn } from '@common/component/button';
 
 import * as common from '../../common';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { CoverPopup } from '../../../share/CoverPopup';
 
 interface IImgPassage { 
@@ -18,17 +18,16 @@ interface IImgPassage {
 class ImgPassage extends React.Component<IImgPassage> {
 	@observable private m_view = false;
 
-	private _onClose = () => {
+	@action private _onClose = () => {
 		App.pub_playBtnTab();
 		this.m_view = false;
 	}
+
 	public componentDidUpdate(prev: IImgPassage) {
-		if(this.props.view && !prev.view) {
-			this.m_view = true;
-		} else if(!this.props.view && prev.view) {
-			this.m_view = false;
-		}
+		const { view } = this.props;
+		if(view && !prev.view || !view && prev.view) this.m_view = view;
 	}
+
 	public render() {
 		const { passage } = this.props;
 		return (

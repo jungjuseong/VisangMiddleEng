@@ -1,14 +1,9 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
-import { observable, action } from 'mobx';
-import { Observer, observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 import * as _ from 'lodash';
-
-import { ToggleBtn } from '@common/component/button';
-
-import * as StrUtil from '@common/util/StrUtil';
 import * as kutil from '@common/util/kutil';
 
 @observer
@@ -22,6 +17,7 @@ export class CoverPopup extends React.Component<{className: string, view: boolea
 			this.m_state = 'open';
 		}
 	}
+	
 	private _close = async () => {
 		if(this.m_state === 'open') {
 			this.m_state = 'closing';
@@ -30,12 +26,14 @@ export class CoverPopup extends React.Component<{className: string, view: boolea
 			this.m_state = 'closed';
 		}
 	}
+
 	public componentDidUpdate(prev: {view: boolean}) {
 		if(this.props.view !== prev.view) {
 			if(this.props.view) this._open();
 			else this._close();
 		}
 	}
+
 	public render() {
 		return (
 			<div className={this.props.className + ' ' + this.m_state}>

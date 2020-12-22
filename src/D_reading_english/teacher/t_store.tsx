@@ -12,7 +12,7 @@ type BTN_DISABLE = ''|'all'|'ex_video';
 const enum SENDPROG {
 	READY,
 	SENDING,
-	SENDED,
+	SENT,
 	COMPLETE,
 }
 

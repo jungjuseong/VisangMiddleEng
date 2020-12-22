@@ -30,15 +30,16 @@
                 position: absolute;
                 text-align: center;
                 white-space: normal;
+                top: 0px;
                 bottom: 0px;
                 left: 0px;
                 right: 0px;
                 letter-spacing: -0.6px;
-                padding: 40px;
+                margin-top: 64px;            
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
-                    padding: 10px 10px 15px 0px;
+                    padding: 0px 6px;
                 }
                 .white_board {
                     display: inline-block;

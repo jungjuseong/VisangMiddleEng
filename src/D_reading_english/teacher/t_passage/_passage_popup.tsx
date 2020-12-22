@@ -9,8 +9,9 @@ import { observable } from 'mobx';
 import { CoverPopup } from '../../../share/CoverPopup';
 import SendUI from '../../../share/sendui_new';
 
+type _PopupType = 'off'|'READALOUD'|'SHADOWING'|'QNA';
 interface IPopupItem {
-	type: 'off'|'READALOUD'|'SHADOWING'|'QNA';
+	type: _PopupType;
 	view: boolean;
 	onClosed: () => void;
 	onSend: () => void;
@@ -25,21 +26,20 @@ class PassagePopup extends React.Component<IPopupItem> {
 		this.m_view = false;
 	}
 	public componentDidUpdate(prev: IPopupItem) {
-		if (this.props.view && !prev.view) {
-			this.m_view = true;
-		} else if (!this.props.view && prev.view) {
-			this.m_view = false;
-		}
+		const { view } = this.props;
+  		if (view && !prev.view || !view && prev.view) this.m_view = view;
 	}
-	public render() {
-		let title;
-		if(this.props.type === 'READALOUD') title = 'READ ALONG';
-		else if(this.props.type === 'SHADOWING') title = 'LISTEN & REPEAT';
-		else if(this.props.type === 'QNA') title = 'Q & A';
-		else title = this.props.type;
 
+	public render() {
+		const { type, view,onClosed,onSend } = this.props;
+
+		let title = type as string;
+		if(type === 'READALOUD') title = 'READ ALONG';
+		else if(type === 'SHADOWING') title = 'LISTEN & REPEAT';
+		else if(type === 'QNA') title = 'Q & A';
+		
 		return (
-			<CoverPopup className={'passage_popup ' + this.props.type} view={this.props.view && this.m_view} onClosed={this.props.onClosed} >
+			<CoverPopup className={'passage_popup ' + type} view={view && this.m_view} onClosed={onClosed} >
 				<span>{title}</span><ToggleBtn className="btn_close" onClick={this._onClose} />
 				<div className="popup_content">
 					<span>Read along together.</span>
@@ -47,11 +47,11 @@ class PassagePopup extends React.Component<IPopupItem> {
 					<span>Do you have any questions?</span>
 				</div>
 				<SendUI
-					view={this.props.view}
+					view={view}
 					type={'teacher'}
 					sended={false}
 					originY={0}
-					onSend={this.props.onSend}
+					onSend={onSend}
 				/>
 			</CoverPopup>
 		);

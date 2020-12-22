@@ -82,7 +82,7 @@ class VPopup extends React.Component<IVPopup> {
 
             if(this._prog !== SENDPROG.SENDING) return;
 
-            this._prog = SENDPROG.SENDED;
+            this._prog = SENDPROG.SENT;
             this.props.onSend(this.props.type);
 
             if(this.props.type !== 'CHECKUP') {
@@ -122,7 +122,7 @@ class VPopup extends React.Component<IVPopup> {
         felsocket.startStudentReportProcess($ReportType.JOIN, this._returnUsers);	
     }
 	private _clickAnswer = () => {
-		if(this._prog !== SENDPROG.SENDED) return;
+		if(this._prog !== SENDPROG.SENT) return;
 		App.pub_playBtnTab();
 
 		const msg: IMsg = {msgtype: 'v_checkup_end',};
@@ -193,14 +193,14 @@ class VPopup extends React.Component<IVPopup> {
 								onClick={this._clickFalse}
 							/>
 						</div>
-						<div className="return_cnt_box white" style={{display: this._prog >= SENDPROG.SENDED ? '' : 'none'}} onClick={this._clickReturn}>
+						<div className="return_cnt_box white" style={{display: this._prog >= SENDPROG.SENT ? '' : 'none'}} onClick={this._clickReturn}>
 							<div>{this._retCnt}/{this._numOfStudent}</div>
 						</div>
-						<ToggleBtn className="btn_answer" view={this._prog >= SENDPROG.SENDED} disabled={this._prog === SENDPROG.COMPLETE} onClick={this._clickAnswer}/>
+						<ToggleBtn className="btn_answer" view={this._prog >= SENDPROG.SENT} disabled={this._prog === SENDPROG.COMPLETE} onClick={this._clickAnswer}/>
 						<ToggleBtn className="btn_v_next" view={this._prog === SENDPROG.COMPLETE} onClick={this._onClose}/>
 					</div>
 					<SendUI
-						view={this._prog < SENDPROG.SENDED}
+						view={this._prog < SENDPROG.SENT}
 						type={'teacher'}
 						sended={false}
 						originY={0}
