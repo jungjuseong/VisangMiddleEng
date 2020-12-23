@@ -94,7 +94,6 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 			this._toggle[1] = this._answer_dic[`${this._jsx_answers[1]}`];
 			this._toggle[2] = this._answer_dic[`${this._jsx_answers[2]}`];
 			this._disable_toggle = this._hint = true;
-			this.props.viewResult(false);
 		}
 	}
 	
@@ -102,8 +101,8 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 		const { data, state ,actions ,viewResult} = this.props;
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
-
-		if(state.confirmSupProg >= SENDPROG.COMPLETE) {
+		const isQComplete = state.confirmSupProg >= SENDPROG.COMPLETE
+		if(isQComplete) {
 			if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmSup.arrayOfCorrect.filter((it) => it === true).length / state.numOfStudent);
 			else qResult = 0;
 			if(qResult > 100) qResult = 100;
@@ -112,7 +111,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 		return (
 			<>
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(true)}} >{state.resultConfirmSup.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}} >{state.resultConfirmSup.uid.length}/{App.students.length}</div>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
 					preview={-1} 

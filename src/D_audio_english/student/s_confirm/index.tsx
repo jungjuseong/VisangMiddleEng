@@ -107,6 +107,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
+			state.confirmBasicProg = QPROG.SENDED;
 			const url = await basicQuizCapture();
 			console.log('url',url)
 

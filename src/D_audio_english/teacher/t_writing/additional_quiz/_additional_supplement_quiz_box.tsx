@@ -36,7 +36,6 @@ class SupplementQuizBox extends QuizBox {
 		this.props.onHintClick();
 		this._hint = !this._hint;
 		this._doSwipe();
-		this.props.viewResult(false);
 	}
 
 	public render() {
@@ -44,8 +43,8 @@ class SupplementQuizBox extends QuizBox {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_kor_sentence;
 		let qResult = -1;
 		const supplement_data = data as IAdditionalSup[];
-
-		if(state.additionalSupProg >= SENDPROG.COMPLETE) {
+		const isQComplete = state.additionalSupProg >= SENDPROG.COMPLETE
+		if(isQComplete) {
 			if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultAdditionalSup.arrayOfCorrect.filter((it) => it === true).length / state.numOfStudent);
 			else qResult = 0;
 			if(qResult > 100) qResult = 100;
@@ -53,7 +52,7 @@ class SupplementQuizBox extends QuizBox {
 		return (
 			<>
 			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
+				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
