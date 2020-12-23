@@ -41,8 +41,7 @@ class TeacherPage extends React.Component<ITeacherPageProps> {
 			<div className="content-container">
 				<div className="content-wrapper" style={{left: (viewDiv === 'direction' ? 0 : -_WIDTH) + 'px'}}>
 					<div>
-						<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={true} video_url={''} video_frame={125}	onEndStart={onDirectionEndStart} onEnd={onDirectionEnded}>
-							<div className="lesson">{App.lesson}</div>
+						<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={true} video_url={_digenglishCB_lib_ + 'direction/ls_comprehension.webp'} video_frame={125}	onEndStart={onDirectionEndStart} onEnd={onDirectionEnded}>
 						</VideoDirection>
 					</div>
 					<div>

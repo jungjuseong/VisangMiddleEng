@@ -36,10 +36,10 @@
 				.btn_clue {
 					position: absolute; top: 0px; right: 0px;
 					@include btn_on(
-						resolve('teacher/images/btn_clue.png'),
-						resolve('teacher/images/btn_clue_down.png'),
-						width('teacher/images/btn_clue.png'),
-						height('teacher/images/btn_clue.png')
+						resolve('teacher/images/btn_clue_n.png'),
+						resolve('teacher/images/btn_clue_n.png'),
+						width('teacher/images/btn_clue_n.png'),
+						height('teacher/images/btn_clue_n.png')
 					);
 				}
 			}

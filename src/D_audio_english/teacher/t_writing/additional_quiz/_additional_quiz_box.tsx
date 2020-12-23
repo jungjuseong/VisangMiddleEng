@@ -92,7 +92,6 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 		this._hint = !this._hint;
 
 		this._doSwipe();
-		this.props.viewResult(false);
 	}
 
 	protected _onClick = () => {

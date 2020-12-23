@@ -41,7 +41,6 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		if(!this._hint) {
 			this.props.onHintClick();
 			this._hint = true;
-			this.props.viewResult(false);
 			// this._doSwipe();
 		}
 	}
@@ -53,7 +52,8 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		let jsx = (this._trans) ? this._jsx_eng_sentence : this._jsx_sentence;
 		let qResult = -1;
 
-		if(state.confirmBasicProg >= SENDPROG.COMPLETE) {
+		const isQComplete = state.confirmBasicProg >= SENDPROG.COMPLETE
+		if(isQComplete) {
 			if(state.numOfStudent > 0) qResult = Math.round(100 * state.resultConfirmBasic.arrayOfCorrect.filter((it) => it === true).length / state.numOfStudent);
 			else qResult = 0;
 			if(qResult > 100) qResult = 100;
@@ -62,7 +62,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		return (
 			<>			
 			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
-				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(true)}}>
+				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>
 					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
 				</div>
 				<CorrectBar 
