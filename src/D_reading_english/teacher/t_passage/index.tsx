@@ -684,14 +684,12 @@ class Passage extends React.Component<IPassageProps> {
 		const { inview, data } = this.props;
 		const curIdx = this._curIdx;
 		const info = this._infos[curIdx];
-
+		const ReadAloudOrShadowing = (this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING');
 		return (
 			<div className="passage" style={inview ? undefined : style.NONE}>
 				<div className="nav">
 					<div className="btn_page_box">
-						{this._infos.map((item, idx) => {
-							return <NItem key={idx} on={idx === curIdx} idx={idx} onClick={this._onPage} />;
-						})}
+						{this._infos.map((item, idx) => <NItem key={idx} on={idx === curIdx} idx={idx} onClick={this._onPage} />)}
 					</div>
 					<div className="right">
 						<div 
@@ -701,10 +699,10 @@ class Passage extends React.Component<IPassageProps> {
 						>
 							<div>{this._retCnt}/{this._numOfStudent}</div>
 						</div>
-						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_trans" onClick={this._clickTrans}/>
-						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_sentence" onClick={this._clickStructure}/>
-						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_img" onClick={this._clickZoom}/>
-						<ToggleBtn disabled={this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING'} className="btn_audio_drop" on={this._audioOn} onClick={this._onAudio}/>
+						<ToggleBtn disabled={ReadAloudOrShadowing} className="btn_trans" onClick={this._clickTrans}/>
+						<ToggleBtn disabled={ReadAloudOrShadowing} className="btn_sentence" onClick={this._clickStructure}/>
+						<ToggleBtn disabled={ReadAloudOrShadowing} className="btn_img" onClick={this._clickZoom}/>
+						<ToggleBtn disabled={ReadAloudOrShadowing} className="btn_audio_drop" on={this._audioOn} onClick={this._onAudio}/>
 						{/*
 							<ToggleBtn disabled={!this._audioOn} on={this._allOrChoose === 'choose'} className="btn_choose" onClick={this._onChoose}/>
 							<ToggleBtn disabled={!this._audioOn} on={this._allOrChoose === 'all'} className="btn_all" onClick={this._onAll}/>
