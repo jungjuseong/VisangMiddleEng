@@ -46,13 +46,7 @@ class PassagePopup extends React.Component<IPopupItem> {
 					<span>Listen and repeat.</span>
 					<span>Do you have any questions?</span>
 				</div>
-				<SendUI
-					view={view}
-					type={'teacher'}
-					sended={false}
-					originY={0}
-					onSend={onSend}
-				/>
+				<SendUI view={view} type={'teacher'} sended={false} originY={0} onSend={onSend} />
 			</CoverPopup>
 		);
 	}
