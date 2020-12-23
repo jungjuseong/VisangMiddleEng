@@ -41,7 +41,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 			<div className="content-container">
 			<div className="content-wrapper" style={{left: left + 'px',}}>
 				<div>
-					<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={false} video_url={_digenglishCB_lib_ + 'direction/reading_english.webp'} video_frame={125}/>
+					<VideoDirection className="video-direction" view={viewDiv === 'direction'} on={directionON} isTeacher={false} video_url={_digenglishCB_lib_ + 'direction/rw_comprehension.webp'} video_frame={125}/>
 				</div>
 				<div>
 					<SWarmup view={viewDiv === 'content' && prog === 'warmup'} state={state} actions={actions}/>

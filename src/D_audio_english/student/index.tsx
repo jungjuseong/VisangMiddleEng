@@ -38,7 +38,7 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 							view={state.viewDiv === 'direction'} 
 							on={state.directionON} 
 							isTeacher={false}
-							video_url={_digenglishCB_lib_ + 'direction/audio_english.webp'}
+							video_url={''}
 							video_frame={125}
 				/></div>
 				<div>
