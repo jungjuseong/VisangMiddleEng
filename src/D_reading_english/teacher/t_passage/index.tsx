@@ -277,24 +277,20 @@ class Passage extends React.Component<IPassageProps> {
 	}
 
 	private _onPage = async (idx: number) => {
-		if(this.props.studying) return;
-		if(idx !== this._curIdx && idx >= 0 && idx < this._infos.length) {
-			App.pub_playBtnPage();
-			// const info = this._infos[idx];
+		const { studying } = this.props;
 
-			this._initAll();
-			this._curIdx = idx;
-			await kutil.wait(300);
-			if(this._swiper) {
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			} 
-			if(this._swiper) {
-				const _slide = this._swiper.wrapperEl.scrollHeight;
-				if(_slide <= this._swiper.height) this._opt = true;
-				else this._opt = false;
+		if(!studying) {
+			if(idx !== this._curIdx && idx >= 0 && idx < this._infos.length) {
+				App.pub_playBtnPage();
+				this._initAll();
+				this._curIdx = idx;
+				await kutil.wait(300);
+				if(this._swiper) {
+					this._swiper.update();
+					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+					this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height)
+				}
 			}
-			// if(this._prog === SENDPROG.SENDED)
 		}
 	}
 	
@@ -302,60 +298,60 @@ class Passage extends React.Component<IPassageProps> {
 		App.pub_playBtnTab();
 		felsocket.startStudentReportProcess($ReportType.JOIN, this._retUsers);		
 	}
+
 	private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
 		this._swiper = el.swiper;
 	}
 
 	private _onSend = () => {
-		if(!this.props.view || !this.props.inview) return;
-		else if(this._prog !== SENDPROG.READY) return;
+		const { view, inview } = this.props;
 
-		this._prog = SENDPROG.SENDING;
-		App.pub_playToPad();
+		if(view && inview && this._prog === SENDPROG.READY) {
+			this._prog = SENDPROG.SENDING;
+			App.pub_playToPad();
 
+			this._retCnt = 0;
+			while(this._retUsers.length > 0) this._retUsers.pop();
 
-
-		this._retCnt = 0;
-		while(this._retUsers.length > 0) this._retUsers.pop();
-		const msg: IMsgForIdx = {msgtype: 'passage_send', idx: this._curIdx};
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-		App.pub_reloadStudents(async () => {
-			if(!this.props.view || !this.props.inview) return;
-			else if(this._prog !== SENDPROG.SENDING) return;
-
-			this._numOfStudent = App.students.length;
-			await kutil.wait(600);
-
-			if(!this.props.view || !this.props.inview) return;
-			else if(this._prog !== SENDPROG.SENDING) return;
-
-			this._prog = SENDPROG.SENT;
-		});
+			felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'passage_send', idx: this._curIdx});
+			App.pub_reloadStudents(async () => {
+				if(view && inview && this._prog === SENDPROG.SENDING) {
+					this._numOfStudent = App.students.length;
+					await kutil.wait(600);
+					this._prog = SENDPROG.SENT;
+				}
+			});
+		}
 	}
+
 	private _clickTrans = () => {
 		App.pub_playBtnTab();
 		this._trans = !this._trans;
-		const msg: IMsgForIdx = {msgtype: 'view_trans', idx: this._trans ? 1 : 0};
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);		
+		felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'view_trans', idx: this._trans ? 1 : 0});		
 	}
+
 	private _clickStructure = () => {
 		App.pub_playBtnTab();
 		this._view_structure = !this._view_structure;
 	}
+
 	private _offTrans = () => {
 		this._trans = false;
 		const msg: IMsgForIdx = {msgtype: 'view_trans', idx: this._trans ? 1 : 0};
 		felsocket.sendPAD($SocketType.MSGTOPAD, msg);		
 	}
+
 	private _offStructure = () => {
 		this._view_structure = false;		
 	}
+
 	private _clickZoom = () => {
 		App.pub_playBtnTab();
 		this._zoom = !this._zoom;
 		this.props.actions.setNaviView(false);
 	}
+
 	private _offZoom = () => {
 		this._zoom = false;
 		this._setNavi();
@@ -368,6 +364,7 @@ class Passage extends React.Component<IPassageProps> {
 
 	private _onReadClick = () => {
 		const { view, inview, actions } = this.props;
+		console.log('onReadClick');
 
 		if(view && inview && this._prog === SENDPROG.SENT) {
 			App.pub_playBtnTab();
@@ -565,14 +562,10 @@ class Passage extends React.Component<IPassageProps> {
 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
 			}
 		}
-		// const audio = this.props.data.audio;
-		// if(this._audioOn === true) App.pub_play(App.data_url + audio, App.pub_stop);
-		// else if(this._audioOn === false) App.pub_stop();
 	}
 
 	private _onChoose = (script: IScript) => {
-		if(this._studyDiv !== 'READALOUD' && this._studyDiv === 'SHADOWING') {
-
+		if(this._studyDiv !== 'READALOUD' && this._studyDiv !== 'SHADOWING') {
 			if(this._audioOn) this._audioOn = false;
 
 			const prevSeq = this._curSeq;
@@ -594,76 +587,71 @@ class Passage extends React.Component<IPassageProps> {
 	private _studySend = async () => {
 		const { actions, view, inview, onStudy } = this.props;
 
-		if(!view || !inview ||
-			this._prog !== SENDPROG.SENT ||
-			this._studyDiv !== 'off' ||
-			this._studyProg !== SENDPROG.READY) return;
+		if(view && inview && this._prog === SENDPROG.SENT && this._studyDiv === 'off' && this._studyProg === SENDPROG.READY) {
+			App.pub_playToPad();
 
-		App.pub_playToPad();
+			let msgtype: 'readaloud_send'|'shadowing_send'|'qna_send';
 
-		let msgtype: 'readaloud_send'|'shadowing_send'|'qna_send';
-		if(this._pass_pop === 'READALOUD') msgtype = 'readaloud_send';
-		else if(this._pass_pop === 'SHADOWING') msgtype = 'shadowing_send';
-		else if(this._pass_pop === 'QNA') { 
-			msgtype = 'qna_send';
-			const rets = this._infos[this._curIdx].qnaRets;
-			for(let i = 0; i < rets.length; i++) {
-				const ret = rets[i];
-				while(ret.users.length > 0) ret.users.pop();
-				ret.num = 0;
+			if(this._pass_pop === 'READALOUD') msgtype = 'readaloud_send';
+			else if(this._pass_pop === 'SHADOWING') msgtype = 'shadowing_send';
+			else if(this._pass_pop === 'QNA') { 
+				msgtype = 'qna_send';
+				const qnaRets = this._infos[this._curIdx].qnaRets;
+				for(let i = 0; i < qnaRets.length; i++) {
+					while(qnaRets[i].users.length > 0) qnaRets[i].users.pop();
+					qnaRets[i].num = 0;
+				}
+			} else return;
+
+			this._retCnt = 0;
+			while(this._retUsers.length > 0) this._retUsers.pop();
+			this._studyProg = SENDPROG.SENDING;
+			this._studyDiv = this._pass_pop;
+
+			onStudy(this._pass_pop === 'QNA' ? 'ex_video' : 'all');
+
+			felsocket.sendPAD($SocketType.MSGTOPAD, { msgtype, idx: this._curIdx });
+
+			await kutil.wait(500);
+			if(view && inview && this._prog === SENDPROG.SENT && this._studyProg === SENDPROG.SENDING) {			
+				this._studyProg = SENDPROG.SENT;
+				this._pass_pop = 'off';
+				this._numOfStudent = App.students.length;
+				if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') {
+					this._viewCountDown = true;
+					this._countdown.reset();
+					await kutil.wait(300);
+					this._countdown.start();					
+				} else if(this._studyDiv === 'QNA') actions.setQNAFnc(this._onQNA);
 			}
-		}	else return;
-		this._retCnt = 0;
-		while(this._retUsers.length > 0) this._retUsers.pop();
-		this._studyProg = SENDPROG.SENDING;
-		this._studyDiv = this._pass_pop;
-
-		onStudy(this._pass_pop === 'QNA' ? 'ex_video' : 'all');
-		// const msg: IMsg = {msgtype};
-		const msg: IMsgForIdx = { msgtype, idx: this._curIdx };
-		felsocket.sendPAD($SocketType.MSGTOPAD, msg);
-
-		await kutil.wait(500);
-		if(!view || !inview || this._prog !== SENDPROG.SENT || this._studyProg !== SENDPROG.SENDING) return;
-		
-		this._studyProg = SENDPROG.SENT;
-		this._pass_pop = 'off';
-		this._numOfStudent = App.students.length;
-		if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') {
-			this._viewCountDown = true;
-			this._countdown.reset();
-			await kutil.wait(300);
-			if(!view || !inview || this._prog !== SENDPROG.SENT) return;
-			if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') this._countdown.start();
-			
-		} else if(this._studyDiv === 'QNA') actions.setQNAFnc(this._onQNA);
+		}
 	}
 
 	private _onQNA = (qmsg: IQNAMsg) => {
-		if(this._studyDiv !== 'QNA') return;
-		let sidx = -1;
-		for(let i = 0; i < App.students.length; i++) {
-			if(App.students[i].id === qmsg.id) {
-				sidx = i;
-				break;
+		if(this._studyDiv === 'QNA') {
+			let sidx = -1;
+			for(let i = 0; i < App.students.length; i++) {
+				if(App.students[i].id === qmsg.id) {
+					sidx = i;
+					break;
+				}
+			}
+			if(sidx >= 0 && this._retUsers.indexOf(qmsg.id) < 0) {
+				const qnaRets = this._infos[this._curIdx].qnaRets;
+				
+				for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
+					const scriptIdx = qmsg.returns[i];
+					if(scriptIdx < qnaRets.length) {
+						const users = qnaRets[scriptIdx].users;
+						if(users.indexOf(qmsg.id) < 0) users.push(qmsg.id);
+						qnaRets[scriptIdx].num = users.length;
+					}
+				}		
+				this._retUsers.push(qmsg.id);
+				felsocket.addStudentForStudentReportType6(qmsg.id);
+				this._retCnt = this._retUsers.length;
 			}
 		}
-		if(sidx < 0) return;
-		if(this._retUsers.indexOf(qmsg.id) >= 0) return;
-
-		const rets = this._infos[this._curIdx].qnaRets;
-		
-		for(let i = 0; i < qmsg.returns.length; i++) {  // 문제별 
-			const scriptIdx = qmsg.returns[i];
-			if(scriptIdx < rets.length) {
-				const users = rets[scriptIdx].users;
-				if(users.indexOf(qmsg.id) < 0) users.push(qmsg.id);
-				rets[scriptIdx].num = users.length;
-			}
-		}		
-		this._retUsers.push(qmsg.id);
-		felsocket.addStudentForStudentReportType6(qmsg.id);
-		this._retCnt = this._retUsers.length;
 	}
 
 	private _countStart = () => {
@@ -674,25 +662,21 @@ class Passage extends React.Component<IPassageProps> {
 		const { actions, inview, view } = this.props;
 
 		this._viewCountDown = false;
-		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENT) return;
+		if(view && inview && this._prog === SENDPROG.SENT) {
+			await kutil.wait(300);
 
-		await kutil.wait(300);
-		if(!view || !inview) return;
-		else if(this._prog !== SENDPROG.SENT) return;
+			if(this._studyDiv === 'READALOUD') {
+				this._curSeq = -1;
+				const passage = this._infos[this._curIdx].passage;
+				this._player.gotoAndPlay(passage.start * 1000, passage.end * 1000, 1);
+			} else if(this._studyDiv === 'SHADOWING') {
+				const script = this._infos[this._curIdx].scripts[0];
+				this._curSeq = script.seq;
 
-		if(this._studyDiv === 'READALOUD') {
-			this._curSeq = -1;
-			const passage = this._infos[this._curIdx].passage;
-			this._player.gotoAndPlay(passage.start * 1000, passage.end * 1000, 1);
-		} else if(this._studyDiv === 'SHADOWING') {
-			const script = this._infos[this._curIdx].scripts[0];
-			this._curSeq = script.seq;
-
-			if(this._curSeq >= 0) this._transAt(this._curSeq);
-			const fmsg: IMsgForIdx = {msgtype: 'focusidx',idx: script.seq,};
-			felsocket.sendPAD($SocketType.MSGTOPAD, fmsg);
-			this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
+				if(this._curSeq >= 0) this._transAt(this._curSeq);
+				felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'focusidx',idx: script.seq,});
+				this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
+			}
 		}
 	}
 
@@ -700,9 +684,6 @@ class Passage extends React.Component<IPassageProps> {
 		const { inview, data } = this.props;
 		const curIdx = this._curIdx;
 		const info = this._infos[curIdx];
-
-		const scripts = info.scripts;
-		const qnaRets = info.qnaRets;
 
 		return (
 			<div className="passage" style={inview ? undefined : style.NONE}>
@@ -744,32 +725,21 @@ class Passage extends React.Component<IPassageProps> {
 						noSwipingClass={'swiper-no-swiping'}
 					>
 						<div id="script-bnd" className="script-bnd">
-							{scripts.map((script, idx) => {
-								return (
+							{info.scripts.map((script, idx) => 
 									<ScriptItem 
 										key={script.seq} 
 										curSeq={this._curSeq} 
 										script={script}
 										retCnt={this._retCnt}
-										qnaRet={qnaRets[idx]}
+										qnaRet={info.qnaRets[idx]}
 										viewReturn={this._studyDiv === 'QNA'}
 										onChoose={this._onChoose}
-									/>
-								);
-							})}
+									/>								
+							)}
 						</div>
 					</SwiperComponent>
-					<CountDown2 
-						state={this._countdown} 
-						view={this._viewCountDown} 
-						onStart={this._countStart}  
-						onComplete={this._countZero}
-					/>
-					<Yourturn 
-						className="yourturn" 
-						view={this._yourturn >= 0}
-						start={this._yourturn >= 0}
-					/>
+					<CountDown2 state={this._countdown} view={this._viewCountDown} onStart={this._countStart} onComplete={this._countZero} />
+					<Yourturn className="yourturn" view={this._yourturn >= 0} start={this._yourturn >= 0} />
 				</div>
 				<div className="popup_btns">
 					<ToggleBtn 
@@ -798,23 +768,10 @@ class Passage extends React.Component<IPassageProps> {
 						originY={0}
 						onSend={this._onSend}
 					/>
-					<ImgPassage view={this._zoom === true} passage={info.passage} onClosed={this._offZoom}/>
-					<PassagePopup 
-						type={this._pass_pop}
-						view={this._pass_pop !== 'off'} 
-						onClosed={this._onPopupClosed}
-						onSend={this._studySend}
-					/>
-					<TransPopup 
-						view={this._trans === true} 
-						scripts={scripts} 
-						onClosed={this._offTrans}
-					/>
-					<SentenceStructure
-						view={this._view_structure === true} 
-						data={data.passage} 
-						onClosed={this._offStructure}
-					/>
+					<ImgPassage view={this._zoom} passage={info.passage} onClosed={this._offZoom}/>
+					<PassagePopup type={this._pass_pop} view={this._pass_pop !== 'off'} onClosed={this._onPopupClosed} onSend={this._studySend} />
+					<TransPopup view={this._trans} scripts={info.scripts} onClosed={this._offTrans} />
+					<SentenceStructure view={this._view_structure} data={data.passage} onClosed={this._offStructure}/>
 				</div>
 		);
 	}
