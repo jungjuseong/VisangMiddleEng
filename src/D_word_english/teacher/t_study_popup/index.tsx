@@ -65,13 +65,7 @@ const _soption: SwiperOptions = {
 	observer: true,
 	noSwiping: true,
 	followFinger: false,
-	effect: 'cube',
-	cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 40,
-        shadowScale: 0.94,
-      },
+	effect: 'slide'
 };
 
 interface IStudyPopupProps {

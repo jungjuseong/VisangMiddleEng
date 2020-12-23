@@ -41,19 +41,13 @@ class ContentBox extends React.Component<IContentBoxProps> {
 	public componentWillUpdate(next: IContentBoxProps) {
 		const { state,prog } = this.props;
 		
-		if(state.prog !== next.state.prog) {
+		if(prog !== next.prog) {
 			if(state.isGroup) {
-				this._groupingStyle = {
-					...this._groupingStyle,
-					display: '',
-					opacity: (next.prog === 'grouping' || prog === 'grouping') ? 1 : 0,
-				};
+				this._groupingStyle.display = '';
+				this._boardStyle.display = '';
+				this._groupingStyle.opacity = (next.prog === 'grouping' || prog === 'grouping') ? 1 : 0;
 				this._timerStyle.opacity = (next.prog === 'timer' || prog === 'timer') ? 1 : 0;
-				this._boardStyle = {
-					...this._boardStyle,
-					display: '',
-					opacity: (next.prog === 'board' || prog === 'board') ? 1 : 0,
-				};
+				this._boardStyle.opacity = (next.prog === 'board' || prog === 'board') ? 1 : 0;
 			} else {
 				this._groupingStyle.display = 'none';
 				this._boardStyle.display = 'none';
@@ -134,7 +128,6 @@ class ContentBox extends React.Component<IContentBoxProps> {
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}
 						>
-							<div className="lesson">{App.lesson}</div>
 						</VideoDirection>
 					</div>
 					<div>
