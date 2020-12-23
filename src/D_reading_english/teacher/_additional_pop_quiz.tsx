@@ -176,30 +176,33 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 		}
 		return (
 			<>
-			<CoverPopup className="lets_talk" view={this._view} onClosed={onClosed} >
+			<CoverPopup className="add_quiz_popup" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
+					<p>추가 문제</p>
 					<ToggleBtn className={"btn_answer" + (this._sended ? '' : ' hide')} on={this._answer} onClick={this._viewAnswer}/>
-					<div className="popbox">
-						<div className="sentence_box">
-							<div>
-								<div className="question_box" onClick={this._onClick}>
-									<div>{this._jsx_sentence}</div>
+					<div>
+						<div className="popbox">
+							<div className="sentence_box">
+								<div>
+									<div className="question_box" onClick={this._onClick}>
+										<div>{this._jsx_sentence}</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div className="quiz_box">
-							{data.map((quiz, idx)=>{
-								return(
-									<div key={idx}>
-										<p>{idx + 1}. {quiz.question}</p>
-										<div className={"toggle_bundle " + this._getToggleState(idx)}>
-											<div className="true" onClick={()=>{this._onClickTrue(idx)}}></div>
-											<div className="false" onClick={()=>{this._onClickFalse(idx)}}></div>
+							<div className="quiz_box">
+								{data.map((quiz, idx)=>{
+									return(
+										<div key={idx}>
+											<p>{idx + 1}. {quiz.question}</p>
+											<div className={"toggle_bundle " + this._getToggleState(idx)}>
+												<div className="true" onClick={()=>{this._onClickTrue(idx)}}></div>
+												<div className="false" onClick={()=>{this._onClickFalse(idx)}}></div>
+											</div>
 										</div>
-									</div>
-								);
-							})}
-						</div>
+									);
+								})}
+							</div>
+						</div>						
 					</div>
     			</div>
 				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
