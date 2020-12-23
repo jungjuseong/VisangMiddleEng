@@ -16,10 +16,10 @@
             display: none;
         }
         .pop_bg {
-            background-image: resolve('teacher/images/lets_talk_bg.png');
-            width: width('teacher/images/lets_talk_bg.png');
-            height: height('teacher/images/lets_talk_bg.png');
-            margin: 0 auto;
+            background-image: resolve('teacher/images/trans_bg.png');
+            width: width('teacher/images/trans_bg.png');
+            height: height('teacher/images/trans_bg.png');
+            margin: 30px auto;
             position: relative;
             .btn_letstalk_close {
                 @include btn_on_dis( resolve('teacher/images/letstalk_close.png'), resolve('teacher/images/letstalk_close_dis.png'), resolve('teacher/images/letstalk_close.png'), width('teacher/images/letstalk_close.png'), height('teacher/images/letstalk_close.png'), );
