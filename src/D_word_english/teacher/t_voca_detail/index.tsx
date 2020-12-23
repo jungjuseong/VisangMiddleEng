@@ -19,10 +19,10 @@ function DetailItem(props: {word: IWordData}) {
 			<div className="entry_box">
 				<div className="entry">
 					<AudioText audio_className="btn_audio" audio_url={App.data_url + word.audio} text_className="re_entry">
-						<ResponsiveText className="re_entry" maxSize={70} minSize={54} lineHeight={120} length={word.entry.length}>
+						<ResponsiveText className="re_entry" maxSize={84} minSize={54} lineHeight={140} length={word.entry.length}>
 							{word.entry}
 						</ResponsiveText>
-						<ResponsiveText className="re_meaning" maxSize={35} minSize={24} lineHeight={120} length={word.meaning.length}>
+						<ResponsiveText className="re_meaning" maxSize={34} minSize={24} lineHeight={120} length={word.meaning.length}>
 							{word.pumsa_kor}. {word.meaning}
 						</ResponsiveText>
 					</AudioText>
