@@ -6,7 +6,7 @@ import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
 import { IScript,IQnaReturn } from '../../common';
 
-interface IScriptItem {
+interface IScriptItemProps {
 	script: IScript;
 	curSeq: number;
 	retCnt: number;
@@ -16,33 +16,35 @@ interface IScriptItem {
 }
 
 @observer
-class ScriptItem extends React.Component<IScriptItem> {
+class ScriptItem extends React.Component<IScriptItemProps> {
 	
 	private _clickReturn = () => {
-		if(this.props.viewReturn) {
+		const { viewReturn, qnaRet } = this.props;
+		if(viewReturn) {
 			App.pub_playBtnTab();
-			felsocket.startStudentReportProcess($ReportType.JOIN, this.props.qnaRet.users);	
+			felsocket.startStudentReportProcess($ReportType.JOIN, qnaRet.users);	
 		}
 	}
-	private _onClick = (evt: React.MouseEvent) => {		
-		if(evt.target && evt.target instanceof HTMLElement) {
-			const el = evt.target as HTMLElement;
-			if(el.classList && el.classList.contains('ret-num')) return; 
+	private _onClick = (evt: React.MouseEvent) => {
+		const { script,onChoose } = this.props;
+		if(evt.target instanceof HTMLElement) {
+			if((evt.target as HTMLElement).classList.contains('ret-num')) return; 
 		}
-		this.props.onChoose(this.props.script);
+		onChoose(script);
 	}
 
     public render() {
 		const { script, curSeq, qnaRet, retCnt, viewReturn } = this.props;
-		const arr: string[] = [
+		const class_names: string[] = [
 			'script_line', 
 			(script.seq === curSeq) ? 'on' : ''
 		];
 		return (
-			<span id={'script_' + script.seq} className={arr.join(' ')} onClick={this._onClick}>
-				<span onClick={this._clickReturn} className="ret-num" style={{display: viewReturn && qnaRet.num > 0 ? '' : 'none'}}>{qnaRet.num}</span>
+			<span id={'script_' + script.seq} className={class_names.join(' ')} onClick={this._onClick}>
+				<span onClick={this._clickReturn} className="ret-num" style={{display: viewReturn && qnaRet.num > 0 ? '' : 'none'}}>
+					{qnaRet.num}
+				</span>
 				<span className="ret-cnt" style={{display: 'none'}}>{retCnt}</span>
-				{/* {script.dms_eng} */}
 				<span dangerouslySetInnerHTML={{__html: script.dms_passage}}/>
 			</span>
 		);

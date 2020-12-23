@@ -42,21 +42,36 @@
             line-height: 90px;
             padding: 0 25px;
             font-size: 30px;
-            overflow: auto;
             &>div{
+                top: 10px;
+                padding: 15px;
+                position: relative;
+                overflow: auto;
+                height: 570px;
+
+                &::-webkit-scrollbar {
+                    width: 7px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: transparent;
+                }
+            }
+            .quiz_box{
+                position: relative;
                 display: flex;
                 justify-content: space-between;
                 &>span {
                     position: absolute;
-                    display: inline-block;
-                    vertical-align: top;
                     width: width("common/icon_o.png");
                     height: height("common/icon_o.png");
                     background-repeat: no-repeat;
                     background-position: 50% 50%;
-                    left: 4px;
+                    left: -20px;
                     margin-top: 13px;
-                    line-height: 5 * height("common/icon_o.png") / 6;
     
                     &.O {
                         background-image: resolve("common/icon_o.png");
@@ -64,23 +79,16 @@
     
                     &.X {
                         background-image: resolve("common/icon_x.png");
-                    }
-    
-                    font-size: 34px;
-                    font-weight: bold;
-                    color: rgba(255, 255, 255, 0.4);
-    
+                    }    
                     &.on {
                         color: rgb(248, 246, 77);
                     }
-                }
-    
+                }    
                 &.off {
                     display: none;
-                }
-    
+                }    
                 &>p {
-                    line-height: 90px;
+                    line-height: 80px;
                 }
             }
             .toggle_bundle {

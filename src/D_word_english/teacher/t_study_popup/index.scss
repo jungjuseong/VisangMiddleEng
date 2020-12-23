@@ -62,6 +62,9 @@
 							1px -1px 1px rgba(0,0,0,0.1);
 			}
 			&.off{display: none;}
+			&>img{
+				vertical-align: sub;
+			}
 		}
 
 		.t_btns {

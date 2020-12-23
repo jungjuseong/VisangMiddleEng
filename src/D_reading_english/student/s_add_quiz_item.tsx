@@ -227,19 +227,21 @@ class SAddQuizItem extends React.Component<IQuizItemProps> {
 							</WrapTextNew>
 						</div>
 						<div>
-						<div className="white_box">
-							{data.map((quiz,idx)=>{
-								return(
-									<div>
-										<p>{idx + 1}. {quiz.question}</p>
-										<span className={OXs[idx]}/>
-										<div className={'toggle_bundle ' + this._getToggleState(idx,OXs[idx])}>
-											<div className="true" onClick={() => this._onClickTrue(idx)}/>
-											<div className="false" onClick={() => this._onClickFalse(idx)}/>
-										</div>
-									</div>
-								)
-							})}
+							<div className="white_box">
+								<div >
+									{data.map((quiz,idx)=>{
+										return(
+											<div className="quiz_box">
+												<p>{idx + 1}. {quiz.question}</p>
+												<span className={OXs[idx]}/>
+												<div className={'toggle_bundle ' + this._getToggleState(idx,OXs[idx])}>
+													<div className="true" onClick={() => this._onClickTrue(idx)}/>
+													<div className="false" onClick={() => this._onClickFalse(idx)}/>
+												</div>
+											</div>
+										)
+									})}
+								</div>
 							</div>
 						</div>
 					</div>
