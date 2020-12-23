@@ -33,7 +33,7 @@ class Yourturn extends React.Component<IYourturn> {
 		if(isChange) {
 			const arr: string[] = [];
 			arr.push(next.className);
-			if(!next.view) arr.push('hide');
+			//if(!next.view) arr.push('hide');
 			this._className = arr.join(' ');
 		}	
 		
