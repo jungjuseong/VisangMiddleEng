@@ -28,7 +28,7 @@ interface IQuestion {
 	state: IStateCtx;
 	actions: IActionsCtx;
 	onStudy: (studying: BTN_DISABLE) => void;
-	onSetNavi: (title: 'Compreshension'|'VISUALIZING', tab: 'Passage'|'GraphicOrganizer') => void;
+	onSetNavi: (title: 'Comprehension'|'VISUALIZING', tab: 'Passage'|'GraphicOrganizer') => void;
 }
 
 @observer
@@ -180,7 +180,7 @@ class Question extends React.Component<IQuestion> {
 			() => {
 				if(this._curIdx === 0) {
 					this.props.state.isNaviBack = true;
-					this.props.onSetNavi('Compreshension','Passage');
+					this.props.onSetNavi('Comprehension','Passage');
 				} else {
 					App.pub_playBtnPage();
 					this._curIdx = this._curIdx - 1;

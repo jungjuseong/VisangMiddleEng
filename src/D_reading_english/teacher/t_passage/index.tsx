@@ -30,6 +30,8 @@ interface IInfo {
 	qnaRets: IQnaReturn[];
 }
 
+type _ComprehensionTabType = 'Warmup'|'Question';
+
 interface IPassageProps {
 	view: boolean;
     videoPopup: boolean;
@@ -40,7 +42,7 @@ interface IPassageProps {
 	state: IStateCtx;
 	actions: IActionsCtx;
 	onStudy: (studying: BTN_DISABLE) => void;
-	onSetNavi: (title: 'Compreshension', tab: 'Warmup'|'Question') => void;
+	onSetNavi: (title: 'Comprehension', tab: _ComprehensionTabType) => void;
 }
 
 @observer
@@ -404,16 +406,14 @@ class Passage extends React.Component<IPassageProps> {
 		const { actions, inview, view } = this.props;
 
 		if(view && inview && this._prog === SENDPROG.SENT) {
-
+			App.pub_playBtnTab();
+			this._initStudy();
 			if(this._studyDiv === 'QNA') {
-				App.pub_playBtnTab();
-				this._initStudy();
 				this._studyDiv = 'off';
 				felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});
 				actions.setNaviView(true);
-			} else if(this._pass_pop === 'off') {
-				App.pub_playBtnTab();
-				this._initStudy();
+			} 
+			else if(this._pass_pop === 'off') {
 				this._pass_pop = 'QNA';
 				actions.setNaviView(false);
 			}
@@ -425,15 +425,51 @@ class Passage extends React.Component<IPassageProps> {
 
 		actions.setNaviView((this._studyDiv === 'off'));
 		actions.setNavi(true, true);
+		// actions.setNaviFnc(
+		// 	async () => {
+		// 		if(this._curIdx === 0) {
+		// 			state.isNaviBack = true;
+		// 			onSetNavi('Comprehension','Warmup');
+		// 		} 
+		// 		else {
+		// 			App.pub_playBtnPage();
+		// 			// const info = this._infos[this._curIdx + 1];
+		// 			this._initAll();
+		// 			this._curIdx = this._curIdx - 1;
 
-		this.props.actions.setNaviFnc(
-			async () => {
+		// 			await kutil.wait(300);
+		// 			if(this._swiper) {
+		// 				this._swiper.update();
+		// 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		// 				this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
+		// 			}
+		// 		}
+		// 	},
+		// 	async () => {
+		// 		if(this._curIdx >= this._infos.length - 1) onSetNavi('Comprehension','Question');
+		// 		else {
+		// 			App.pub_playBtnPage();
+		// 			// const info = this._infos[this._curIdx + 1];
+		// 			this._initAll();
+		// 			this._curIdx = this._curIdx + 1;
+
+		// 			await kutil.wait(300);
+		// 			if(this._swiper) {
+		// 				this._swiper.update();
+		// 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
+		// 				this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
+		// 			}
+		// 		}
+		// 	}
+		// );
+		const _setSwiper = (tab: _ComprehensionTabType) => {
+			return async () => {
 				if(this._curIdx === 0) {
 					state.isNaviBack = true;
-					onSetNavi('Compreshension','Warmup');
-				} else {
+					onSetNavi('Comprehension', tab);
+				}
+				else {
 					App.pub_playBtnPage();
-					// const info = this._infos[this._curIdx + 1];
 					this._initAll();
 					this._curIdx = this._curIdx - 1;
 
@@ -441,34 +477,12 @@ class Passage extends React.Component<IPassageProps> {
 					if(this._swiper) {
 						this._swiper.update();
 						if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-						
-						const _slide = this._swiper.wrapperEl.scrollHeight;
-						if(_slide <= this._swiper.height) this._opt = true;
-						else this._opt = false;
-					}
-				}
-			},
-			async () => {
-				if(this._curIdx >= this._infos.length - 1) {
-					onSetNavi('Compreshension','Question');
-				} else {
-					App.pub_playBtnPage();
-					// const info = this._infos[this._curIdx + 1];
-					this._initAll();
-					this._curIdx = this._curIdx + 1;
-
-					await kutil.wait(300);
-					if(this._swiper) {
-						this._swiper.update();
-						if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-
-						const _slide = this._swiper.wrapperEl.scrollHeight;
-						if(_slide <= this._swiper.height) this._opt = true;
-						else this._opt = false;
+						this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
 					}
 				}
 			}
-		);
+		}
+		actions.setNaviFnc(_setSwiper('Warmup'), _setSwiper('Question'));
 	}
 
 	public componentDidUpdate(prev: IPassageProps) {
