@@ -111,24 +111,30 @@
         }
         @include t_video_popup;
         @include t_storybook;
-        .lets_talk {
+        .add_quiz_popup {
             @include CoverPopup(10001);
-            background-color: rgba(0, 0, 0, 0.6);
-            padding-top: 60px;
             .closed_hint {
                 display: none;
             }
             .pop_bg {
-                background-image: resolve('teacher/images/lets_talk_bg.png');
-                width: width('teacher/images/lets_talk_bg.png');
-                height: height('teacher/images/lets_talk_bg.png');
+                background-image: resolve('teacher/images/bg_popup.png');
+                width: width('teacher/images/bg_popup.png');
+                height: height('teacher/images/bg_popup.png');
                 margin: 0 auto;
                 position: relative;
+                &>p{
+                    display: inline-block;
+                    position: absolute;
+                    top: 107px;
+                    left: 93px;
+                    font-size: 19px;
+                    font-weight: bold;
+                }
                 .btn_answer {
                     @include btn_on( resolve('teacher/images/btn_answer.png'), resolve('teacher/images/btn_answer_down.png'), width('teacher/images/btn_answer.png'), height('teacher/images/btn_answer.png'), );
                     position: absolute;
-                    right: 20px;
-                    top: 65px;
+                    right: 76px;
+                    top: 167px;
                     z-index: 2;
                     &.hide{
                         display: none;
@@ -136,13 +142,14 @@
                 }
                 .popbox {
                     position: absolute;
-                    top: 50px;
-                    bottom: 0px;
-                    left: 0px;
-                    right: 0px;
+                    left: 68px;
+                    top: 87px;
+                    width: 1147px;
+                    height: 622px;
                     letter-spacing: -0.6px;
                     white-space: normal;
                     font-size: 34px;
+                    padding-top: 64px;
                     span.word {
                         display: inline-block;
                         padding: 0px 6px;
@@ -150,21 +157,22 @@
                     }
                     .sentence_box {
                         position: relative;
-                        height: 160px;
+                        height: 110px;
                         text-align: left;
                         padding: 0 35px;
                         &>div {
                             position: relative;
                             display: inline-block;
-                            top: 80px;
+                            top: 70px;
                             transform: translateY(-50%);
                             .question_box {
                                 text-align: left;
                                 display: inline-block;
                                 vertical-align: top;
                                 max-width: 1000px;
-                                font-size: 30px;
+                                font-size: 19px;
                                 line-height: 120%;
+                                font-weight: bold;
                             }
                         }
                     }
@@ -172,7 +180,9 @@
                         position: relative;
                         text-align: left;
                         font-size: 24px;
-                        margin: 0 90px 0 50px;
+                        padding: 0px 110px 0px 32px;
+                        margin: 0px 10px;
+                        overflow: auto;
                         &>div {
                             font-family: nanumgothic;
                             font-weight: bold;
@@ -205,6 +215,17 @@
                         .on_false_t {
                             background: resolve('teacher/images/TF_F_T.png');
                         }
+
+                        &::-webkit-scrollbar{
+                            width: 7px;
+                        }
+                        &::-webkit-scrollbar-thumb{
+                            background: rgba(0, 0, 0, 0.3);
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track{
+                            background-color: transparent;
+                        }
                     }
                 }
             }
@@ -214,6 +235,10 @@
                 right: 5px;
                 bottom: 3px;
                 z-index: 2;
+            }
+            .fel_topad{
+                bottom: 100px;
+                right: 80px;
             }
         }
         &.Comprehension {
