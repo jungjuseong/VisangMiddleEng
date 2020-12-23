@@ -49,7 +49,7 @@ class Comp extends React.Component<ITeacher> {
 							view={viewDiv === 'direction'} 
 							on={state.directionON} 
 							isTeacher={true}
-							video_url={_digenglishCB_lib_ + 'direction/reading_english.webp'}
+							video_url={_digenglishCB_lib_ + 'direction/rw_comprehension.webp'}
 							video_frame={125}
 							onEndStart={actions.onDirectionEndStart}
 							onEnd={actions.onDirectionEnded}
