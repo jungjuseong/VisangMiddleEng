@@ -515,6 +515,7 @@ class Passage extends React.Component<IPassageProps> {
 				}, 300);
 			} 
 		}
+
 		if(inview && !prev.inview) {
 			this._initAll();
 			this._setNavi();
@@ -526,12 +527,7 @@ class Passage extends React.Component<IPassageProps> {
 				if(this._swiper) {
 					this._swiper.update();
 					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-
-					if(this._swiper) {
-						const _slide = this._swiper.wrapperEl.scrollHeight;
-						if(_slide <= this._swiper.height) this._opt = true;
-						else this._opt = false;
-					}
+					this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);					
 				}
 			}, 300);
 		} else if (!inview && prev.inview) {
@@ -575,26 +571,29 @@ class Passage extends React.Component<IPassageProps> {
 	}
 
 	private _onChoose = (script: IScript) => {
-		if(this._studyDiv === 'READALOUD' || this._studyDiv === 'SHADOWING') return;
+		if(this._studyDiv !== 'READALOUD' && this._studyDiv === 'SHADOWING') {
 
-		if(this._audioOn) this._audioOn = false;
+			if(this._audioOn) this._audioOn = false;
 
-		const prevSeq = this._curSeq;
-		this._curSeq = script.seq;
-		this._transAt(this._curSeq);
-		App.pub_playBtnTab();
+			const prevSeq = this._curSeq;
+			this._curSeq = script.seq;
+			this._transAt(this._curSeq);
+			App.pub_playBtnTab();
 
-		if(this._curSeq === prevSeq) {
-			if(this._player.bPlay) {
-				this._player.pause();
-				this._curSeq = -1;
-			} else this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
-		} else {
-			this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
+			if(this._curSeq === prevSeq) {
+				if(this._player.bPlay) {
+					this._player.pause();
+					this._curSeq = -1;
+				} else this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
+			} else {
+				this._player.gotoAndPlay(script.audio_start * 1000, script.audio_end * 1000, 1);
+			}
 		}
 	}
+
 	private _studySend = async () => {
 		const { actions, view, inview, onStudy } = this.props;
+
 		if(!view || !inview ||
 			this._prog !== SENDPROG.SENT ||
 			this._studyDiv !== 'off' ||
