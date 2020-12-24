@@ -40,6 +40,7 @@
             right: 0px;
             letter-spacing: -0.6px;
             margin-top: 64px;
+            font-weight: bold;
             span.word {
                 display: inline-block;
                 white-space: nowrap;
@@ -52,6 +53,7 @@
                 border-radius: 10px;
                 width: 1027px;
                 height: 492px;
+                padding-left: 25px;
                 .btn_trans {
                     @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                     position: absolute;
@@ -63,11 +65,9 @@
                     height: 100px;
                     position: relative;
                     font-size: 22px;
-                    font-weight: bold;
                     text-align: left;
-                    margin-bottom: 10px;
-                    margin-left: 25px;
                     font-family: NanumGothic;
+                    margin-bottom: 50px;
                     &>div {
                         display: inline-block;
                         transform: translateY(-50%);
@@ -98,10 +98,9 @@
                 .sup_question {
                     position: relative;
                     text-align: left;
-                    font-size: 34px;
+                    font-size: 32px;
                     font-family: nanumgothic;
-                    font-weight: bold;
-                    padding: 100px 32px 0px 27px;
+                    margin: 0px 32px 0px 2px;
                     &>div {
                         display: flex;
                         justify-content: space-between;
@@ -154,10 +153,9 @@
                 .hard_question {
                     position: relative;
                     text-align: left;
-                    font-size: 34px;
+                    font-size: 32px;
                     font-family: nanumgothic;
-                    font-weight: bold;
-                    padding: 0px 25px;
+                    padding-right:25px;
                     &>div {
                         margin-bottom: 22px;
                     }
@@ -180,9 +178,6 @@
                             padding-bottom: 5px;
                             padding-top: 15px;
                             color: rgb(0, 0, 255);
-                            .block {
-                                font-weight: bold;
-                            }
                         }
                     }
                 }

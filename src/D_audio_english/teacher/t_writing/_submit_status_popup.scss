@@ -1,13 +1,10 @@
 @import '../../../share/CoverPopup.scss';
 @import './_result_screen_popup.scss';
-@mixin check_result {
-    .result_view {
+@mixin submit_status_popup {
+    .submit_status_popup {
         @include CoverPopup(10001);
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0.5);
-        .closed_hint {
-            display: none;
-        }
         .pop_bg {
             background-image: resolve('teacher/images/bg_t.png');
             width: width('teacher/images/bg_t.png');
@@ -16,13 +13,6 @@
             position: relative;
             &.hide{
                 display: none;
-            }
-            .btn_letstalk_close {
-                @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
-                position: absolute;
-                right: 10px;
-                top: 13px;
-                z-index: 2;
             }
             .btn_popup_close {
                 @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
@@ -62,8 +52,9 @@
                     display: inline-block;
                     padding: 0px 6px;
                     white-space: nowrap;
-                }
-                @include result_screen;
+                }                
+                @include result_screen_swiper;
+
                 .content {
                     position: relative;
                     width: 1140px;

@@ -250,7 +250,10 @@ class TableItem extends React.Component<ITableItem> {
 		this._cont = (
 			<div className="content-box">
 				<div>
-					<ul className="content">{this._jsx}</ul>
+					<p>{this.props.idx + 1}.</p>
+					<ul className="content">
+						{this._jsx}
+					</ul>
 				</div>
 			</div>
 		);

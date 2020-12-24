@@ -7,75 +7,69 @@
 @import './s_question.scss';
 @import './s_v_script.scss';
 @import './s_add_quiz_item.scss';
-
-#wrap{
-
-	background-image:resolve("student/images/bg.png");
-	font-family: NotoSans;
-	.eyeon_svg{
-		@include page;
-		pointer-events: none;
-	}
-	.goodjob-svg{
-		@include page;
-		z-index: 100;
-	}
-	.content-container{
-		@include page;
-
-		.content-wrapper{
-			position: absolute;
-			left: 0px; top: 0px;
-			width: 100%;
-			height: 100%;
-			white-space: nowrap;
-
-			transition: left 0.3s ease-in-out;
-			&>div{
-				position: relative;
-				display: inline-block;
-				vertical-align: top;
-				width: 100%;
-				height: 100%;
-			}
-		}
-	}
-	.video-direction{
-		@include video-direction;
-		background-image: resolve('common/bg_direction.jpg');
-
-		&>.movieclip{
-			position: absolute;
-			right: 0px;
-			bottom: 0px;
-			width: 330px;
-			height: 550px;
-		}
-		&>div.direction{
-			position: absolute;
-			background-image: resolve("common/direction.png");
-			width: width("common/direction.png");
-			height:  height("common/direction.png");
-			left: calc(43% - width("common/direction.png")/2);
-			top: calc(50% - height("common/direction.png")/2);
-		}
-		&>div.lesson{
-			font-size: 40px;
-			position: absolute;
-			left: 30px;
-			top: 20px;		
-			color: #fff;
-		}
-	}
-
-	@include s_warmup;
-	@include s_passage;
-	@include s_question;
-	@include s_add_quiz_item;
-
-	
-	@include s_v_script;
-	.fel_toteacher{
-		@include fel_toteacher;
-	}
+#wrap {
+    background-image: resolve("student/images/bg.png");
+    font-family: NotoSans;
+    .eyeon_svg {
+        @include page;
+        pointer-events: none;
+    }
+    .goodjob-svg {
+        @include page;
+        z-index: 100;
+    }
+    .content-container {
+        @include page;
+        .content-wrapper {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            white-space: nowrap;
+            transition: left 0.3s ease-in-out;
+            &>div {
+                position: relative;
+                display: inline-block;
+                vertical-align: top;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .video-direction {
+        @include video-direction;
+        background-image: resolve('common/bg_direction.jpg');
+        &>.movieclip {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            width: 330px;
+            height: 550px;
+        }
+        &>div.direction {
+            position: absolute;
+            background: no-repeat;
+            background-image: resolve("common/direction.png");
+            width: width("common/direction.png");
+            height: height("common/direction.png");
+            left: calc(43% - width("common/direction.png")/2);
+            top: calc(50% - height("common/direction.png")/2);
+        }
+        &>div.lesson {
+            font-size: 40px;
+            position: absolute;
+            left: 30px;
+            top: 20px;
+            color: #fff;
+        }
+    }
+    @include s_warmup;
+    @include s_passage;
+    @include s_question;
+    @include s_add_quiz_item;
+    @include s_v_script;
+    .fel_toteacher {
+        @include fel_toteacher;
+    }
 }

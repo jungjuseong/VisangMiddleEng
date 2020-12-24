@@ -127,7 +127,7 @@ class TComprehension extends React.Component<ITComprehension> {
 		return (
 			<div className={'t_compre ' + this._Title}>
 				<div className="top">
-					<ToggleBtn className="btn_comprehension" on={this._Title === 'Comprehension'} disabled={this._btn_disable !== ''} onClick={this._clickComprension}/>
+					{/* <ToggleBtn className="btn_comprehension" on={this._Title === 'Comprehension'} disabled={this._btn_disable !== ''} onClick={this._clickComprension}/> */}
 					{/* <ToggleBtn className="btn_visualizing" on={this._Title === 'VISUALIZING'} disabled={this._btn_disable !== ''} onClick={this._clickVisual}/>
 					<ToggleBtn className="btn_summarizing" on={this._Title === 'SUMMARIZING'} disabled={this._btn_disable !== ''} onClick={this._clickSummary}/> */}
 				</div>

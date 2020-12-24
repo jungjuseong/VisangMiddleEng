@@ -61,6 +61,7 @@ body {
         }
         &>div.direction {
             position: absolute;
+            background: no-repeat;
             background-image: resolve("common/direction.png");
             width: width("common/direction.png");
             height: height("common/direction.png");

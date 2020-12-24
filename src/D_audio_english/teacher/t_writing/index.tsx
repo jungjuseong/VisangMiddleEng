@@ -16,7 +16,7 @@ import { SENDPROG, IStateCtx, IActionsCtx } from '../t_store';
 import { IData, IIndexMsg ,IConfirmHardMsg } from '../../common';
 
 import { CoverPopup } from '../../../share/CoverPopup';
-import CheckResult from './_check_result';
+import CheckResult from './_submit_status_popup';
 
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';

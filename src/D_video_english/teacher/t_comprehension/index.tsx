@@ -821,7 +821,7 @@ class Comprehension extends React.Component<IComprehensionProps> {
                     <ToggleBtn className="btn_clue" onClick={this._clickViewClue} on={this._viewClue} view={isViewClue}/>
                 </div>	
                 <div className="right_box">
-                    <div className="btn_page_box">
+                    <div className="btn_page_box" style={{display : (this._tab ==='QUESTION')? '' : 'none'}}>
                         {quizs.map((page, idx) => {
                             return <NItem key={idx} on={(this._hint === true || this._tab === 'QUESTION') && idx === this._curQidx} idx={idx} onClick={this._onPage}/>;
                         })}

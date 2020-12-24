@@ -15,7 +15,6 @@
                 display: none;
             }
             @include rate_box;
-                        
             .btn_answer {
                 @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
                 position: absolute;
@@ -35,7 +34,7 @@
                 left: 0px;
                 right: 0px;
                 letter-spacing: -0.6px;
-                margin-top: 64px;            
+                margin-top: 64px;
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
@@ -65,8 +64,6 @@
                         font-size: 22px;
                         font-weight: bold;
                         text-align: left;
-                        margin-bottom: 10px;
-                        margin-left: 25px;
                         font-family: NanumGothic;
                         &>div {
                             display: inline-block;
@@ -98,10 +95,10 @@
                     }
                     .table_box {
                         width: 975px;
-                        height: 380px;
+                        height: 360px;
                         text-align: left;
-                        margin: 0 auto;
                         overflow: auto;
+                        padding-top: 22px;
                         .swiper-container {
                             overflow: visible;
                         }
@@ -176,7 +173,7 @@
                         $head-font-size: 23px;
                         $head-line-height: 40px;
                         $content-font-size: 28px;
-                        $content-padding: 10px 15px 15px 15px;
+                        $content-padding: 10px 15px 15px 0px;
                         $radius: 10px;
                         $normal: resolve("teacher/images/btn_dropdown_t_down.png");
                         $on: resolve("teacher/images/btn_dropdown_t_up.png");
@@ -224,11 +221,12 @@
                     }
                     .basic_question {
                         overflow: auto;
-                        height: 385px;
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding: 30px 0 0 0;
+                        line-height: 51px;
+                        height: 385px;
+                        padding-top: 40px;
                         .block {
                             border-bottom: 4px solid #000;
                         }
@@ -284,8 +282,9 @@
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding-top: 30px;
+                        padding-top: 40px;
                         height: 385px;
+                        line-height: 51px;
                         p {
                             display: inline-block;
                             margin-bottom: 60px;
@@ -298,14 +297,17 @@
                             align-items: center;
                             text-align: center;
                             margin-bottom: 90px;
+                            padding-left: 40px;
+
                             .answer_box {
                                 display: inline-block;
                                 width: 151px;
                                 height: 55px;
                                 border-bottom: 4px solid #000;
-                                margin-left: 55px;
                                 line-height: 47px;
                                 color: rgb(0, 0, 255);
+                                margin: 0px 10px;
+
                                 .hide {
                                     display: none;
                                 }

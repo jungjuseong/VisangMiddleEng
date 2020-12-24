@@ -116,12 +116,18 @@
       & > div {
         display: table-cell;
         vertical-align: middle;
-
+        color: rgb(50, 50, 50);
+        font-size: $content-font-size;        
+        &>p{
+          display: block;
+          float: left;
+          padding-top: 10px;
+          line-height: $line-height;
+        }
         .content {
           /* rw_comprehension 190425 수정사항 p.23 */
+          display: inherit;
           box-sizing: border-box;
-          color: rgb(50, 50, 50);
-          font-size: $content-font-size;
           text-align: left;
           width: 100%;
           height: auto;

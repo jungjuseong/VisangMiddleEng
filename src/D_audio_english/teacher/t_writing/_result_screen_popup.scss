@@ -1,5 +1,5 @@
 @import '../../../share/CoverPopup.scss';
-@mixin result_screen {
+@mixin result_screen_swiper {
     &>.swiper-container{
         @include page;
         &>.swiper-wrapper{
@@ -8,7 +8,7 @@
         .swiper-slide{
             &.swiper-slide-active{
                 z-index:2;
-              }
+            }
         }
-    }
+    }    
 }
