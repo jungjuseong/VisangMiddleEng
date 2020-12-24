@@ -64,26 +64,6 @@ class Yourturn extends React.Component<IYourturn> {
         <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/yourturn1.png`} height="100%" width="100%" />
       </g>
     </g>
-    <mask id="mask_ut">
-      <g>
-        <g>
-          <g>
-            <g>
-              <path fill="#FFF" stroke="none" d="M50.05 433.25L51 459.5 163.85 456.1 429.15 456.1 429.15 13 50.05 13 50.05 433.25Z" fillOpacity="1"/>
-            </g>
-          </g>
-          <animate attributeName="display" fill="freeze" repeatCount="1" dur="2.533s" keyTimes="0;.75;1" values="none;inline;inline"/>
-        </g>
-        <g display="none">
-          <g>
-            <g>
-              <path fill="#FFF" stroke="none" d="M50 433.25L50.9 459.45 163.75 456.1 429.1 456.1 429.1 13 50 13 50 433.25Z" fillOpacity="1"/>
-            </g>
-          </g>
-          <animate attributeName="display" fill="freeze" repeatCount="1" dur="2.533s" keyTimes="0;.75;1" values="inline;none;none"/>
-        </g>
-      </g>
-    </mask>
   </g>
 </svg>
 
