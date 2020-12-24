@@ -30,6 +30,7 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	@observable private _corfal : 0|1|2 = 0;
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
+	@observable private _viewChange : boolean = true
 	// @observable private _result : result
 	
 	private _swiper?: Swiper;
@@ -43,7 +44,9 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		App.pub_playBtnTab();
 		this._view = false;
 	}
-
+	private _onChangeScreen = (bool : boolean) =>{
+		this._viewChange = bool
+	}
 	private _closeResultScreen = () => {
 		this._viewResult = false;
 	}
@@ -69,6 +72,15 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		let re_num = -1
 		App.students.map((student, idx)=>{
 			if(student.name === uid){
+				re_num = idx
+			}
+		})
+		return re_num
+	}
+	private checkStdudentName(arr : string[] ,id : string){
+		let re_num = -1
+		arr.map((name ,idx)=>{
+			if(name === id){
 				re_num = idx
 			}
 		})
@@ -125,18 +137,79 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 			}
 			default : break
 		}
+		let nosendstudent :IStudent[]= []
+		App.students.map((student, idx)=>{
+			console.log('arrarrarr',arr, student.name)
+			console.log('chechechelk',this.checkStdudentName(arr, student.name))
+			if(this.checkStdudentName(arr, student.name) === -1){
+				nosendstudent.push(student)
+			}
+		})
+		console.log('nosend',nosendstudent)
 		
 	
 		return (
 			<>
 			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
-				<div className="pop_bg">
+				<div className={"pop_bg" + (this._viewChange? '' : ' hide')} >
 					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
 					<div className="subject_rate">
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
 							<div className="content">
+								<ToggleBtn onClick={()=>{this._onChangeScreen(false)}}/>
+								<div className="table">
+									{arr.map((uid , idx)=>{
+										let url = '';
+										if(result[idx] !== undefined){
+											url = result[idx][0];
+										}
+										if(this._corfal === 0){
+										}else if(this._corfal === 1){
+											if(correct[idx] === false){
+												return;
+											}
+										}else{
+											if(correct[idx] === true){
+												return;
+											}
+										}
+										return(
+											<div key={idx}>
+												<div className="status">
+													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<div>
+														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+														<div className="score">0</div>
+													</div>
+												</div>
+											</div>
+										);
+									})}
+									{nosendstudent.map((student , idx)=>{
+										return(
+											<div className="status no_send" key={idx}>
+													<img className = {this._color[idx]} src={student.thumb}></img>
+													<div>
+														<p className="s_name">{student.nickname}</p>
+														<div className="score">0</div>
+													</div>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						</div>
+				</div>
+				<div className={"pop_bg" + (this._viewChange? ' hide' : '')}>
+					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					<div className="subject_rate">
+						{arr.length}/{App.students.length}
+					</div>
+						<div className="popbox">
+							<div className="content">
+							<ToggleBtn onClick={()=>{this._onChangeScreen(true)}}/>
 								<div>
 									<ToggleBtn className="all_student" onClick={() =>{this.setCorfal(0)}}/>
 									<ToggleBtn className="correct_answer" style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(1)}}/>

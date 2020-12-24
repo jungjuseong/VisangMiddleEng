@@ -112,6 +112,13 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		else this.props.player.play();
 	}
 
+	private _playPointClick = (cnum : number) => {
+		const {data, idx, player} = this.props;
+		const scripts = data.scripts[cnum];
+		if(this.m_viewCountDown) return;
+		player.gotoAndPlay(scripts[0].audio_start * 1000, scripts[scripts.length - 1].audio_end * 1000, 1);
+	}
+
 	private _togglePlay = () => {
 		const { data,shadowing, player,setShadowPlay, playerInitTime, isShadowPlay } = this.props;
 		const scripts = data.scripts[this.props.idx];
@@ -188,6 +195,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 						isPlay={isPlay}
 						togglePlay={this._togglePlay}
 						view={this._view_audio_box}
+						pointClick={this._playPointClick}
 					/>
 				</div>
 

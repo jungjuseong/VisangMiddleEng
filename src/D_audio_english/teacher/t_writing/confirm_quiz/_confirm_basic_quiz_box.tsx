@@ -30,6 +30,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 		this._jsx_hints = [basic_data.item1.answer, basic_data.item2.answer, basic_data.item3.answer]; // 답
 	}
 	protected _onClick = () => {
+		if(!this._trans) return;
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 	private _refAudio = (btn: BtnAudio) => {
@@ -77,8 +78,10 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 						<div className="sentence_box">
 							<div>
 								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
-								<div className="question_box" onClick={this._onClick}>
+								<div className="question_box" >
+									<div onClick={this._onClick}>
 									{jsx}
+									</div>
 									<div className="video_container">
 										<VideoBox
 											data={actions.getData()}

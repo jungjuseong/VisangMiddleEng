@@ -14,6 +14,9 @@
             height: height('teacher/images/bg_t.png');
             margin: 0 auto;
             position: relative;
+            &.hide{
+                display: none;
+            }
             .btn_letstalk_close {
                 @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
                 position: absolute;
@@ -113,7 +116,9 @@
                             justify-content: center;
                             font-size: 20px;
                             color: #fff;
-
+                            &.no_send{
+                                opacity: 0.5;
+                            }
                             &>img{
                                 display: block;
                                 width: 50px;

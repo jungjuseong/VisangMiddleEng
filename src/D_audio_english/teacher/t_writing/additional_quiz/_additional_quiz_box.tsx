@@ -95,6 +95,7 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 	}
 
 	protected _onClick = () => {
+		if(!this._trans) return;
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 

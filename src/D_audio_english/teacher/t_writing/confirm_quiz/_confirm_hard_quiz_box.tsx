@@ -37,6 +37,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 		// this._doSwipe();
 	}
 	protected _onClick = () => {
+		if(!this._trans) return;
 		if(this._btnAudio) this._btnAudio.toggle();
 	}
 	private _refAudio = (btn: BtnAudio) => {
@@ -65,8 +66,10 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 						<div className="sentence_box">
 							<div>
 								<BtnAudio className="hide" url={App.data_url + data.directive.audio} ref={this._refAudio}/>
-								<div className="question_box" onClick={this._onClick}>
+								<div className="question_box">
+									<div onClick={this._onClick}>
 									{sentence}
+									</div>
 									<div className="video_container">
 										<VideoBox
 											data={actions.getData()}

@@ -43,7 +43,7 @@ class NItemNavL extends React.Component<{curidx: number, on: boolean , onClick: 
 	}
 	public render() {
 		const {curidx, on} = this.props;
-		return <span className={on ? 'on' : ''} onClick={this._click}><img src={App.data_url + "btn_left_indicator.png"}/></span>;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_left_indicator.png"}/></span>;
 	}
 }
 
@@ -56,7 +56,7 @@ class NItemNavR extends React.Component<{maxidx: number , curidx: number, on: bo
 	}
 	public render() {
 		const { on } = this.props;
-		return <span className={on ? 'on' : ''} onClick={this._click}><img src={App.data_url + "btn_right_indicator.png"}/></span>;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_right_indicator.png"}/></span>;
 	}
 }
 

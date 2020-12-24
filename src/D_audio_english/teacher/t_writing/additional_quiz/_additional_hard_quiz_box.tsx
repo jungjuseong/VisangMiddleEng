@@ -43,8 +43,10 @@ class HardQuizBox extends QuizBox {
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
-								<div className="question_box" onClick={this._onClick}>
+								<div className="question_box">
+									<div onClick={this._onClick}>
 									{jsx}
+									</div>
 									<div className="video_container">
 										<VideoBox
 											data={actions.getData()}
