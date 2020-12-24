@@ -67,6 +67,7 @@ class QuizSound extends React.Component<common.IQuizPage> {
 	public render() {
 		const { view, isTeacher, quizProg, hasPreview, percent, quiz }  = this.props;
 		const quiz_sound = quiz.quiz_sound;
+		const correct = quiz_sound.correct;
 		let choices: string[] = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3, quiz_sound.choice4];
 		if(quiz_sound.choice4 === '') choices = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3];
 		
@@ -78,7 +79,7 @@ class QuizSound extends React.Component<common.IQuizPage> {
 				<div className={quiz_sound.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{
 					choices.map((choice, idx) => {
 						let word_style = ' small';
-						let quiz_box_style = '';
+						let quiz_box_style = 'quiz_box';
 
 						if(choice.length <= 10) word_style = ' big';
 						else if(choice.length <= 13) word_style = ' middle';
