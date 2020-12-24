@@ -20,40 +20,38 @@ class QuizSound extends React.Component<common.IQuizPage> {
 		this._nPlay = 0;
 		this._selected = 0;
 	}
-	
 	public componentDidUpdate(prev: common.IQuizPage) {
-		const { view, isTeacher, quizProg, on } = this.props;
-		if(on && !prev.on) {
-			if(isTeacher) this._selected = 0;
-			if(isTeacher && quizProg === 'quiz') {
+		if(this.props.on && !prev.on) {
+			if(this.props.isTeacher) this._selected = 0;
+			if(this.props.isTeacher && this.props.quizProg === 'quiz') {
 			    this._nPlay = 2;
 			    this._btnAudioDisabled = true;
 			} else {
 			    this._nPlay = 0;
 			    this._btnAudioDisabled = false;
 			}	
-		} else if(!on && prev.on) {
+		} else if(!this.props.on && prev.on) {
 			this._nPlay = 0;
-			if(isTeacher) this._selected = 0;
+			if(this.props.isTeacher) this._selected = 0;
 		}
-		if(!view && prev.view) {
+		if(!this.props.view && prev.view) {
 			this._selected = 0;
 		}
 	}
 
 	private _onMc = (num: number) => {
-		const { idx, quiz, isTeacher, quizProg, on, onItemChange } = this.props;
+		if(!this.props.on) return;
+		else if(this.props.quizProg !== 'quiz') return;
 
-		if(!on) return;
-		else if(quizProg !== 'quiz') return;
-
-		this._selected = (this._selected === num) ? 0 : num;
+		if(this._selected === num) this._selected = 0;
+		else this._selected = num;
 		
-		if(!isTeacher) {
-			quiz.app_result = (this._selected === quiz.quiz_sound.correct);
+		if(!this.props.isTeacher) {
+			const word = this.props.quiz;
+			word.app_result = this._selected === word.quiz_sound.correct;
 		}
 
-		if(onItemChange) onItemChange(idx, this._selected + '');
+		if(this.props.onItemChange) this.props.onItemChange(this.props.idx, this._selected + '');
 	}
 
 	private _onStop = () => {
@@ -65,54 +63,84 @@ class QuizSound extends React.Component<common.IQuizPage> {
 	}
 
 	public render() {
-		const { view, isTeacher, quizProg, hasPreview, percent, quiz }  = this.props;
-		const quiz_sound = quiz.quiz_sound;
-		const correct = quiz_sound.correct;
-		let choices: string[] = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3, quiz_sound.choice4];
-		if(quiz_sound.choice4 === '') choices = [quiz_sound.choice1, quiz_sound.choice2, quiz_sound.choice3];
+		const {isGroup, group, isTeacher, quizProg, hasPreview, percent}  = this.props;
+		const word = this.props.quiz;
+		const quiz = word.quiz_sound;
+		const correct = quiz.correct;
+		let choices: string[] = [quiz.choice1, quiz.choice2, quiz.choice3, quiz.choice4];
+		if(quiz.choice4 === '') choices = [quiz.choice1, quiz.choice2, quiz.choice3];
 		
 		return (
 			<>
-				<PreInBox view={isTeacher && quizProg === 'result'}	preClass={hasPreview ? quiz.app_sound : -1}	inClass={percent} top={65} right={110}/>
+				<PreInBox
+					view={isTeacher && quizProg === 'result'}
+					preClass={hasPreview ? word.app_sound : -1}
+					inClass={percent}
+					top={65}
+					right={110}
+				/>
 
-				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + quiz.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
-				<div className={quiz_sound.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{
-					choices.map((choice, idx) => {
-						let word_style = ' small';
-						let quiz_box_style = 'quiz_box';
+				<BtnAudio className={'btn_audio' + (isTeacher ? '' : ' ' + quizProg)} url={App.data_url + word.audio} nPlay={this._nPlay} onStop={this._onStop} disabled={this._btnAudioDisabled}/>
+				<div className={quiz.choice4 === '' ? 'mc-box-three' : 'mc-box'}>{choices.map((choice, idx) => {
+					const arr: string[] = ['quiz_box'];
+					let selected = this._selected;
+					const total = choice.length;
+					let wordClass;
 
-						if(choice.length <= 10) word_style = ' big';
-						else if(choice.length <= 13) word_style = ' middle';
+					if(total <= 10) wordClass = ' big';
+					else if(total <= 13) wordClass = ' middle';
+					else wordClass = ' small';
 
-						if(quizProg === 'result') {
-							if(quiz_sound.correct === idx + 1) quiz_box_style = 'quiz_box correct';
-							if(!isTeacher) {
-								if(this._selected === idx + 1) quiz_box_style = 'quiz_box wrong';							
-							}
-							this._selected = 0;
+					if(quizProg === 'result') {
+						if(isTeacher) {
+							if(correct === idx + 1) arr.push('correct');
+							selected = 0;
+						} else {
+							if(correct === idx + 1) arr.push('correct');
+							else if(selected === idx + 1) arr.push('wrong');
+							selected = 0;
+							/* 정답일 경우 선태 모양 유지
+							if(correct === selected) {
+								selected = this._selected;
+								// if(correct === idx + 1) arr.push('correct');
+							} else {
+								if(correct === idx + 1) arr.push('correct');
+								if(selected === idx + 1) arr.push('wrong');
+								selected = 0;
+							} 
+							*/
 						}
-						if(quiz_sound.choice4 === '') {
-							return (
-								<div key={idx}>
-									<QuizMCBtn key={idx} className={quiz_box_style + word_style} num={idx + 1} on={this._selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
-										<WrapTextNew view={view} lineHeight={120} viewOnInit={true}>
-											<span className={word_style}>{choice}</span>
-										</WrapTextNew>
-									</QuizMCBtn>
-								</div>
-							);
-						} else { 
-							return (
-								<QuizMCBtn key={idx} className={quiz_box_style + word_style} num={idx + 1} on={this._selected === (idx + 1)} onClick={this._onMc} disabled={quizProg !== 'quiz'}>
-									<WrapTextNew view={view} lineHeight={120} viewOnInit={true}>
-										<span className={word_style}>{choice}</span>
-									</WrapTextNew>
+					}
+					if(quiz.choice4 === '') {
+						return (
+							<div key={idx}>
+								<QuizMCBtn 
+									key={idx}
+									className={arr.join(' ') + wordClass} 
+									num={idx + 1} 
+									on={selected === (idx + 1)} 
+									onClick={this._onMc} 
+									disabled={this.props.quizProg !== 'quiz'}
+								>
+									<WrapTextNew view={this.props.view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewOnInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
 								</QuizMCBtn>
-							);
-						}
-					})
-				}
-				</div>
+							</div>
+						);
+					} else { 
+						return (
+							<QuizMCBtn 
+								key={idx}
+								className={arr.join(' ') + wordClass} 
+								num={idx + 1} 
+								on={selected === (idx + 1)} 
+								onClick={this._onMc} 
+								disabled={this.props.quizProg !== 'quiz'}
+							>
+								<WrapTextNew view={this.props.view} /*maxSize={54} minSize={54}*/ lineHeight={120} viewOnInit={true}><span className={wordClass}>{choice}</span></WrapTextNew>
+							</QuizMCBtn>
+						);
+					}
+				})}</div>
 			</>
 		);
 	}
