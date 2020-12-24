@@ -18,7 +18,7 @@ interface IQuizBoxProps {
 	data: IScript[];
 }
 @observer
-class PopTranslation extends React.Component<IQuizBoxProps> {
+class TransPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	
 	private _swiper?: Swiper;
@@ -97,4 +97,4 @@ class PopTranslation extends React.Component<IQuizBoxProps> {
 		);
 	}
 }
-export default PopTranslation;
+export default TransPopup;

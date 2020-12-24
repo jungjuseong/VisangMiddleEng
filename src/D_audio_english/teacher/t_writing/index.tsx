@@ -22,7 +22,7 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import HardDictationQuizBox from './_hard_dictation_quiz_box';
-import PopTrans from './_trans_popup';
+import TransPopup from './_trans_popup';
 import ScriptAudio from './script_audio';
 
 function falsySended(state: IStateCtx): boolean {
@@ -618,7 +618,7 @@ class Writing extends React.Component<IWritingProps> {
                     <ToggleBtn className="btn_tab_script" onClick={this._clickScript} on={this._tab === 'SCRIPT'} disabled={this._tab === 'SCRIPT' || isOnStudy} />
                 </div>
                 <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
-                <PopTrans 
+                <TransPopup 
                     view={this._popTrans} 
                     data={this.m_data.scripts[this._curQidx]} 
                     onClosed={this._PopTransClosed}
