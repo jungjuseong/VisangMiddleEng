@@ -158,7 +158,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 					</div>
 						<div className="popbox">
 							<div className="content">
-								<ToggleBtn onClick={()=>{this._onChangeScreen(false)}}/>
+								<div className="right_top">
+									<button className="all_student" onClick={()=>{this._onChangeScreen(false)}}/>
+								</div>
 								<div className="table">
 									{arr.map((uid , idx)=>{
 										let url = '';
@@ -208,9 +210,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
-							<div className="content">
-							<ToggleBtn onClick={()=>{this._onChangeScreen(true)}}/>
-								<div>
+							<div className="submit_status">
+								<div className="right_top">
+									<button className="all_student" onClick={()=>{this._onChangeScreen(true)}}/>
+								</div>
+								<div className="sort_category">
 									<ToggleBtn className="all_student" onClick={() =>{this.setCorfal(0)}}/>
 									<ToggleBtn className="correct_answer" style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(1)}}/>
 									<ToggleBtn className="wrong_answer" style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(2)}}/>
