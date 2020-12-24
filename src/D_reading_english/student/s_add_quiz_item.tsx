@@ -21,6 +21,7 @@ interface IQuizItemProps {
 @observer
 class SAddQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _toggle: number[] = [];
+	@observable private _view = false;
 
 	@observable private _felView = false;
 
@@ -192,7 +193,20 @@ class SAddQuizItem extends React.Component<IQuizItemProps> {
 		this.setState({activeDrags: --this.state.activeDrags});
 	}
 
-	public componentDidUpdate() {
+	public componentDidUpdate(prev: IQuizItemProps) {
+		if(this.props.view && !prev.view) {
+			this._view = true;
+
+		} else if(!this.props.view && prev.view) {
+			this._view = false;	
+			this._toggle= []
+			this._felView = false;
+			this.props.state.addquizProg = SENDPROG.READY;
+			this._disable_toggle = false;
+			for(let i = 0 ; i < this.props.data.length ; i++){
+				this._toggle.push(0)
+			}
+		}
 		if(this.props.state.addquizProg === SENDPROG.SENDED) {
 			this._disable_toggle = true;
 		} 

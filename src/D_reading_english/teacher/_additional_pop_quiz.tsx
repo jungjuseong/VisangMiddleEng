@@ -164,6 +164,13 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 
 		} else if(!this.props.view && prev.view) {
 			this._view = false;	
+			this.props.state.addQuizProg = SENDPROG.READY
+			this._view = false;
+			this._answer = false;
+			this._toggle = [null,null,null,null,null,null,null];
+			this. _sended = false;
+			this._disable_toggle = false;
+	
 			App.pub_stop();
 		}
 		
@@ -207,7 +214,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
     			</div>
 				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
 				<SendUINew
-					view={true}
+					view={this._view}
 					type={'teacher'}
 					sended={false}
 					originY={0}
