@@ -44,7 +44,7 @@
             }
             .sentence_box {
                 height: 80px;
-                font-size: 50px;
+                font-size: 34px;
                 color: #fff;
                 &>div {
                     display: inline-block;
@@ -65,12 +65,13 @@
                 }
             }
             .speechbubble_box {
-                margin-top: 0px;
+                margin-top: 0px;                
+                font-size: 34px;
                 &>div {
                     display: inline-table;
                     vertical-align: middle;
-                    width: 626px;
-                    height: 80px;
+                    width: 456px;
+                    height: 60px;
                     border-bottom: 4px solid #fff;
                     max-height: 120px;
                     &.view-hint {
@@ -92,7 +93,6 @@
                     }
                     .hint {
                         text-align: left;
-                        font-size: 50px;
                         min-height: 55px;
                     }
                 }
