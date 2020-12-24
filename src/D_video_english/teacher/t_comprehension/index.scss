@@ -266,7 +266,7 @@
             .btn_trans {
                 display: inline-block;
                 vertical-align: middle;
-                @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_show_down.png'), resolve('teacher/images/btn_show_down.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'));
+                @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_script_on.png'), resolve('teacher/images/btn_script_down.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'));
             }
             .btn_clue {
                 display: inline-block;
@@ -405,8 +405,7 @@
                     position: absolute;
                     top: 10px;
                     right: 100px;
-                    margin-right: 300px;
-                    @include btn_down_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'));
+                    @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_script_on.png'), resolve('teacher/images/btn_script_on.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'));
                 }
                 /* 빈칸*/
                 .btn_script_show {
