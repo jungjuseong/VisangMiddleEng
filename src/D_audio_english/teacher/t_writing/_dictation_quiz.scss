@@ -58,7 +58,7 @@
                 .sentence_box {
                     height: 100px;
                     position: relative;
-                    font-size: 28px;
+                    font-size: 22px;
                     font-family: NanumGothic;
                     font-weight: bold;
                     text-align: left;
@@ -91,10 +91,10 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
-                    padding: 0px 5px;
+                    padding: 45px 5px 0 5px;
                     .blank_sentence {
                         display: flex;
-                        margin-bottom: 100px;
+                        margin-bottom: 66px;
                          :last-child {
                             margin-bottom: 0px;
                         }

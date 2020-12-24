@@ -126,6 +126,7 @@
         }
         .content {
           /* rw_comprehension 190425 수정사항 p.23 */
+          display: inherit;
           box-sizing: border-box;
           text-align: left;
           width: 100%;
