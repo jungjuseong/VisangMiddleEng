@@ -15,7 +15,6 @@
                 display: none;
             }
             @include rate_box;
-                        
             .btn_answer {
                 @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
                 position: absolute;
@@ -35,7 +34,7 @@
                 left: 0px;
                 right: 0px;
                 letter-spacing: -0.6px;
-                margin-top: 64px;            
+                margin-top: 64px;
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
@@ -55,7 +54,7 @@
                     .btn_trans {
                         @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
                         position: absolute;
-                        left: 25px;
+                        left: 50px;
                         top: 20px;
                         z-index: 2;
                     }
