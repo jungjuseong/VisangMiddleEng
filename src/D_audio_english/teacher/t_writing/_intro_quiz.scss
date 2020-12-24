@@ -65,6 +65,7 @@
                 }
             }
             .speechbubble_box {
+                color: rgb(255, 253, 138);
                 margin-top: 0px;                
                 font-size: 34px;
                 &>div {
@@ -72,10 +73,8 @@
                     vertical-align: middle;
                     width: 456px;
                     height: 60px;
-                    border-bottom: 4px solid #fff;
                     max-height: 120px;
                     &.view-hint {
-                        color: rgb(255, 253, 138);
                         white-space: nowrap;
                         &:after {
                             border-right-color: rgb(13, 92, 155);
@@ -83,17 +82,17 @@
                     }
                     .sample {
                         min-height: 55px;
+                        border-bottom: 4px solid #fff;
                         span.block {
                             color: transparent;
-                            border-bottom: 2px solid #fff;
                         }
                     }
                     .hide {
                         display: none;
                     }
                     .hint {
-                        text-align: left;
                         min-height: 55px;
+                        text-align: left;
                     }
                 }
             }
