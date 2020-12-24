@@ -46,7 +46,7 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 					<VocaTyping />
 					<SSpeakRecord />
 					<Loading view={loading}/>
-					<SVGAni className="goodjob-svg" view={goodjob} delay={2000}	data={`${_digenglishCB_lib_}images/goodjob_ls.png`} onComplete={actions.goodjobComplete} />
+					<SVGAni className="goodjob-svg" view={goodjob} delay={2000}	data={`${_digenglishCB_lib_}images/goodjob.png`} onComplete={actions.goodjobComplete} />
 					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}	/>
 				</div>
 			</div></div>
