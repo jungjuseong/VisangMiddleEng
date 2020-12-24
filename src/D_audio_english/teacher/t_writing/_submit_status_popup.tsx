@@ -24,7 +24,7 @@ interface IQuizBoxProps {
 	idx : number;
 }
 @observer
-class CheckResult extends React.Component<IQuizBoxProps> {
+class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
 	@observable private _color : COLOR[] = [];
 	@observable private _corfal : 0|1|2 = 0;
@@ -129,9 +129,9 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 	
 		return (
 			<>
-			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
+			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
 					<div className="subject_rate">
 						{arr.length}/{App.students.length}
 					</div>
@@ -188,4 +188,4 @@ class CheckResult extends React.Component<IQuizBoxProps> {
 		);
 	}
 }
-export default CheckResult;
+export default SubmitStatusPopup;

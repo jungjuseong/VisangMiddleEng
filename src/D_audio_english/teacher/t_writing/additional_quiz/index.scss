@@ -35,7 +35,7 @@
                 left: 0px;
                 right: 0px;
                 letter-spacing: -0.6px;
-                margin-top: 64px;            
+                margin-top: 64px;
                 span.word {
                     display: inline-block;
                     white-space: nowrap;
@@ -65,8 +65,6 @@
                         font-size: 22px;
                         font-weight: bold;
                         text-align: left;
-                        margin-bottom: 10px;
-                        margin-left: 25px;
                         font-family: NanumGothic;
                         &>div {
                             display: inline-block;
@@ -98,10 +96,10 @@
                     }
                     .table_box {
                         width: 975px;
-                        height: 380px;
+                        height: 355px;
                         text-align: left;
-                        margin: 0 auto;
                         overflow: auto;
+                        padding-top: 28px;
                         .swiper-container {
                             overflow: visible;
                         }
@@ -176,7 +174,7 @@
                         $head-font-size: 23px;
                         $head-line-height: 40px;
                         $content-font-size: 28px;
-                        $content-padding: 10px 15px 15px 15px;
+                        $content-padding: 10px 15px 15px 0px;
                         $radius: 10px;
                         $normal: resolve("teacher/images/btn_dropdown_t_down.png");
                         $on: resolve("teacher/images/btn_dropdown_t_up.png");
@@ -228,7 +226,7 @@
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding: 30px 0 0 0;
+                        padding-top: 40px;
                         .block {
                             border-bottom: 4px solid #000;
                         }
@@ -284,7 +282,7 @@
                         position: relative;
                         text-align: left;
                         font-size: 28px;
-                        padding-top: 30px;
+                        padding-top: 40px;
                         height: 385px;
                         p {
                             display: inline-block;

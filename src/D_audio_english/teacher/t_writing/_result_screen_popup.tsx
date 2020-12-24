@@ -66,7 +66,7 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 	
 		return (
 			<>
-			<CoverPopup className="result_view" view={this._view} onClosed={onClosed} >
+			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
 					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
 					<div className="popbox">
