@@ -23,7 +23,7 @@
             "video": "word_visit.mp4",
             "sound_start": 0.7,
             "sound_end": 5.52,
-            "meaning_start": 13.8,
+            "meaning_start": 14.3,
             "meaning_end": 18.23,
             "sentence_start": 22,
             "sentence_end": 25.86,
@@ -34,9 +34,7 @@
             "key_word": false,
             "sentence_meaning": "나는 언젠가 파리를 {방문}하길 원한다.",
             "reading": true,
-            "tmq_seq": 39773,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39983
         }, {
             "seq": 2,
             "idx": "2v_Textbook_M1_L4_002_straight",
@@ -71,9 +69,7 @@
             "key_word": false,
             "sentence_meaning": "나는 공항으로 {곧장} 갔다.",
             "reading": false,
-            "tmq_seq": 39774,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39984
         }, {
             "seq": 3,
             "idx": "2v_Textbook_M1_L4_003_be filled with",
@@ -97,7 +93,7 @@
             "video": "word_be filled with.mp4",
             "sound_start": 0.8,
             "sound_end": 6.8,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.44,
             "sentence_start": 24.3,
             "sentence_end": 28.36,
@@ -108,9 +104,7 @@
             "key_word": false,
             "sentence_meaning": "야구장은 매주 많은 사람들로 {가득찬다}.",
             "reading": true,
-            "tmq_seq": 39775,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39985
         }, {
             "seq": 4,
             "idx": "2v_Textbook_M4_L4_04_festival",
@@ -134,7 +128,7 @@
             "video": "word_festival.mp4",
             "sound_start": 0.9,
             "sound_end": 6.39,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.66,
             "sentence_start": 23.8,
             "sentence_end": 27.67,
@@ -145,9 +139,7 @@
             "key_word": false,
             "sentence_meaning": "여름 동안 해변가에서 많은 {축제}가 있다.",
             "reading": true,
-            "tmq_seq": 39776,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39986
         }, {
             "seq": 5,
             "idx": "2v_Textbook_M1_L4_005_take place",
@@ -182,9 +174,7 @@
             "key_word": false,
             "sentence_meaning": "댄스 축제가 다음 주에 {열린다}.",
             "reading": true,
-            "tmq_seq": 39777,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39987
         }, {
             "seq": 6,
             "idx": "2v_Textbook_M1_L4_006_block",
@@ -219,9 +209,7 @@
             "key_word": false,
             "sentence_meaning": "이 {구역}에 우체국이 있나요?",
             "reading": false,
-            "tmq_seq": 39778,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39988
         }, {
             "seq": 7,
             "idx": "2v_Textbook_M7_L4_007_play",
@@ -256,9 +244,7 @@
             "key_word": false,
             "sentence_meaning": "당신은 {연극}과 영화 보는 것을 좋아하나요?",
             "reading": true,
-            "tmq_seq": 39779,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39989
         }, {
             "seq": 8,
             "idx": "2v_Textbook_M1_L4_008_show",
@@ -293,9 +279,7 @@
             "key_word": false,
             "sentence_meaning": "그 마술{쇼}는 멋있다.",
             "reading": true,
-            "tmq_seq": 39780,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39990
         }, {
             "seq": 9,
             "idx": "2v_Textbook_M1_L4_009_go on a trip",
@@ -330,9 +314,7 @@
             "key_word": false,
             "sentence_meaning": "우리는 하와이로 {여행을 갔다}.",
             "reading": false,
-            "tmq_seq": 39781,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39991
         }, {
             "seq": 10,
             "idx": "2v_Textbook_M1_L4_010_artist",
@@ -356,7 +338,7 @@
             "video": "word_artist.mp4",
             "sound_start": 1.95,
             "sound_end": 6.95,
-            "meaning_start": 16.12,
+            "meaning_start": 15.5,
             "meaning_end": 20,
             "sentence_start": 23.79,
             "sentence_end": 27.35,
@@ -367,9 +349,7 @@
             "key_word": false,
             "sentence_meaning": "레오나르도는 그 시대의 가장 유명한 {예술가}이다.",
             "reading": true,
-            "tmq_seq": 39782,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39992
         }, {
             "seq": 11,
             "idx": "2v_Textbook_M1_L4_011_visit",
@@ -393,7 +373,7 @@
             "video": "word_visit.mp4",
             "sound_start": 0.7,
             "sound_end": 5.52,
-            "meaning_start": 13.8,
+            "meaning_start": 14.3,
             "meaning_end": 18.23,
             "sentence_start": 22,
             "sentence_end": 25.86,
@@ -404,9 +384,7 @@
             "key_word": false,
             "sentence_meaning": "나는 언젠가 파리를 {방문}하길 원한다.",
             "reading": true,
-            "tmq_seq": 39783,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39993
         }, {
             "seq": 12,
             "idx": "2v_Textbook_M1_L4_012_straight",
@@ -441,9 +419,7 @@
             "key_word": false,
             "sentence_meaning": "나는 공항으로 {곧장} 갔다.",
             "reading": false,
-            "tmq_seq": 39784,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39994
         }, {
             "seq": 13,
             "idx": "2v_Textbook_M1_L4_013_be filled with",
@@ -467,7 +443,7 @@
             "video": "word_be filled with.mp4",
             "sound_start": 0.8,
             "sound_end": 6.8,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.44,
             "sentence_start": 24.3,
             "sentence_end": 28.36,
@@ -478,9 +454,7 @@
             "key_word": false,
             "sentence_meaning": "야구장은 매주 많은 사람들로 {가득찬다}.",
             "reading": true,
-            "tmq_seq": 39785,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39995
         }, {
             "seq": 14,
             "idx": "2v_Textbook_M4_L4_014_festival",
@@ -504,7 +478,7 @@
             "video": "word_festival.mp4",
             "sound_start": 0.9,
             "sound_end": 6.39,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.66,
             "sentence_start": 23.8,
             "sentence_end": 27.67,
@@ -515,9 +489,7 @@
             "key_word": false,
             "sentence_meaning": "여름 동안 해변가에서 많은 {축제}가 있다.",
             "reading": true,
-            "tmq_seq": 39786,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39996
         }, {
             "seq": 15,
             "idx": "2v_Textbook_M1_L4_015_take place",
@@ -552,9 +524,7 @@
             "key_word": false,
             "sentence_meaning": "댄스 축제가 다음 주에 {열린다}.",
             "reading": true,
-            "tmq_seq": 39787,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39997
         }, {
             "seq": 16,
             "idx": "2v_Textbook_M1_L4_016_block",
@@ -589,9 +559,7 @@
             "key_word": false,
             "sentence_meaning": "이 {구역}에 우체국이 있나요?",
             "reading": false,
-            "tmq_seq": 39788,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39998
         }, {
             "seq": 17,
             "idx": "2v_Textbook_M7_L4_017_play",
@@ -626,9 +594,7 @@
             "key_word": false,
             "sentence_meaning": "당신은 {연극}과 영화 보는 것을 좋아하나요?",
             "reading": true,
-            "tmq_seq": 39789,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 39999
         }, {
             "seq": 18,
             "idx": "2v_Textbook_M1_L4_018_show",
@@ -663,9 +629,7 @@
             "key_word": false,
             "sentence_meaning": "그 마술{쇼}는 멋있다.",
             "reading": true,
-            "tmq_seq": 39790,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40000
         }, {
             "seq": 19,
             "idx": "2v_Textbook_M1_L4_019_go on a trip",
@@ -700,9 +664,7 @@
             "key_word": false,
             "sentence_meaning": "우리는 하와이로 {여행을 갔다}.",
             "reading": false,
-            "tmq_seq": 39791,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40001
         }, {
             "seq": 20,
             "idx": "2v_Textbook_M1_L4_020_artist",
@@ -726,7 +688,7 @@
             "video": "word_artist.mp4",
             "sound_start": 1.95,
             "sound_end": 6.95,
-            "meaning_start": 16.12,
+            "meaning_start": 15.5,
             "meaning_end": 20,
             "sentence_start": 23.79,
             "sentence_end": 27.35,
@@ -737,9 +699,7 @@
             "key_word": false,
             "sentence_meaning": "레오나르도는 그 시대의 가장 유명한 {예술가}이다.",
             "reading": true,
-            "tmq_seq": 39792,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40002
         }, {
             "seq": 21,
             "idx": "2v_Textbook_M1_L4_021_visit",
@@ -763,7 +723,7 @@
             "video": "word_visit.mp4",
             "sound_start": 0.7,
             "sound_end": 5.52,
-            "meaning_start": 13.8,
+            "meaning_start": 14.3,
             "meaning_end": 18.23,
             "sentence_start": 22,
             "sentence_end": 25.86,
@@ -774,9 +734,7 @@
             "key_word": false,
             "sentence_meaning": "나는 언젠가 파리를 {방문}하길 원한다.",
             "reading": true,
-            "tmq_seq": 39793,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40003
         }, {
             "seq": 22,
             "idx": "2v_Textbook_M1_L4_022_straight",
@@ -811,9 +769,7 @@
             "key_word": false,
             "sentence_meaning": "나는 공항으로 {곧장} 갔다.",
             "reading": false,
-            "tmq_seq": 39794,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40004
         }, {
             "seq": 23,
             "idx": "2v_Textbook_M1_L4_023_be filled with",
@@ -837,7 +793,7 @@
             "video": "word_be filled with.mp4",
             "sound_start": 0.8,
             "sound_end": 6.8,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.44,
             "sentence_start": 24.3,
             "sentence_end": 28.36,
@@ -848,9 +804,7 @@
             "key_word": false,
             "sentence_meaning": "야구장은 매주 많은 사람들로 {가득찬다}.",
             "reading": true,
-            "tmq_seq": 39795,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40005
         }, {
             "seq": 24,
             "idx": "2v_Textbook_M4_L4_024_festival",
@@ -874,7 +828,7 @@
             "video": "word_festival.mp4",
             "sound_start": 0.9,
             "sound_end": 6.39,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.66,
             "sentence_start": 23.8,
             "sentence_end": 27.67,
@@ -885,9 +839,7 @@
             "key_word": false,
             "sentence_meaning": "여름 동안 해변가에서 많은 {축제}가 있다.",
             "reading": true,
-            "tmq_seq": 39796,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40006
         }, {
             "seq": 25,
             "idx": "2v_Textbook_M1_L4_025_take place",
@@ -922,9 +874,7 @@
             "key_word": false,
             "sentence_meaning": "댄스 축제가 다음 주에 {열린다}.",
             "reading": true,
-            "tmq_seq": 39797,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40007
         }, {
             "seq": 26,
             "idx": "2v_Textbook_M1_L4_026_block",
@@ -959,9 +909,7 @@
             "key_word": false,
             "sentence_meaning": "이 {구역}에 우체국이 있나요?",
             "reading": false,
-            "tmq_seq": 39798,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40008
         }, {
             "seq": 27,
             "idx": "2v_Textbook_M7_L4_027_play",
@@ -996,9 +944,7 @@
             "key_word": false,
             "sentence_meaning": "당신은 {연극}과 영화 보는 것을 좋아하나요?",
             "reading": true,
-            "tmq_seq": 39799,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40009
         }, {
             "seq": 28,
             "idx": "2v_Textbook_M1_L4_028_show",
@@ -1033,9 +979,7 @@
             "key_word": false,
             "sentence_meaning": "그 마술{쇼}는 멋있다.",
             "reading": true,
-            "tmq_seq": 39800,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40010
         }, {
             "seq": 29,
             "idx": "2v_Textbook_M1_L4_029_go on a trip",
@@ -1070,9 +1014,7 @@
             "key_word": false,
             "sentence_meaning": "우리는 하와이로 {여행을 갔다}.",
             "reading": false,
-            "tmq_seq": 39801,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40011
         }, {
             "seq": 30,
             "idx": "2v_Textbook_M1_L4_030_artist",
@@ -1096,7 +1038,7 @@
             "video": "word_artist.mp4",
             "sound_start": 1.95,
             "sound_end": 6.95,
-            "meaning_start": 16.12,
+            "meaning_start": 15.5,
             "meaning_end": 20,
             "sentence_start": 23.79,
             "sentence_end": 27.35,
@@ -1107,9 +1049,7 @@
             "key_word": false,
             "sentence_meaning": "레오나르도는 그 시대의 가장 유명한 {예술가}이다.",
             "reading": true,
-            "tmq_seq": 39802,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40012
         }, {
             "seq": 31,
             "idx": "2v_Textbook_M1_L4_031_visit",
@@ -1133,7 +1073,7 @@
             "video": "word_visit.mp4",
             "sound_start": 0.7,
             "sound_end": 5.52,
-            "meaning_start": 13.8,
+            "meaning_start": 14.3,
             "meaning_end": 18.23,
             "sentence_start": 22,
             "sentence_end": 25.86,
@@ -1144,9 +1084,7 @@
             "key_word": false,
             "sentence_meaning": "나는 언젠가 파리를 {방문}하길 원한다.",
             "reading": true,
-            "tmq_seq": 39803,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40013
         }, {
             "seq": 32,
             "idx": "2v_Textbook_M1_L4_032_straight",
@@ -1181,9 +1119,7 @@
             "key_word": false,
             "sentence_meaning": "나는 공항으로 {곧장} 갔다.",
             "reading": false,
-            "tmq_seq": 39804,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40014
         }, {
             "seq": 33,
             "idx": "2v_Textbook_M1_L4_033_be filled with",
@@ -1207,7 +1143,7 @@
             "video": "word_be filled with.mp4",
             "sound_start": 0.8,
             "sound_end": 6.8,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.44,
             "sentence_start": 24.3,
             "sentence_end": 28.36,
@@ -1218,9 +1154,7 @@
             "key_word": false,
             "sentence_meaning": "야구장은 매주 많은 사람들로 {가득찬다}.",
             "reading": true,
-            "tmq_seq": 39805,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40015
         }, {
             "seq": 34,
             "idx": "2v_Textbook_M4_L4_034_festival",
@@ -1244,7 +1178,7 @@
             "video": "word_festival.mp4",
             "sound_start": 0.9,
             "sound_end": 6.39,
-            "meaning_start": 15,
+            "meaning_start": 15.5,
             "meaning_end": 20.66,
             "sentence_start": 23.8,
             "sentence_end": 27.67,
@@ -1255,9 +1189,7 @@
             "key_word": false,
             "sentence_meaning": "여름 동안 해변가에서 많은 {축제}가 있다.",
             "reading": true,
-            "tmq_seq": 39806,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40016
         }, {
             "seq": 35,
             "idx": "2v_Textbook_M1_L4_035_take place",
@@ -1292,9 +1224,7 @@
             "key_word": false,
             "sentence_meaning": "댄스 축제가 다음 주에 {열린다}.",
             "reading": true,
-            "tmq_seq": 39807,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40017
         }, {
             "seq": 36,
             "idx": "2v_Textbook_M1_L4_036_block",
@@ -1329,9 +1259,7 @@
             "key_word": false,
             "sentence_meaning": "이 {구역}에 우체국이 있나요?",
             "reading": false,
-            "tmq_seq": 39808,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40018
         }, {
             "seq": 37,
             "idx": "2v_Textbook_M7_L4_037_play",
@@ -1366,9 +1294,7 @@
             "key_word": false,
             "sentence_meaning": "당신은 {연극}과 영화 보는 것을 좋아하나요?",
             "reading": true,
-            "tmq_seq": 39809,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40019
         }, {
             "seq": 38,
             "idx": "2v_Textbook_M1_L4_038_show",
@@ -1403,9 +1329,7 @@
             "key_word": false,
             "sentence_meaning": "그 마술{쇼}는 멋있다.",
             "reading": true,
-            "tmq_seq": 39810,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40020
         }, {
             "seq": 39,
             "idx": "2v_Textbook_M1_L4_039_go on a trip",
@@ -1440,9 +1364,7 @@
             "key_word": false,
             "sentence_meaning": "우리는 하와이로 {여행을 갔다}.",
             "reading": false,
-            "tmq_seq": 39811,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40021
         }, {
             "seq": 40,
             "idx": "2v_Textbook_M1_L4_040_artist",
@@ -1466,7 +1388,7 @@
             "video": "word_artist.mp4",
             "sound_start": 1.95,
             "sound_end": 6.95,
-            "meaning_start": 16.12,
+            "meaning_start": 15.5,
             "meaning_end": 20,
             "sentence_start": 23.79,
             "sentence_end": 27.35,
@@ -1477,9 +1399,7 @@
             "key_word": false,
             "sentence_meaning": "레오나르도는 그 시대의 가장 유명한 {예술가}이다.",
             "reading": true,
-            "tmq_seq": 39812,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40022
         }, {
             "seq": 41,
             "idx": "2v_Textbook_M1_L4_041_visit",
@@ -1503,7 +1423,7 @@
             "video": "word_visit.mp4",
             "sound_start": 0.7,
             "sound_end": 5.52,
-            "meaning_start": 13.8,
+            "meaning_start": 14.3,
             "meaning_end": 18.23,
             "sentence_start": 22,
             "sentence_end": 25.86,
@@ -1514,9 +1434,7 @@
             "key_word": false,
             "sentence_meaning": "나는 언젠가 파리를 {방문}하길 원한다.",
             "reading": true,
-            "tmq_seq": 39813,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40023
         }, {
             "seq": 42,
             "idx": "2v_Textbook_M1_L4_042_straight",
@@ -1551,9 +1469,7 @@
             "key_word": false,
             "sentence_meaning": "나는 공항으로 {곧장} 갔다.",
             "reading": false,
-            "tmq_seq": 39814,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40024
         }],
         "quiz_sounds": [{
             "seq": 1,
@@ -1570,9 +1486,7 @@
             "choice2": "block",
             "choice3": "visit",
             "choice4": "vacation",
-            "tmq_seq": 39815,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40025
         }, {
             "seq": 2,
             "idx": "2v_Textbook_M1_L4_002_straight",
@@ -1588,9 +1502,7 @@
             "choice2": "show",
             "choice3": "place",
             "choice4": "type",
-            "tmq_seq": 39816,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40026
         }, {
             "seq": 3,
             "idx": "2v_Textbook_M1_L4_003_be filled with",
@@ -1606,9 +1518,7 @@
             "choice2": "be filled with",
             "choice3": "at one time",
             "choice4": "be surprised at",
-            "tmq_seq": 39817,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40027
         }, {
             "seq": 4,
             "idx": "2v_Textbook_M4_L4_04_festival",
@@ -1624,9 +1534,7 @@
             "choice2": "festival",
             "choice3": "museum",
             "choice4": "art",
-            "tmq_seq": 39818,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40028
         }, {
             "seq": 5,
             "idx": "2v_Textbook_M1_L4_005_take place",
@@ -1642,9 +1550,7 @@
             "choice2": "festival",
             "choice3": "visit",
             "choice4": "take place",
-            "tmq_seq": 39819,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40029
         }, {
             "seq": 6,
             "idx": "2v_Textbook_M1_L4_006_block",
@@ -1660,9 +1566,7 @@
             "choice2": "trip",
             "choice3": "block",
             "choice4": "view",
-            "tmq_seq": 39820,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40030
         }, {
             "seq": 7,
             "idx": "2v_Textbook_M7_L4_007_play",
@@ -1678,9 +1582,7 @@
             "choice2": "play",
             "choice3": "straight",
             "choice4": "plat",
-            "tmq_seq": 39821,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40031
         }, {
             "seq": 8,
             "idx": "2v_Textbook_M1_L4_008_show",
@@ -1696,9 +1598,7 @@
             "choice2": "slow",
             "choice3": "surprised",
             "choice4": "stop",
-            "tmq_seq": 39822,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40032
         }, {
             "seq": 9,
             "idx": "2v_Textbook_M1_L4_009_go on a trip",
@@ -1714,9 +1614,7 @@
             "choice2": "take place",
             "choice3": "go to school",
             "choice4": "go on a trip",
-            "tmq_seq": 39823,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40033
         }, {
             "seq": 10,
             "idx": "2v_Textbook_M1_L4_010_artist",
@@ -1732,9 +1630,7 @@
             "choice2": "explore",
             "choice3": "artist",
             "choice4": "show",
-            "tmq_seq": 39824,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40034
         }, {
             "seq": 11,
             "idx": "2v_Textbook_M1_L4_011_visit",
@@ -1750,9 +1646,7 @@
             "choice2": "block",
             "choice3": "visit",
             "choice4": "vacation",
-            "tmq_seq": 39825,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40035
         }, {
             "seq": 12,
             "idx": "2v_Textbook_M1_L4_012_straight",
@@ -1768,9 +1662,7 @@
             "choice2": "show",
             "choice3": "place",
             "choice4": "type",
-            "tmq_seq": 39826,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40036
         }, {
             "seq": 13,
             "idx": "2v_Textbook_M1_L4_013_be filled with",
@@ -1786,9 +1678,7 @@
             "choice2": "be filled with",
             "choice3": "at one time",
             "choice4": "be surprised at",
-            "tmq_seq": 39827,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40037
         }, {
             "seq": 14,
             "idx": "2v_Textbook_M4_L4_014_festival",
@@ -1804,9 +1694,7 @@
             "choice2": "festival",
             "choice3": "museum",
             "choice4": "art",
-            "tmq_seq": 39828,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40038
         }, {
             "seq": 15,
             "idx": "2v_Textbook_M1_L4_015_take place",
@@ -1822,9 +1710,7 @@
             "choice2": "festival",
             "choice3": "visit",
             "choice4": "take place",
-            "tmq_seq": 39829,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40039
         }, {
             "seq": 16,
             "idx": "2v_Textbook_M1_L4_016_block",
@@ -1840,9 +1726,7 @@
             "choice2": "trip",
             "choice3": "block",
             "choice4": "view",
-            "tmq_seq": 39830,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40040
         }, {
             "seq": 17,
             "idx": "2v_Textbook_M7_L4_017_play",
@@ -1858,9 +1742,7 @@
             "choice2": "play",
             "choice3": "straight",
             "choice4": "plat",
-            "tmq_seq": 39831,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40041
         }, {
             "seq": 18,
             "idx": "2v_Textbook_M1_L4_018_show",
@@ -1876,9 +1758,7 @@
             "choice2": "slow",
             "choice3": "surprised",
             "choice4": "stop",
-            "tmq_seq": 39832,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40042
         }, {
             "seq": 19,
             "idx": "2v_Textbook_M1_L4_019_go on a trip",
@@ -1894,9 +1774,7 @@
             "choice2": "take place",
             "choice3": "go to school",
             "choice4": "go on a trip",
-            "tmq_seq": 39833,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40043
         }, {
             "seq": 20,
             "idx": "2v_Textbook_M1_L4_020_artist",
@@ -1912,9 +1790,7 @@
             "choice2": "explore",
             "choice3": "artist",
             "choice4": "show",
-            "tmq_seq": 39834,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40044
         }, {
             "seq": 21,
             "idx": "2v_Textbook_M1_L4_021_visit",
@@ -1930,9 +1806,7 @@
             "choice2": "block",
             "choice3": "visit",
             "choice4": "vacation",
-            "tmq_seq": 39835,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40045
         }, {
             "seq": 22,
             "idx": "2v_Textbook_M1_L4_022_straight",
@@ -1948,9 +1822,7 @@
             "choice2": "show",
             "choice3": "place",
             "choice4": "type",
-            "tmq_seq": 39836,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40046
         }, {
             "seq": 23,
             "idx": "2v_Textbook_M1_L4_023_be filled with",
@@ -1966,9 +1838,7 @@
             "choice2": "be filled with",
             "choice3": "at one time",
             "choice4": "be surprised at",
-            "tmq_seq": 39837,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40047
         }, {
             "seq": 24,
             "idx": "2v_Textbook_M4_L4_024_festival",
@@ -1984,9 +1854,7 @@
             "choice2": "festival",
             "choice3": "museum",
             "choice4": "art",
-            "tmq_seq": 39838,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40048
         }, {
             "seq": 25,
             "idx": "2v_Textbook_M1_L4_025_take place",
@@ -2002,9 +1870,7 @@
             "choice2": "festival",
             "choice3": "visit",
             "choice4": "take place",
-            "tmq_seq": 39839,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40049
         }, {
             "seq": 26,
             "idx": "2v_Textbook_M1_L4_026_block",
@@ -2020,9 +1886,7 @@
             "choice2": "trip",
             "choice3": "block",
             "choice4": "view",
-            "tmq_seq": 39840,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40050
         }, {
             "seq": 27,
             "idx": "2v_Textbook_M7_L4_027_play",
@@ -2038,9 +1902,7 @@
             "choice2": "play",
             "choice3": "straight",
             "choice4": "plat",
-            "tmq_seq": 39841,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40051
         }, {
             "seq": 28,
             "idx": "2v_Textbook_M1_L4_028_show",
@@ -2056,9 +1918,7 @@
             "choice2": "slow",
             "choice3": "surprised",
             "choice4": "stop",
-            "tmq_seq": 39842,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40052
         }, {
             "seq": 29,
             "idx": "2v_Textbook_M1_L4_029_go on a trip",
@@ -2074,9 +1934,7 @@
             "choice2": "take place",
             "choice3": "go to school",
             "choice4": "go on a trip",
-            "tmq_seq": 39843,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40053
         }, {
             "seq": 30,
             "idx": "2v_Textbook_M1_L4_030_artist",
@@ -2092,9 +1950,7 @@
             "choice2": "explore",
             "choice3": "artist",
             "choice4": "show",
-            "tmq_seq": 39844,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40054
         }, {
             "seq": 31,
             "idx": "2v_Textbook_M1_L4_031_visit",
@@ -2110,9 +1966,7 @@
             "choice2": "block",
             "choice3": "visit",
             "choice4": "vacation",
-            "tmq_seq": 39845,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40055
         }, {
             "seq": 32,
             "idx": "2v_Textbook_M1_L4_032_straight",
@@ -2128,9 +1982,7 @@
             "choice2": "show",
             "choice3": "place",
             "choice4": "type",
-            "tmq_seq": 39846,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40056
         }, {
             "seq": 33,
             "idx": "2v_Textbook_M1_L4_033_be filled with",
@@ -2146,9 +1998,7 @@
             "choice2": "be filled with",
             "choice3": "at one time",
             "choice4": "be surprised at",
-            "tmq_seq": 39847,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40057
         }, {
             "seq": 34,
             "idx": "2v_Textbook_M4_L4_034_festival",
@@ -2164,9 +2014,7 @@
             "choice2": "festival",
             "choice3": "museum",
             "choice4": "art",
-            "tmq_seq": 39848,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40058
         }, {
             "seq": 35,
             "idx": "2v_Textbook_M1_L4_035_take place",
@@ -2182,9 +2030,7 @@
             "choice2": "festival",
             "choice3": "visit",
             "choice4": "take place",
-            "tmq_seq": 39849,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40059
         }, {
             "seq": 36,
             "idx": "2v_Textbook_M1_L4_036_block",
@@ -2200,9 +2046,7 @@
             "choice2": "trip",
             "choice3": "block",
             "choice4": "view",
-            "tmq_seq": 39850,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40060
         }, {
             "seq": 37,
             "idx": "2v_Textbook_M7_L4_037_play",
@@ -2218,9 +2062,7 @@
             "choice2": "play",
             "choice3": "straight",
             "choice4": "plat",
-            "tmq_seq": 39851,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40061
         }, {
             "seq": 38,
             "idx": "2v_Textbook_M1_L4_038_show",
@@ -2236,9 +2078,7 @@
             "choice2": "slow",
             "choice3": "surprised",
             "choice4": "stop",
-            "tmq_seq": 39852,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40062
         }, {
             "seq": 39,
             "idx": "2v_Textbook_M1_L4_039_go on a trip",
@@ -2254,9 +2094,7 @@
             "choice2": "take place",
             "choice3": "go to school",
             "choice4": "go on a trip",
-            "tmq_seq": 39853,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40063
         }, {
             "seq": 40,
             "idx": "2v_Textbook_M1_L4_040_artist",
@@ -2272,9 +2110,7 @@
             "choice2": "explore",
             "choice3": "artist",
             "choice4": "show",
-            "tmq_seq": 39854,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40064
         }, {
             "seq": 41,
             "idx": "2v_Textbook_M1_L4_041_visit",
@@ -2290,9 +2126,7 @@
             "choice2": "block",
             "choice3": "visit",
             "choice4": "vacation",
-            "tmq_seq": 39855,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40065
         }, {
             "seq": 42,
             "idx": "2v_Textbook_M1_L4_042_straight",
@@ -2308,9 +2142,7 @@
             "choice2": "show",
             "choice3": "place",
             "choice4": "type",
-            "tmq_seq": 39856,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40066
         }],
         "quiz_meanings": [{
             "seq": 1,
@@ -2326,9 +2158,7 @@
             "choice1": "to go to a place",
             "choice2": "to go somewhere far away",
             "choice3": "to be full of something",
-            "tmq_seq": 39857,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40067
         }, {
             "seq": 2,
             "idx": "2v_Textbook_M1_L4_002_straight",
@@ -2343,9 +2173,7 @@
             "choice1": "directly and immediately",
             "choice2": "very unusual or surprising",
             "choice3": "with a lot of effort",
-            "tmq_seq": 39858,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40068
         }, {
             "seq": 3,
             "idx": "2v_Textbook_M1_L4_003_be filled with",
@@ -2360,9 +2188,7 @@
             "choice1": "to begin to sleep",
             "choice2": "to happen",
             "choice3": "to be full of something",
-            "tmq_seq": 39859,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40069
         }, {
             "seq": 4,
             "idx": "2v_Textbook_M4_L4_04_festival",
@@ -2377,9 +2203,7 @@
             "choice1": "a performance",
             "choice2": "a story performed on stage",
             "choice3": "a special day of celebration",
-            "tmq_seq": 39860,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40070
         }, {
             "seq": 5,
             "idx": "2v_Textbook_M1_L4_005_take place",
@@ -2394,9 +2218,7 @@
             "choice1": "to happen",
             "choice2": "to go somewhere far away",
             "choice3": "to start to move as if alive",
-            "tmq_seq": 39861,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40071
         }, {
             "seq": 6,
             "idx": "2v_Textbook_M1_L4_006_block",
@@ -2411,9 +2233,7 @@
             "choice1": "a small stone",
             "choice2": "a female who uses magic and spells",
             "choice3": "an area in a city surrounded by four streets",
-            "tmq_seq": 39862,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40072
         }, {
             "seq": 7,
             "idx": "2v_Textbook_M7_L4_007_play",
@@ -2428,9 +2248,7 @@
             "choice1": "a special day of celebration",
             "choice2": "a story performed on stage",
             "choice3": "a part of land",
-            "tmq_seq": 39863,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40073
         }, {
             "seq": 8,
             "idx": "2v_Textbook_M1_L4_008_show",
@@ -2445,9 +2263,7 @@
             "choice1": "a small, thin branch of a tree",
             "choice2": "a performance",
             "choice3": "a female who uses magic and spells",
-            "tmq_seq": 39864,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40074
         }, {
             "seq": 9,
             "idx": "2v_Textbook_M1_L4_009_go on a trip",
@@ -2462,9 +2278,7 @@
             "choice1": "to go somewhere far away",
             "choice2": "to do an action with a thing",
             "choice3": "to put water on something",
-            "tmq_seq": 39865,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40075
         }, {
             "seq": 10,
             "idx": "2v_Textbook_M1_L4_010_artist",
@@ -2479,9 +2293,7 @@
             "choice1": "someone who travels in space",
             "choice2": "someone who produces art",
             "choice3": "someone who fixes ships",
-            "tmq_seq": 39866,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40076
         }, {
             "seq": 11,
             "idx": "2v_Textbook_M1_L4_011_visit",
@@ -2496,9 +2308,7 @@
             "choice1": "to go to a place",
             "choice2": "to go somewhere far away",
             "choice3": "to be full of something",
-            "tmq_seq": 39867,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40077
         }, {
             "seq": 12,
             "idx": "2v_Textbook_M1_L4_012_straight",
@@ -2513,9 +2323,7 @@
             "choice1": "directly and immediately",
             "choice2": "very unusual or surprising",
             "choice3": "with a lot of effort",
-            "tmq_seq": 39868,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40078
         }, {
             "seq": 13,
             "idx": "2v_Textbook_M1_L4_013_be filled with",
@@ -2530,9 +2338,7 @@
             "choice1": "to begin to sleep",
             "choice2": "to happen",
             "choice3": "to be full of something",
-            "tmq_seq": 39869,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40079
         }, {
             "seq": 14,
             "idx": "2v_Textbook_M4_L4_014_festival",
@@ -2547,9 +2353,7 @@
             "choice1": "a performance",
             "choice2": "a story performed on stage",
             "choice3": "a special day of celebration",
-            "tmq_seq": 39870,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40080
         }, {
             "seq": 15,
             "idx": "2v_Textbook_M1_L4_015_take place",
@@ -2564,9 +2368,7 @@
             "choice1": "to happen",
             "choice2": "to go somewhere far away",
             "choice3": "to start to move as if alive",
-            "tmq_seq": 39871,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40081
         }, {
             "seq": 16,
             "idx": "2v_Textbook_M1_L4_016_block",
@@ -2581,9 +2383,7 @@
             "choice1": "a small stone",
             "choice2": "a female who uses magic and spells",
             "choice3": "an area in a city surrounded by four streets",
-            "tmq_seq": 39872,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40082
         }, {
             "seq": 17,
             "idx": "2v_Textbook_M7_L4_017_play",
@@ -2598,9 +2398,7 @@
             "choice1": "a special day of celebration",
             "choice2": "a story performed on stage",
             "choice3": "a part of land",
-            "tmq_seq": 39873,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40083
         }, {
             "seq": 18,
             "idx": "2v_Textbook_M1_L4_018_show",
@@ -2615,9 +2413,7 @@
             "choice1": "a small, thin branch of a tree",
             "choice2": "a performance",
             "choice3": "a female who uses magic and spells",
-            "tmq_seq": 39874,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40084
         }, {
             "seq": 19,
             "idx": "2v_Textbook_M1_L4_019_go on a trip",
@@ -2632,9 +2428,7 @@
             "choice1": "to go somewhere far away",
             "choice2": "to do an action with a thing",
             "choice3": "to put water on something",
-            "tmq_seq": 39875,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40085
         }, {
             "seq": 20,
             "idx": "2v_Textbook_M1_L4_020_artist",
@@ -2649,9 +2443,7 @@
             "choice1": "someone who travels in space",
             "choice2": "someone who produces art",
             "choice3": "someone who fixes ships",
-            "tmq_seq": 39876,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40086
         }, {
             "seq": 21,
             "idx": "2v_Textbook_M1_L4_021_visit",
@@ -2666,9 +2458,7 @@
             "choice1": "to go to a place",
             "choice2": "to go somewhere far away",
             "choice3": "to be full of something",
-            "tmq_seq": 39877,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40087
         }, {
             "seq": 22,
             "idx": "2v_Textbook_M1_L4_022_straight",
@@ -2683,9 +2473,7 @@
             "choice1": "directly and immediately",
             "choice2": "very unusual or surprising",
             "choice3": "with a lot of effort",
-            "tmq_seq": 39878,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40088
         }, {
             "seq": 23,
             "idx": "2v_Textbook_M1_L4_023_be filled with",
@@ -2700,9 +2488,7 @@
             "choice1": "to begin to sleep",
             "choice2": "to happen",
             "choice3": "to be full of something",
-            "tmq_seq": 39879,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40089
         }, {
             "seq": 24,
             "idx": "2v_Textbook_M4_L4_024_festival",
@@ -2717,9 +2503,7 @@
             "choice1": "a performance",
             "choice2": "a story performed on stage",
             "choice3": "a special day of celebration",
-            "tmq_seq": 39880,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40090
         }, {
             "seq": 25,
             "idx": "2v_Textbook_M1_L4_025_take place",
@@ -2734,9 +2518,7 @@
             "choice1": "to happen",
             "choice2": "to go somewhere far away",
             "choice3": "to start to move as if alive",
-            "tmq_seq": 39881,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40091
         }, {
             "seq": 26,
             "idx": "2v_Textbook_M1_L4_026_block",
@@ -2751,9 +2533,7 @@
             "choice1": "a small stone",
             "choice2": "a female who uses magic and spells",
             "choice3": "an area in a city surrounded by four streets",
-            "tmq_seq": 39882,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40092
         }, {
             "seq": 27,
             "idx": "2v_Textbook_M7_L4_027_play",
@@ -2768,9 +2548,7 @@
             "choice1": "a special day of celebration",
             "choice2": "a story performed on stage",
             "choice3": "a part of land",
-            "tmq_seq": 39883,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40093
         }, {
             "seq": 28,
             "idx": "2v_Textbook_M1_L4_028_show",
@@ -2785,9 +2563,7 @@
             "choice1": "a small, thin branch of a tree",
             "choice2": "a performance",
             "choice3": "a female who uses magic and spells",
-            "tmq_seq": 39884,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40094
         }, {
             "seq": 29,
             "idx": "2v_Textbook_M1_L4_029_go on a trip",
@@ -2802,9 +2578,7 @@
             "choice1": "to go somewhere far away",
             "choice2": "to do an action with a thing",
             "choice3": "to put water on something",
-            "tmq_seq": 39885,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40095
         }, {
             "seq": 30,
             "idx": "2v_Textbook_M1_L4_030_artist",
@@ -2819,9 +2593,7 @@
             "choice1": "someone who travels in space",
             "choice2": "someone who produces art",
             "choice3": "someone who fixes ships",
-            "tmq_seq": 39886,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40096
         }, {
             "seq": 31,
             "idx": "2v_Textbook_M1_L4_031_visit",
@@ -2836,9 +2608,7 @@
             "choice1": "to go to a place",
             "choice2": "to go somewhere far away",
             "choice3": "to be full of something",
-            "tmq_seq": 39887,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40097
         }, {
             "seq": 32,
             "idx": "2v_Textbook_M1_L4_032_straight",
@@ -2853,9 +2623,7 @@
             "choice1": "directly and immediately",
             "choice2": "very unusual or surprising",
             "choice3": "with a lot of effort",
-            "tmq_seq": 39888,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40098
         }, {
             "seq": 33,
             "idx": "2v_Textbook_M1_L4_033_be filled with",
@@ -2870,9 +2638,7 @@
             "choice1": "to begin to sleep",
             "choice2": "to happen",
             "choice3": "to be full of something",
-            "tmq_seq": 39889,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40099
         }, {
             "seq": 34,
             "idx": "2v_Textbook_M4_L4_034_festival",
@@ -2887,9 +2653,7 @@
             "choice1": "a performance",
             "choice2": "a story performed on stage",
             "choice3": "a special day of celebration",
-            "tmq_seq": 39890,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40100
         }, {
             "seq": 35,
             "idx": "2v_Textbook_M1_L4_035_take place",
@@ -2904,9 +2668,7 @@
             "choice1": "to happen",
             "choice2": "to go somewhere far away",
             "choice3": "to start to move as if alive",
-            "tmq_seq": 39891,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40101
         }, {
             "seq": 36,
             "idx": "2v_Textbook_M1_L4_036_block",
@@ -2921,9 +2683,7 @@
             "choice1": "a small stone",
             "choice2": "a female who uses magic and spells",
             "choice3": "an area in a city surrounded by four streets",
-            "tmq_seq": 39892,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40102
         }, {
             "seq": 37,
             "idx": "2v_Textbook_M7_L4_037_play",
@@ -2938,9 +2698,7 @@
             "choice1": "a special day of celebration",
             "choice2": "a story performed on stage",
             "choice3": "a part of land",
-            "tmq_seq": 39893,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40103
         }, {
             "seq": 38,
             "idx": "2v_Textbook_M1_L4_038_show",
@@ -2955,9 +2713,7 @@
             "choice1": "a small, thin branch of a tree",
             "choice2": "a performance",
             "choice3": "a female who uses magic and spells",
-            "tmq_seq": 39894,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40104
         }, {
             "seq": 39,
             "idx": "2v_Textbook_M1_L4_039_go on a trip",
@@ -2972,9 +2728,7 @@
             "choice1": "to go somewhere far away",
             "choice2": "to do an action with a thing",
             "choice3": "to put water on something",
-            "tmq_seq": 39895,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40105
         }, {
             "seq": 40,
             "idx": "2v_Textbook_M1_L4_040_artist",
@@ -2989,9 +2743,7 @@
             "choice1": "someone who travels in space",
             "choice2": "someone who produces art",
             "choice3": "someone who fixes ships",
-            "tmq_seq": 39896,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40106
         }, {
             "seq": 41,
             "idx": "2v_Textbook_M1_L4_041_visit",
@@ -3006,9 +2758,7 @@
             "choice1": "to go to a place",
             "choice2": "to go somewhere far away",
             "choice3": "to be full of something",
-            "tmq_seq": 39897,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40107
         }, {
             "seq": 42,
             "idx": "2v_Textbook_M1_L4_042_straight",
@@ -3023,9 +2773,7 @@
             "choice1": "directly and immediately",
             "choice2": "very unusual or surprising",
             "choice3": "with a lot of effort",
-            "tmq_seq": 39898,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40108
         }],
         "quiz_usages": [{
             "seq": 1,
@@ -3042,9 +2790,7 @@
             "choice1": "speak",
             "choice2": "visit",
             "choice3": "make",
-            "tmq_seq": 39899,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40109
         }, {
             "seq": 2,
             "idx": "2v_Textbook_M1_L4_002_straight",
@@ -3060,9 +2806,7 @@
             "choice1": "straight",
             "choice2": "fast",
             "choice3": "slow",
-            "tmq_seq": 39900,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40110
         }, {
             "seq": 3,
             "idx": "2v_Textbook_M1_L4_003_be filled with",
@@ -3078,9 +2822,7 @@
             "choice1": "is satisfied with",
             "choice2": "is filled with",
             "choice3": "is made with",
-            "tmq_seq": 39901,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40111
         }, {
             "seq": 4,
             "idx": "2v_Textbook_M4_L4_04_festival",
@@ -3096,9 +2838,7 @@
             "choice1": "shops",
             "choice2": "balls",
             "choice3": "festivals",
-            "tmq_seq": 39902,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40112
         }, {
             "seq": 5,
             "idx": "2v_Textbook_M1_L4_005_take place",
@@ -3114,9 +2854,7 @@
             "choice1": "take place",
             "choice2": "end",
             "choice3": "close down",
-            "tmq_seq": 39903,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40113
         }, {
             "seq": 6,
             "idx": "2v_Textbook_M1_L4_006_block",
@@ -3132,9 +2870,7 @@
             "choice1": "block",
             "choice2": "table",
             "choice3": "letter",
-            "tmq_seq": 39904,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40114
         }, {
             "seq": 7,
             "idx": "2v_Textbook_M7_L4_007_play",
@@ -3150,9 +2886,7 @@
             "choice1": "TV",
             "choice2": "plays",
             "choice3": "games",
-            "tmq_seq": 39905,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40115
         }, {
             "seq": 8,
             "idx": "2v_Textbook_M1_L4_008_show",
@@ -3168,9 +2902,7 @@
             "choice1": "pot",
             "choice2": "shoe",
             "choice3": "show",
-            "tmq_seq": 39906,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40116
         }, {
             "seq": 9,
             "idx": "2v_Textbook_M1_L4_009_go on a trip",
@@ -3186,9 +2918,7 @@
             "choice1": "went on a trip",
             "choice2": "sent a card",
             "choice3": "moved out",
-            "tmq_seq": 39907,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40117
         }, {
             "seq": 10,
             "idx": "2v_Textbook_M1_L4_010_artist",
@@ -3204,9 +2934,7 @@
             "choice1": "dancer",
             "choice2": "artist",
             "choice3": "dentist",
-            "tmq_seq": 39908,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40118
         }, {
             "seq": 11,
             "idx": "2v_Textbook_M1_L4_011_visit",
@@ -3222,9 +2950,7 @@
             "choice1": "speak",
             "choice2": "visit",
             "choice3": "make",
-            "tmq_seq": 39909,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40119
         }, {
             "seq": 12,
             "idx": "2v_Textbook_M1_L4_012_straight",
@@ -3240,9 +2966,7 @@
             "choice1": "straight",
             "choice2": "fast",
             "choice3": "slow",
-            "tmq_seq": 39910,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40120
         }, {
             "seq": 13,
             "idx": "2v_Textbook_M1_L4_013_be filled with",
@@ -3258,9 +2982,7 @@
             "choice1": "is satisfied with",
             "choice2": "is filled with",
             "choice3": "is made with",
-            "tmq_seq": 39911,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40121
         }, {
             "seq": 14,
             "idx": "2v_Textbook_M4_L4_014_festival",
@@ -3276,9 +2998,7 @@
             "choice1": "shops",
             "choice2": "balls",
             "choice3": "festivals",
-            "tmq_seq": 39912,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40122
         }, {
             "seq": 15,
             "idx": "2v_Textbook_M1_L4_015_take place",
@@ -3294,9 +3014,7 @@
             "choice1": "take place",
             "choice2": "end",
             "choice3": "close down",
-            "tmq_seq": 39913,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40123
         }, {
             "seq": 16,
             "idx": "2v_Textbook_M1_L4_016_block",
@@ -3312,9 +3030,7 @@
             "choice1": "block",
             "choice2": "table",
             "choice3": "letter",
-            "tmq_seq": 39914,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40124
         }, {
             "seq": 17,
             "idx": "2v_Textbook_M7_L4_017_play",
@@ -3330,9 +3046,7 @@
             "choice1": "TV",
             "choice2": "plays",
             "choice3": "games",
-            "tmq_seq": 39915,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40125
         }, {
             "seq": 18,
             "idx": "2v_Textbook_M1_L4_018_show",
@@ -3348,9 +3062,7 @@
             "choice1": "pot",
             "choice2": "shoe",
             "choice3": "show",
-            "tmq_seq": 39916,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40126
         }, {
             "seq": 19,
             "idx": "2v_Textbook_M1_L4_019_go on a trip",
@@ -3366,9 +3078,7 @@
             "choice1": "went on a trip",
             "choice2": "sent a card",
             "choice3": "moved out",
-            "tmq_seq": 39917,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40127
         }, {
             "seq": 20,
             "idx": "2v_Textbook_M1_L4_020_artist",
@@ -3384,9 +3094,7 @@
             "choice1": "dancer",
             "choice2": "artist",
             "choice3": "dentist",
-            "tmq_seq": 39918,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40128
         }, {
             "seq": 21,
             "idx": "2v_Textbook_M1_L4_021_visit",
@@ -3402,9 +3110,7 @@
             "choice1": "speak",
             "choice2": "visit",
             "choice3": "make",
-            "tmq_seq": 39919,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40129
         }, {
             "seq": 22,
             "idx": "2v_Textbook_M1_L4_022_straight",
@@ -3420,9 +3126,7 @@
             "choice1": "straight",
             "choice2": "fast",
             "choice3": "slow",
-            "tmq_seq": 39920,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40130
         }, {
             "seq": 23,
             "idx": "2v_Textbook_M1_L4_023_be filled with",
@@ -3438,9 +3142,7 @@
             "choice1": "is satisfied with",
             "choice2": "is filled with",
             "choice3": "is made with",
-            "tmq_seq": 39921,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40131
         }, {
             "seq": 24,
             "idx": "2v_Textbook_M4_L4_024_festival",
@@ -3456,9 +3158,7 @@
             "choice1": "shops",
             "choice2": "balls",
             "choice3": "festivals",
-            "tmq_seq": 39922,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40132
         }, {
             "seq": 25,
             "idx": "2v_Textbook_M1_L4_025_take place",
@@ -3474,9 +3174,7 @@
             "choice1": "take place",
             "choice2": "end",
             "choice3": "close down",
-            "tmq_seq": 39923,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40133
         }, {
             "seq": 26,
             "idx": "2v_Textbook_M1_L4_026_block",
@@ -3492,9 +3190,7 @@
             "choice1": "block",
             "choice2": "table",
             "choice3": "letter",
-            "tmq_seq": 39924,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40134
         }, {
             "seq": 27,
             "idx": "2v_Textbook_M7_L4_027_play",
@@ -3510,9 +3206,7 @@
             "choice1": "TV",
             "choice2": "plays",
             "choice3": "games",
-            "tmq_seq": 39925,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40135
         }, {
             "seq": 28,
             "idx": "2v_Textbook_M1_L4_028_show",
@@ -3528,9 +3222,7 @@
             "choice1": "pot",
             "choice2": "shoe",
             "choice3": "show",
-            "tmq_seq": 39926,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40136
         }, {
             "seq": 29,
             "idx": "2v_Textbook_M1_L4_029_go on a trip",
@@ -3546,9 +3238,7 @@
             "choice1": "went on a trip",
             "choice2": "sent a card",
             "choice3": "moved out",
-            "tmq_seq": 39927,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40137
         }, {
             "seq": 30,
             "idx": "2v_Textbook_M1_L4_030_artist",
@@ -3564,9 +3254,7 @@
             "choice1": "dancer",
             "choice2": "artist",
             "choice3": "dentist",
-            "tmq_seq": 39928,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40138
         }, {
             "seq": 31,
             "idx": "2v_Textbook_M1_L4_031_visit",
@@ -3582,9 +3270,7 @@
             "choice1": "speak",
             "choice2": "visit",
             "choice3": "make",
-            "tmq_seq": 39929,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40139
         }, {
             "seq": 32,
             "idx": "2v_Textbook_M1_L4_032_straight",
@@ -3600,9 +3286,7 @@
             "choice1": "straight",
             "choice2": "fast",
             "choice3": "slow",
-            "tmq_seq": 39930,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40140
         }, {
             "seq": 33,
             "idx": "2v_Textbook_M1_L4_033_be filled with",
@@ -3618,9 +3302,7 @@
             "choice1": "is satisfied with",
             "choice2": "is filled with",
             "choice3": "is made with",
-            "tmq_seq": 39931,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40141
         }, {
             "seq": 34,
             "idx": "2v_Textbook_M4_L4_034_festival",
@@ -3636,9 +3318,7 @@
             "choice1": "shops",
             "choice2": "balls",
             "choice3": "festivals",
-            "tmq_seq": 39932,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40142
         }, {
             "seq": 35,
             "idx": "2v_Textbook_M1_L4_035_take place",
@@ -3654,9 +3334,7 @@
             "choice1": "take place",
             "choice2": "end",
             "choice3": "close down",
-            "tmq_seq": 39933,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40143
         }, {
             "seq": 36,
             "idx": "2v_Textbook_M1_L4_036_block",
@@ -3672,9 +3350,7 @@
             "choice1": "block",
             "choice2": "table",
             "choice3": "letter",
-            "tmq_seq": 39934,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40144
         }, {
             "seq": 37,
             "idx": "2v_Textbook_M7_L4_037_play",
@@ -3690,9 +3366,7 @@
             "choice1": "TV",
             "choice2": "plays",
             "choice3": "games",
-            "tmq_seq": 39935,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40145
         }, {
             "seq": 38,
             "idx": "2v_Textbook_M1_L4_038_show",
@@ -3708,9 +3382,7 @@
             "choice1": "pot",
             "choice2": "shoe",
             "choice3": "show",
-            "tmq_seq": 39936,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40146
         }, {
             "seq": 39,
             "idx": "2v_Textbook_M1_L4_039_go on a trip",
@@ -3726,9 +3398,7 @@
             "choice1": "went on a trip",
             "choice2": "sent a card",
             "choice3": "moved out",
-            "tmq_seq": 39937,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40147
         }, {
             "seq": 40,
             "idx": "2v_Textbook_M1_L4_040_artist",
@@ -3744,9 +3414,7 @@
             "choice1": "dancer",
             "choice2": "artist",
             "choice3": "dentist",
-            "tmq_seq": 39938,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40148
         }, {
             "seq": 41,
             "idx": "2v_Textbook_M1_L4_041_visit",
@@ -3762,9 +3430,7 @@
             "choice1": "speak",
             "choice2": "visit",
             "choice3": "make",
-            "tmq_seq": 39939,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40149
         }, {
             "seq": 42,
             "idx": "2v_Textbook_M1_L4_042_straight",
@@ -3780,9 +3446,7 @@
             "choice1": "straight",
             "choice2": "fast",
             "choice3": "slow",
-            "tmq_seq": 39940,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40150
         }],
         "quiz_spellings": [{
             "seq": 1,
@@ -3793,9 +3457,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39941,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40151
         }, {
             "seq": 2,
             "idx": "2v_Textbook_M1_L4_002_straight",
@@ -3805,9 +3467,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39942,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40152
         }, {
             "seq": 3,
             "idx": "2v_Textbook_M1_L4_003_be filled with",
@@ -3817,9 +3477,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39943,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40153
         }, {
             "seq": 4,
             "idx": "2v_Textbook_M4_L4_04_festival",
@@ -3829,9 +3487,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39944,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40154
         }, {
             "seq": 5,
             "idx": "2v_Textbook_M1_L4_005_take place",
@@ -3841,9 +3497,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39945,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40155
         }, {
             "seq": 6,
             "idx": "2v_Textbook_M1_L4_006_block",
@@ -3853,9 +3507,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39946,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40156
         }, {
             "seq": 7,
             "idx": "2v_Textbook_M7_L4_007_play",
@@ -3865,9 +3517,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39947,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40157
         }, {
             "seq": 8,
             "idx": "2v_Textbook_M1_L4_008_show",
@@ -3877,9 +3527,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39948,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40158
         }, {
             "seq": 9,
             "idx": "2v_Textbook_M1_L4_009_go on a trip",
@@ -3889,9 +3537,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39949,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40159
         }, {
             "seq": 10,
             "idx": "2v_Textbook_M1_L4_010_artist",
@@ -3901,9 +3547,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39950,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40160
         }, {
             "seq": 11,
             "idx": "2v_Textbook_M1_L4_011_visit",
@@ -3913,9 +3557,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39951,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40161
         }, {
             "seq": 12,
             "idx": "2v_Textbook_M1_L4_012_straight",
@@ -3925,9 +3567,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39952,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40162
         }, {
             "seq": 13,
             "idx": "2v_Textbook_M1_L4_013_be filled with",
@@ -3937,9 +3577,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39953,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40163
         }, {
             "seq": 14,
             "idx": "2v_Textbook_M4_L4_014_festival",
@@ -3949,9 +3587,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39954,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40164
         }, {
             "seq": 15,
             "idx": "2v_Textbook_M1_L4_015_take place",
@@ -3961,9 +3597,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39955,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40165
         }, {
             "seq": 16,
             "idx": "2v_Textbook_M1_L4_016_block",
@@ -3973,9 +3607,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39956,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40166
         }, {
             "seq": 17,
             "idx": "2v_Textbook_M7_L4_017_play",
@@ -3985,9 +3617,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39957,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40167
         }, {
             "seq": 18,
             "idx": "2v_Textbook_M1_L4_018_show",
@@ -3997,9 +3627,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39958,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40168
         }, {
             "seq": 19,
             "idx": "2v_Textbook_M1_L4_019_go on a trip",
@@ -4009,9 +3637,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39959,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40169
         }, {
             "seq": 20,
             "idx": "2v_Textbook_M1_L4_020_artist",
@@ -4021,9 +3647,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39960,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40170
         }, {
             "seq": 21,
             "idx": "2v_Textbook_M1_L4_021_visit",
@@ -4033,9 +3657,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39961,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40171
         }, {
             "seq": 22,
             "idx": "2v_Textbook_M1_L4_022_straight",
@@ -4045,9 +3667,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39962,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40172
         }, {
             "seq": 23,
             "idx": "2v_Textbook_M1_L4_023_be filled with",
@@ -4057,9 +3677,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39963,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40173
         }, {
             "seq": 24,
             "idx": "2v_Textbook_M4_L4_024_festival",
@@ -4069,9 +3687,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39964,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40174
         }, {
             "seq": 25,
             "idx": "2v_Textbook_M1_L4_025_take place",
@@ -4081,9 +3697,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39965,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40175
         }, {
             "seq": 26,
             "idx": "2v_Textbook_M1_L4_026_block",
@@ -4093,9 +3707,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39966,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40176
         }, {
             "seq": 27,
             "idx": "2v_Textbook_M7_L4_027_play",
@@ -4105,9 +3717,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39967,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40177
         }, {
             "seq": 28,
             "idx": "2v_Textbook_M1_L4_028_show",
@@ -4117,9 +3727,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39968,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40178
         }, {
             "seq": 29,
             "idx": "2v_Textbook_M1_L4_029_go on a trip",
@@ -4129,9 +3737,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39969,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40179
         }, {
             "seq": 30,
             "idx": "2v_Textbook_M1_L4_030_artist",
@@ -4141,9 +3747,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39970,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40180
         }, {
             "seq": 31,
             "idx": "2v_Textbook_M1_L4_031_visit",
@@ -4153,9 +3757,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39971,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40181
         }, {
             "seq": 32,
             "idx": "2v_Textbook_M1_L4_032_straight",
@@ -4165,9 +3767,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39972,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40182
         }, {
             "seq": 33,
             "idx": "2v_Textbook_M1_L4_033_be filled with",
@@ -4177,9 +3777,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39973,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40183
         }, {
             "seq": 34,
             "idx": "2v_Textbook_M4_L4_034_festival",
@@ -4189,9 +3787,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39974,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40184
         }, {
             "seq": 35,
             "idx": "2v_Textbook_M1_L4_035_take place",
@@ -4201,9 +3797,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39975,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40185
         }, {
             "seq": 36,
             "idx": "2v_Textbook_M1_L4_036_block",
@@ -4213,9 +3807,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39976,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40186
         }, {
             "seq": 37,
             "idx": "2v_Textbook_M7_L4_037_play",
@@ -4225,9 +3817,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39977,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40187
         }, {
             "seq": 38,
             "idx": "2v_Textbook_M1_L4_038_show",
@@ -4237,9 +3827,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39978,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40188
         }, {
             "seq": 39,
             "idx": "2v_Textbook_M1_L4_039_go on a trip",
@@ -4249,9 +3837,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39979,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40189
         }, {
             "seq": 40,
             "idx": "2v_Textbook_M1_L4_040_artist",
@@ -4261,9 +3847,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39980,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40190
         }, {
             "seq": 41,
             "idx": "2v_Textbook_M1_L4_041_visit",
@@ -4273,9 +3857,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39981,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40191
         }, {
             "seq": 42,
             "idx": "2v_Textbook_M1_L4_042_straight",
@@ -4285,9 +3867,7 @@
             "SC_DIV3": "",
             "SC_DIV4": "",
             "SC_SAVE": true,
-            "tmq_seq": 39982,
-            "tmq_CDC": [],
-            "tmq_COD": []
+            "tmq_seq": 40192
         }]
     }
 };
