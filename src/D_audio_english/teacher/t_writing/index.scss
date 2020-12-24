@@ -383,7 +383,7 @@
                 .video_container {
                     position: relative;
                     margin-top: 10px;
-                    z-index: 2;
+                    z-index: 1001;
                     @include t_video_box;
                 }
                 .btn_script_show {
@@ -466,8 +466,8 @@
             background-image: resolve('teacher/images/bg_popup.png');
             width: width('teacher/images/bg_popup.png');
             height: height('teacher/images/bg_popup.png');
-            left: -66px;
-            top: -140px;
+            left: -69px;
+            top: -118px;
             &>span {
                 display: inline-block;
                 position: absolute;

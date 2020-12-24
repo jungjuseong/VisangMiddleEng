@@ -56,12 +56,12 @@ class Yourturn extends React.Component<IYourturn> {
 			<div className={this._className}>
         {/* <img src= {`${_digenglishCB_lib_}images/yourturn/yourturn.png`}/> */}
 
-<svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="460" height="560" viewBox="0 0 460 560" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+<svg ref={this._refSVG} imageRendering="auto" baseProfile="basic" version="1.1" x="0px" y="0px" width="1280" height="800" viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
   <g overflow="visible">
     <g mask="url(#mask_ut)">
-      <g transform="translate(58 62)" opacity="1">
+      <g opacity="1">
         <animate attributeName="opacity" dur="2.533s" keyTimes="0;.25;1" values="0;1;1" fill="freeze"/>
-        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/yourturn.png`} height="100%" width="100%" transform="translate(0 -33.5)"/>
+        <image overflow="visible" xlinkHref={`${_digenglishCB_lib_}images/yourturn/yourturn1.png`} height="100%" width="100%" />
       </g>
     </g>
     <mask id="mask_ut">
