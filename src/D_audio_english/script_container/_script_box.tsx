@@ -506,7 +506,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 			<>
 				<div className={'thumb ' + cname} onClick={this._onClickThumb}>
 					<div className="progress">{this.m_prog}</div>
-					<img className="img_cls" src={_digenglishCB_lib_+'D/audio_english/teacher/images/' + this.props.image_s} draggable={false}/>
+					<img className="img_cls" src={App.data_url + this.props.image_s} draggable={false}/>
 					<div className="img_cls"/>
 					<span/>
 				</div>
