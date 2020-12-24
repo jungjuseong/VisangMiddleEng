@@ -1,4 +1,5 @@
 @import '../../../share/CoverPopup.scss';
+@import './_result_screen_popup.scss';
 @mixin check_result {
     .result_view {
         @include CoverPopup(10001);
@@ -14,6 +15,13 @@
             margin: 0 auto;
             position: relative;
             .btn_letstalk_close {
+                @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
+                position: absolute;
+                right: 10px;
+                top: 13px;
+                z-index: 2;
+            }
+            .btn_popup_close {
                 @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
                 position: absolute;
                 right: 10px;
@@ -52,6 +60,7 @@
                     padding: 0px 6px;
                     white-space: nowrap;
                 }
+                @include result_screen;
                 .content {
                     position: relative;
                     width: 1140px;

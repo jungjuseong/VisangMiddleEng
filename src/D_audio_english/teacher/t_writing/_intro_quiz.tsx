@@ -19,9 +19,7 @@ interface IQuizBox {
 @observer
 class IntroQuiz extends React.Component<IQuizBox> {
 	@observable private _view = false;
-	@observable private _hint = false;
-	
-	private _swiper?: Swiper;
+	@observable private _hint = false;	
 
 	private _jsx_sentence: JSX.Element;
 	private _jsx_hint: JSX.Element;
@@ -38,19 +36,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 	private _viewAnswer = () => {
 		App.pub_playBtnTab();
 		this._hint = !this._hint;
-
-		if(this._swiper) {
-			this._swiper.slideTo(0, 0);
-			this._swiper.update();
-			if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		}
-		_.delay(() => {
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}				
-		}, 300);
 	}
 
 	private _onClick = () => {
@@ -62,19 +47,6 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		if(view && !prev.view) {
 			this._view = true;
 			this._hint = false;
-
-			if(this._swiper) {
-				this._swiper.slideTo(0, 0);
-				this._swiper.update();
-				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-			}
-			_.delay(() => {
-				if(this._swiper) {
-					this._swiper.slideTo(0, 0);
-					this._swiper.update();
-					if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-				}				
-			}, 300);
 
 		} else if(!view && prev.view) {
 			this._view = false;	
@@ -103,7 +75,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 					</div>
 					<div className="speechbubble_box" >
 						<div className={(this._hint ? ' view-hint' : '')}>
-							<div className={'sample' + (this._hint ? ' hide' : '')}/>
+							<div className={'sample' + (this._hint ? ' hide' : '') + (this._hint ? ' hide' : '')}/>
 							<div className={'hint' + (this._hint ? '' : ' hide')}>
 								{this._jsx_hint}
 							</div>
