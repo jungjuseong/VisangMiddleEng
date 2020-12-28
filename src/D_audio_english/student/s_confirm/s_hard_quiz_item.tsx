@@ -127,6 +127,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 
 	public componentDidUpdate(prev: IQuizItemProps) {
 		const { view,confirmProg } = this.props;
+		const wrap = document.querySelector('.scroll');
 		if (view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;
@@ -154,7 +155,6 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 			keyBoardState.state = 'hide';
 		}
 		if(keyBoardState.state === 'on'){
-			const wrap = document.querySelector('.scroll');
 			wrap?.scrollTo(0,200);
 		}
 

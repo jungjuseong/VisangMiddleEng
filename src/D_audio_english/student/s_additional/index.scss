@@ -42,21 +42,38 @@
                         @include page;
                     }
                     .q-item {
+                        .scroll{
+                            overflow: auto;
+                            &.key-on {
+                                margin-top: 260px;
+                                height: 260px;
+                            }
+                            &::-webkit-scrollbar {
+                                width: 7px;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 10px;
+                            }
+                            &::-webkit-scrollbar-track {
+                                background-color: transparent;
+                            }
+                        }
                         &.key-on {
                             top: -300px;
                         }
                         .quiz {
                             position: relative;
                             display: flex;
-                            height: 180px;
+                            height: 145px;
                             width: 100%;
-                            padding: 0px 30px;
+                            padding: 0px 60px;
                             font-size: 29px;
                             font-weight: bold;
                             word-break: normal;
                             color: rgb(0, 0, 0);
                             white-space: normal;
-                            margin-bottom: 55px;
+                            margin-top: 60px;
                             &>div {
                                 position: absolute;
                                 top: 64px
@@ -78,6 +95,7 @@
                                 left: 7px;
                                 font-size: 25px;
                                 text-align: center;
+                                color: #000;
                                 z-index: 101;
                                 line-height: 5 * height("common/icon_o.png") / 6;
                                 width: width("common/icon_o.png");
@@ -96,7 +114,7 @@
                                 height: inherit;
                                 border-radius: 35px;
                                 position: absolute;
-                                background: #fff;
+                                background: rgba(255,255,255,0.9);
                             }
                             .question_box {
                                 position: relative;
@@ -105,10 +123,9 @@
                                 width: 1100px;
                                 font-size: 30px;
                                 &>p {
-                                    display: inline-block;
-                                    color: #000;
+                                    display: block;
                                     text-align: left;
-                                    vertical-align: top;
+                                    float: left;
                                     .word {
                                         margin-bottom: 30px;
                                     }
@@ -142,7 +159,7 @@
                             transition: margin-top 0.3s;
                             margin-top: 40px;
                             justify-content: center;
-                            padding: 0 40px;
+                            padding: 0 65px;
                             .area-bnd {
                                 position: relative;
                                 display: flex;
@@ -394,15 +411,15 @@
                         .quiz {
                             position: relative;
                             display: flex;
-                            height: 180px;
+                            height: 145px;
                             width: 100%;
-                            padding: 0px 30px;
+                            padding: 0px 60px;
                             font-size: 29px;
                             font-weight: bold;
                             word-break: normal;
                             color: rgb(0, 0, 0);
                             white-space: normal;
-                            margin-bottom: 55px;
+                            margin-top: 60px;
                             &>div {
                                 position: absolute;
                                 top: 64px
