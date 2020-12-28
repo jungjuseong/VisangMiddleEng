@@ -132,7 +132,6 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	public render() {
 		const { view, data ,state, prog} = this.props;
 		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
-		const alphabet = ['a','b','c'];
 		let OXs: Array<''|'O'|'X'> = ['','',''];
 		let corrects: Array<Array<(''|'O'|'X')>> = [['','',''],['','',''],['','','']];
 		let correct_count = 0;
@@ -160,6 +159,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
+								const alphabet1 = ['c','b','a']
+								const alphabet2 = ['c','b','a']
 								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 								return (
 									<div key={idx} className={'q-item' + keyon}>
@@ -175,9 +176,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 												<p>{idx + 1}.</p>
 												<p>{_getJSX(quiz.sentence)}</p>
 												<div>
-													<div className={"blank_box " + (quiz.sentence_answer1? '' : 'hide')} >a</div>
-													<div className={"blank_box " + (quiz.sentence_answer2? '' : 'hide')} >b</div>
-													<div className={"blank_box " + (quiz.sentence_answer3? '' : 'hide')} >c</div>
+													<div className={"blank_box " + (quiz.sentence_answer1? '' : 'hide')} >{quiz.sentence_answer1? alphabet1.pop() : ''}</div>
+													<div className={"blank_box " + (quiz.sentence_answer2? '' : 'hide')} >{quiz.sentence_answer2? alphabet1.pop() : ''}</div>
+													<div className={"blank_box " + (quiz.sentence_answer3? '' : 'hide')} >{quiz.sentence_answer3? alphabet1.pop() : ''}</div>
 												</div>
 											</div>
 										</div>
@@ -189,7 +190,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 														<div className={'answer_box ' + corrects[idx][index]}>
 															{answer}
 														</div>
-														<span className="index">{alphabet[index]}.</span>
+														<span className="index">{alphabet2.pop()}.</span>
 														<KTextArea 
 															ref={this._refArea[idx][index]} 
 															view={view} 
