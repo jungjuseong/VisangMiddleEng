@@ -223,13 +223,13 @@
                             position: relative;
                             height: 120px;
                             width: 100%;
-                            padding: 0px 30px;
+                            padding: 0px 80px;
                             font-size: 29px;
                             font-weight: bold;
                             word-break: normal;
                             color: rgb(0, 0, 0);
                             white-space: normal;
-                            margin-bottom: 55px;
+                            margin: 50px 0px 40px 0px;
                             &>div {
                                 position: absolute;
                                 top: 64px
@@ -239,8 +239,8 @@
                             position: absolute;
                             display: inline-block;
                             background-repeat: no-repeat;
-                            top: 210px;
-                            left: 123px;
+                            top: 245px;
+                            left: 90px;
                             font-size: 25px;
                             text-align: center;
                             z-index: 101;
@@ -265,6 +265,7 @@
                                 .content-box>p {
                                     line-height: 120px;
                                     padding: 10px 0 0 10px;
+                                    text-align: center;
                                 }
                                 .content-box>div .content {
                                     .answer {

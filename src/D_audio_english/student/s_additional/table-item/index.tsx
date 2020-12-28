@@ -241,7 +241,7 @@ class TableItem extends React.Component<ITableItemProps> {
 	public render() {	
 		this._cont = (
 			<div className="content-box">
-				<p>{this.props.idx + 1}</p>
+				<p>{this.props.idx + 1}.</p>
 				<div>
 					<ul className="content">
 						{this._jsx}
@@ -250,7 +250,7 @@ class TableItem extends React.Component<ITableItemProps> {
 			</div>
 		);
 		return (
-			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 'px', zIndex: (100 - this.props.idx) }}>
+			<div className={'table-item ' + this.props.className} style={{ maxWidth: this.props.maxWidth + 100 + 'px', zIndex: (100 - this.props.idx) }}>
 				{this._cont}
 				<ToggleBtn className="table-item-btn" view={this.props.viewBtn === true} onClick={this.props.onClickBtn} />
 			</div>
