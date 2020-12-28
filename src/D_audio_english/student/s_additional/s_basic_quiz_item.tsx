@@ -105,9 +105,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
-		const wrap1 = document.querySelector('.basic_question .q-item:nth-child(1) .scroll');
-		const wrap2 = document.querySelector('.basic_question .q-item:nth-child(2) .scroll');
-		const wrap3 = document.querySelector('.basic_question .q-item:nth-child(3) .scroll');
+		const wrap1 = document.querySelector('.s_additional .basic_question .q-item:nth-child(1) .scroll');
+		const wrap2 = document.querySelector('.s_additional .basic_question .q-item:nth-child(2) .scroll');
+		const wrap3 = document.querySelector('.s_additional .basic_question .q-item:nth-child(3) .scroll');
 		if(this.props.view && !prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'on';

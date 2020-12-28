@@ -127,9 +127,9 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 
 	public componentDidUpdate(prev: IQuizItemProps) {
 		const { view,confirmProg } = this.props;
-		const wrap1 = document.querySelector('.hard_question .q-item:nth-child(1) .scroll');
-		const wrap2 = document.querySelector('.hard_question .q-item:nth-child(2) .scroll');
-		const wrap3 = document.querySelector('.hard_question .q-item:nth-child(3) .scroll');
+		const wrap1 = document.querySelector('.s_confirm .hard_question .q-item:nth-child(1) .scroll');
+		const wrap2 = document.querySelector('.s_confirm .hard_question .q-item:nth-child(2) .scroll');
+		const wrap3 = document.querySelector('.s_confirm .hard_question .q-item:nth-child(3) .scroll');
 		if (view && !prev.view) {
 			this._bndH_p = 0;
 			this._bndW_p = 0;

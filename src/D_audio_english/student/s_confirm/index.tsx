@@ -285,7 +285,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		const confirm_nomals = c_data.confirm_nomal;
 		
 		return (
-			<div className="s_question" style={{...this._style}}>
+			<div className="s_confirm" style={{...this._style}}>
 				<div className="question" >
 					<div className={'q-item'}>
 						<SSupplementQuizItem

@@ -1,8 +1,8 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
 @import './s_basic.scss';
-@mixin s_question {
-    .s_question {
+@mixin s_confirm {
+    .s_confirm {
         @include page;
         z-index: 2;
         background-image: resolve("student/images/bg.png");

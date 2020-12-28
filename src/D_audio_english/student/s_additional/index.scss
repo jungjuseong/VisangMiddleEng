@@ -29,7 +29,7 @@
             .swiper-container {
                 @include page;
             }
-            .q-item {
+            .quiz_box {
                 .basic_question {
                     position: relative;
                     text-align: center;
@@ -405,6 +405,23 @@
                         @include page;
                     }
                     .q-item {
+                        .scroll{
+                            overflow: auto;
+                            &.key-on {
+                                margin-top: 260px;
+                                height: 260px;
+                            }
+                            &::-webkit-scrollbar {
+                                width: 7px;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 10px;
+                            }
+                            &::-webkit-scrollbar-track {
+                                background-color: transparent;
+                            }
+                        }
                         &.key-on {
                             top: -300px;
                         }
