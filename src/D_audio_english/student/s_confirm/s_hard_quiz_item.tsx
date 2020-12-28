@@ -89,11 +89,6 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		keyBoardState.state = 'on';
 
 	}
-	private _refCanvas = (el: HTMLCanvasElement|null) => {
-		if(this._canvas || !el) return;
-		this._canvas = el;
-		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}
 		
 	private _refArea = [
 		(el: KTextArea|null) => {
@@ -172,21 +167,22 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 							{quizs.map((quiz, idx) => {
 								return (
 									<div key={idx} className={'q-item' + keyon}>
-										<div className="quiz">
-											<WrapTextNew view={view}>
-												{this._jsx_sentence}
-											</WrapTextNew>
-										</div>
-										<div className="sentence_box">
-											<canvas/>
-											<div className="question_box">
-												<p>{idx + 1}.{quizs[idx].question}</p>
-												<p className={state.hint ? '' : 'no_hint'}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+										<div className={"scroll" + keyon}> 
+											<div className="quiz">
+												<WrapTextNew view={view}>
+													{this._jsx_sentence}
+												</WrapTextNew>
+											</div>
+											<div className="sentence_box">
+												<canvas/>
+												<div className="question_box">
+													<p>{idx + 1}. {quizs[idx].question}</p>
+													<p className={state.hint ? 'hint' : 'no_hint'}>{state.hint ? _getBlockJSX(quiz.hint) : ''}</p>
+												</div>
 											</div>
 										</div>
 										<div className="s_typing" >
 											<div className="area-bnd">
-												<canvas ref={this._refCanvas}/>
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 

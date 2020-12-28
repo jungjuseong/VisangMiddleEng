@@ -148,21 +148,28 @@
                         @include page;
                     }
                     .q-item {
+                        .scroll{
+                            overflow: auto;
+                            &.key-on {
+                                margin-top: 260px;
+                                height: 260px;
+                            }
+                        }
                         &.key-on {
-                            top: -300px;
+                            top: -260px;
                         }
                         .quiz {
                             position: relative;
                             display: flex;
-                            height: 180px;
+                            height: 145px;
                             width: 100%;
-                            padding: 0px 30px;
+                            padding: 0px 60px;
                             font-size: 29px;
                             font-weight: bold;
                             word-break: normal;
                             color: rgb(0, 0, 0);
                             white-space: normal;
-                            margin-bottom: 55px;
+                            margin-top: 60px;
                             &>div {
                                 position: absolute;
                                 top: 64px
@@ -194,23 +201,23 @@
                                 line-height: 80px;
                                 &>p {
                                     color: #fff;
+                                }
+                                .hint{
+                                    color: #f8f64d;                                  
                                     .block {
                                         display: inline-block;
-                                        border-bottom: 2px solid #fff;
+                                        border-bottom: 2px solid #f8f64d;
                                         width: 150px;
                                     }
                                 }
                                 .no_hint {
-                                    min-width: 850px;
-                                    border-bottom: 2px solid #fff;
-                                    height: 80px;
+                                    display: none;
                                 }
                             }
                         }
                         &>.s_typing {
                             position: relative;
                             transition: margin-top 0.3s;
-                            margin-top: 40px;
                             .area-bnd {
                                 position: relative;
                                 display: inline-block;
@@ -229,6 +236,7 @@
                                         color: #000;
                                         font-family: NotoSans;
                                         font-weight: bold;
+                                        border-bottom: 3px solid #fff;
                                         &:disabled {
                                             color: #000;
                                         }
