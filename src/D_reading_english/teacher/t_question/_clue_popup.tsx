@@ -73,7 +73,7 @@ class CluePopup extends React.Component<IClue> {
 
         return (
             <CoverPopup className="clue_popup" view={this.props.view && this.m_view} onClosed={this.props.onClosed} >
-                <span className="title">CLUE</span><ToggleBtn className="btn_close" onClick={this._onClose} />
+                <span className="title">답 관련 문장</span><ToggleBtn className="btn_close" onClick={this._onClose} />
                 <div className="clue_script">
                     <SwiperComponent
                         ref={this._refSwiper}

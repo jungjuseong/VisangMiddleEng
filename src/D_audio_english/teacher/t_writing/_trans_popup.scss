@@ -24,8 +24,8 @@
             .btn_letstalk_close {
                 @include btn_on_dis( resolve('teacher/images/letstalk_close.png'), resolve('teacher/images/letstalk_close_dis.png'), resolve('teacher/images/letstalk_close.png'), width('teacher/images/letstalk_close.png'), height('teacher/images/letstalk_close.png'), );
                 position: absolute;
-                right: 10px;
-                top: 13px;
+                right: 20px;
+                top: 20px;
                 z-index: 2;
             }
             .btn_hint {
