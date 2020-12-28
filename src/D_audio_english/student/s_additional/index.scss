@@ -239,7 +239,7 @@
                             position: absolute;
                             display: inline-block;
                             background-repeat: no-repeat;
-                            top: 245px;
+                            top: 265px;
                             left: 90px;
                             font-size: 25px;
                             text-align: center;
@@ -322,7 +322,7 @@
                         $head-line-height: 40px;
                         $content-font-size: 28px;
                         $content-padding: 10px 15px 15px 15px;
-                        $radius: 10px;
+                        $radius: 20px;
                         $normal: resolve("teacher/images/btn_dropdown_t_down.png");
                         $on: resolve("teacher/images/btn_dropdown_t_up.png");
                         $width: width("teacher/images/btn_dropdown_t_down.png");
@@ -331,7 +331,8 @@
                         @include mixin_table_item( $min-height, $min-width, $head-font-size, $head-line-height, $content-font-size, $content-padding, $radius, $normal, $on, $width, $height, $line-height);
                         .table-item {
                             display: block;
-                            margin: 0 auto;
+                            margin: 0px auto;
+                            padding: 20px 0px;
                             &.type_2 {
                                 .table-item-btn {
                                     top: 1px;
