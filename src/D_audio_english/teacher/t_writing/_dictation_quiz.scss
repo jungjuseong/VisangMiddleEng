@@ -91,11 +91,12 @@
                     position: relative;
                     text-align: left;
                     font-size: 28px;
+                    line-height: 51px;
                     padding: 45px 5px 0 5px;
                     .blank_sentence {
                         display: flex;
                         margin-bottom: 66px;
-                         :last-child {
+                        :last-child {
                             margin-bottom: 0px;
                         }
                     }
