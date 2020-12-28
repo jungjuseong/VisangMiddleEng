@@ -186,6 +186,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 			<CoverPopup className="add_quiz_popup" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
 					<p>추가 문제</p>
+					<ToggleBtn className="btn_close" onClick={this._onClosepop} />
 					<ToggleBtn className={"btn_answer" + (this._sended ? '' : ' hide')} on={this._answer} onClick={this._viewAnswer}/>
 					<div>
 						<div className="popbox">
