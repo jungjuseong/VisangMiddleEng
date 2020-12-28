@@ -87,7 +87,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
 		keyBoardState.state = 'on';
-
+		
 	}
 		
 	private _refArea = [
@@ -153,6 +153,11 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 			this._sended = true;
 			keyBoardState.state = 'hide';
 		}
+		if(keyBoardState.state === 'on'){
+			const wrap = document.querySelector('.scroll');
+			wrap?.scrollTo(0,200);
+		}
+
 	}
 
 	public render() {
