@@ -156,8 +156,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 					<div className="subject_rate">
 						{arr.length}/{App.students.length}
 					</div>
-						<div className="popbox">
-							<div className="content">
+						<div className="popbox">							
+							{/* 제출현황 */}
+							<div className="submit_status">
 								<div className="right_top">
 									<button className="all_student" onClick={()=>{this._onChangeScreen(false)}}/>
 								</div>
@@ -210,7 +211,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
-							<div className="submit_status">
+							<div className="content">
 								<div className="right_top">
 									<button className="all_student" onClick={()=>{this._onChangeScreen(true)}}/>
 								</div>
