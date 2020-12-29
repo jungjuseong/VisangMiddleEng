@@ -11,6 +11,16 @@ import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 export type COLOR = 'pink'|'green'|'orange'|'purple';
 const SwiperComponent = require('react-id-swiper').default;
 
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
+}
+
 interface IQuizBoxProps {
 	view: boolean;
 	result : string[][];
@@ -22,6 +32,7 @@ interface IQuizBoxProps {
 @observer
 class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
+	@observable private _curIdx = 0;
 	@observable private _color : COLOR[] = [];
 	@observable private _corfal : 0|1|2 = 0
 	// @observable private _result : result
@@ -30,7 +41,21 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 
 	private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
-		this._swiper = el.swiper;
+		const swiper = el.swiper;
+		swiper.on('transitionStart', () => {
+			this._curIdx = -1;
+		});
+		swiper.on('transitionEnd', () => {
+			if(this.props.view) {
+				this._curIdx = swiper.activeIndex;
+			}
+		});
+		this._swiper = swiper;
+	}
+
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
 	}
 
 	private _onClosePopup = () => {
@@ -67,6 +92,11 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 		return (
 			<>
 			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >
+				<div className={"btn_page_box"}>
+						{result[idx]?.map((quiz, idxs) => {
+							return <NItem key={idxs} on={idxs === this._curIdx} idx={idxs} onClick={this._onPage} />;
+						})}
+					</div>
 				<div className="pop_bg">
 					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
 					<div className="popbox">
