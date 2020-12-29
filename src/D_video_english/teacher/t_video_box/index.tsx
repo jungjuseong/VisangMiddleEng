@@ -339,13 +339,6 @@ class VideoBox extends React.Component<IVideoBox> {
 					{/* <ToggleBtn className="playbtn" view={viewBtnPlay} onClick={this._playClick} /> */}
 					<CaptionBox view={this.m_viewCaption} script={script} />
 					<CountDown2 state={this.props.countdown} view={this.m_viewCountDown} onStart={this._countStart}  onComplete={this._countZero}/>
-					<div className="wrap">
-						<Yourturn 
-						className="yourturn" 
-						view={this.m_yourturn >= 0 && isShadowPlay}
-						start={this.m_yourturn >= 0}
-						/>
-					</div>
 				</div>
 				<ControlBox
 					player={player}
@@ -361,6 +354,11 @@ class VideoBox extends React.Component<IVideoBox> {
 					toggleMute={this._toggleMute}
 				/>
 			</div>			
+			<Yourturn 
+			className="yourturn" 
+			view={this.m_yourturn >= 0 && isShadowPlay}
+			start={this.m_yourturn >= 0}
+			/>			
 			</>
 		);
 	}

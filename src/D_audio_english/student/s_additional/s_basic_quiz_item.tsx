@@ -172,17 +172,17 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 								return (
 									<div key={idx} className={'q-item' + keyon}>
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
 										<div className={"scroll" + keyon}>
-											<div className="quiz">
-												<WrapTextNew view={view}>
-													{this._jsx_sentence}
-												</WrapTextNew>
-											</div>
 											<div className="sentence_box">
 												<div className={'OX_box ' + OXs[idx]}/>
 												<canvas/>
 												<div className="question_box">
-													<p>{idx + 1}.</p>
+													<p style={{width : '30'+'px'}}>{idx + 1}.</p>
 													<p>{_getJSX(quiz.sentence)}</p>
 													<div>
 														<div className={"blank_box " + (quiz.sentence_answer1? '' : 'hide')} >{quiz.sentence_answer1? alphabet1.pop() : ''}</div>

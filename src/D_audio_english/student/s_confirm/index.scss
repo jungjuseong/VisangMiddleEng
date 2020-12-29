@@ -169,8 +169,7 @@
                         .scroll{
                             overflow: auto;
                             &.key-on {
-                                margin-top: 260px;
-                                height: 260px;
+                                height: 255px;
                             }
                             &::-webkit-scrollbar {
                                 width: 7px;
@@ -184,7 +183,7 @@
                             }
                         }
                         &.key-on {
-                            top: -260px;
+                            top: -205px;
                         }
                         .quiz {
                             position: relative;
@@ -246,6 +245,7 @@
                         &>.s_typing {
                             position: relative;
                             transition: margin-top 0.3s;
+                            margin-top: 23px;
                             .area-bnd {
                                 position: relative;
                                 display: inline-block;
