@@ -222,15 +222,15 @@ class SDictation extends React.Component<ISQuestionProps> {
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						{data_array.map((data,idx) =>
 							<SSupplementQuizItem
-										key={idx}						
-										view={view && state.idx === idx}
-										state={state}
-										actions={actions}
-										idx={idx}
-										choice={0}
-										data={data}
-										dictationProg={state.dictationProg[idx]}
-										onChoice={this._onChoice}
+								key={idx}						
+								view={view && state.idx === idx}
+								state={state}
+								actions={actions}
+								idx={idx}
+								choice={0}
+								data={data}
+								dictationProg={state.dictationProg[idx]}
+								onChoice={this._onChoice}
 							/>
 						)}
 					</div>
