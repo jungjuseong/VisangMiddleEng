@@ -13,21 +13,13 @@ import SendUINew from '../../../share/sendui_new';
 
 import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
 
-interface INItem {
-	idx: number;
-	on: boolean;
-	OX: ''|'O'|'X';
-	onClick: (idx: number) => void;
-}
-
-/*  페이지 인디게이터 관련  */
-class NItem extends React.Component<INItem> {
+export class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
 	private _click = () => {
 		this.props.onClick(this.props.idx);
 	}
 	public render() {
-		const { idx, on } = this.props;
-		return <span className={this.props.OX + (on ? ' on' : '')} onClick={this._click}>{idx + 1}</span>;
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
 	}
 }
 

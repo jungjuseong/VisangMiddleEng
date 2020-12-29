@@ -9,6 +9,8 @@ import { KTextArea } from '@common/component/KTextArea';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
+import { NItem } from './index';
+import { App } from '../../../App';
 import { IStateCtx, IActionsCtx } from '../s_store';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
@@ -78,6 +80,11 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		if(!this.props.view) return;
 		this.props.onChoice(this._curIdx,text,index);
 		this._tlen = text.trim().length;
+	}
+
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
 	}
 	
 	private _onDone = (text: string) => {
@@ -149,6 +156,11 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className={"quiz_box" + (view ? '' : 'none')} style={{ display: view ? '' : 'none' }}>
+					<div className={"btn_page_box" + keyon}>
+						{data.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="dict_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {
