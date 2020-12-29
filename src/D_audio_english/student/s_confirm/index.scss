@@ -13,6 +13,24 @@
             z-index: 2;
             @include btn_down_dis( resolve('student/images/btn_script.png'), resolve('student/images/btn_script_down.png'), resolve('student/images/btn_script.png'), width('student/images/btn_script.png'), height('student/images/btn_script.png'));
         }
+        .btn_page_box{
+            width: 100%; height: 0px;
+				overflow: visible;text-align: center;
+				z-index: 2;
+				position: relative; top: 38px;
+				cursor: pointer;
+				&>span {
+					box-sizing: border-box;
+					display: inline-block;
+					width: width('student/images/btn_navi.png');
+					height: height('student/images/btn_navi.png');
+					line-height: 100%;
+                    padding-top: 10px;  /* 값 수정 padding-top: 15px;*/
+                    background-image: resolve('student/images/btn_navi.png');
+					&.on {background-image: resolve('student/images/btn_navi_on.png');}
+				}
+				&.off{display: none;}
+        }
         .question {
             position: absolute;
             top: 0px;

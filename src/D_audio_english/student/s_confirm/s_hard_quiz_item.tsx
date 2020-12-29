@@ -8,6 +8,8 @@ import { KTextArea } from '@common/component/KTextArea';
 import ReactResizeDetector from 'react-resize-detector';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
+import { App } from '../../../App';
+import { NItem } from './index';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
@@ -87,7 +89,10 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
 		keyBoardState.state = 'on';
-		
+	}
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
 	}
 		
 	private _refArea = [
@@ -171,6 +176,11 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+					<div className="btn_page_box">
+						{quizs.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="hard_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{quizs.map((quiz, idx) => {
