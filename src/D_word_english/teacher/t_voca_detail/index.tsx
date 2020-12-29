@@ -23,7 +23,7 @@ function DetailItem(props: {word: IWordData}) {
 							{word.entry}
 						</ResponsiveText>
 						<div className="re_wrap">
-							<ResponsiveText className="re_meaning1" maxSize={17} minSize={24} lineHeight={120} length={word.meaning.length}>
+							<ResponsiveText className="re_meaning1" maxSize={24} minSize={24} lineHeight={120} length={word.meaning.length}>
 								{word.pumsa_kor}.   
 							</ResponsiveText>
 							<ResponsiveText className="re_meaning2" maxSize={34} minSize={24} lineHeight={120} length={word.meaning.length}>

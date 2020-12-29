@@ -115,25 +115,14 @@
                         display: flex;
                         align-items: center;
                         &>.re_meaning1 {
-                            position: relative;
-                            display: inline-block;
-                            width: 10px;
-                            flex-grow: 1;
-                            margin-left: 45px;
-                            margin-right: 25px;
-                            height: auto;
-                            font-size: 20px;
-                            color: rgb(255, 255, 255);
-                            line-height: 1.2;
-                            white-space: normal;
-                            letter-spacing: -0.8px;
+                            margin-top: 9px;
                         }
                         &>.re_meaning2 {
                             position: relative;
                             display: inline-block;
                             width: 10px;
                             flex-grow: 1;
-                            margin-left: 35px;
+                            margin-left: 5px;
                             margin-right: 25px;
                             height: auto;
                             font-size: 34px;
