@@ -11,6 +11,8 @@ import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+import { NItem } from './index';
+import { App } from '../../../App';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -108,6 +110,10 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		this._bndW = w;
 		this._bndH = h;
 	}
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
+	}
 
 	private _refSwiper = (el: SwiperComponent) => {
 		if(this._swiper || !el) return;
@@ -180,6 +186,11 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+					<div className={"btn_page_box" + keyon}>
+						{data.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="hard_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	

@@ -18,15 +18,19 @@
 				overflow: visible;text-align: center;
 				z-index: 2;
 				position: relative; top: 38px;
-				cursor: pointer;
+                cursor: pointer;
+                &.key-on{
+                    display: none;
+                }
 				&>span {
-					box-sizing: border-box;
 					display: inline-block;
 					width: width('student/images/btn_navi.png');
-					height: height('student/images/btn_navi.png');
-					line-height: 100%;
-                    padding-top: 10px;  /* 값 수정 padding-top: 15px;*/
+                    height: height('student/images/btn_navi.png');
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    background: no-repeat;
                     background-image: resolve('student/images/btn_navi.png');
+                    background-position-x: center;
 					&.on {background-image: resolve('student/images/btn_navi_on.png');}
 				}
 				&.off{display: none;}
