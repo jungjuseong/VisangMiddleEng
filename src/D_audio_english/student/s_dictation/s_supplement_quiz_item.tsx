@@ -9,6 +9,7 @@ import { KTextArea } from '@common/component/KTextArea';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
+import { App } from '../../../App';
 import { IStateCtx, IActionsCtx } from '../s_store';
 
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
@@ -29,6 +30,15 @@ export async function quizCapture(type:string) {
 		}));
 	}
 	return url;
+}
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {
@@ -78,6 +88,11 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		if(!this.props.view) return;
 		this.props.onChoice(this._curIdx,text,index);
 		this._tlen = text.trim().length;
+	}
+
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
 	}
 	
 	private _onDone = (text: string) => {
@@ -131,7 +146,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 
 	public render() {
 		const { view, data, dictationProg } = this.props;
-		const keyon = keyBoardState.state === 'on' ? ' key-on' : ' key-off';
+		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a', 'b', 'c'];
 		let corrects: Array<Array<'' | 'O' | 'X'>> = [['', '', ''], ['', '', ''], ['', '', '']];
 		if (dictationProg === QPROG.COMPLETE) {
@@ -149,6 +164,11 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className={"quiz_box" + (view ? '' : 'none')} style={{ display: view ? '' : 'none' }}>
+					<div className={"btn_page_box" + keyon}>
+						{data.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="dict_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {
@@ -160,36 +180,36 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 												{this._jsx_sentence}
 											</WrapTextNew>
 										</div>
-										<div className="sentence_box">
-											<canvas/>
-											<div className="question_box">
-												<p>{_getJSX(quiz.sentence)}</p>
+										<div className={"scroll" + keyon}>
+											<div className="sentence_box">
+												<canvas/>
+												<div className="question_box">
+													<p>{_getJSX(quiz.sentence)}</p>
+												</div>
 											</div>
 										</div>
 										<div className="s_typing" >
 											{sentences.map((sentence, index) => {
 												if (sentence.answer1 === '') return;
 												return (
-													<div>
-														<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
-															<div className={"answer_box "+ corrects[idx][index]}>
-																{sentence.answer1}
-															</div>
-															<div className={"OX_box " + corrects[idx][index]}></div>
-															<span className={"index"}>{alphabet[index]}.</span>
-															<KTextArea
-																ref={this._refArea[idx][index]}
-																view={view}
-																on={view && this._curIdx === idx && this._select_area === index && !this._sended}
-																autoResize={true}
-																skipEnter={false}
-																onChange={(text: string) => {this._onChange(text, index)}}
-																onDone={this._onDone}
-																maxLength={60}
-																maxLineNum={3}
-																rows={1}
-															/>
+													<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
+														<div className={"answer_box "+ corrects[idx][index]}>
+															{sentence.answer1}
 														</div>
+														<div className={"OX_box " + corrects[idx][index]}></div>
+														<span className={"index"}>{alphabet[index]}.</span>
+														<KTextArea
+															ref={this._refArea[idx][index]}
+															view={view}
+															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+															autoResize={true}
+															skipEnter={false}
+															onChange={(text: string) => {this._onChange(text, index)}}
+															onDone={this._onDone}
+															maxLength={60}
+															maxLineNum={3}
+															rows={1}
+														/>
 													</div>
 												);
 											})}

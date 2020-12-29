@@ -31,6 +31,10 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
 	@observable private _viewChange : boolean = true
+	private _selectColor : COLOR = 'pink'
+	private _selectThumb = ''
+	private _selectNickname = ''
+
 	// @observable private _result : result
 	
 	private _swiper?: Swiper;
@@ -50,10 +54,13 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	private _closeResultScreen = () => {
 		this._viewResult = false;
 	}
-	private _viewResultScreen = (idx : number) => {
+	private _viewResultScreen = (idx : number, color:COLOR , thumb:string, nickname:string) => {
 		App.pub_playBtnTab();
 		this._currentIdx = idx;
 		this._viewResult = true;
+		this._selectColor = color;
+		this._selectThumb = thumb;
+		this._selectNickname = nickname;
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
@@ -156,8 +163,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 					<div className="subject_rate">
 						{arr.length}/{App.students.length}
 					</div>
-						<div className="popbox">
-							<div className="content">
+						<div className="popbox">							
+							{/* 제출현황 */}
+							<div className="submit_status">
 								<div className="right_top">
 									<button className="all_student" onClick={()=>{this._onChangeScreen(false)}}/>
 								</div>
@@ -210,7 +218,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
-							<div className="submit_status">
+							<div className="content">
 								<div className="right_top">
 									<button className="all_student" onClick={()=>{this._onChangeScreen(true)}}/>
 								</div>
@@ -237,7 +245,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
-												<img className="thumnail" src={url} onClick={()=>this._viewResultScreen(idx)}></img>
+												<img className="thumnail" src={url} onClick={()=>this._viewResultScreen(idx,this._color[idx],App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
 												<div className="status">
 													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 													<div>
@@ -254,10 +262,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						<ResultScreenPopup
 							view={this._viewResult}
 							result={result}
-							answer={answer}
-							tab = {tab}
 							idx = {this._currentIdx}
 							onClosed={this._closeResultScreen}
+							color = {this._selectColor}
+							thumb = {this._selectThumb}
+							nickname = {this._selectNickname}
 						/>
 				</div>
 			</CoverPopup>

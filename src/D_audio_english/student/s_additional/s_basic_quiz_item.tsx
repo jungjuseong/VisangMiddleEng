@@ -11,6 +11,7 @@ import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
+import { App } from '../../../App';
 
 const SwiperComponent = require('react-id-swiper').default;
 
@@ -30,6 +31,16 @@ export async function quizCapture(type:string) {
 		);
 	}
 	return url;
+}
+
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {
@@ -85,6 +96,11 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		keyBoardState.state = 'on';
 	}
 
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
+	}
+
 	private _selectArea = (index: number) => {
 		if (index !== null)	this._select_area = index;
 	}
@@ -105,9 +121,6 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
-		const wrap1 = document.querySelector('.s_additional .basic_question .q-item:nth-child(1) .scroll');
-		const wrap2 = document.querySelector('.s_additional .basic_question .q-item:nth-child(2) .scroll');
-		const wrap3 = document.querySelector('.s_additional .basic_question .q-item:nth-child(3) .scroll');
 		if(this.props.view && !prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'on';
@@ -129,11 +142,6 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		if(this.props.prog >= QPROG.SENDED && this.props.view) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
-		}
-		if(keyBoardState.state === 'on'){			
-			wrap1?.scrollTo(0,200);
-			wrap2?.scrollTo(0,200);
-			wrap3?.scrollTo(0,200);
 		}
 	}
 
@@ -164,6 +172,11 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+					<div className={"btn_page_box" + keyon}>
+						{data.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="basic_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
@@ -172,17 +185,17 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 								return (
 									<div key={idx} className={'q-item' + keyon}>
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
 										<div className={"scroll" + keyon}>
-											<div className="quiz">
-												<WrapTextNew view={view}>
-													{this._jsx_sentence}
-												</WrapTextNew>
-											</div>
 											<div className="sentence_box">
 												<div className={'OX_box ' + OXs[idx]}/>
 												<canvas/>
 												<div className="question_box">
-													<p>{idx + 1}.</p>
+													<p style={{width : '30'+'px'}}>{idx + 1}.</p>
 													<p>{_getJSX(quiz.sentence)}</p>
 													<div>
 														<div className={"blank_box " + (quiz.sentence_answer1? '' : 'hide')} >{quiz.sentence_answer1? alphabet1.pop() : ''}</div>

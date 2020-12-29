@@ -18,24 +18,6 @@ import SHardQuizItem, {quizCapture as hardQuizCapture} from './s_hard_quiz_item'
 
 const SwiperComponent = require('react-id-swiper').default;
 
-interface INItem {
-	idx: number;
-	on: boolean;
-	OX: ''|'O'|'X';
-	onClick: (idx: number) => void;
-}
-
-/*  페이지 인디게이터 관련  */
-class NItem extends React.Component<INItem> {
-	private _click = () => {
-		this.props.onClick(this.props.idx);
-	}
-	public render() {
-		const { idx, on } = this.props;
-		return <span className={this.props.OX + (on ? ' on' : '')} onClick={this._click}>{idx + 1}</span>;
-	}
-}
-
 interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;

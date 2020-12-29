@@ -6,6 +6,7 @@ import WrapTextNew from '@common/component/WrapTextNew';
 import { state as keyBoardState } from '@common/component/Keyboard';
 import { KTextArea } from '@common/component/KTextArea';
 import TableItem from './table-item';
+import { App } from '../../../App';
 
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
@@ -31,6 +32,16 @@ export async function quizCapture(type:string) {
 		);
 	}
 	return url;
+}
+
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {
@@ -71,37 +82,9 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 
 		keyBoardState.state = 'hide';
 	}
-	private _onDone = (text: string) => {
-		if(this._stime === 0) this._stime = Date.now();
-		
-		if(!this.props.view) return;
-		this._tlen = text.trim().length;
-		keyBoardState.state = 'on';
-
-	}
-	private _refCanvas = (el: HTMLCanvasElement|null) => {
-		if(this._canvas || !el) return;
-		this._canvas = el;
-		this._ctx = this._canvas.getContext('2d') as CanvasRenderingContext2D;
-	}	
-	private _refArea = [
-		(el: KTextArea|null) => {
-			if(this._tarea[0] || !el) return;
-			this._tarea[0] = el;
-		},
-		(el: KTextArea|null) => {
-			if(this._tarea[1] || !el) return;
-			this._tarea[1] = el;
-		},
-		(el: KTextArea|null) => {
-			if(this._tarea[2] || !el) return;
-			this._tarea[2] = el;
-		}
-	];
-
-	private _onResize = (w: number, h: number) => {
-		this._bndW = w;
-		this._bndH = h;
+	private _onPage = (idx: number) =>{
+		App.pub_playBtnTab();
+		if(this._swiper) this._swiper.slideTo(idx);
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -167,6 +150,11 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+					<div className={"btn_page_box"}>
+						{data.map((quiz, idx) => {
+							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
+						})}
+					</div>
 					<div className="sup_question">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {

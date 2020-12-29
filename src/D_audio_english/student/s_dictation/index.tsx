@@ -13,24 +13,6 @@ import SendUINew from '../../../share/sendui_new';
 
 import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
 
-interface INItem {
-	idx: number;
-	on: boolean;
-	OX: ''|'O'|'X';
-	onClick: (idx: number) => void;
-}
-
-/*  페이지 인디게이터 관련  */
-class NItem extends React.Component<INItem> {
-	private _click = () => {
-		this.props.onClick(this.props.idx);
-	}
-	public render() {
-		const { idx, on } = this.props;
-		return <span className={this.props.OX + (on ? ' on' : '')} onClick={this._click}>{idx + 1}</span>;
-	}
-}
-
 interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;
@@ -222,15 +204,15 @@ class SDictation extends React.Component<ISQuestionProps> {
 					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
 						{data_array.map((data,idx) =>
 							<SSupplementQuizItem
-										key={idx}						
-										view={view && state.idx === idx}
-										state={state}
-										actions={actions}
-										idx={idx}
-										choice={0}
-										data={data}
-										dictationProg={state.dictationProg[idx]}
-										onChoice={this._onChoice}
+								key={idx}						
+								view={view && state.idx === idx}
+								state={state}
+								actions={actions}
+								idx={idx}
+								choice={0}
+								data={data}
+								dictationProg={state.dictationProg[idx]}
+								onChoice={this._onChoice}
 							/>
 						)}
 					</div>

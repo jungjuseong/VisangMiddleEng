@@ -737,8 +737,8 @@ class Passage extends React.Component<IPassageProps> {
 						</div>
 					</SwiperComponent>
 					<CountDown2 state={this._countdown} view={this._viewCountDown} onStart={this._countStart} onComplete={this._countZero} />
-					<Yourturn className="yourturn" view={this._yourturn >= 0} start={this._yourturn >= 0} />
 				</div>
+				<Yourturn className="yourturn" view={this._yourturn >= 0} start={this._yourturn >= 0} />
 				<div className="popup_btns">
 					<ToggleBtn 
 						className="btn_listen_repeat" 
