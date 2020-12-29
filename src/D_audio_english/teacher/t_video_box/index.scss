@@ -114,12 +114,16 @@
                     line-height: 15px;
                     z-index: 10;
                     &.one {
-                        left: 83px;
+                        left: 32px;
                         background-image: resolve('digenglishCB_lib/images/mplayer/brake_point1.png');
                     }
                     &.two {
-                        left: 137px;
+                        left: 92px;
                         background-image: resolve('digenglishCB_lib/images/mplayer/brake_point2.png');
+                    }
+                    &.three {
+                        left: 146px;
+                        background-image: resolve('digenglishCB_lib/images/mplayer/brake_point3.png');
                     }
                 }
             }

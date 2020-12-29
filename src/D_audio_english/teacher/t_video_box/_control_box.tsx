@@ -29,6 +29,7 @@ class ControlBox extends React.Component<IControlBox> {
 				<div className="control_over">
 					<div className="brake_point one" onClick={()=>{pointClick(0)}}></div>
 					<div className="brake_point two" onClick={()=>{pointClick(1)}}></div>
+					<div className="brake_point three" onClick={()=>{pointClick(2)}}></div>
 				</div>
 				<div className="control_left">
 					<ToggleBtn className="btn_play_pause" on={isPlay} onClick={togglePlay} />

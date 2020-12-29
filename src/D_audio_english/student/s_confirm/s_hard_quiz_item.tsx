@@ -9,7 +9,6 @@ import ReactResizeDetector from 'react-resize-detector';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { App } from '../../../App';
-import { NItem } from './index';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
@@ -36,6 +35,16 @@ export async function quizCapture(type:string) {
 
 	return url;
 
+}
+
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {
