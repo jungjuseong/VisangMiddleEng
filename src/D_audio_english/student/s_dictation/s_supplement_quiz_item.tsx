@@ -146,7 +146,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 
 	public render() {
 		const { view, data, dictationProg } = this.props;
-		const keyon = keyBoardState.state === 'on' ? ' key-on' : ' key-off';
+		const keyon = keyBoardState.state === 'on' ? ' key-on' : '';
 		const alphabet = ['a', 'b', 'c'];
 		let corrects: Array<Array<'' | 'O' | 'X'>> = [['', '', ''], ['', '', ''], ['', '', '']];
 		if (dictationProg === QPROG.COMPLETE) {
@@ -180,10 +180,12 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 												{this._jsx_sentence}
 											</WrapTextNew>
 										</div>
-										<div className="sentence_box">
-											<canvas/>
-											<div className="question_box">
-												<p>{_getJSX(quiz.sentence)}</p>
+										<div className={"scroll" + keyon}>
+											<div className="sentence_box">
+												<canvas/>
+												<div className="question_box">
+													<p>{_getJSX(quiz.sentence)}</p>
+												</div>
 											</div>
 										</div>
 										<div className="s_typing" >
