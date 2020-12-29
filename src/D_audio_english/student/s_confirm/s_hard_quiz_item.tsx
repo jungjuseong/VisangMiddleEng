@@ -176,12 +176,12 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 							{quizs.map((quiz, idx) => {
 								return (
 									<div key={idx} className={'q-item' + keyon}>
+										<div className="quiz">
+											<WrapTextNew view={view}>
+												{this._jsx_sentence}
+											</WrapTextNew>
+										</div>
 										<div className={"scroll" + keyon}> 
-											<div className="quiz">
-												<WrapTextNew view={view}>
-													{this._jsx_sentence}
-												</WrapTextNew>
-											</div>
 											<div className="sentence_box">
 												<canvas/>
 												<div className="question_box">
