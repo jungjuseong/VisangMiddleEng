@@ -11,7 +11,6 @@ import { observable } from 'mobx';
 
 import { IStateCtx, IActionsCtx } from '../s_store';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
-import { NItem } from './index';
 import { App } from '../../../App';
 
 const SwiperComponent = require('react-id-swiper').default;
@@ -32,6 +31,16 @@ export async function quizCapture(type:string) {
 		);
 	}
 	return url;
+}
+
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {

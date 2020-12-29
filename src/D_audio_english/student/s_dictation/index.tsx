@@ -13,16 +13,6 @@ import SendUINew from '../../../share/sendui_new';
 
 import SSupplementQuizItem, {quizCapture} from './s_supplement_quiz_item';
 
-export class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
-	private _click = () => {
-		this.props.onClick(this.props.idx);
-	}
-	public render() {
-		const {idx, on} = this.props;
-		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
-	}
-}
-
 interface ISQuestionProps {
 	view: boolean;
 	questionView: boolean;

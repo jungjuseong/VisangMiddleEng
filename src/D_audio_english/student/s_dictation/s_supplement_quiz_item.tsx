@@ -9,7 +9,6 @@ import { KTextArea } from '@common/component/KTextArea';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 
-import { NItem } from './index';
 import { App } from '../../../App';
 import { IStateCtx, IActionsCtx } from '../s_store';
 
@@ -31,6 +30,15 @@ export async function quizCapture(type:string) {
 		}));
 	}
 	return url;
+}
+class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {
+	private _click = () => {
+		this.props.onClick(this.props.idx);
+	}
+	public render() {
+		const {idx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+	}
 }
 
 interface IQuizItemProps {
