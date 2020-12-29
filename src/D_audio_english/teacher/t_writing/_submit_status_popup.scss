@@ -13,16 +13,18 @@
 				position: relative; top: 38px;
                 cursor: pointer;
 				&>span {
-					display: inline-block;
-					width: width('student/images/btn_navi.png');
-                    height: height('student/images/btn_navi.png');
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    background: no-repeat;
-                    background-image: resolve('student/images/btn_navi.png');
-                    background-position-x: center;
-					&.on {background-image: resolve('student/images/btn_navi_on.png');}
-				}
+                    margin: 0px 16px;
+                    font-size: 16px;
+                    color: rgba(179, 179, 179, 0.5);
+                    font-weight: bold;
+                    &.on {
+                        color: rgb(248, 246, 77);
+                    }
+                    text-shadow: 1px 1px 1px rgba(0,0,0,0.1),
+                                -1px 1px 1px rgba(0,0,0,0.1),
+                                -1px -1px 1px rgba(0,0,0,0.1),
+                                1px -1px 1px rgba(0,0,0,0.1);
+                }
 				&.off{display: none;}
         }
         .pop_bg {

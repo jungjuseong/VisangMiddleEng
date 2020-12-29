@@ -17,7 +17,7 @@ class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: nu
 	}
 	public render() {
 		const {idx, on} = this.props;
-		return <span className={on ? 'on' : ''} onClick={this._click}></span>;
+		return <span className={on ? 'on' : ''} onClick={this._click}>{idx + 1}</span>;
 	}
 }
 
