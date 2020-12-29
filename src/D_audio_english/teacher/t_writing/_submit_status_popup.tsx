@@ -187,12 +187,10 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
+												<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 												<div className="status">
-													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
-													<div>
-														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
-														<div className="score">0</div>
-													</div>
+													<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+													<div className="score">0</div>
 												</div>
 											</div>
 										);
@@ -200,11 +198,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 									{nosendstudent.map((student , idx)=>{
 										return(
 											<div className="status no_send" key={idx}>
-													<img className = {this._color[idx]} src={student.thumb}></img>
-													<div>
-														<p className="s_name">{student.nickname}</p>
-														<div className="score">0</div>
-													</div>
+												<img className = {this._color[idx]} src={student.thumb}></img>
+												<div>
+													<p className="s_name">{student.nickname}</p>
+													<div className="score">0</div>
+												</div>
 											</div>
 										);
 									})}
@@ -245,7 +243,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
-												<img className="thumnail" src={url} onClick={()=>this._viewResultScreen(idx,this._color[idx],App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
+												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx,this._color[idx],App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
 												<div className="status">
 													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 													<div>

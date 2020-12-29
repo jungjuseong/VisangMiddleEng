@@ -1,6 +1,7 @@
 @import '../../../share/CoverPopup.scss';
 @import './_result_screen_popup.scss';
-@mixin submit_status_popup {
+@mixin submit_status_popup {                
+    @include result_status_popup;
     .submit_status_popup {
         @include CoverPopup(10001);
         overflow: hidden;
@@ -71,8 +72,8 @@
                     display: inline-block;
                     padding: 0px 6px;
                     white-space: nowrap;
-                }                
-                @include result_screen_swiper;
+                }
+                // 제출 현황 페이지
                 .submit_status {
                     position: relative;
                     width: 1140px;
@@ -84,7 +85,7 @@
                     overflow: auto;
                     &>div{
                         position: absolute;
-                        top: 24px;
+                        top: 10px;
                         z-index: 2;
                     }
                     .right_top{
@@ -107,58 +108,48 @@
                     }
                     .table{
                         position: relative;
-                        display: table;
                         width: 1000px;
                         margin: 0 auto;
                         left: 0;
                         &>div{
                             display: block;
-                            float: left;
                             width: calc(100% / 6);
+                            float: left;
                             height: 230px;
                             padding: 0 15px 0 10px;
-                            margin-bottom: 27px;                            
-                        } 
-                        .thumnail{
-                            width: 100%;
-                            height: auto;
-                            border: 3px solid #fff;
-                            border-radius: 15px;
-                            background-image: resolve('student/images/bg_ls.png');
-                            background-size: contain;
+                            margin-bottom: 27px;
+                            &>img{
+                                display: block;
+                                width: 110px;
+                                border-radius: 50%;
+                                border-width: 6px;
+                                border-style: solid;
+                                margin: 0 auto;
+                                &.pink{border-color: rgb(206, 116, 225);}
+                                &.green{border-color: rgb(34,205,172);}
+                                &.orange{border-color: rgb(255,186,0);}
+                                &.purple{border-color: rgb(116,113,236);}
+                            }                        
                         }
                         .status{
                             position: relative;
+                            display: block;
                             font-size: 20px;
                             color: #fff;
                             &.no_send{
                                 opacity: 0.5;
                             }
-                            &>img{
-                                display: block;
-                                width: 50px;
-                                height: 50px;
-                                float: left;
-                                border-radius: 50%;
-                                border-width: 4px;
-                                border-style: solid;
-                                margin-right: 8px;
-                                &.pink{border-color: rgb(206, 116, 225);}
-                                &.green{border-color: rgb(34,205,172);}
-                                &.orange{border-color: rgb(255,186,0);}
-                                &.purple{border-color: rgb(116,113,236);}
-                            }
                             .s_name{
                                 height: 23px;
                                 line-height: 23px;
-                                margin-bottom: 7px;
+                                margin: 8px 0px;
                             }
                             .score{
                                 font-size: 13px;
                                 line-height: 23px;
                                 padding-right: 30px;
                                 text-align: end;
-                                float: right;
+                                margin: 0 auto;
                                 width: width('teacher/images/score.png');
                                 height: height('teacher/images/score.png');
                                 background-image: resolve('teacher/images/score.png');
@@ -176,6 +167,7 @@
                         background-color: transparent;
                     }
                 }
+                // 본문 페이지
                 .content {
                     position: relative;
                     width: 1140px;
@@ -187,7 +179,7 @@
                     overflow: auto;
                     &>div{
                         position: absolute;
-                        top: 24px;
+                        top: 10px;
                         z-index: 2;
                     }
                     .right_top{
@@ -210,7 +202,6 @@
                     }
                     .table{
                         position: relative;
-                        display: table;
                         width: 1000px;
                         margin: 0 auto;
                         left: 0;
@@ -222,7 +213,7 @@
                             padding: 0 15px 0 10px;
                             margin-bottom: 27px;                            
                         } 
-                        .thumnail{
+                        .thumbnail{
                             width: 100%;
                             height: auto;
                             border: 3px solid #fff;
@@ -243,7 +234,6 @@
                                 display: block;
                                 width: 50px;
                                 height: 50px;
-                                float: left;
                                 border-radius: 50%;
                                 border-width: 4px;
                                 border-style: solid;

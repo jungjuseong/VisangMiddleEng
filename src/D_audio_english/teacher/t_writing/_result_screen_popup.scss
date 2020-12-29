@@ -1,14 +1,122 @@
 @import '../../../share/CoverPopup.scss';
-@mixin result_screen_swiper {
-    &>.swiper-container{
-        @include page;
-        &>.swiper-wrapper{
-            width: auto;
+@import './_result_screen_popup.scss';
+@mixin result_status_popup {
+    .result_screen {
+        @include CoverPopup(10001);
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.5);
+        .btn_page_box{
+            width: 100%; height: 0px;
+				overflow: visible;text-align: center;
+				z-index: 2;
+				position: relative; top: 10px;
+                cursor: pointer;
+				&>span {
+					display: inline-block;
+					width: width('student/images/btn_navi.png');
+                    height: height('student/images/btn_navi.png');
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    background: no-repeat;
+                    background-image: resolve('student/images/btn_navi.png');
+                    background-position-x: center;
+					&.on {background-image: resolve('student/images/btn_navi_on.png');}
+				}
+				&.off{display: none;}
         }
-        .swiper-slide{
-            &.swiper-slide-active{
-                z-index:2;
+        .result_bg {
+            background-image: resolve('teacher/images/bg_t.png');
+            width: width('teacher/images/bg_t.png');
+            height: height('teacher/images/bg_t.png');
+            margin: 0 auto;
+            position: relative;
+            .status{
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                font-size: 20px;
+                color: #fff;
+                left: 110px;
+                top: 25px;
+
+                &>img{
+                    display: block;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border-width: 4px;
+                    border-style: solid;
+                    margin-right: 8px;
+                    &.pink{border-color: rgb(206, 116, 225);}
+                    &.green{border-color: rgb(34,205,172);}
+                    &.orange{border-color: rgb(255,186,0);}
+                    &.purple{border-color: rgb(116,113,236);}
+                }
+                .s_name{
+                    height: 23px;
+                    line-height: 23px;
+                    margin-bottom: 7px;
+                }
+                .score{
+                    font-size: 13px;
+                    line-height: 23px;
+                    padding-right: 30px;
+                    text-align: end;
+                    float: right;
+                    width: width('teacher/images/score.png');
+                    height: height('teacher/images/score.png');
+                    background-image: resolve('teacher/images/score.png');
+                }
+            }
+            &.hide{
+                display: none;
+            }
+            .btn_popup_close {
+                @include btn_on_dis( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), resolve('teacher/images/btn_close.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'), );
+                position: absolute;
+                right: 10px;
+                top: 13px;
+                z-index: 2;
+            }
+            .result_box {
+                width: 900px;
+                display: flex;
+                text-align: center;
+                letter-spacing: -0.6px;
+                white-space: normal;
+                font-size: 24px;
+                line-height: 41px;
+                font-family: NanumGothic;
+                font-weight: bold;
+                margin: 0 auto;
+                margin-top: 110px;
+
+                &>.swiper-container{
+                    margin: 0 auto;
+                    border: 5px solid #fff;
+                    background-image: resolve('teacher/images/bg_t.png');
+                    width: 100%;
+                    height: 100%;
+                    background-size: cover;
+                    &>.swiper-wrapper{
+                        width: auto;
+                    }
+                    .swiper-slide{
+                        width: 900px;
+                        &.swiper-slide-active{
+                            z-index:2;
+                        }
+                    }
+                }
+                .image_box{
+                    width: 900px;
+                    .thumbnail{
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                    }
+                }
             }
         }
-    }    
+    }
 }

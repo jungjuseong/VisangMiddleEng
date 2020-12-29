@@ -92,27 +92,29 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 	
 		return (
 			<>
-			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >
-				<div className="status">
-					<img className = {color} src={thumb}></img>
-					<div>
-						<p className="s_name">{nickname}</p>
-						<div className="score">0</div>
+			<CoverPopup className="result_screen" view={this._view} onClosed={onClosed} >
+				<div className="result_bg">
+					<div className="status">
+						<img className = {color} src={thumb}></img>
+						<div>
+							<p className="s_name">{nickname}</p>
+							<div className="score">0</div>
+						</div>
 					</div>
-				</div>
-				<div className={"btn_page_box"}>
-						{result[idx]?.map((quiz, idxs) => {
-							return <NItem key={idxs} on={idxs === this._curIdx} idx={idxs} onClick={this._onPage} />;
-						})}
+					<div className={"btn_page_box"}>
+					{result[idx]?.map((quiz, idxs) => {
+						return <NItem key={idxs} on={idxs === this._curIdx} idx={idxs} onClick={this._onPage} />;
+					})}
 					</div>
-				<div className="pop_bg">
 					<ToggleBtn className="btn_popup_close" onClick={this._onClosePopup}/>
-					<div className="popbox">
+					<div className="result_box">
 						<SwiperComponent ref={this._refSwiper}>			
 							{result[idx]?.map((url , idx)=>{									
 								return(
 									<div key={idx}>
-										<img className="thumnail" src={url}></img>												
+										<div className="image_box">
+										<img className="thumbnail" src={url}></img>												
+										</div>
 									</div>
 								);
 							})}
