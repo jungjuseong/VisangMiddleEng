@@ -24,10 +24,11 @@ class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: nu
 interface IQuizBoxProps {
 	view: boolean;
 	result : string[][];
-	answer : boolean;
 	onClosed: () => void;
-	tab :'INTRODUCTION'|'CONFIRM'|'ADDITIONAL'|'DICTATION'|'SCRIPT';
 	idx : number;
+	color : COLOR;
+	thumb : string;
+	nickname : string;
 }
 @observer
 class ResultScreenPopup extends React.Component<IQuizBoxProps> {
@@ -87,11 +88,18 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 	}
 
 	public render() {
-		const { onClosed, result, idx } = this.props;		
+		const { onClosed, result, idx, color, thumb, nickname } = this.props;		
 	
 		return (
 			<>
 			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >
+				<div className="status">
+					<img className = {color} src={thumb}></img>
+					<div>
+						<p className="s_name">{nickname}</p>
+						<div className="score">0</div>
+					</div>
+				</div>
 				<div className={"btn_page_box"}>
 						{result[idx]?.map((quiz, idxs) => {
 							return <NItem key={idxs} on={idxs === this._curIdx} idx={idxs} onClick={this._onPage} />;
