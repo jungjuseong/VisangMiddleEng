@@ -19,12 +19,17 @@ function DetailItem(props: {word: IWordData}) {
 			<div className="entry_box">
 				<div className="entry">
 					<AudioText audio_className="btn_audio" audio_url={App.data_url + word.audio} text_className="re_entry">
-						<ResponsiveText className="re_entry" maxSize={84} minSize={54} lineHeight={140} length={word.entry.length}>
+						<ResponsiveText className="re_entry" maxSize={84} minSize={84} lineHeight={140} length={word.entry.length}>
 							{word.entry}
 						</ResponsiveText>
-						<ResponsiveText className="re_meaning" maxSize={34} minSize={24} lineHeight={120} length={word.meaning.length}>
-							{word.pumsa_kor}. {word.meaning}
-						</ResponsiveText>
+						<div className="re_wrap">
+							<ResponsiveText className="re_meaning1" maxSize={17} minSize={24} lineHeight={120} length={word.meaning.length}>
+								{word.pumsa_kor}.   
+							</ResponsiveText>
+							<ResponsiveText className="re_meaning2" maxSize={34} minSize={24} lineHeight={120} length={word.meaning.length}>
+								{word.meaning}
+							</ResponsiveText>
+						</div>
 					</AudioText>
 				</div>					
 				<div className="meaning_eng">
@@ -37,7 +42,7 @@ function DetailItem(props: {word: IWordData}) {
 				<div className="sentence">
 					<AudioText audio_className="btn_audio" audio_url={App.data_url + word.sentence_audio} text_className="re_sentence">
 						{butil.parseBlock(word.sentence, 'block')}
-						<ResponsiveText className="re_sentence_meaning" maxSize={35} minSize={25} lineHeight={120} length={word.sentence_meaning.length}>
+						<ResponsiveText className="re_sentence_meaning" maxSize={30} minSize={25} lineHeight={120} length={word.sentence_meaning.length}>
 						{butil.parseBlock(word.sentence_meaning, 'block')}
 					</ResponsiveText>
 					</AudioText>

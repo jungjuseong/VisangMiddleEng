@@ -103,7 +103,7 @@
                     flex-grow: 1;
                     margin-right: 25px;
                     margin-left: 33px;
-                    margin-top: 30px;
+                    margin-top: 17px;
                     height: auto;
                     font-size: 84px;
                     color: rgb(255, 255, 255);
@@ -111,6 +111,38 @@
                     white-space: normal;
                     letter-spacing: -2.3px;
                     word-break: break-all;
+                    .re_wrap {
+                        display: flex;
+                        align-items: center;
+                        &>.re_meaning1 {
+                            position: relative;
+                            display: inline-block;
+                            width: 10px;
+                            flex-grow: 1;
+                            margin-left: 45px;
+                            margin-right: 25px;
+                            height: auto;
+                            font-size: 20px;
+                            color: rgb(255, 255, 255);
+                            line-height: 1.2;
+                            white-space: normal;
+                            letter-spacing: -0.8px;
+                        }
+                        &>.re_meaning2 {
+                            position: relative;
+                            display: inline-block;
+                            width: 10px;
+                            flex-grow: 1;
+                            margin-left: 35px;
+                            margin-right: 25px;
+                            height: auto;
+                            font-size: 34px;
+                            color: rgb(255, 255, 255);
+                            line-height: 1.2;
+                            white-space: normal;
+                            letter-spacing: -0.8px;
+                        }
+                    }
                     &.small {
                         font-size: 60px;
                     }
@@ -186,12 +218,11 @@
                     display: inline-block;
                     width: 10px;
                     flex-grow: 1;
-                    margin-left: 35px;
-                    margin-right: 35px;
+                    margin: 0px 35px 20px 24px;
                     height: auto;
-                    font-size: 45px;
+                    font-size: 34px;
                     color: rgb(0, 0, 0);
-                    line-height: 1.2;
+                    line-height: 1.8;
                     white-space: normal;
                     letter-spacing: -0.8px;
                     .block {
@@ -206,7 +237,8 @@
                     margin-left: 35px;
                     margin-right: 35px;
                     height: auto;
-                    font-size: 25px;
+                    font-size: 30px;
+                    font-weight: bold;
                     color: rgb(0, 0, 0);
                     line-height: 1.2;
                     white-space: normal;
@@ -217,6 +249,7 @@
                 }
                 &>.btn_audio {
                     position: relative;
+                    margin-bottom: 50px;
                     margin-left: 46px;
                     flex-grow: 0;
                 }
@@ -254,7 +287,7 @@
     &>.drill_btns {
         position: absolute;
         top: 694px;
-        left: 868px;
+        left: 825px;
         float: left;
         &>.btn_spelling {
             @include btn_down_dis( resolve('teacher/images/btn_spelling.png'), resolve('teacher/images/btn_spelling_on.png'), resolve('teacher/images/btn_spelling.png'), width('teacher/images/btn_spelling.png'), height('teacher/images/btn_spelling.png'));
