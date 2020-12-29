@@ -422,64 +422,30 @@ class Passage extends React.Component<IPassageProps> {
 
 		actions.setNaviView((this._studyDiv === 'off'));
 		actions.setNavi(true, true);
-		// actions.setNaviFnc(
-		// 	async () => {
-		// 		if(this._curIdx === 0) {
-		// 			state.isNaviBack = true;
-		// 			onSetNavi('Comprehension','Warmup');
-		// 		} 
-		// 		else {
-		// 			App.pub_playBtnPage();
-		// 			// const info = this._infos[this._curIdx + 1];
-		// 			this._initAll();
-		// 			this._curIdx = this._curIdx - 1;
-
-		// 			await kutil.wait(300);
-		// 			if(this._swiper) {
-		// 				this._swiper.update();
-		// 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		// 				this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
-		// 			}
-		// 		}
-		// 	},
-		// 	async () => {
-		// 		if(this._curIdx >= this._infos.length - 1) onSetNavi('Comprehension','Question');
-		// 		else {
-		// 			App.pub_playBtnPage();
-		// 			// const info = this._infos[this._curIdx + 1];
-		// 			this._initAll();
-		// 			this._curIdx = this._curIdx + 1;
-
-		// 			await kutil.wait(300);
-		// 			if(this._swiper) {
-		// 				this._swiper.update();
-		// 				if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-		// 				this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
-		// 			}
-		// 		}
-		// 	}
-		// );
-		const _setSwiper = (tab: _ComprehensionTabType) => {
-			return async () => {
+		actions.setNaviFnc(
+			async () => {
 				if(this._curIdx === 0) {
 					state.isNaviBack = true;
-					onSetNavi('Comprehension', tab);
-				}
+					onSetNavi('Comprehension','Warmup');
+				} 
 				else {
 					App.pub_playBtnPage();
-					this._initAll();
 					this._curIdx = this._curIdx - 1;
-
-					await kutil.wait(300);
-					if(this._swiper) {
-						this._swiper.update();
-						if(this._swiper.scrollbar) this._swiper.scrollbar.updateSize();
-						this._opt = (this._swiper.wrapperEl.scrollHeight <= this._swiper.height);
-					}
+					this._setNavi();
+				}
+			},
+			async () => {
+				if(this._curIdx >= this._infos.length - 1) onSetNavi('Comprehension','Question');
+				else {
+					App.pub_stop();	
+					App.pub_playBtnPage();
+					// const info = this._infos[this._curIdx + 1];
+					this._initAll();
+					this._curIdx = this._curIdx + 1;
+					this._setNavi();
 				}
 			}
-		}
-		actions.setNaviFnc(_setSwiper('Warmup'), _setSwiper('Question'));
+		);
 	}
 
 	public componentDidUpdate(prev: IPassageProps) {

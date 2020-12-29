@@ -37,7 +37,7 @@
             top: 79px;
             right: 136px;
             z-index: 1;
-            @include btn_down_dis( resolve('teacher/images/btn_book.png'), resolve('teacher/images/btn_book_down.png'), resolve('teacher/images/btn_book_dis.png'), width('teacher/images/btn_book.png'), height('teacher/images/btn_book.png'));
+            @include btn_down_dis( resolve('teacher/images/btn_book.png'), resolve('teacher/images/btn_book.png'), resolve('teacher/images/btn_book.png'), width('teacher/images/btn_book.png'), height('teacher/images/btn_book.png'));
             &.up {
                 position: absolute;
                 top: 56.5px;
@@ -49,7 +49,7 @@
             top: 80px;
             right: 67px;
             z-index: 1;
-            @include btn_down_dis( resolve('teacher/images/btn_video.png'), resolve('teacher/images/btn_video_down.png'), resolve('teacher/images/btn_video_dis.png'), width('teacher/images/btn_video.png'), height('teacher/images/btn_video.png'));
+            @include btn_down_dis( resolve('teacher/images/btn_video.png'), resolve('teacher/images/btn_video.png'), resolve('teacher/images/btn_video.png'), width('teacher/images/btn_video.png'), height('teacher/images/btn_video.png'));
             &.up {
                 position: absolute;
                 top: 58px;

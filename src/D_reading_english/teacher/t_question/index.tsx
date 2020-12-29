@@ -189,7 +189,6 @@ class Question extends React.Component<IQuestion> {
 			},
 			() => {
 				if(this._curIdx >= this.props.data.question.length - 1) {
-					this.props.onSetNavi('VISUALIZING','GraphicOrganizer');
 				} else {
 					App.pub_playBtnPage();
 					this._curIdx = this._curIdx + 1;
