@@ -51,7 +51,7 @@ class SupplementQuizBox extends QuizBox {
 		}
 		return (
 			<>
-			<div className="additional_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
@@ -59,7 +59,7 @@ class SupplementQuizBox extends QuizBox {
 					preview={-1} 
 					result={qResult}
 				/>
-				<div className="quiz_box">
+				<div className="additional quiz_box">
 					<div className={'white_board ' + this._done} >
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">

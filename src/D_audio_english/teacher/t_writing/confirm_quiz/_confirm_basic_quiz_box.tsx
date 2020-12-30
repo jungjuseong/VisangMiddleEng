@@ -62,7 +62,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 
 		return (
 			<>			
-			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={'subject_rate' + (this._sended[1] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>
 					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
 				</div>
@@ -72,7 +72,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 					result={qResult}
 				/>
 				<ToggleBtn className={'btn_answer' + (this._sended[1] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
-				<div className="quiz_box">
+				<div className="confirm quiz_box">
 					<div className="white_board basic">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">

@@ -110,7 +110,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 		console.log('tsetset',state.resultConfirmSup.url)
 		return (
 			<>
-			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}} >{state.resultConfirmSup.uid.length}/{App.students.length}</div>
 				<CorrectBar 
 					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
@@ -118,7 +118,7 @@ class ConfirmSupplementQuizBox extends ConfirmQuizBox {
 					result={qResult}
 				/>
 				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
-				<div className="quiz_box">
+				<div className="confirm quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">

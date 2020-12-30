@@ -16,10 +16,7 @@
         width: width('teacher/images/bg_write.png');
         height: 613px;
         margin: 117px 66px 47px 69px;
-        @include intro_quiz;
-        @include confirm_quiz;
-        @include additional_quiz;
-        @include dictation_quiz;
+        
         @include trans_popup;
         @include submit_status_popup;
         /*힌트 제공 팝업*/
@@ -143,7 +140,7 @@
             height: 613px;
             .btn_page_box {
                 position: absolute;
-                margin-top: 25px;
+                top: 25px;
                 width: 100%;
                 height: 0px;
                 overflow: visible;
@@ -167,169 +164,124 @@
                     display: none;
                 }
             }
-            /* 오른쪽 상단*/
-            .right_top {
-                /* 정답률*/
-                .correct_box {
-                    @include compre_correct(10px, 361px);
-                    &.no-result {
-                        padding-top: 7px;
-                    }
-                    &.hide {
-                        display: none;
-                    }
-                    .title {
-                        display: none;
-                    }
-                    &>.progress_bar {
-                        width: 70px;
-                        &>.data_percent {
-                            left: 75px;
-                        }
-                    }
-                }
-                /* hint*/
-                .hint_box {
-                    position: absolute;
-                    top: 35px;
-                    z-index: 2;
-                    &>.arrow {
-                        position: absolute;
-                        background: resolve('teacher/images/bg_bubble.png') no-repeat;
-                        width: 100%;
-                        height: height('teacher/images/bg_bubble.png');
-                        background-position-x: center;
-                    }
-                    &>.content {
-                        width: 454px;
-                        padding: 15px;
-                        position: relative;
-                        top: height('teacher/images/bg_bubble.png');
-                        background-color: #A4DFFD;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-                        min-height: 115px;
-                        border-radius: 5px;
-                        .btn_hint_close {
-                            position: absolute;
-                            top: 6px;
-                            right: 6px;
-                            @include btn_down_dis( resolve('teacher/images/btn_bubble_close.png'), resolve('teacher/images/btn_bubble_close_down.png'), resolve('teacher/images/btn_bubble_close.png'), width('teacher/images/btn_bubble_close.png'), height('teacher/images/btn_bubble_close.png'));
-                        }
-                        &>div {
-                            font-size: 26px;
-                            line-height: 120%;
-                            color: rgb(0, 0, 0);
-                            text-align: center;
-                            /*
-							max-width: 100%;
-							width: auto;
-							display: table-caption;
-							text-align: left; 
-							
-							
-							white-space: normal;
-							word-break: keep-all;
-							margin: 0px;
-							*/
-                        }
-                    }
-                }
-                .btn_lets_talk {
-                    display: none;
-                    position: absolute;
-                    top: 14px;
-                    right: 316px;
-                    @include btn_on_dis( resolve('teacher/images/btn_lets_talk.png'), resolve('teacher/images/btn_lets_talk_down.png'), resolve('teacher/images/btn_lets_talk_dis.png'), width('teacher/images/btn_lets_talk.png'), height('teacher/images/btn_lets_talk.png'));
-                }
-                /* 우리말로 번역 */
-                .btn_script_trans {
-                    display: none;
-                    position: absolute;
-                    top: 10px;
-                    right: 103px;
-                    @include btn_down_dis( resolve('teacher/images/btn_script_trans.png'), resolve('teacher/images/btn_script_trans_down.png'), resolve('teacher/images/btn_script_trans_dis.png'), width('teacher/images/btn_script_trans.png'), height('teacher/images/btn_script_trans.png'));
-                }
-                /* 빈칸*/
-                .btn_script_show {
-                    display: none;
-                    position: absolute;
-                    top: 10px;
-                    right: 20px;
-                    @include btn_down_dis( resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_show.png'), resolve('teacher/images/btn_script_show_dis.png'), width('teacher/images/btn_show.png'), height('teacher/images/btn_show.png'));
-                    &.on {
-                        background: resolve('teacher/images/btn_script_show_down.png')
-                    }
-                    /*
-					&:disabled{
-						opacity: 0.5;
-					}
-					*/
-                }
-            }
             /* question탭 활성화*/
             .question {
                 width: 100%;
-                height: 600px;
-                .line {
-                    position: absolute;
-                    left: 8px;
-                    right: 12px;
-                    top: 155px;
-                    border: none;
-                    border-top: 1px solid rgba(0, 0, 0, 0.9);
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                }
-                .choice {
-                    position: absolute;
-                    top: 195px;
-                    right: 3px;
-                    text-align: center;
-                    white-space: normal;
-                    .btn_choice {
-                        @include btn_on( resolve('teacher/images/box_select_t.png'), resolve('teacher/images/box_select_down_t.png'), width('teacher/images/box_select_t.png'), height('teacher/images/box_select_t.png'));
-                        position: relative;
-                        @include quiz-btn-mc;
-                        font-size: 30px;
-                        text-align: left;
-                        padding: 0px 10px 6px 55px;
-                        color: rgb(0, 0, 0);
-                        margin-bottom: 31px;
-                        vertical-align: middle;
-                        letter-spacing: -0.8px;
-                    }
-                    &>span {
+                height: 100%;
+                .question_bg{
+                    position: relative;
+                    width: 100%;
+                    height: 613px;
+                    .closed_hint {
                         display: none;
-                        cursor: pointer;
-                        vertical-align: middle;
-                        background: resolve('teacher/images/icon_person.png') no-repeat;
-                        width: 55px;
-                        height: 30px;
+                    }
+                    .subject_rate {
+                        position: absolute;
+                        color: white;
+                        text-align: right;
                         font-size: 12px;
-                        color: rgb(167, 161, 177);
+                        padding-right: 25px;
+                        line-height: 26px;
+                        width: 87px;
+                        height: 26px;
+                        top: -80px;
+                        left: 4px;
+                        background-image: resolve('teacher/images/sub_rate.png');
+                        &.hide {
+                            display: none;
+                        }
+                    }
+                    .correct_answer_rate {
+                        width: 118px;
+                        height: 26px;
+                        background-image: resolve('teacher/images/correct_answer_rate.png');
+                        @include compre_correct(-80px, 97px);
+                        &.no-result {
+                            padding-top: 7px;
+                        }
+                        &.hide {
+                            display: none;
+                        }
+                        .title {
+                            display: none;
+                        }
+                        &>.progress_bar {
+                            width: 70px;
+                            &>.data_percent {
+                                left: 75px;
+                            }
+                        }
+                    }
+                    .btn_answer {
+                        @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+                        position: absolute;
+                        right: 15px;
+                        top: 15px;
+                        z-index: 2;
+                        &.hide {
+                            display: none;
+                        }
+                    }
+                    .quiz_box {
+                        position: absolute;
                         text-align: center;
-                        line-height: 28px;
-                        position: relative;
-                        left: 205px;
-                    }
-                    &.correct {
-                        .btn_choice.on {
-                            background-image: resolve('teacher/images/box_select_correct_t.png');
-                        }
-                    }
-                }
-                &.complete {
-                    .choice {
-                        top: 165px;
-                        .btn_choice {
-                            margin-bottom: 0px;
-                        }
-                        &>span {
+                        white-space: normal;
+                        top: 75px;
+                        bottom: 0px;
+                        left: 0px;
+                        right: 0px;
+                        letter-spacing: -0.6px;
+                        span.word {
                             display: inline-block;
+                            white-space: nowrap;
+                            padding: 0px 6px;
+                        }
+                        .white_board{
+                            .btn_trans {
+                                @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
+                                position: absolute;
+                                left: 25px;
+                                top: 20px;
+                                z-index: 2;
+                            }
+                            .sentence_box {
+                                height: 100px;
+                                position: relative;
+                                text-align: left;
+                                font-size: 22px;
+                                padding-left: 25px;
+                                &>div {
+                                    display: inline-block;
+                                    transform: translateY(-50%);
+                                    margin-top: 75px;
+                                    .video_container {
+                                        position: absolute;
+                                        bottom: -3px;
+                                        right: -33px;
+                                        z-index: 2;
+                                        @include t_video_box;
+                                    }
+                                    .hide{
+                                        display: none;
+                                    }
+                                    .btn_audio {
+                                        @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
+                                        margin-top: 5px;
+                                    }
+                                    .question_box {
+                                        text-align: left;
+                                        display: inline-block;
+                                        vertical-align: top;
+                                        max-width: 1000px;
+                                    }
+                                }
+                            }
                         }
                     }
+                    @include intro_quiz;
+                    @include confirm_quiz;
+                    @include additional_quiz;
+                    @include dictation_quiz;
                 }
             }
             /* script탭 활성화*/

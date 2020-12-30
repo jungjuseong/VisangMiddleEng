@@ -1,100 +1,77 @@
 @mixin intro_quiz {
-    .intro_question_bg {
-        position: relative;
-        margin: 0 auto;
-        width: 1150px;
-        height: 600px;
-        .btn_example {
-            @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
-            position: absolute;
-            right: 15px;
-            top: -62px;
-            z-index: 2;
-        }
-        .quiz_box {
+    .btn_example {
+        @include btn_on(resolve('teacher/images/btn_example.png'), resolve('teacher/images/btn_example_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        z-index: 2;
+    }
+    .intro {
+        font-family: NanumGothic;
+        font-size: 34px;
+        font-weight: bold;
+        .white_board {
+            display: inline-block;
             position: relative;
-            text-align: center;
-            white-space: normal;
-            top: 74px;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            letter-spacing: -0.6px;
-            span.word {
+            background-color: #fff;
+            border-radius: 20px;
+            width: 654px;
+            height: 364px;
+            padding: 10px;
+            .image_box {
+                margin-top: 5px;
                 display: inline-block;
-                white-space: nowrap;
-                padding: 0px 6px;
-            }
-            .white_board {
-                display: inline-block;
-                position: relative;
-                background-color: #fff;
-                border-radius: 10px;
-                width: 654px;
-                height: 364px;
-                padding: 10px;
-                .image_box {
-                    margin-top: 5px;
-                    display: inline-block;
-                    &>img {
-                        width: auto;
-                        height: 339px;
-                    }
+                &>img {
+                    width: auto;
+                    height: 339px;
                 }
             }
-            .sentence_box {
-                height: 80px;
-                font-size: 34px;
-                color: #fff;
-                &>div {
+        }
+        .sentence_box {
+            height: 80px;
+            color: #fff;
+            &>div {
+                display: inline-block;
+                transform: translateY(-50%);
+                margin-top: 45px;
+                .btn_audio {
+                    @include btn_on( resolve('teacher/images/btn_speaker.png'), resolve('teacher/images/btn_speaker_on.png'), width('teacher/images/btn_speaker.png'), height('teacher/images/btn_speaker.png'));
+                    vertical-align: top;
+                    margin-top: 12px;
+                    margin-right: 12px;
+                }
+                .question_box {
+                    text-align: left;
                     display: inline-block;
-                    transform: translateY(-50%);
-                    margin-top: 45px;
-                    .btn_audio {
-                        @include btn_on( resolve('teacher/images/btn_speaker.png'), resolve('teacher/images/btn_speaker_on.png'), width('teacher/images/btn_speaker.png'), height('teacher/images/btn_speaker.png'));
-                        vertical-align: top;
-                        margin-top: 12px;
-                        margin-right: 12px;
-                    }
-                    .question_box {
-                        text-align: left;
-                        display: inline-block;
-                        vertical-align: top;
-                        //max-width: 1000px;
-                    }
+                    vertical-align: top;
+                    //max-width: 1000px;
                 }
             }
-            .speechbubble_box {
-                color: rgb(255, 253, 138);
-                margin-top: 0px;
-                font-size: 34px;
-                &>div {
-                    display: inline-table;
-                    vertical-align: middle;
-                    width: 456px;
-                    height: 60px;
-                    max-height: 120px;
-                    &.view-hint {
-                        white-space: nowrap;
-                        &:after {
-                            border-right-color: rgb(13, 92, 155);
-                        }
+        }
+        .speechbubble_box {
+            color: rgb(255, 253, 138);
+            &>div {
+                display: inline-table;
+                vertical-align: middle;
+                width: 456px;
+                height: 60px;
+                max-height: 120px;
+                &.view-hint {
+                    white-space: nowrap;
+                    &:after {
+                        border-right-color: rgb(13, 92, 155);
                     }
-                    .sample {
-                        min-height: 55px;
-                        border-bottom: 4px solid #fff;
-                        span.block {
-                            color: transparent;
-                        }
-                    }
-                    .hide {
-                        display: none;
-                    }
-                    .hint {
-                        min-height: 55px;
-                        text-align: left;
-                        letter-spacing: -0.6px;
-                    }
+                }
+                .sample {
+                    min-height: 55px;
+                    border-bottom: 4px solid #fff;
+                }
+                .hide {
+                    display: none;
+                }
+                .hint {
+                    min-height: 55px;
+                    text-align: left;
                 }
             }
         }
