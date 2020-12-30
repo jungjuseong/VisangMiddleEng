@@ -213,7 +213,7 @@ class AdditionalPopQuiz extends React.Component<ILetsTalk> {
 						</div>						
 					</div>
     			</div>
-				<ToggleBtn className="btn_back" onClick={this._onClosepop}/>
+
 				<SendUINew
 					view={this._view}
 					type={'teacher'}

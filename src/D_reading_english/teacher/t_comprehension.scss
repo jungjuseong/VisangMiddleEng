@@ -235,13 +235,6 @@
                     }
                 }
             }
-            .btn_back {
-                @include common_back;
-                position: absolute;
-                right: 5px;
-                bottom: 3px;
-                z-index: 2;
-            }
             .fel_topad {
                 bottom: 100px;
                 right: 80px;
