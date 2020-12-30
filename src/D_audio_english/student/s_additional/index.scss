@@ -497,7 +497,7 @@
                                 height: inherit;
                                 border-radius: 35px;
                                 position: absolute;
-                                background: #fff;
+                                background: rgba(255,255,255,0.9);
                             }
                             .question_box {
                                 top: 0;
@@ -509,9 +509,7 @@
                                     color: #000;
                                     text-align: left;
                                     vertical-align: top;
-                                    .word {
-                                        margin-bottom: 30px;
-                                    }
+                                    line-height: 80px;
                                     .block {
                                         display: inline-block;
                                         border-bottom: 2px solid #000;

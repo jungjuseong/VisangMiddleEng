@@ -15,7 +15,7 @@
             .sup_question {
                 position: relative;
                 text-align: left;
-                margin: 50px 32px 0px 27px;
+                margin: 50px 32px 0px 30px;
                 font-size: 32px;
                 &>div {
                     display: flex;
@@ -38,18 +38,10 @@
                         z-index: 5;
                     }
                 }
-                .on_true {
-                    background: resolve('teacher/images/TF_T_B.png');
-                }
-                .on_false {
-                    background: resolve('teacher/images/TF_F_B.png');
-                }
-                .on_true_t {
-                    background: resolve('teacher/images/TF_T_T.png');
-                }
-                .on_false_t {
-                    background: resolve('teacher/images/TF_F_T.png');
-                }
+                .on_true { background: resolve('teacher/images/TF_T_B.png'); }
+                .on_false { background: resolve('teacher/images/TF_F_B.png'); }
+                .on_true_t { background: resolve('teacher/images/TF_T_T.png'); }
+                .on_false_t { background: resolve('teacher/images/TF_F_T.png'); }
             }
             /*기본*/
             .image_box {
@@ -65,8 +57,7 @@
             .hard_question {
                 position: relative;
                 text-align: left;
-                margin-top: 30px;
-                margin-left: 27px;
+                margin: 40px 5px 0px 30px;
                 font-size: 32px;
                 &>div {
                     margin-bottom: 22px;
