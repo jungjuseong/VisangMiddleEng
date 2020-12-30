@@ -19,8 +19,6 @@
         
         @include trans_popup;
         @include submit_status_popup;
-        
-
         /*힌트 제공 팝업*/
         .pop_hint {
             @include CoverPopup(10001);
@@ -260,6 +258,8 @@
                 top: 0px;
                 bottom: 38px;
                 padding: 0px 10px;
+                font-family: NanumGothic;
+                font-weight: bold;
                 .video_container {
                     position: relative;
                     margin-top: 10px;
