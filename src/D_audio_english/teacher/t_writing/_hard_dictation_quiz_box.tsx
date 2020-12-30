@@ -171,7 +171,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 		}
 		return (
 			<>
-			<div className="dict_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
@@ -179,15 +179,15 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 					preview={-1} 
 					result={qResult}
 				/>
-				<div className="quiz_box">
+				<div className="dictation quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">
 							<div>
 								<div className="question_box">
-									<div onClick={this._onClick}>
+								<div onClick={this._onClick}>
 									{jsx}
-									</div>
+								</div>
 								<div className="video_container">
 										<VideoBox
 											data={actions.getData()}

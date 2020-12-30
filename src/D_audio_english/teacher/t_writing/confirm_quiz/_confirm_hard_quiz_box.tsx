@@ -56,11 +56,11 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 
 		return (
 			<>
-			<div className="confirm_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<div className={'subject_rate' + ((this._sended[2] && answerView) ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultConfirmHard.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_example' + ((this._sended[2] && answerView) ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				
-				<div className="quiz_box">
+				<div className="confirm quiz_box">
 					<div className="white_board">
 						<ToggleBtn className="btn_trans" on={this._trans} onClick={this._viewTrans}/>
 						<div className="sentence_box">

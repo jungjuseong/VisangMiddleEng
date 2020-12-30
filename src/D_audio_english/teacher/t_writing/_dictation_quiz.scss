@@ -1,146 +1,67 @@
-@import '../../../share/sendui.scss';
-@import '../../../share/Progress_bar.scss';
-@import '../../script_container/index.scss';
-@import '../t_video_box/index.scss';
-@import '../../../share/QuizMCBtn.scss';
-@import "./rate_box.scss";
 @mixin dictation_quiz {
-    .dict_question_bg {
-        margin: 0 auto;
-        position: relative;
-        width: 1150px;
-        height: 613px;
-        .closed_hint {
-            display: none;
-        }
-        @include rate_box;
-        .btn_answer {
-            @include btn_on(resolve('teacher/images/C_answer.png'), resolve('teacher/images/C_answer_down.png'), width('teacher/images/C_answer.png'), height('teacher/images/C_answer.png'));
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            z-index: 2;
-            &.hide {
-                display: none;
-            }
-        }
-        .quiz_box {
-            position: absolute;
-            text-align: center;
-            white-space: normal;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            letter-spacing: -0.6px;
-            margin-top: 64px;
-            span.word {
-                display: inline-block;
-                white-space: nowrap;
-                padding: 0px 6px;
-            }
-            .white_board {
-                display: inline-block;
+    .dictation {
+        font-family: NanumGothic;
+        font-weight: bold;
+        .white_board {
+            display: inline-block;
+            position: relative;
+            background-color: #fff;
+            border-radius: 17px;
+            width: 1027px;
+            height: 492px;
+            overflow: hidden;
+            
+            /*보충, 기본, 심화*/
+            .dict_question {
+                overflow: auto;
+                height: 385px;
                 position: relative;
-                background-color: #fff;
-                border-radius: 10px;
-                width: 1027px;
-                height: 492px;
-                padding-left: 25px;
-                overflow: hidden;
-                .btn_trans {
-                    @include btn_on( resolve('teacher/images/btn_korean_english.png'), resolve('teacher/images/btn_english_korean.png'), width('teacher/images/btn_korean_english.png'), height('teacher/images/btn_korean_english.png'), );
-                    position: absolute;
-                    left: 25px;
-                    top: 20px;
-                    z-index: 2;
-                }
-                .sentence_box {
-                    height: 100px;
-                    position: relative;
-                    font-size: 22px;
-                    font-family: NanumGothic;
-                    font-weight: bold;
-                    text-align: left;
-                    &>div {
-                        display: inline-block;
-                        transform: translateY(-50%);
-                        margin-top: 75px;
-                        .video_container {
-                            position: absolute;
-                            bottom: -3px;
-                            right: -33px;
-                            z-index: 2;
-                            @include t_video_box;
-                        }
-                        .btn_audio {
-                            @include btn_on( resolve('teacher/images/btn_audio.png'), resolve('teacher/images/btn_audio.png'), width('teacher/images/btn_audio.png'), height('teacher/images/btn_audio.png'), );
-                            margin-top: 5px;
-                        }
-                        .question_box {
-                            text-align: left;
-                            display: inline-block;
-                            vertical-align: top;
-                            max-width: 1000px;
-                        }
-                    }
-                }
-                .dict_question {
-                    overflow: auto;
-                    height: 385px;
-                    position: relative;
-                    text-align: left;
-                    font-size: 28px;
-                    line-height: 51px;
-                    padding: 45px 5px 0 5px;
-                    font-family: nanumgothic;
-                    font-weight: bold;
+                text-align: left;
+                font-size: 28px;
+                line-height: 51px;
+                margin: 45px 5px 0px 30px;
 
-                    .blank_sentence {
-                        display: flex;
-                        margin-bottom: 66px;
-                        :last-child {
-                            margin-bottom: 0px;
-                        }
+                .blank_sentence {
+                    display: flex;
+                    margin-bottom: 66px;
+                    :last-child {
+                        margin-bottom: 0px;
                     }
-                    .block {
+                }
+                .block {
+                    color: rgb(0, 0, 255);
+                    min-width: 230px;
+                    border-bottom: 2px solid #000;
+                    display: inline-block;
+                    text-align: center;
+                }
+                .answer_box {
+                    display: inline-block;
+                    border-bottom: 2px solid #000;
+                    margin-bottom: 25px;
+                    .sample {
+                        min-height: 55px;
+                        padding-bottom: 5px;
+                    }
+                    .hide {
+                        display: none;
+                    }
+                    .hint {
+                        vertical-align: center;
+                        min-height: 55px;
+                        padding-bottom: 5px;
                         color: rgb(0, 0, 255);
-                        min-width: 230px;
-                        border-bottom: 2px solid #000;
-                        display: inline-block;
-                        text-align: center;
                     }
-                    .answer_box {
-                        display: inline-block;
-                        border-bottom: 2px solid #000;
-                        margin-bottom: 25px;
-                        .sample {
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                        }
-                        .hide {
-                            display: none;
-                        }
-                        .hint {
-                            vertical-align: center;
-                            min-height: 55px;
-                            padding-bottom: 5px;
-                            color: rgb(0, 0, 255);
-                            .block {
-                                font-weight: bold;
-                            }
-                        }
-                    }
-                    &::-webkit-scrollbar {
-                        width: 7px;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background: rgba(0, 0, 0, 0.3);
-                        border-radius: 10px;
-                    }
-                    &::-webkit-scrollbar-track {
-                        background-color: transparent;
-                    }
+                }
+                &::-webkit-scrollbar {
+                    width: 7px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: transparent;
                 }
             }
         }

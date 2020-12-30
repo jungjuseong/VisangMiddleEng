@@ -58,9 +58,9 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		const { data } = this.props;
 		return (
 			<>
-			<div className="intro_question_bg" style={{ display: this._view ? '' : 'none' }}>
+			<div className="question_bg" style={{ display: this._view ? '' : 'none' }}>
 				<ToggleBtn className="btn_example" on={this._hint} onClick={this._viewAnswer}/>
-				<div className="quiz_box">
+				<div className="intro quiz_box">
 					<div className="white_board">
 						<div className="image_box">
 							<img  src={App.data_url + data.img} draggable={false}/>
