@@ -22,6 +22,9 @@
         @include dictation_quiz;
         @include trans_popup;
         @include submit_status_popup;
+        
+
+        /*힌트 제공 팝업*/
         .pop_hint {
             @include CoverPopup(10001);
             overflow: hidden;
@@ -69,18 +72,7 @@
                 }
             }
         }
-        .top {
-            position: absolute;
-            top: 52px;
-            left: 50%;
-            transform: translateX(-50%);
-            .btn_compre {
-                @include btn_on( resolve('teacher/images/btn_compre.png'), resolve('teacher/images/btn_compre_on.png'), width('teacher/images/btn_compre.png'), height('teacher/images/btn_compre.png'));
-            }
-            .btn_dialogue {
-                @include btn_on( resolve('teacher/images/btn_dialogue.png'), resolve('teacher/images/btn_dialogue_on.png'), width('teacher/images/btn_dialogue.png'), height('teacher/images/btn_dialogue.png'));
-            }
-        }
+        /*탭 버튼*/
         .btn_tabs {
             position: absolute;
             top: 75px;
@@ -146,19 +138,11 @@
                 @include btn_on_dis( resolve('teacher/images/btn_clue.png'), resolve('teacher/images/btn_clue_down.png'), resolve('teacher/images/btn_clue_down.png'), width('teacher/images/btn_clue.png'), height('teacher/images/btn_clue.png'));
             }
         }
-        /* 비디오 관련 */
-        .left_box {
-            width: 633px;
-            height: 515px;
-            position: absolute;
-            top: 163px;
-            left: 88px;
-        }
         /* 화면에 따라 내용이 바뀌는 가운데*/
         .writing_content_box {
+            position: relative;
             width: 1145px;
-            height: 642px;
-            position: absolute;
+            height: 613px;
             .btn_page_box {
                 position: absolute;
                 margin-top: 25px;
@@ -291,22 +275,6 @@
             .question {
                 width: 100%;
                 height: 600px;
-                .quiz {
-                    height: auto;
-                    position: relative;
-                    top: 45px;
-                    left: 0px;
-                    white-space: normal;
-                    line-height: 1;
-                    padding: 0px 15px;
-                    vertical-align: middle;
-                    &>div {
-                        text-align: left;
-                        color: rgb(255, 255, 255);
-                    }
-                    cursor: pointer;
-                    letter-spacing: -0.8px;
-                }
                 .line {
                     position: absolute;
                     left: 8px;
@@ -633,26 +601,6 @@
                         top: 150px;
                     }
                 }
-            }
-        }
-        &.DIALOGUE {
-            .btn_tab_question,
-            .btn_tab_script {
-                display: none;
-            }
-            &>.right_box>.right_top {
-                .btn_lets_talk,
-                .btn_script_trans,
-                .btn_script_show {
-                    display: unset;
-                }
-            }
-            &>.right_box>.question,
-            .btn_page_box {
-                display: none;
-            }
-            .right_box .script_container .script_box:first-child {
-                margin-top: 0px;
             }
         }
         .img_popup {
