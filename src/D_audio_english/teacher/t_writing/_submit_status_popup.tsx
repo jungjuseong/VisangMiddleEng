@@ -221,9 +221,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 									<button className="all_student" onClick={()=>{this._onChangeScreen(true)}}/>
 								</div>
 								<div className="sort_category">
-									<ToggleBtn className="all_student" onClick={() =>{this.setCorfal(0)}}/>
-									<ToggleBtn className="correct_answer" style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(1)}}/>
-									<ToggleBtn className="wrong_answer" style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(2)}}/>
+									<ToggleBtn className="all_student" on={this._corfal=== 0} onClick={() =>{this.setCorfal(0)}}/>
+									<ToggleBtn className="correct_answer" on={this._corfal=== 1} style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(1)}}/>
+									<ToggleBtn className="wrong_answer" on={this._corfal=== 2} style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(2)}}/>
 								</div>
 								<div className="table">
 									{arr.map((uid , idx)=>{

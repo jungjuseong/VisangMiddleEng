@@ -93,19 +93,7 @@
                     .right_top{
                         right: 30px;
                         .all_student{
-                            @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
-                        }
-                    }
-                    .sort_category{
-                        left: 30px;
-                        .all_student{
-                            @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
-                        }
-                        .correct_answer{
-                            @include btn_on_dis( resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), width('teacher/images/btn_result_correct.png'), height('teacher/images/btn_result_correct.png'), );
-                        }
-                        .wrong_answer{
-                            @include btn_on_dis( resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), width('teacher/images/btn_result_wrong.png'), height('teacher/images/btn_result_wrong.png'), );
+                            @include btn_on_dis( resolve('teacher/images/btn_show_answer.png'), resolve('teacher/images/btn_show_answer.png'), resolve('teacher/images/btn_show_answer.png'), width('teacher/images/btn_show_answer.png'), height('teacher/images/btn_show_answer.png'), );
                         }
                     }
                     .table{
@@ -187,19 +175,19 @@
                     .right_top{
                         right: 30px;
                         .all_student{
-                            @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
+                            @include btn_on_dis( resolve('teacher/images/btn_submit_status.png'), resolve('teacher/images/btn_submit_status.png'), resolve('teacher/images/btn_submit_status.png'), width('teacher/images/btn_submit_status.png'), height('teacher/images/btn_submit_status.png'), );
                         }
                     }
                     .sort_category{
                         left: 30px;
                         .all_student{
-                            @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
+                            @include btn_on_dis( resolve('teacher/images/btn_total.png'), resolve('teacher/images/btn_total_down.png'), resolve('teacher/images/btn_total.png'), width('teacher/images/btn_total.png'), height('teacher/images/btn_total.png'), );
                         }
                         .correct_answer{
-                            @include btn_on_dis( resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct.png'), width('teacher/images/btn_result_correct.png'), height('teacher/images/btn_result_correct.png'), );
+                            @include btn_on_dis( resolve('teacher/images/btn_result_correct.png'), resolve('teacher/images/btn_result_correct_down.png'), resolve('teacher/images/btn_result_correct.png'), width('teacher/images/btn_result_correct.png'), height('teacher/images/btn_result_correct.png'), );
                         }
                         .wrong_answer{
-                            @include btn_on_dis( resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong.png'), width('teacher/images/btn_result_wrong.png'), height('teacher/images/btn_result_wrong.png'), );
+                            @include btn_on_dis( resolve('teacher/images/btn_result_wrong.png'), resolve('teacher/images/btn_result_wrong_down.png'), resolve('teacher/images/btn_result_wrong.png'), width('teacher/images/btn_result_wrong.png'), height('teacher/images/btn_result_wrong.png'), );
                         }
                     }
                     .table{
@@ -220,7 +208,7 @@
                             height: auto;
                             border: 3px solid #fff;
                             border-radius: 15px;
-                            background-image: resolve('student/images/bg_ls.png');
+                            background-image: resolve('student/images/bg.png');
                             background-size: contain;
                         }
                         .status{
