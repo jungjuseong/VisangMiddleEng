@@ -175,7 +175,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		const quizs = [data.problem1, data.problem2, data.problem3];
 		return (
 			<>
-				<div className="quiz_box" style={{ display: view ? '' : 'none' }}>
+				<div className="s_confirm" style={{ display: view ? '' : 'none' }}>
 					<div className={"btn_page_box" + keyon}>
 						{quizs.map((quiz, idx) => {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;

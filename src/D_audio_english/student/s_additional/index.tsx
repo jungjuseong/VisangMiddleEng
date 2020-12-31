@@ -281,9 +281,9 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
-			<div className="s_additional" style={{...this._style}}>
+			<div className="content_box" style={{...this._style}}>
 				<div className="question">
-					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
+					<div className={(noSwiping ? ' swiper-no-swiping' : '')}>
 						<SSupplementQuizItem
 							view={view && state.idx === 0}
 							state={state}

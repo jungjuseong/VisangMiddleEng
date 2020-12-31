@@ -6,10 +6,179 @@
 @mixin s_content{
 	.s_content{
 		@include page;
-		@include s_confirm;
-		@include s_additional;
-		@include s_dictation;
+		
 		@include s_script;
+		.content_box {
+			@include page;
+			z-index: 2;
+			background-image: resolve("student/images/bg.png");
+			.btn_SCRIPT {
+				position: absolute;
+				top: 19px;
+				left: 26px;
+				z-index: 2;
+				@include btn_down_dis( resolve('student/images/btn_script.png'), resolve('student/images/btn_script_down.png'), resolve('student/images/btn_script.png'), width('student/images/btn_script.png'), height('student/images/btn_script.png'));
+			}
+			.btn_page_box{
+				width: 100%; height: 0px;
+					overflow: visible;text-align: center;
+					z-index: 2;
+					position: relative; top: 38px;
+					cursor: pointer;
+					&.key-on{
+						display: none;
+					}
+					&>span {
+						display: inline-block;
+						width: width('student/images/btn_navi.png');
+						height: height('student/images/btn_navi.png');
+						padding-left: 15px;
+						padding-right: 15px;
+						background: no-repeat;
+						background-image: resolve('student/images/btn_navi.png');
+						background-position-x: center;
+						&.on {background-image: resolve('student/images/btn_navi_on.png');}
+					}
+					&.off{display: none;}
+			}
+			.question {
+				position: absolute;
+				top: 0px;
+				height: 100%;
+				left: 0px;
+				width: 100%;
+				span.word {
+					display: inline-block;
+					white-space: nowrap;
+					padding: 0px 6px;
+				}
+				.swiper-container {
+					@include page;
+				}
+				.capture {
+					z-index: 100;
+					width: 1280px;
+					height: 800px;
+				}
+				/*question --> s_question*/
+				.s_question{
+					.q-item {
+						.scroll{
+							overflow: auto;
+							&.key-on {
+								height: 255px;
+							}
+							&::-webkit-scrollbar {
+								width: 7px;
+							}
+							&::-webkit-scrollbar-thumb {
+								background: rgba(0, 0, 0, 0.3);
+								border-radius: 10px;
+							}
+							&::-webkit-scrollbar-track {
+								background-color: transparent;
+							}
+						}
+						&.key-on {
+							top: -205px;
+						}
+						.quiz {
+							position: relative;
+							display: flex;
+							height: 145px;
+							width: 100%;
+							padding: 0px 60px;
+							font-size: 29px;
+							font-weight: bold;
+							word-break: normal;
+							color: rgb(0, 0, 0);
+							white-space: normal;
+							margin-top: 60px;
+							&>div {
+								position: absolute;
+								top: 64px
+							}
+						}
+						/*sentence_box--> module*/
+						&.s_typing {
+							position: relative;
+							display: flex;
+							transition: margin-top 0.3s;
+							margin-top: 23px;
+							justify-content: center;
+							padding: 0 65px;
+							.area-bnd {
+								position: relative;
+								display: flex;
+								align-items: center;
+								vertical-align: top;
+								min-width: 300px;
+								width: 100%;
+								max-width: 50%;
+								margin-right: 50px;
+								color: #fff;
+								font-family: NotoSans;
+								font-size: 52px;
+								font-weight: bold;
+								border-bottom: 3px solid #fff;
+								.answer_box {
+									position: absolute;
+									display: block;
+									font-size: 45px;
+									color: red;
+									left: 120px;
+									top: 0px;
+									line-height: 0px;
+									visibility: hidden;
+									&.X {
+										visibility: visible;
+									}
+								}
+								.index {
+									flex: 0 0 auto;
+								}
+								.k-tarea {
+									position: relative;
+									width: 100%;
+									height: auto;
+									min-height: 64px;
+									textarea {
+										box-sizing: border-box;
+										font-size: 52px;
+										padding: 30px 35px 30px 30px;
+										color: #fff;
+										font-family: NotoSans;
+										font-weight: bold;
+										&::disabled {
+											color: #fff;
+										}
+									}
+									.k-tarea-bg {
+										height: 0px;
+										min-height: 100%;
+									}
+									.k-tarea-bar {
+										display: none;
+									}
+								}
+								&:last-child {
+									margin-right: 0px;
+								}
+							}
+						}
+					}
+				}
+				@include s_confirm;
+				@include s_additional;
+				@include s_dictation;
+			}
+		}
+		.fel_toteacher {
+			position: absolute;
+			@include fel_toteacher;
+			bottom: 7px;
+			right: 7px;
+		}
 		.img_pop {
 			pointer-events: none;
 			opacity: 0;
@@ -23,6 +192,7 @@
 				opacity: 1;
 			}
 		}
+		/*QnA*/
 		.btn_box {
 			$MYH: 142px;
 			border-top-left-radius: 25px;

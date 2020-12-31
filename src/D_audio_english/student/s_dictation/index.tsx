@@ -199,9 +199,9 @@ class SDictation extends React.Component<ISQuestionProps> {
 		const noSwiping = state.confirmSupProg === QPROG.ON;
 		
 		return (
-			<div className="s_dictation" style={{...this._style}}>
+			<div className="content_box" style={{...this._style}}>
 				<div className="question">
-					<div className={'q-item' + (noSwiping ? ' swiper-no-swiping' : '')}>
+					<div className={(noSwiping ? ' swiper-no-swiping' : '')}>
 						{data_array.map((data,idx) =>
 							<SSupplementQuizItem
 								key={idx}						
