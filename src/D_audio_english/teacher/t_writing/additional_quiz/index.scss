@@ -13,10 +13,11 @@
             overflow: hidden;
             /*보충*/
             .table_box {
-                height: 360px;
+                height: 385px;
                 text-align: left;
                 overflow: auto;
-                margin: 22px 0px 0px 27px;
+                margin: 0px 5px 0px 30px;
+                padding-top: 22px;
                 .swiper-container {
                     overflow: visible;
                 }
@@ -130,7 +131,8 @@
                 font-size: 28px;
                 line-height: 51px;
                 height: 385px;
-                margin: 40px 0px 0px 27px;                
+                margin: 0px 5px 0px 30px;      
+                padding-top: 40px;          
                 .block {
                     border-bottom: 4px solid #000;
                 }
@@ -144,9 +146,6 @@
                     .number {
                         vertical-align: top;
                     }
-                }
-                &>div:last-child {
-                    margin-bottom: 0px;
                 }
                 .answer_box {
                     width: 216px;
@@ -186,7 +185,8 @@
                 font-size: 28px;
                 height: 385px;
                 line-height: 51px;
-                margin: 40px 0px 0px 27px;  
+                margin: 0px 5px 0px 30px;
+                padding-top: 40px;
                 p {
                     display: inline-block;
                     margin-bottom: 60px;

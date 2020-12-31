@@ -10,16 +10,17 @@
             width: 1027px;
             height: 492px;
             overflow: hidden;
-            
+
             /*보충, 기본, 심화*/
             .dict_question {
                 overflow: auto;
-                height: 385px;
                 position: relative;
                 text-align: left;
                 font-size: 28px;
                 line-height: 51px;
-                margin: 45px 5px 0px 30px;
+                height: 385px;
+                margin: 0px 5px 0px 30px;
+                padding-top: 40px;
 
                 .blank_sentence {
                     display: flex;
