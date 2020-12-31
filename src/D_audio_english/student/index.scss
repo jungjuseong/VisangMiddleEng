@@ -5,7 +5,8 @@
 @import "./s_content.scss";
 #wrap {
     background-image: resolve("student/images/bg.png");
-    font-family: NotoSans;
+    font-family: NanumGothic;
+    font-weight: Bold;
     .eyeon_svg {
         @include page;
         pointer-events: none;
