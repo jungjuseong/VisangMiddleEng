@@ -60,8 +60,11 @@
 					width: 1280px;
 					height: 800px;
 				}
-				/*question --> s_question*/
-				.s_question{
+				/*question --> quiz_box*/
+				.quiz_box{
+					.swiper-container {
+                        @include page;
+                    }
 					.q-item {
 						.scroll{
 							overflow: auto;
@@ -87,7 +90,7 @@
 							display: flex;
 							height: 145px;
 							width: 100%;
-							padding: 0px 60px;
+							padding: 0px 70px;
 							font-size: 29px;
 							font-weight: bold;
 							word-break: normal;
@@ -98,44 +101,21 @@
 								position: absolute;
 								top: 64px
 							}
-						}
+						}	
 						/*sentence_box--> module*/
-						&.s_typing {
+						&>.s_typing {
 							position: relative;
-							display: flex;
 							transition: margin-top 0.3s;
 							margin-top: 23px;
+							font-size: 52px;
+							display: flex;
 							justify-content: center;
-							padding: 0 65px;
+							color: #fff;
+							align-items: center;
 							.area-bnd {
-								position: relative;
-								display: flex;
-								align-items: center;
-								vertical-align: top;
-								min-width: 300px;
-								width: 100%;
-								max-width: 50%;
-								margin-right: 50px;
-								color: #fff;
-								font-family: NotoSans;
-								font-size: 52px;
-								font-weight: bold;
-								border-bottom: 3px solid #fff;
-								.answer_box {
-									position: absolute;
-									display: block;
-									font-size: 45px;
-									color: red;
-									left: 120px;
-									top: 0px;
-									line-height: 0px;
-									visibility: hidden;
-									&.X {
-										visibility: visible;
-									}
-								}
 								.index {
 									flex: 0 0 auto;
+									padding: 30px 0px;
 								}
 								.k-tarea {
 									position: relative;
@@ -144,11 +124,11 @@
 									min-height: 64px;
 									textarea {
 										box-sizing: border-box;
-										font-size: 52px;
 										padding: 30px 35px 30px 30px;
-										color: #fff;
-										font-family: NotoSans;
+										font-family: NanumGothic;
+										font-size: 52px;
 										font-weight: bold;
+										color: #fff;										
 										&::disabled {
 											color: #fff;
 										}
@@ -161,13 +141,10 @@
 										display: none;
 									}
 								}
-								&:last-child {
-									margin-right: 0px;
-								}
 							}
 						}
 					}
-				}
+				}	
 				@include s_confirm;
 				@include s_additional;
 				@include s_dictation;

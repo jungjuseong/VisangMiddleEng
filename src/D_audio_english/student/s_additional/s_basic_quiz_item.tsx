@@ -177,7 +177,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
 						})}
 					</div>
-					<div className="basic_question">
+					<div className="basic quiz_box">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {	
 								const alphabet1 = ['c','b','a']

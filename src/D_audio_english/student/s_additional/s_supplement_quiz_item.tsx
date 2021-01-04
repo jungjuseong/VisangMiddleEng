@@ -155,7 +155,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
 						})}
 					</div>
-					<div className="sup_question">
+					<div className="supplement">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {
 								return (

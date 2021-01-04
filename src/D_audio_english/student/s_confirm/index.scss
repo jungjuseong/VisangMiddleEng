@@ -6,39 +6,37 @@
             /*basic*/
             @include s_basic;
             /*supplement*/
-            .sup_question {
+            .supplement {
                 position: relative;
                 text-align: left;
                 font-size: 28px;
-                padding: 0px 25px;
                 height: 800px;
-                &>div {
-                    position: relative;
-                }
+                width: 100%;
                 .quiz {
                     position: relative;
-                    height: 120px;
+                    height: 145px;
                     width: 100%;
-                    padding: 0px 30px;
+                    padding: 0px 70px;
                     font-size: 29px;
                     font-weight: bold;
                     word-break: normal;
                     color: rgb(0, 0, 0);
                     white-space: normal;
-                    margin-bottom: 55px;
+                    margin-top: 60px;
                     &>div {
                         position: absolute;
                         top: 64px
                     }
-                }
+                }	
                 .white_box {
                     display: flex;
+                    position: relative;
                     justify-content: space-between;
                     width: 1150px;
                     margin: 25px auto;
-                    background: #fff;
-                    border-radius: 15px;
-                    height: 100;
+                    width: width('student/images/box_TF_s.png');
+                    height: height('student/images/box_TF_s.png');
+                    background: resolve("student/images/box_TF_s.png");
                     line-height: 90px;
                     padding: 0 25px;
                     font-size: 38px;
@@ -50,14 +48,14 @@
                         height: height("common/icon_o.png");
                         background-repeat: no-repeat;
                         background-position: 50% 50%;
-                        left: 41px;
+                        left: 3px;
                         margin-top: 13px;
                         line-height: 5 * height("common/icon_o.png") / 6;
                         &.O {
-                            background-image: resolve("common/icon_o.png");
+                            background: resolve("common/icon_o.png");
                         }
                         &.X {
-                            background-image: resolve("common/icon_x.png");
+                            background: resolve("common/icon_x.png");
                         }
                         font-size: 34px;
                         font-weight: bold;
@@ -70,7 +68,7 @@
                         display: none;
                     }
                     &>p {
-                        line-height: 90px;
+                        line-height: 100px;
                     }
                     .toggle_bundle {
                         width: width('teacher/images/TF.png');
@@ -86,8 +84,7 @@
                             cursor: pointer;
                         }
                     }
-                    .on_true {
-                        background: resolve('teacher/images/TF_T_B.png');
+                    .on_true { background: resolve('teacher/images/TF_T_B.png');
                     }
                     .on_false {
                         background: resolve('teacher/images/TF_F_B.png');
@@ -106,7 +103,7 @@
                     }
                 }
             }
-            .hard_question {
+            .hard {
                 position: relative;
                 text-align: center;
                 font-size: 28px;
@@ -114,54 +111,16 @@
                 top: 0px;
                 height: 800px;
                 width: 100%;
-                .swiper-container {
-                    @include page;
-                }
                 .q-item {
-                    .scroll{
-                        overflow: auto;
-                        &.key-on {
-                            height: 255px;
-                        }
-                        &::-webkit-scrollbar {
-                            width: 7px;
-                        }
-                        &::-webkit-scrollbar-thumb {
-                            background: rgba(0, 0, 0, 0.3);
-                            border-radius: 10px;
-                        }
-                        &::-webkit-scrollbar-track {
-                            background-color: transparent;
-                        }
-                    }
-                    &.key-on {
-                        top: -205px;
-                    }
-                    .quiz {
-                        position: relative;
-                        display: flex;
-                        height: 145px;
-                        width: 100%;
-                        padding: 0px 60px;
-                        font-size: 29px;
-                        font-weight: bold;
-                        word-break: normal;
-                        color: rgb(0, 0, 0);
-                        white-space: normal;
-                        margin-top: 60px;
-                        &>div {
-                            position: absolute;
-                            top: 64px
-                        }
-                    }
                     .sentence_box {
                         position: relative;
                         display: inline-flex;
                         align-items: center;
+                        text-align: left;
                         width: 1150px;
                         height: 300px;
                         border-radius: 15px;
-                        padding-left: 30px;
+                        padding: 0px 30px;
                         canvas {
                             top: 0;
                             left: 0;
@@ -182,7 +141,8 @@
                                 color: #fff;
                             }
                             .hint{
-                                color: #f8f64d;                                  
+                                color: #f8f64d;
+                                margin-left: 35px;
                                 .block {
                                     display: inline-block;
                                     border-bottom: 2px solid #f8f64d;
@@ -204,30 +164,9 @@
                             vertical-align: top;
                             width: 894px;
                             margin-right: 5px;
-                            .k-tarea {
-                                position: relative;
-                                width: 100%;
-                                height: auto;
-                                min-height: 64px;
-                                textarea {
-                                    box-sizing: border-box;
-                                    font-size: 52px;
-                                    padding: 30px 35px 30px 30px;
-                                    color: #000;
-                                    font-family: NotoSans;
-                                    font-weight: bold;
-                                    border-bottom: 3px solid #fff;
-                                    &:disabled {
-                                        color: #000;
-                                    }
-                                }
-                                .k-tarea-bg {
-                                    height: 0px;
-                                    min-height: 100%;
-                                }
-                                .k-tarea-bar {
-                                    display: none;
-                                }
+                            border-bottom: 3px solid #fff; 
+                            &:last-child {
+                                margin-right: 0px;
                             }
                         }
                     }
