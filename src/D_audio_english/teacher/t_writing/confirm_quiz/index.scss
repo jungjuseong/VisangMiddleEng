@@ -70,14 +70,14 @@
                     width: 730px;
                     margin-left: 40px;
                     .sample {
-                        min-height: 55px;
+                        height: 55px;
                         padding-bottom: 5px;
                     }
                     .hide {
                         display: none;
                     }
                     .hint {
-                        min-height: 55px;
+                        height: 55px;
                         padding-bottom: 5px;
                         padding-top: 15px;
                         color: rgb(0, 0, 255);
@@ -103,13 +103,13 @@
                     }
                 }
                 .sample {
-                    min-height: 55px;
+                    height: 55px;
                 }
                 .hide {
                     display: none;
                 }
                 .hint {
-                    min-height: 55px;
+                    height: 55px;
                     padding-bottom: 5px;
                 }
             }

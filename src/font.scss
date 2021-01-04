@@ -33,4 +33,13 @@
     font-weight:bold;
 	src: url(/content/digenglishCB_lib/font/HelveticaRoundedLTStd-Bd.woff) format('woff');
 }
+@font-face {
+  font-family: NanumGothic;
+  src: url(/content/digenglishCB_lib/font/나눔고딕.TTF) format('truetype');
+}
+@font-face {
+  font-family: NanumGothic_bold;
+  font-weight:bold;
+  src: url(/content/digenglishCB_lib/font/나눔고딕BOLD.TTF) format('truetype');
+}
 
