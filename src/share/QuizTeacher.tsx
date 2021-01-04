@@ -25,6 +25,31 @@ class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: nu
 		return <span className={on ? 'on' : ''} onClick={this._click}>{idx + 1}</span>;
 	}
 }
+class NItemNavL extends React.Component<{curidx: number, on: boolean , onClick: (start: number) => void}> {
+	private _click = () => {
+		const {curidx} = this.props;
+		if(curidx > 0) {
+			this.props.onClick((curidx - 1) * 10);
+		}
+	}
+	public render() {
+		const {curidx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_left_indicator.png"}/></span>;
+	}
+}
+
+class NItemNavR extends React.Component<{maxidx: number , curidx: number, on: boolean , onClick: (start: number) => void}> {
+	private _click = () => {
+		const {maxidx, curidx} = this.props;
+		if(curidx < maxidx) {
+			this.props.onClick((curidx + 1) * 10);
+		}	
+	}
+	public render() {
+		const { on } = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_right_indicator.png"}/></span>;
+	}
+}
 
 const _soption: SwiperOptions = {
 	direction: 'horizontal',
@@ -358,6 +383,8 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 				/>
 			);
 		}
+		const navcur = Math.trunc(curIdx_tgt / 10);
+		const maxnav = Math.trunc(quizs.length / 10); 
 		return (
 			<div className={arr.join(' ')}>
 				<SwiperComponent 
@@ -401,10 +428,15 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 				<div className="icon_point" style={{display: point >= 0 ? '' : 'none'}}>
 					<span>{point}</span><span>POINTS</span>
 				</div>
-				<div className="btn_page_box" style={{display: curIdx >= qlen ? 'none' : ''}}>	
-					{quizs.map((quiz, idx) => {
-						return <NItem key={idx} on={idx === curIdx_tgt} idx={idx} onClick={this._onPage}/>;
-					})}	
+				<div className="btn_page_box" style={{display: curIdx >= qlen ? 'none' : ''}}>
+					<NItemNavL curidx={navcur} on={false} onClick={this._onPage}/>
+					{quizs.map((word, idx) => {
+						if(idx >= (navcur * 10) && idx < (navcur * 10) + 10) { 
+							return (<NItem key={idx} on={idx === curIdx_tgt} idx={idx} onClick={this._onPage}/>);
+						}
+						return <></>
+					})}
+					<NItemNavR maxidx={maxnav} curidx={navcur} on={false} onClick={this._onPage}/>	
 				</div>
 				<div className="timer full">
 					<Timer 

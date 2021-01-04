@@ -47,6 +47,31 @@ class NItem extends React.Component<INItem> {
 		return <span className={arr.join(' ')} onClick={this._click}>{idx + 1}</span>;
 	}
 }
+class NItemNavL extends React.Component<{curidx: number, on: boolean , onClick: (start: number) => void}> {
+	private _click = () => {
+		const {curidx} = this.props;
+		if(curidx > 0) {
+			this.props.onClick((curidx - 1) * 10);
+		}
+	}
+	public render() {
+		const {curidx, on} = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_left_indicator.png"}/></span>;
+	}
+}
+
+class NItemNavR extends React.Component<{maxidx: number , curidx: number, on: boolean , onClick: (start: number) => void}> {
+	private _click = () => {
+		const {maxidx, curidx} = this.props;
+		if(curidx < maxidx) {
+			this.props.onClick((curidx + 1) * 10);
+		}	
+	}
+	public render() {
+		const { on } = this.props;
+		return <span className={on ? 'on' : ''} onClick={this._click}><img src={"/content/digenglishCB_lib/D/word_english/teacher/images/btn_right_indicator.png"}/></span>;
+	}
+}
 interface IQuizStudent<T> {
 	view: boolean;
 	className: string;
@@ -364,8 +389,8 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 		}
 		if(viewBoxGana) arr.push('view-gana');
 		if(this._checkCanSwipe()) arr.push('can-swipe');
-		
-
+		const navcur = Math.trunc(curIdx_tgt / 10);
+		const maxnav = Math.trunc(quizs.length / 10); 
 		return (
 			<div className={arr.join(' ')}>
 				<SwiperComponent 
@@ -404,7 +429,9 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 				<div className={'icon_crown ' + ga_na + ' ' + this._groupResult_save} style={{display: isGroup === true && groupProg === 'complete' ? '' : 'none'}}/>
 
 				<div className="btn_page_box">	
+					<NItemNavL curidx={navcur} on={false} onClick={this._onPage}/>
 					{quizs.map((quiz, idx) => {
+						if(idx >= (navcur * 10) && idx < (navcur * 10) + 10) { 
 						let viewResult = false;
 						if(isGroup) {
 							/* if(groupProg === 'complete') viewResult = true; */
@@ -423,7 +450,10 @@ class QuizStudent<T extends IShareQuizData> extends React.Component<IQuizStudent
 								onClick={this._onPage}
 							/>
 						);
+						}
+						return <></>
 					})}	
+					<NItemNavR maxidx={maxnav} curidx={navcur} on={false} onClick={this._onPage}/>	
 				</div>
 
 				<div className="timer full">

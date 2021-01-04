@@ -27,8 +27,8 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 
 		const hard_data = props.data as IConfirmHard;
 		this._jsx_questions.push(hard_data.problem1);
-		this._jsx_questions.push(hard_data.problem1);
-		this._jsx_questions.push(hard_data.problem1);
+		this._jsx_questions.push(hard_data.problem2);
+		this._jsx_questions.push(hard_data.problem3);
 	}
 	@action
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
