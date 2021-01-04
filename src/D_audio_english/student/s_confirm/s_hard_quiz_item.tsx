@@ -181,7 +181,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
 						})}
 					</div>
-					<div className="hard_question">
+					<div className="hard quiz_box">
 						<SwiperComponent ref={this._refSwiper}>
 							{quizs.map((quiz, idx) => {
 								return (

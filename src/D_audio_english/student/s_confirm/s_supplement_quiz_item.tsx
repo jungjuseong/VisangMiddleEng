@@ -182,7 +182,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		return (
 			<>
 				<div className="s_confirm" style={{display : view ? '' : 'none' }} ref={this._refQuiz}>
-					<div className="sup_question">
+					<div className="supplement quiz_box">
 						<div className="quiz">
 							<WrapTextNew view={view}>
 								{this._jsx_sentence}
