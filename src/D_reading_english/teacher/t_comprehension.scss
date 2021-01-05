@@ -129,7 +129,7 @@
                     left: 93px;
                     font-size: 19px;
                     font-weight: bold;
-                    color: gray;
+                    opacity: 50%;
                 }
                 .btn_close {
                     @include btn_on_dis( resolve('teacher/images/letstalk_close.png'), resolve('teacher/images/letstalk_close.png'), resolve('teacher/images/letstalk_close.png'), width('teacher/images/letstalk_close.png'), height('teacher/images/letstalk_close.png'), );
