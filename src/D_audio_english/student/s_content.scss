@@ -2,209 +2,206 @@
 @import "./s_additional/index.scss";
 @import "./s_dictation/index.scss";
 @import "./s_script.scss";
-
-@mixin s_content{
-	.s_content{
-		@include page;
-		
-		@include s_script;
-		.content_box {
-			@include page;
-			z-index: 2;
-			background-image: resolve("student/images/bg.png");
-			.btn_SCRIPT {
-				position: absolute;
-				top: 19px;
-				left: 26px;
-				z-index: 2;
-				@include btn_down_dis( resolve('student/images/btn_script.png'), resolve('student/images/btn_script_down.png'), resolve('student/images/btn_script.png'), width('student/images/btn_script.png'), height('student/images/btn_script.png'));
-			}
-			.btn_page_box{
-				width: 100%; height: 0px;
-					overflow: visible;text-align: center;
-					z-index: 2;
-					position: relative; top: 38px;
-					cursor: pointer;
-					&.key-on{
-						display: none;
-					}
-					&>span {
-						display: inline-block;
-						width: width('student/images/btn_navi.png');
-						height: height('student/images/btn_navi.png');
-						padding-left: 15px;
-						padding-right: 15px;
-						background: no-repeat;
-						background-image: resolve('student/images/btn_navi.png');
-						background-position-x: center;
-						&.on {background-image: resolve('student/images/btn_navi_on.png');}
-					}
-					&.off{display: none;}
-			}
-			.question {
-				position: absolute;
-				top: 0px;
-				height: 100%;
-				left: 0px;
-				width: 100%;
-				span.word {
-					display: inline-block;
-					white-space: nowrap;
-					padding: 0px 6px;
-				}
-				.swiper-container {
-					@include page;
-				}
-				.capture {
-					z-index: 100;
-					width: 1280px;
-					height: 800px;
-				}
-				/*question --> quiz_box*/
-				.quiz_box{
-					.swiper-container {
+@mixin s_content {
+    .s_content {
+        @include page;
+        @include s_script;
+        .content_box {
+            @include page;
+            z-index: 2;
+            background-image: resolve("student/images/bg.png");
+            .btn_SCRIPT {
+                position: absolute;
+                top: 19px;
+                left: 26px;
+                z-index: 2;
+                @include btn_down_dis( resolve('student/images/btn_script.png'), resolve('student/images/btn_script_down.png'), resolve('student/images/btn_script.png'), width('student/images/btn_script.png'), height('student/images/btn_script.png'));
+            }
+            .btn_page_box {
+                width: 100%;
+                height: 0px;
+                overflow: visible;
+                text-align: center;
+                z-index: 2;
+                position: relative;
+                top: 38px;
+                cursor: pointer;
+                &.key-on {
+                    display: none;
+                }
+                &>span {
+                    display: inline-block;
+                    width: width('student/images/btn_navi.png');
+                    height: height('student/images/btn_navi.png');
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    background: no-repeat;
+                    background-image: resolve('student/images/btn_navi.png');
+                    background-position-x: center;
+                    &.on {
+                        background-image: resolve('student/images/btn_navi_on.png');
+                    }
+                }
+                &.off {
+                    display: none;
+                }
+            }
+            .question {
+                position: absolute;
+                top: 0px;
+                height: 100%;
+                left: 0px;
+                width: 100%;
+                span.word {
+                    display: inline-block;
+                    white-space: nowrap;
+                    padding: 0px 6px;
+                }
+                .swiper-container {
+                    @include page;
+                }
+                .capture {
+                    z-index: 100;
+                    width: 1280px;
+                    height: 800px;
+                }
+                /*question --> quiz_box*/
+                .quiz_box {
+                    .swiper-container {
                         @include page;
                     }
-					.q-item {
-						.scroll{
-							overflow: auto;
-							&.key-on {
-								height: 255px;
-							}
-							&::-webkit-scrollbar {
-								width: 7px;
-							}
-							&::-webkit-scrollbar-thumb {
-								background: rgba(0, 0, 0, 0.3);
-								border-radius: 10px;
-							}
-							&::-webkit-scrollbar-track {
-								background-color: transparent;
-							}
-						}
-						&.key-on {
-							top: -205px;
-						}
-						.quiz {
-							position: relative;
-							display: flex;
-							height: 145px;
-							width: 100%;
-							padding: 0px 70px;
-							font-size: 29px;
-							font-weight: bold;
-							word-break: normal;
-							color: rgb(0, 0, 0);
-							white-space: normal;
-							margin-top: 60px;
-							&>div {
-								position: absolute;
-								top: 64px
-							}
-						}	
-						/*sentence_box--> module*/
-						&>.s_typing {
-							position: relative;
-							transition: margin-top 0.3s;
-							margin-top: 23px;
-							font-size: 52px;
-							display: flex;
-							justify-content: center;
-							color: #fff;
-							align-items: center;
-							.area-bnd {
-								.index {
-									flex: 0 0 auto;
-									padding: 30px 0px;
-								}
-								.k-tarea {
-									position: relative;
-									width: 100%;
-									height: auto;
-									min-height: 64px;
-									textarea {
-										box-sizing: border-box;
-										padding: 30px 35px 30px 30px;
-										font-family: NanumGothic;
-										font-size: 52px;
-										font-weight: bold;
-										color: #fff;										
-										&::disabled {
-											color: #fff;
-										}
-									}
-									.k-tarea-bg {
-										height: 0px;
-										min-height: 100%;
-									}
-									.k-tarea-bar {
-										display: none;
-									}
-								}
-							}
-						}
-					}
-				}	
-				@include s_confirm;
-				@include s_additional;
-				@include s_dictation;
-			}
-		}
-		.fel_toteacher {
-			position: absolute;
-			@include fel_toteacher;
-			bottom: 7px;
-			right: 7px;
-		}
-		.img_pop {
-			pointer-events: none;
-			opacity: 0;
-			position: absolute;	bottom: 21px; left: 275px;
-			background-image: resolve('student/images/pop_click.png');
-			width:  width('student/images/pop_click.png');
-			height: height('student/images/pop_click.png');
-			z-index: 2;
-			transition: opacity 0.3s;
-			&.on{
-				opacity: 1;
-			}
-		}
-		/*QnA*/
-		.btn_box {
-			$MYH: 142px;
-			border-top-left-radius: 25px;
-			border-top-right-radius: 25px;
-			width: 664px; 
-			height: $MYH;
-			position: absolute; bottom: -$MYH; 
-			left: 50%; transform: translate(-50%, 0%);
-			background-color: rgba(0, 0, 0, 0.8);
-			z-index: 5;
-			text-align: center;
-
-			transition: bottom 0.3s;
-			.btn_yes {
-				margin: 25px 10px;
-				@include btn_on(
-					resolve('student/images/btn_yes.png'),
-					resolve('student/images/btn_yes_down.png'),
-					width('student/images/btn_yes.png'),
-					height('student/images/btn_yes.png')
-				);
-			}
-			.btn_no {
-				margin: 25px 10px;
-				@include btn_on(
-					resolve('student/images/btn_no.png'),
-					resolve('student/images/btn_no_down.png'),
-					width('student/images/btn_no.png'),
-					height('student/images/btn_no.png')
-				);
-			}
-
-			&.on{
-				bottom: 0px; 
-			}
-		}
-	}
+                    .q-item {
+                        .scroll {
+                            overflow: auto;
+                            &.key-on {
+                                height: 255px;
+                            }
+                            &::-webkit-scrollbar {
+                                width: 7px;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 10px;
+                            }
+                            &::-webkit-scrollbar-track {
+                                background-color: transparent;
+                            }
+                        }
+                        &.key-on {
+                            top: -205px;
+                        }
+                        .quiz {
+                            position: relative;
+                            display: flex;
+                            height: 145px;
+                            width: 100%;
+                            padding: 0px 70px;
+                            font-size: 29px;
+                            font-weight: bold;
+                            word-break: normal;
+                            color: rgb(0, 0, 0);
+                            white-space: normal;
+                            margin-top: 60px;
+                            &>div {
+                                position: absolute;
+                                top: 64px
+                            }
+                        }
+                        /*sentence_box--> module*/
+                        &>.s_typing {
+                            position: relative;
+                            transition: margin-top 0.3s;
+                            margin-top: 23px;
+                            font-size: 52px;
+                            display: flex;
+                            justify-content: center;
+                            color: #fff;
+                            align-items: center;
+                            .area-bnd {
+                                .index {
+                                    flex: 0 0 auto;
+                                    padding: 30px 0px;
+                                }
+                                .k-tarea {
+                                    position: relative;
+                                    width: 100%;
+                                    height: auto;
+                                    min-height: 64px;
+                                    textarea {
+                                        box-sizing: border-box;
+                                        padding: 30px 35px 30px 30px;
+                                        font-family: NanumGothic;
+                                        font-size: 40px;
+                                        font-weight: bold;
+                                        color: #fff;
+                                        &::disabled {
+                                            color: #fff;
+                                        }
+                                    }
+                                    .k-tarea-bg {
+                                        height: 0px;
+                                        min-height: 100%;
+                                    }
+                                    .k-tarea-bar {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                @include s_confirm;
+                @include s_additional;
+                @include s_dictation;
+            }
+        }
+        .fel_toteacher {
+            position: absolute;
+            @include fel_toteacher;
+            bottom: 7px;
+            right: 7px;
+        }
+        .img_pop {
+            pointer-events: none;
+            opacity: 0;
+            position: absolute;
+            bottom: 21px;
+            left: 275px;
+            background-image: resolve('student/images/pop_click.png');
+            width: width('student/images/pop_click.png');
+            height: height('student/images/pop_click.png');
+            z-index: 2;
+            transition: opacity 0.3s;
+            &.on {
+                opacity: 1;
+            }
+        }
+        /*QnA*/
+        .btn_box {
+            $MYH: 142px;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            width: 664px;
+            height: $MYH;
+            position: absolute;
+            bottom: -$MYH;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 5;
+            text-align: center;
+            transition: bottom 0.3s;
+            .btn_yes {
+                margin: 25px 10px;
+                @include btn_on( resolve('student/images/btn_yes.png'), resolve('student/images/btn_yes_down.png'), width('student/images/btn_yes.png'), height('student/images/btn_yes.png'));
+            }
+            .btn_no {
+                margin: 25px 10px;
+                @include btn_on( resolve('student/images/btn_no.png'), resolve('student/images/btn_no_down.png'), width('student/images/btn_no.png'), height('student/images/btn_no.png'));
+            }
+            &.on {
+                bottom: 0px;
+            }
+        }
+    }
 }
