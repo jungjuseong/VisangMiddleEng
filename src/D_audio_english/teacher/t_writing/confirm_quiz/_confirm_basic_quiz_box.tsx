@@ -109,7 +109,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 						<div className={(this._hint ? ' view-hint' : '')}>
 							<div className={'sample' + (this._hint ? ' hide' : '')}/>
 							<div className={'hint' + (this._hint ? '' : ' hide')}>
-								{this._jsx_hints[0]},{this._jsx_hints[1]},{this._jsx_hints[2]}
+								{this._jsx_hints[0]}, {this._jsx_hints[1]}, {this._jsx_hints[2]}
 							</div>
 						</div>
 					</div>

@@ -9,8 +9,9 @@
             border-radius: 17px;
             width: 1027px;
             height: 492px;
-            &.basic { height: 433px; }
-
+            &.basic {
+                height: 433px;
+            }
             /*보충*/
             .sup_question {
                 position: relative;
@@ -22,7 +23,7 @@
                     justify-content: space-between;
                     margin-bottom: 25px;
                 }
-                :last-child {
+                 :last-child {
                     margin-bottom: 0px;
                 }
                 .toggle_bundle {
@@ -38,10 +39,18 @@
                         z-index: 5;
                     }
                 }
-                .on_true { background: resolve('teacher/images/TF_T_B.png'); }
-                .on_false { background: resolve('teacher/images/TF_F_B.png'); }
-                .on_true_t { background: resolve('teacher/images/TF_T_T.png'); }
-                .on_false_t { background: resolve('teacher/images/TF_F_T.png'); }
+                .on_true {
+                    background: resolve('teacher/images/TF_T_B.png');
+                }
+                .on_false {
+                    background: resolve('teacher/images/TF_F_B.png');
+                }
+                .on_true_t {
+                    background: resolve('teacher/images/TF_T_T.png');
+                }
+                .on_false_t {
+                    background: resolve('teacher/images/TF_F_T.png');
+                }
             }
             /*기본*/
             .image_box {
@@ -62,7 +71,7 @@
                 &>div {
                     margin-bottom: 22px;
                 }
-                    :last-child {
+                 :last-child {
                     border-bottom: 0px;
                 }
                 .answer_box {
@@ -111,6 +120,7 @@
                 .hint {
                     height: 55px;
                     padding-bottom: 5px;
+                    color: yellow;
                 }
             }
         }
