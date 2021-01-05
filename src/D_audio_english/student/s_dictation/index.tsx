@@ -68,7 +68,7 @@ class SDictation extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		const data = actions.getData();
 		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
-		const url = await quizCapture('.quiz_box .dict_question .q-item');
+		const url = await quizCapture('.s_dictation .dict_question .q-item');
 		console.log(url)
 		state.dictationProg[state.idx] = QPROG.SENDING;
 		if(App.student) {

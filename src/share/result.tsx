@@ -36,11 +36,6 @@ class QIem extends React.Component<IQIem> {
 							<span className={percent > 2 ? 'inner' : 'outer'}>{percent + '%'}</span>
 						</span>
 					</span>
-					<span className="preclass" style={{display: preview < 0 ? 'none' : ''}} > 
-						<span style={{width: preview + '%'}}>
-							<span className={preview > 2 ? 'inner' : 'outer'}>{preview + '%'}</span>
-						</span>
-					</span>
 				</span>
 				<span>{this.props.item.name}</span>
 			</div>
@@ -495,7 +490,6 @@ export class Result extends React.Component<IResultNormal> {
 	public render() {
 		return (
 			<div className="share_result">
-				<div className={this.props.haspre ? 'icon_result_info' : 'icon_inclass_info'} style={{display: this.props.div === 'question' ? '' : 'none'}}/>
 				<div className="title-result">RESULTS</div>
 				<QuestionNormal {...this.props}/>
 				<Student {...this.props} isGroup={false}/>

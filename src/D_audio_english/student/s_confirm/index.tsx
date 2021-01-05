@@ -114,7 +114,7 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 2) {
-			const url = await hardQuizCapture('.s_question .question .q-item .hard_question .q-item');
+			const url = await hardQuizCapture('.content_box .question .s_confirm .hard .q-item');
 			console.log('url',url)
 			state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {

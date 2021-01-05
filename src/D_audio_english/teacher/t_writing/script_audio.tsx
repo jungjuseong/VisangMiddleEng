@@ -281,7 +281,6 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             this._focusIdx = -1;
             this.m_player.setMuted(false);
             this.m_player.setMutedTemp(false);
-
             let msg: IRollMsg = {msgtype: 'roll_send',idx:idx, roll};
             felsocket.sendPAD($SocketType.MSGTOPAD, msg);
             _.delay(() => {

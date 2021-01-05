@@ -125,6 +125,9 @@
                         left: 146px;
                         background-image: resolve('digenglishCB_lib/images/mplayer/brake_point3.png');
                     }
+                    &.hide {
+                        display: none;
+                    }
                 }
             }
             .control_left {

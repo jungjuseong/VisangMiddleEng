@@ -106,11 +106,15 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		});
 	}
 	private _playClick = () => {
+		const { data,shadowing, player,setShadowPlay, playerInitTime, isShadowPlay } = this.props;
+		const scripts = data.scripts[this.props.idx];
 		App.pub_playBtnTab();
 		this._togglePlay();
 		this._view_audio_box = !this._view_audio_box;
 		if (!this._view_audio_box) this.props.player.pause();
-		else this.props.player.play();
+		else {
+			const playTime = (player.currentTime >= player.duration || player.currentTime < playerInitTime * 1000) ? playerInitTime * 1000 : player.currentTime;
+			this.props.player.gotoAndPlay(playTime, scripts[scripts.length - 1].audio_end * 1000, 1);	}
 	}
 
 	private _playPointClick = (cnum : number) => {
@@ -138,7 +142,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 			console.log(player.bPlay);
 			if (player.bPlay) player.pause();
 			else {
-				const playTime = (player.currentTime >= player.duration || player.currentTime < playerInitTime * 1000) ? playerInitTime * 1000 : player.currentTime;
+				const playTime = (player.currentTime >= scripts[scripts.length - 1].audio_end * 1000 || player.currentTime < playerInitTime * 1000) ? playerInitTime * 1000 : player.currentTime;
 				player.gotoAndPlay(playTime, scripts[scripts.length - 1].audio_end * 1000, 1);				
             }
 		}
