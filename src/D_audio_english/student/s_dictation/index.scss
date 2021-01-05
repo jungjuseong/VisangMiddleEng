@@ -18,6 +18,7 @@
                     .q-item {
                         .scroll{
                             overflow: auto;
+                            margin: 0px 15px;
                             &.key-on {
                                 height: 255px;
                             }
@@ -33,14 +34,14 @@
                             }
                         }
                         &.key-on {
-                            top: -205px;
+                            top: 0px;
                         }
                         .quiz {
                             position: relative;
                             display: flex;
                             height: 145px;
                             width: 100%;
-                            padding: 0px 60px;
+                            padding: 0px 55px;
                             font-size: 29px;
                             font-weight: bold;
                             word-break: normal;

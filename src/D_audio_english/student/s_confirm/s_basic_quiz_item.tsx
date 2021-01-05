@@ -78,13 +78,13 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	public state = {
 		activeDrags: 0,
 		firstPosition: {
-			x: 500, y: 400
+			x: 500, y: 430
 		},
 		secondPosition: {
-			x: 600, y: 400
+			x: 600, y: 430
 		},
 		thirdPosition: {
-			x: 700, y: 400
+			x: 700, y: 430
 		}
 	};
 
@@ -164,7 +164,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 					this.props.onChoice(2, this._clicked_number);
 				}
 			}
-			position[i].y = 400;
+			position[i].y = 430;
 		}
 		this.state.firstPosition.x = 500;
 		this.state.secondPosition.x = 600;
@@ -265,13 +265,13 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 								</div>
 							</div>
 
-							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 500, y: 400 }} onStop={this.handleStop}	onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(1)}>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 500, y: 430 }} onStop={this.handleStop}	onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(1)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>1</div>
 							</Draggable>
-							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 600, y: 400 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(2)}>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 600, y: 430 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(2)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>2</div>
 							</Draggable>
-							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 700, y: 400 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(3)}>
+							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 700, y: 430 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(3)}>
 								<div className={'box' + (this._sended ? ' hide' : '')}>3</div>
 							</Draggable>
 						</div>
