@@ -6,6 +6,7 @@ import { DraggableCore, DraggableData, DraggableEvent } from 'react-draggable';
 
 import { MPlayer } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
+import {IData } from '../../common';
 
 function _getTimeStr(ms: number, max: number) {
 	const maxSec = Math.round(max / 1000);
@@ -32,7 +33,7 @@ function _getTimeStr(ms: number, max: number) {
 }
 
 @observer
-class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
+class ProgBox extends React.Component<{ player: MPlayer, disable: boolean ,data:IData, idx:number, script:boolean}> {
 	@observable private m_dragLeft = 0;
 
 	private m_dragging = false;
@@ -42,9 +43,17 @@ class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
 	private m_dragLeft_s = 0;
 	
 	private _seek = _.throttle((percent: number) => {
+		const {script, idx, data} = this.props
+		console.log('idx!!!!',idx)
 		if(this.props.disable) return;
 		const player = this.props.player;
-		player.seek(this.props.player.duration * percent / 100);
+		let scriptinit = 0;
+		let scriptpercent = 1;
+		if(script){
+			scriptpercent = (this.props.data.scripts[idx][this.props.data.scripts[idx].length-1].audio_end-this.props.data.scripts[idx][0].audio_start)/this.props.data.scripts[2][this.props.data.scripts[2].length-1].audio_end
+			scriptinit = this.props.data.scripts[idx][0].audio_start*1000
+		}
+		player.seek((((this.props.player.duration)*scriptpercent)* percent / 100)+scriptinit);
 	}, 300, { leading: false });
 
 	private _refBG = (el: HTMLElement | null) => {
@@ -77,20 +86,36 @@ class ProgBox extends React.Component<{ player: MPlayer, disable: boolean }> {
 
 		const player = this.props.player;
 		if (!player.bPlay) this._seek(left);
+		console.log('퍼센트으으으',left)
 	}
 	private _stop = (evt: DraggableEvent, data: DraggableData) => {
+		const {script, idx} = this.props
 		if (!this.m_dragging || this.props.disable) return;
 
 		this.m_dragging = false;
 		const player = this.props.player;
-		player.seek(player.duration * this.m_dragLeft / 100);
+		let scriptinit = 0;
+		let scriptpercent = 1;
+		if(script){
+			scriptpercent = (this.props.data.scripts[idx][this.props.data.scripts[idx].length-1].audio_end-this.props.data.scripts[idx][0].audio_start)/this.props.data.scripts[2][this.props.data.scripts[2].length-1].audio_end
+			scriptinit = this.props.data.scripts[idx][0].audio_start*1000
+		}
+		player.seek((((player.duration)*scriptpercent) * this.m_dragLeft / 100)+scriptinit);
 	}
 
 	public render() {
+		const {script, idx} = this.props
 		const player = this.props.player;
 		let percent = 0;
+		let scriptinit = 0;
+		let scriptpercent = 1;
+		if(script){
+			scriptpercent = (this.props.data.scripts[idx][this.props.data.scripts[idx].length-1].audio_end-this.props.data.scripts[idx][0].audio_start)/this.props.data.scripts[2][this.props.data.scripts[2].length-1].audio_end
+			scriptinit = this.props.data.scripts[idx][0].audio_start *1000
+		}
 		if (player.duration > 0) {
-			percent = (player.viewTime / player.duration) * 100;
+			console.log('asdasdasd',player.viewTime,scriptinit,player.duration,scriptpercent)
+			percent = ((player.viewTime-scriptinit) / ((player.duration)*scriptpercent)) * 100;
 		}
 		let btnLeft = 0;
 		let dragLeft = this.m_dragLeft;

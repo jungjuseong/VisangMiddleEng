@@ -115,14 +115,14 @@ const _bg_normal = _RGBA(0, 0, 0, 0.2);
 const _brdThick = 2;
 const _brdThick_focus = d_audio_english_s ? 4 : 2; 
 
-const _bgA = _RGBA(150, 40, 202, 1);
-const _bgB = _RGBA(0, 42, 227, 1);
+const _bgA = _RGBA(0, 42, 227, 1);
+const _bgB = _RGBA(150, 40, 202, 1);
 const _bgC = _RGBA(193, 55, 169, 1);
 const _bgD = _RGBA(255, 114 ,0 , 1);
 const _bgE = _RGBA(0, 146, 238, 1);
 
-const _strokA = _RGBA(150, 40, 202, 1);
-const _strokB = _RGBA(0, 42, 227, 1);
+const _strokA = _RGBA(0, 42, 227, 1);
+const _strokB = _RGBA(150, 40, 202, 1);
 const _strokC = _RGBA(193, 55, 169, 1);
 const _strokD = _RGBA(255, 114, 0, 1);
 const _strokE = _RGBA(0, 146, 238, 1);

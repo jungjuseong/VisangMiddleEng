@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 
 import { MPlayer } from '@common/mplayer/mplayer';
 import { ToggleBtn } from '@common/component/button';
-
+import {IData } from '../../common';
 import ProgBox from './_prog_box';
 import { App } from 'src/App';
 /*
@@ -19,11 +19,14 @@ interface IControlBox {
 	togglePlay: () => void;
 	view: boolean;
 	pointClick: (cnum:number) =>void;
+	data:IData
+	idx:number
+	script:boolean
 }
 @observer
 class ControlBox extends React.Component<IControlBox> {
 	public render() {
-		const {player, view, disable, isPlay, togglePlay,pointClick} = this.props;
+		const {player, view, disable, isPlay, togglePlay,pointClick, data , idx, script} = this.props;
 		return (
 			<div className="control" style={{display : (view ? '' : 'none')}}>
 				<div className="control_over">
@@ -36,7 +39,7 @@ class ControlBox extends React.Component<IControlBox> {
 				</div>
 				<div className="control_top">
 					<div>
-						<ProgBox player={player} disable={disable}/>
+						<ProgBox player={player} disable={disable} data={data} idx={idx} script={script}/>
 					</div>
 				</div>
 			</div>

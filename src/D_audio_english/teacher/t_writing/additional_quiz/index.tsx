@@ -52,7 +52,6 @@ class AdditionalQuiz extends React.Component<IQuizBoxProps> {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
 			this._zoom = false;
 			this._zoomImgUrl = '';
