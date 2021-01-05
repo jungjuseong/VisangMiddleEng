@@ -275,6 +275,7 @@ class TeacherContext extends TeacherContextBase {
 							result.c3.push(ret.answer3);
 							result.url.push(qmsg.imgUrl);
 							result.uid.push(qmsg.id);
+							console.log('ddddd',result.url)
 						}
 					}
 					break;				

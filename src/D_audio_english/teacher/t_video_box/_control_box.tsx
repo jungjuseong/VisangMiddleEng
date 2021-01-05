@@ -30,9 +30,9 @@ class ControlBox extends React.Component<IControlBox> {
 		return (
 			<div className="control" style={{display : (view ? '' : 'none')}}>
 				<div className="control_over">
-					<div className="brake_point one" onClick={()=>{pointClick(0)}}></div>
-					<div className="brake_point two" onClick={()=>{pointClick(1)}}></div>
-					<div className="brake_point three" onClick={()=>{pointClick(2)}}></div>
+					<div className={"brake_point one" + (script? ' hide' : '')} onClick={()=>{pointClick(0)}}></div>
+					<div className={"brake_point two" + (script? ' hide' : '')} onClick={()=>{pointClick(1)}}></div>
+					<div className={"brake_point three" + (script? ' hide' : '')} onClick={()=>{pointClick(2)}}></div>
 				</div>
 				<div className="control_left">
 					<ToggleBtn className="btn_play_pause" on={isPlay} onClick={togglePlay} />

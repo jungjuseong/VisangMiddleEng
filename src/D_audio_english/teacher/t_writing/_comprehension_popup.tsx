@@ -28,6 +28,7 @@ class ComprehensionPopup extends React.Component<IComprehensionPopupProps> {
 	@observable private m_roll: ''|'A'|'B' = '';
 
 	private onSend = async () => {
+		console.log('roll1',this.m_roll)
 		this.props.onSend(this.m_roll);
 		await kutil.wait(400);
 		this.m_view = false;
@@ -59,16 +60,18 @@ class ComprehensionPopup extends React.Component<IComprehensionPopupProps> {
 		if (view && !prev.view) {
 			this.m_view = true;
 			this.m_sendView = (type !== 'ROLE PLAY') ;
+			this.m_roll = '';
 		} 
 		else if (!view && prev.view) {
 			this.m_view = false;
 			this.m_sendView = false;
+			this.m_roll = '';
 		}
-		this.m_roll = '';
 	}
 
 	public render() {
 		const { view, type, onClosed, imgA, imgB } = this.props;
+		console.log('roll2',this.m_roll)
 		return (
 			<CoverPopup className={'compre_popup ' + type} view={view && this.m_view} onClosed={onClosed} >
 				<span>{type === 'SHADOWING' ? 'LISTEN & REPEAT' : type}</span>
