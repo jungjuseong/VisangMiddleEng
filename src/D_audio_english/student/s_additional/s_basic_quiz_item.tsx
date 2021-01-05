@@ -93,7 +93,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	private _onDone = (text: string) => {		
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
-		keyBoardState.state = 'on';
+		keyBoardState.state = 'off';
 	}
 
 	private _onPage = (idx: number) =>{

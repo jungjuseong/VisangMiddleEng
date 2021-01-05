@@ -50,6 +50,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	@observable private m_yourturn = -1;
 	@observable private m_ytNext = -1;
 	@observable private _view_audio_box: boolean = false;
+	@observable private _checkscript = false;
 
 	private _refBox = (el: HTMLElement | null) => {
         if (this.m_box || !el) return;
@@ -144,8 +145,13 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	}
 
 	public componentDidUpdate(prev: IVideoBoxProps) {
-		const { data, player, roll, shadowing,playerInitTime,setShadowPlay} = this.props;
+		const { data, player, roll, shadowing,playerInitTime,setShadowPlay, idx} = this.props;
 		const scripts = data.scripts[this.props.idx];
+		if(idx == 2 && playerInitTime == 0){
+			this._checkscript = false
+		}else{
+			this._checkscript = true
+		}
 		if(roll !== prev.roll) {
 			if(	this.m_yourturn >= 0) {
 				clearTimeout(this.m_yourturn);
@@ -196,6 +202,9 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 						togglePlay={this._togglePlay}
 						view={this._view_audio_box}
 						pointClick={this._playPointClick}
+						data={this.props.data}
+						idx={this.props.idx}
+						script={this._checkscript}
 					/>
 				</div>
 

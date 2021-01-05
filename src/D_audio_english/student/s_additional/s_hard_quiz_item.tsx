@@ -104,7 +104,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
-		keyBoardState.state = 'on';
+		keyBoardState.state = 'off';
 
 	}
 	private _selectArea = (index: number) => {

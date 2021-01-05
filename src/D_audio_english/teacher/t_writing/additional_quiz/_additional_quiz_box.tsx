@@ -89,7 +89,7 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 		console.log('viewHint');
 
 		this.props.onHintClick();
-		this._hint = !this._hint;
+		this._hint = true;
 
 		this._doSwipe();
 	}
@@ -103,7 +103,6 @@ class QuizBox extends React.Component<IQuizBoxProps> {
 		const { view ,state } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
 
 			this._doSwipe();
