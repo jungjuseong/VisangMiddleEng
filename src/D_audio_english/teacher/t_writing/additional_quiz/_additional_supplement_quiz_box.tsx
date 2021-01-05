@@ -55,7 +55,7 @@ class SupplementQuizBox extends QuizBox {
 				<div className={'subject_rate' + (this._sended[0] ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultAdditionalSup.uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended[0] ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended[0] ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._hint ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>

@@ -106,7 +106,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 	// 답 확인 토글 기능 answer
 	private _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		this.props.onHintClick();
-		this._hint = !this._hint;
+		this._hint = true;
 
 		if(!this._boxs) return;
 
@@ -133,7 +133,6 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 		const { view ,state,index } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
-			this._hint = false;
 			this._trans = false;
 
 			if(this._swiper) {
@@ -175,7 +174,7 @@ class HardDictationQuizBox extends React.Component<IQuizBoxProps> {
 				<div className={'subject_rate' + (this._sended ? '' : ' hide')} onClick={()=>{viewResult(!isQComplete)}}>{state.resultDictation[index].uid.length}/{App.students.length}</div>
 				<ToggleBtn className={'btn_answer' + (this._sended ? '' : ' hide')} on={this._hint} onClick={this._viewAnswer}/>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._hint ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>

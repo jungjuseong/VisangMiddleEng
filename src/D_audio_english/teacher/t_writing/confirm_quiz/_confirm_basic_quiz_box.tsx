@@ -67,7 +67,7 @@ class ConfirmBasicQuizBox extends ConfirmQuizBox {
 					{this.props.state.resultConfirmBasic.uid.length}/{App.students.length}
 				</div>
 				<CorrectBar 
-					className={'correct_answer_rate' + (this._sended[1] ? '' : ' hide')} 
+					className={'correct_answer_rate' + (this._hint ? '' : ' hide')} 
 					preview={-1} 
 					result={qResult}
 				/>
