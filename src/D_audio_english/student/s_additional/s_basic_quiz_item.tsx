@@ -121,6 +121,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
+		const wrap1 = document.querySelector('.s_additional .basic .q-item:nth-child(1) .scroll');
+        const wrap2 = document.querySelector('.s_additional .basic .q-item:nth-child(2) .scroll');
+        const wrap3 = document.querySelector('.s_additional .basic .q-item:nth-child(3) .scroll');
 		if(this.props.view && !prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'on';
@@ -142,6 +145,11 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		if(this.props.prog >= QPROG.SENDED && this.props.view) {
 			this._sended = true;
 			keyBoardState.state = 'hide';
+		}
+		if(keyBoardState.state === 'on'){
+            wrap1?.scrollTo(0,200);
+            wrap2?.scrollTo(0,200);
+			wrap3?.scrollTo(0,200);
 		}
 	}
 
@@ -185,12 +193,12 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 								const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 								return (
 									<div key={idx} className={'q-item' + keyon}>
-										<div className="quiz">
-											<WrapTextNew view={view}>
-												{this._jsx_sentence}
-											</WrapTextNew>
-										</div>
 										<div className={"scroll" + keyon}>
+											<div className="quiz">
+												<WrapTextNew view={view}>
+													{this._jsx_sentence}
+												</WrapTextNew>
+											</div>
 											<div className="sentence_box">
 												<div className={'OX_box ' + OXs[idx]}/>
 												<canvas/>
