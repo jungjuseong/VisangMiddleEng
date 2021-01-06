@@ -226,6 +226,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	private _cancelNumbering = (idx : number)=>{
 		if (this.props.confirmProg === QPROG.COMPLETE) return;
 		this._hide_num_box[this._choices[idx] - 1] = false;
+		this.props.onChoice(0, this._choices[idx]);
 		this._choices[idx] = 0;
 	}
 
