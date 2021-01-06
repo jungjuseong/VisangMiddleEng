@@ -22,7 +22,6 @@ import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
 import AdditionalQuiz from './additional_quiz';
 import HardDictationQuizBox from './_hard_dictation_quiz_box';
-import TransPopup from './_trans_popup';
 import ScriptAudio from './script_audio';
 
 function falsySended(state: IStateCtx): boolean {
@@ -76,10 +75,8 @@ class Writing extends React.Component<IWritingProps> {
 	@observable private _view = false;
 	@observable private _curQidx = 0;
 	@observable private _viewClue = false;
-	@observable private _viewTrans = false;
 	@observable private _viewScript = false;
 	@observable private _letstalk = false;
-	@observable private _popTrans = false;
 	@observable private _viewResult = false;
     @observable private _viewQuiz = true;
     @observable private _viewpop = false;
@@ -362,7 +359,6 @@ class Writing extends React.Component<IWritingProps> {
         this._curQidx = 0;
         this.c_popup = 'off';
         this._viewClue = false;
-        this._viewTrans = false;
         this._viewScript = false;
         this._roll = '';
         this._isShadowPlay = false;
@@ -478,18 +474,7 @@ class Writing extends React.Component<IWritingProps> {
 
         if(idx === 1) felsocket.startStudentReportProcess($ReportType.JOIN, quizResults[this._curQidx].u1);
         else if(idx === 2) felsocket.startStudentReportProcess($ReportType.JOIN, quizResults[this._curQidx].u2);
-	}
-    
-    private _onPopTrans = () => {
-		App.pub_playBtnTab();
-		this._popTrans = true;
-		this.props.actions.setNaviView(false);
-    }
-    
-	private _PopTransClosed = () => {
-		this._popTrans = false;
-		this.props.actions.setNaviView(true);
-	}
+	}    
 	private _letstalkClosed = () => {
 		this._letstalk = false;
 		this.props.actions.setNaviView(true);
@@ -567,7 +552,6 @@ class Writing extends React.Component<IWritingProps> {
             this._view = true;
             this._setNavi();
             this._letstalk = false;
-            this._popTrans = false;
         } else if (!view && prev.view) {
             this.c_popup = 'off';
             this._focusIdx = -1;
@@ -604,7 +588,6 @@ class Writing extends React.Component<IWritingProps> {
     
         return (
             <div className={'t_writing '} style={style}>
-
                 <div className="close_box">
                     <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>
                 </div>
@@ -615,20 +598,6 @@ class Writing extends React.Component<IWritingProps> {
                     <ToggleBtn className="btn_tab_dictation" onClick={this._clickDictation} on={this._tab === 'DICTATION'} disabled={this._tab === 'DICTATION' || isOnStudy} />
                     <ToggleBtn className="btn_tab_script" onClick={this._clickScript} on={this._tab === 'SCRIPT'} disabled={this._tab === 'SCRIPT' || isOnStudy} />
                 </div>
-                <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
-                <TransPopup 
-                    view={this._popTrans} 
-                    data={this.m_data.scripts[this._curQidx]} 
-                    onClosed={this._PopTransClosed}
-                />
-                <SubmitStatusPopup 
-                    view={this._viewResult}
-                    answer={this.answerboolean}
-                    tab = {this._tab}
-                    idx = {this._curQidx}
-                    state={this.props.state}
-                    onClosed={this._closeResult}
-			    />
                 <div className="writing_content_box">
                     {/* index */}
                     <div className="btn_page_box">
@@ -677,6 +646,14 @@ class Writing extends React.Component<IWritingProps> {
                         );
                     })}
                 </div>
+                <SubmitStatusPopup 
+                    view={this._viewResult}
+                    answer={this.answerboolean}
+                    tab = {this._tab}
+                    idx = {this._curQidx}
+                    state={this.props.state}
+                    onClosed={this._closeResult}
+			    />
                 <SendUINew view={isViewSend} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
                 <CoverPopup className="pop_hint" view={this._viewpop} onClosed={() => {/**/}}>
                     <div className="pop_bg">

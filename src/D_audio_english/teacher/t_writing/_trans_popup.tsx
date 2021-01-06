@@ -8,12 +8,13 @@ import { ToggleBtn } from '@common/component/button';
 import { App } from '../../../App';
 
 import { CoverPopup } from '../../../share/CoverPopup';
-import { IScript } from '../../common';
+import { IScript, IRolePlay } from '../../common';
 import { BtnAudio } from '../../../share/BtnAudio';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
 interface IQuizBoxProps {
 	view: boolean;
+	role: IRolePlay;
 	onClosed: () => void;
 	data: IScript[];
 }
@@ -71,7 +72,12 @@ class TransPopup extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { onClosed } = this.props;
+		const { onClosed, data, role } = this.props;
+		const thumbA = role.speakerA.image_s;
+		const thumbB = role.speakerB.image_s;
+		const thumbC = role.speakerC.image_s;
+		const thumbD = role.speakerD.image_s;
+		const thumbE = role.speakerE.image_s;
 
 		return (
 			<>
@@ -81,13 +87,18 @@ class TransPopup extends React.Component<IQuizBoxProps> {
 						<div className="popbox">
 							<div className="sentence_box">
 								<div>
-								{this._jsx_sentences.map((sentence, key) => 
-										(<>
-										<div className="question_box" onClick={this._onClick}>{sentence.eng}</div>
-										<div className="kor_question_box" onClick={this._onClick}>{sentence.kor}</div>
+								{this._jsx_sentences.map((sentence, idx) =>{
+									let speaker;
+									if (data[idx].speaker === "Man")  speaker = 'M';
+									else if (data[idx].speaker === "Woman")  speaker = 'W';
+									else speaker = '';
+
+									return(<>
+										<div className="question_box" onClick={this._onClick}>{speaker}: {sentence.eng}</div>
+										<div className="kor_question_box" onClick={this._onClick}>{speaker}: {sentence.kor}</div>
 										</>)
-									)
-								}
+									}
+								)}
 								</div>
 							</div>
 						</div>

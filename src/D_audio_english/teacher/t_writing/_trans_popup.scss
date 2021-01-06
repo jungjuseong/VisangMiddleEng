@@ -3,12 +3,13 @@
     .btn_pop_trans {
         @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'), );
         position: absolute;
-        left: 80px;
-        top: 130px;
+        left: 15px;
+        top: 10px;
         z-index: 100;
     }
     .pop_trans {
         @include CoverPopup(10001);
+        position: fixed;
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0.5);
         padding-top: 60px;
@@ -56,7 +57,7 @@
                 .sentence_box {
                     position: relative;
                     text-align: left;
-                    height: 160px;
+                    height: 100%;
                     padding: 0 30px;
                     &>div {
                         position: relative;
