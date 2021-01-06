@@ -14,6 +14,8 @@ import { TeacherProvider, tContext } from './t_store';
 import VideoDirection from '../../share/video-direction';
 import { App } from '../../App';
 import Comprehension from './t_comprehension';
+import * as felsocket from '../../felsocket';
+import { ToggleBtn } from '@common/component/button';
 
 const _WIDTH = 1280;
 
@@ -29,6 +31,12 @@ class TeacherPage extends React.Component<ITeacher> {
 
 		// console.log('==>', props.actions.getData());
 	}
+	
+    private _goToIntro = () => {
+        felsocket.sendLauncher($SocketType.CLOSE_OTHER_BOOK, null);
+        return;
+    }
+
 	public render() {
 		const {state, actions} = this.props;
 		const viewDiv = state.viewDiv;
@@ -64,6 +72,10 @@ class TeacherPage extends React.Component<ITeacher> {
 				</div>
 
 				<Navi {...state.navi} onLeftClick={actions.naviLeft} onRightClick={actions.naviRight}/>
+				                
+                <div className="close_box">
+                    <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>
+                </div>
 			</>
 		);
 	}

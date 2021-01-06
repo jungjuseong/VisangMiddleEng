@@ -14,6 +14,7 @@ import Grouping from './t_grouping';
 import Board from './t_board';
 
 import VideoDirection from '../../share/video-direction';
+import * as felsocket from '../../felsocket';
 
 const _WIDTH = 1280;
 
@@ -34,7 +35,7 @@ class ContentBox extends React.Component<IContentBoxProps> {
 	private _boardStyle: React.CSSProperties = {};
 	
 	private _goToIntro = () => {
-        alert('go to Intro page');
+		felsocket.sendLauncher($SocketType.CLOSE_OTHER_BOOK, null);
         return;
     }
 

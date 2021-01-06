@@ -60,6 +60,10 @@
 			_previewCallBack = null;
 		}
 	};
+	tsoc_o.closeOtherBook = function(){
+		console.log("closeOtherBook 요청");
+		window.parent.postMessage({ type: 'gotoBookParent', from: 'content' }, '*');
+	};
 	tsoc_o.getPreviewDmsResult = function(callBack, msg){
 		_previewCallBack = callBack;
 		try{

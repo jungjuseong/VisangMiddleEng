@@ -233,13 +233,6 @@ class Comprehension extends React.Component<IComprehensionProps> {
         }
         actions.setNavi(false, false);
     }
-
-	private _goToIntro = () => {
-        alert('go to Intro page');
-        this.props.actions.gotoDirection();
-        return;
-    }
-
     /* Hint Bubble */
 	private _clickTranslate = () => {
         if(this._title !== 'COMPREHENSION' || this._tab !== 'SCRIPT') return;        	
@@ -787,9 +780,6 @@ class Comprehension extends React.Component<IComprehensionProps> {
                 <div className="top">
                     <ToggleBtn onClick={this._clickCompre} on={this._title === 'COMPREHENSION'} disabled={this._title === 'COMPREHENSION' || isOnStudy} className="btn_compre" />
                     <ToggleBtn onClick={this._clickDial} on={this._title === 'DIALOGUE'} disabled={this._title === 'DIALOGUE' || isOnStudy} className="btn_dialogue" />
-                </div>
-                <div className="close_box">
-                    <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>
                 </div>
                 <div className="left_box" >
                     <div className="video_container">

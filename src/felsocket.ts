@@ -94,6 +94,16 @@ export function sendLauncher(type: $SocketType, data: any) {
 				window['tsoc_o']['gotoNextBook'](); // tslint:disable-line
 			} catch(e) {}
 		}
+	} else if (type === $SocketType.CLOSE_OTHER_BOOK) {
+        if (_isDvlp) {
+            try {
+                window.top['tsoc_o']['closeOtherBook'](); // tslint:disable-line
+            } catch(e) {}
+        } else {
+            try {
+                window['tsoc_o']['closeOtherBook'](); // tslint:disable-line
+            } catch(e) {}
+        }
 	}
 }
 	

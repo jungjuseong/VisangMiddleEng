@@ -71,6 +71,9 @@
 		tsoc_o.getPopupIdx = function(win){
 			return _popups.indexOf(win);
 		};
+		tsoc_o.closeOtherBook = function(){
+			console.log("closeOtherBook 요청 테스트용");
+		};
 		
 		tsoc_o.gotoPAD = function(url){
 			url = comm_o.addQuery(url, "kdmtdvlp", "y");

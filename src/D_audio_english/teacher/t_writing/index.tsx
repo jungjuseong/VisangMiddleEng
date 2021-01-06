@@ -326,9 +326,7 @@ class Writing extends React.Component<IWritingProps> {
 
     // 인트로 페이지로 이동
 	private _goToIntro = () => {
-        alert('go to Intro page');
-        this.props.actions.gotoDirection();
-        // this._testQuiz = true;
+        felsocket.sendLauncher($SocketType.CLOSE_OTHER_BOOK, null);
         return;
     }
 

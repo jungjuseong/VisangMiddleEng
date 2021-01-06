@@ -65,6 +65,7 @@ declare interface IPREVIEW_MEMBER_AI {
 	STAR_SET, // 18
 	STAR_SEND, // 19
 	PAD_ONSCREEN_FIX, // 20 // 리포트(스텝1) 미제출 학생은 unmount까지 계속 ONSCREEN
+	CLOSE_OTHER_BOOK
   }
   
   

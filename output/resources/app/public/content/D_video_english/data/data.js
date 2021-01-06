@@ -142,7 +142,7 @@
         "seq": 8,
         "dms_seq": 0,
         "dms_speaker": "Girl",
-        "dms_start": 38.25,
+        "dms_start": 37.87,
         "dms_end": 39.58,
         "qnums": [2],
         "dms_eng": "I’m going to eat lunch.",
