@@ -16,6 +16,7 @@ import ComprehensionPopup from './_comprehension_popup';
 import ScriptContainer, { IScriptContainerProps } from '../../script_container';
 import VideoBox from '../t_video_box';
 import { ToggleBtn } from '@common/component/button';
+import TransPopup from './_trans_popup';
 
 interface IScriptAudioProps {
 	view: boolean;
@@ -43,6 +44,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 	@observable private _shadowing = false;
 	@observable private _focusIdx = -1;
     @observable private _isShadowPlay = false;
+	@observable private _popTrans = false;
     
     private _lastFocusIdx = -1;
 
@@ -309,8 +311,18 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             }, 300);
         }
         actions.setNavi(false, false);
-    }
+    }    
 
+    private _onPopTrans = () => {
+		App.pub_playBtnTab();
+		this._popTrans = true;
+		this.props.actions.setNaviView(false);
+    }    
+	private _PopTransClosed = () => {
+		this._popTrans = false;
+		this.props.actions.setNaviView(true);
+    }
+    
     private _onPopupClosed = () => {
         if(this._tab === 'SCRIPT' && this.props.state.qnaProg === SENDPROG.READY && this._roll === '' && !this._shadowing) this.props.actions.setNavi(true, true);
         this.c_popup = 'off';
@@ -330,6 +342,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
             this._roll = '';
             this._isShadowPlay = false;
             this._shadowing = false;
+            this._popTrans = false;
             App.pub_stop();
         }
     }
@@ -347,6 +360,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
         return (
             <>
             <ToggleBtn className={'btn_script_show' + (this._viewScript ? ' on' : '')} on={this._viewScript} onClick={this._toggleScript} />
+            <ToggleBtn className="btn_pop_trans" view={view && this._tab === 'SCRIPT'} on={this._popTrans} onClick={this._onPopTrans} />
             <div className="video_container">
 				<VideoBox
                     data={this.m_data}
@@ -392,6 +406,12 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
                 imgB={this.m_data.role_play.speakerB.image_l}
                 onSend={this._onPopupSend}
                 onClosed={this._onPopupClosed}
+            />
+            <TransPopup 
+            view={this._popTrans} 
+            data={script} 
+            role={this.m_data.role_play}
+            onClosed={this._PopTransClosed}
             />
             </>
         );
