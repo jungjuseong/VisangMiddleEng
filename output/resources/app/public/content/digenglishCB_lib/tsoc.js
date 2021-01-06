@@ -72,7 +72,7 @@
 			return _popups.indexOf(win);
 		};
 		tsoc_o.closeOtherBook = function(){
-			console.log("closeOtherBook 요청 테스트용");
+			console.log("closeOtherBook", { type: 'gotoBookParent', from: 'content' , msg: '' });
 		};
 		
 		tsoc_o.gotoPAD = function(url){
