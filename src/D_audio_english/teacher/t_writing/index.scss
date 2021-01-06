@@ -36,8 +36,8 @@
                 .btn_close {
                     @include btn_on_dis( resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), width('teacher/images/pop_close.png'), height('teacher/images/pop_close.png'), );
                     position: absolute;
-                    right: 10px;
-                    top: 13px;
+                    right: 20px;
+                    top: 20px;
                     z-index: 2;
                 }
                 .btn_yes {
@@ -470,12 +470,6 @@
                             border-radius: 100%;
                             border: 8px solid transparent;
                             margin: 30px;
-                            &.A {
-                                border-color: #AD5BFF;
-                            }
-                            &.B {
-                                border-color: #0066FF;
-                            }
                             &.on {
                                 /* border-color: #ff0; */
                                 .icon_check {
