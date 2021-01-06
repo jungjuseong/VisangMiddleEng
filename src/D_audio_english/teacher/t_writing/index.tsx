@@ -75,7 +75,6 @@ class Writing extends React.Component<IWritingProps> {
 	@observable private _view = false;
 	@observable private _curQidx = 0;
 	@observable private _viewClue = false;
-	@observable private _viewTrans = false;
 	@observable private _viewScript = false;
 	@observable private _letstalk = false;
 	@observable private _viewResult = false;
@@ -360,7 +359,6 @@ class Writing extends React.Component<IWritingProps> {
         this._curQidx = 0;
         this.c_popup = 'off';
         this._viewClue = false;
-        this._viewTrans = false;
         this._viewScript = false;
         this._roll = '';
         this._isShadowPlay = false;
@@ -590,7 +588,6 @@ class Writing extends React.Component<IWritingProps> {
     
         return (
             <div className={'t_writing '} style={style}>
-
                 <div className="close_box">
                     <ToggleBtn className="btn_intro" onClick={this._goToIntro}/>
                 </div>
@@ -600,15 +597,7 @@ class Writing extends React.Component<IWritingProps> {
                     <ToggleBtn className="btn_tab_additional" onClick={this._clickAdditional} on={this._tab === 'ADDITIONAL'} disabled={this._tab === 'ADDITIONAL' || isOnStudy} />
                     <ToggleBtn className="btn_tab_dictation" onClick={this._clickDictation} on={this._tab === 'DICTATION'} disabled={this._tab === 'DICTATION' || isOnStudy} />
                     <ToggleBtn className="btn_tab_script" onClick={this._clickScript} on={this._tab === 'SCRIPT'} disabled={this._tab === 'SCRIPT' || isOnStudy} />
-                </div>                
-                <SubmitStatusPopup 
-                    view={this._viewResult}
-                    answer={this.answerboolean}
-                    tab = {this._tab}
-                    idx = {this._curQidx}
-                    state={this.props.state}
-                    onClosed={this._closeResult}
-			    />
+                </div>
                 <div className="writing_content_box">
                     {/* index */}
                     <div className="btn_page_box">
@@ -657,6 +646,14 @@ class Writing extends React.Component<IWritingProps> {
                         );
                     })}
                 </div>
+                <SubmitStatusPopup 
+                    view={this._viewResult}
+                    answer={this.answerboolean}
+                    tab = {this._tab}
+                    idx = {this._curQidx}
+                    state={this.props.state}
+                    onClosed={this._closeResult}
+			    />
                 <SendUINew view={isViewSend} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
                 <CoverPopup className="pop_hint" view={this._viewpop} onClosed={() => {/**/}}>
                     <div className="pop_bg">
