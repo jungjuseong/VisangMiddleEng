@@ -72,12 +72,7 @@ class TransPopup extends React.Component<IQuizBoxProps> {
 	}
 	
 	public render() {
-		const { onClosed, data, role } = this.props;
-		const thumbA = role.speakerA.image_s;
-		const thumbB = role.speakerB.image_s;
-		const thumbC = role.speakerC.image_s;
-		const thumbD = role.speakerD.image_s;
-		const thumbE = role.speakerE.image_s;
+		const { onClosed, data } = this.props;
 
 		return (
 			<>

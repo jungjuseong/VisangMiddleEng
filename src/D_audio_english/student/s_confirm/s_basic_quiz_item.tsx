@@ -45,11 +45,13 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _clicked_number: number = 0;
 	@observable private _sended: boolean;
 	@observable private _view_answer: boolean;
+	@observable private _hide_num_box: boolean[];
+	@observable private _put_answer: boolean = false;
 
 	quizCapture!: HTMLElement;
 	private _refQuiz = (el: HTMLElement | null) => {
-	  if (this.quizCapture || !el) return;
-	  this.quizCapture = el;
+		if (this.quizCapture || !el) return;
+		this.quizCapture = el;
 	};
 
 	public constructor(props: IQuizItemProps) {
@@ -57,6 +59,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		this._clicked_number = 0;
 		this._sended = false;
 		this._view_answer = false;
+		this._hide_num_box = [false,false,false];
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
@@ -97,18 +100,14 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	}
 
 	private _ExclusiveGroup = (num: number) => {
-		for (let i = 0; i < this._choices.length; i ++) {
-			if(this._choices[i] === num) {
-				this._choices[i] = 0;
-			}
+		if(this._choices[num] === 0){
+			return
+		}else{
+			this._hide_num_box[this._choices[num] - 1] = false;
 		}
 	}
 
 	private handleStop = () => {
-		// console.log(`x: ${this.state.firstPosition.x.toFixed(0)} y: ${this.state.firstPosition.y.toFixed(0)}`);
-		// console.log(`x: ${this.state.secondPosition.x.toFixed(0)} y: ${this.state.secondPosition.y.toFixed(0)}`);
-		// console.log(`x: ${this.state.thirdPosition.x.toFixed(0)} y: ${this.state.thirdPosition.y.toFixed(0)}`);
-
 		const draggable = document.querySelector('.draggable_place');
 		if (draggable === null) return;
 		const drag_center = draggable.getBoundingClientRect();
@@ -145,27 +144,33 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		for (let i = 0; i < position.length; i++) {
 			if (position[i].x >= x0 && position[i].x <= x1) {
 				if (position[i].y >= y0 && position[i].y <= y1) {
-					this._ExclusiveGroup(this._clicked_number);
+					this._ExclusiveGroup(0);
 					this._choices[0] = this._clicked_number;
 					this.props.onChoice(0, this._clicked_number);
+					this._put_answer = true;
 				}
 			}
 			if (position[i].x >= x2 && position[i].x <= x3) {
 				if (position[i].y >= y2 && position[i].y <= y3) {
-					this._ExclusiveGroup(this._clicked_number);
+					this._ExclusiveGroup(1);
 					this._choices[1] = this._clicked_number;
 					this.props.onChoice(1, this._clicked_number);
+					this._put_answer = true;
 				}
 			}
 			if (position[i].x >= x4 && position[i].x <= x5) {
 				if (position[i].y >= y4 && position[i].y <= y5) {
-					this._ExclusiveGroup(this._clicked_number);
+					this._ExclusiveGroup(2);
 					this._choices[2] = this._clicked_number;
 					this.props.onChoice(2, this._clicked_number);
+					this._put_answer = true;
 				}
 			}
 			position[i].y = 430;
 		}
+		if (this._put_answer === true)
+			this._hide_num_box[this._clicked_number - 1] = true;
+			this._put_answer= false;
 		this.state.firstPosition.x = 500;
 		this.state.secondPosition.x = 600;
 		this.state.thirdPosition.x = 700;
@@ -218,6 +223,10 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 			return '';
 		}
 	}
+	private _cancelNmbering = (idx : number)=>{
+		this._hide_num_box[this._choices[idx] - 1] = false;
+		this._choices[idx] = 0;
+	}
 
 	public render() {
 		_current = this;
@@ -250,29 +259,31 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 							<div className="img_bundle">
 								<div>
 									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
-									<div className={'number_box ' + OXs[0] } style={{left: "47px", top: "37px"}}>{this._putNumber(0)}</div>
+									<div className={'number_box ' + OXs[0] } style={{left: "47px", top: "37px"}} onClick= {()=>{this._cancelNmbering(0)}}>{this._putNumber(0)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item1.answer}</div>
 								</div>
 								<div>
 									<img id="riding" className="image" src={App.data_url + data.item2.img} />
-									<div className={'number_box ' + OXs[1]} style={{left: "41px", top: "37px"}}>{this._putNumber(1)}</div>
+									<div className={'number_box ' + OXs[1]} style={{left: "41px", top: "37px"}} onClick= {()=>{this._cancelNmbering(1)}}>{this._putNumber(1)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item2.answer}</div>
 								</div>
 								<div>
 									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
-									<div className={'number_box ' + OXs[2]} style={{left: "56px", top: "37px"}}>{this._putNumber(2)}</div>
+									<div className={'number_box ' + OXs[2]} style={{left: "56px", top: "37px"}} onClick= {()=>{this._cancelNmbering(2)}}>{this._putNumber(2)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item3.answer}</div>
 								</div>
 							</div>
+							{
 
+							}
 							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 500, y: 430 }} onStop={this.handleStop}	onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(1)}>
-								<div className={'box' + (this._sended ? ' hide' : '')}>1</div>
+								<div className={'box' + (this._sended || this._hide_num_box[0]? ' hide' : '')}>1</div>
 							</Draggable>
 							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 600, y: 430 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(2)}>
-								<div className={'box' + (this._sended ? ' hide' : '')}>2</div>
+								<div className={'box' + (this._sended || this._hide_num_box[1]? ' hide' : '')}>2</div>
 							</Draggable>
 							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 700, y: 430 }} onStop={this.handleStop} onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(3)}>
-								<div className={'box' + (this._sended ? ' hide' : '')}>3</div>
+								<div className={'box' + (this._sended || this._hide_num_box[2]? ' hide' : '')}>3</div>
 							</Draggable>
 						</div>
 					</div>
