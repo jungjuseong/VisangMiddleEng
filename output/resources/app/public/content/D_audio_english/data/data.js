@@ -157,7 +157,7 @@
         "kor_eng": true,
         "directive": {
             "kor": "대화를  듣고, 내용과 일치하면 T, 일치하지 않으면 F로 말해 봅시다.",
-            "eng": "Listen and choose T if the sentence is true, F if the sentence is false.",
+            "eng": "Listen and choose T for true sentences and F for false sentences.",
             "movie": "",
             "audio": "",
             "img": "",
@@ -593,7 +593,7 @@
             "answer4": ""
         },
         "sentence2": {
-            "answer1": "I’m going to",
+            "answer1": "I'm going to",
             "answer2": "",
             "answer3": "",
             "answer4": ""
