@@ -223,7 +223,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 			return '';
 		}
 	}
-	private _cancelNmbering = (idx : number)=>{
+	private _cancelNumbering = (idx : number)=>{
+		if (this.props.confirmProg === QPROG.COMPLETE) return;
 		this._hide_num_box[this._choices[idx] - 1] = false;
 		this._choices[idx] = 0;
 	}
@@ -259,17 +260,17 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 							<div className="img_bundle">
 								<div>
 									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
-									<div className={'number_box ' + OXs[0] } style={{left: "47px", top: "37px"}} onClick= {()=>{this._cancelNmbering(0)}}>{this._putNumber(0)}</div>
+									<div className={'number_box ' + OXs[0] } style={{left: "47px", top: "37px"}} onClick= {()=>{this._cancelNumbering(0)}}>{this._putNumber(0)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item1.answer}</div>
 								</div>
 								<div>
 									<img id="riding" className="image" src={App.data_url + data.item2.img} />
-									<div className={'number_box ' + OXs[1]} style={{left: "41px", top: "37px"}} onClick= {()=>{this._cancelNmbering(1)}}>{this._putNumber(1)}</div>
+									<div className={'number_box ' + OXs[1]} style={{left: "41px", top: "37px"}} onClick= {()=>{this._cancelNumbering(1)}}>{this._putNumber(1)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item2.answer}</div>
 								</div>
 								<div>
 									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
-									<div className={'number_box ' + OXs[2]} style={{left: "56px", top: "37px"}} onClick= {()=>{this._cancelNmbering(2)}}>{this._putNumber(2)}</div>
+									<div className={'number_box ' + OXs[2]} style={{left: "56px", top: "37px"}} onClick= {()=>{this._cancelNumbering(2)}}>{this._putNumber(2)}</div>
 									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item3.answer}</div>
 								</div>
 							</div>
