@@ -96,7 +96,7 @@
                     }
                 }
                 &>.s_typing {
-                    padding: 0 65px;
+                    padding: 0 110px;
                     .area-bnd {
                         position: relative;
                         display: flex;
@@ -109,7 +109,7 @@
                         .answer_box {
                             position: absolute;
                             display: block;
-                            font-size: 45px;
+                            font-size: 40px;
                             color: red;
                             left: 74px;
                             top: 0px;
@@ -359,7 +359,7 @@
                     }
                 }
                 &>.s_typing {
-                    padding: 0 40px;
+                    padding: 0 110px;
                     .area-bnd {
                         position: relative;
                         display: inline-table;
@@ -371,7 +371,7 @@
                         border-bottom: 3px solid #fff;
                         .answer_box {
                             display: block;
-                            font-size: 45px;
+                            font-size: 40px;
                             color: red;
                             line-height: 0px;
                             visibility: hidden;
