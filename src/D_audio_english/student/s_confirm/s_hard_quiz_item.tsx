@@ -169,9 +169,9 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 			keyBoardState.state = 'hide';
 		}
 		if(keyBoardState.state === 'on'){
-            wrap1?.scrollTo(0,200);
-            wrap2?.scrollTo(0,200);
-			wrap3?.scrollTo(0,200);
+            wrap1?.scrollTo(0,235);
+            wrap2?.scrollTo(0,235);
+			wrap3?.scrollTo(0,235);
 		}
 	}
 
@@ -192,7 +192,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 							{quizs.map((quiz, idx) => {
 								return (
 									<div key={idx} className={'q-item' + keyon}>
-										<div className={"scroll" + keyon}> 
+										<div className={"scroll black" + keyon}> 
 											<div className="quiz">
 												<WrapTextNew view={view}>
 													{this._jsx_sentence}
@@ -206,7 +206,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 												</div>
 											</div>
 										</div>
-										<div className="s_typing" >
+										<div className={"s_typing" + keyon} >
 											<div className="area-bnd">
 												<KTextArea 
 													ref={this._refArea[idx]} 

@@ -90,7 +90,7 @@ class TransPopup extends React.Component<IQuizBoxProps> {
 
 									return(<>
 										<div className="question_box" onClick={this._onClick}>{speaker}: {sentence.eng}</div>
-										<div className="kor_question_box" onClick={this._onClick}>{speaker}: {sentence.kor}</div>
+										<div className="kor_question_box" onClick={this._onClick}>{sentence.kor}</div>
 										</>)
 									}
 								)}
