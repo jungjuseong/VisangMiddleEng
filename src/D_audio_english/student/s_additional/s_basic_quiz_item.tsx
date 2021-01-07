@@ -147,9 +147,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 			keyBoardState.state = 'hide';
 		}
 		if(keyBoardState.state === 'on'){
-            wrap1?.scrollTo(0,200);
-            wrap2?.scrollTo(0,200);
-			wrap3?.scrollTo(0,200);
+            wrap1?.scrollTo(0,235);
+            wrap2?.scrollTo(0,235);
+			wrap3?.scrollTo(0,235);
 		}
 	}
 
@@ -213,7 +213,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 												</div>
 											</div>
 										</div>
-										<div className="s_typing" >
+										<div className={"s_typing" + keyon}>
 											{answerlist.map((answer, index) => {
 												if (answer === '') return;																			
 												return (

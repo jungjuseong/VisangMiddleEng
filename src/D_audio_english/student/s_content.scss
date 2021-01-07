@@ -24,7 +24,7 @@
                 text-align: center;
                 z-index: 2;
                 position: relative;
-                top: 38px;
+                top: 60px;
                 cursor: pointer;
                 &.key-on {
                     display: none;
@@ -76,12 +76,16 @@
 							overflow: auto;
                             margin: 0px 15px;
 							&.key-on {
-								height: 255px;
+								height: 290px;  
 							}
 							&::-webkit-scrollbar {
 								width: 7px;
 							}
 							&::-webkit-scrollbar-thumb {
+                                background: rgba(255, 255, 255, 0.25);
+                                border-radius: 10px;
+                            }
+							&.black::-webkit-scrollbar-thumb {
 								background: rgba(0, 0, 0, 0.3);
 								border-radius: 10px;
 							}
@@ -98,16 +102,16 @@
 							display: flex;
 							height: 145px;
 							width: 100%;
-							padding: 0px 55px;
-							font-size: 29px;
+							padding: 0px 60px;
+							font-size: 34px;
 							font-weight: bold;
 							word-break: normal;
 							color: rgb(0, 0, 0);
 							white-space: normal;
-							margin-top: 60px;
+							margin-top: 88px;
 							&>div {
 								position: absolute;
-								top: 64px;
+								top: 60px;
 							}
 						}	
 						/*sentence_box--> module*/

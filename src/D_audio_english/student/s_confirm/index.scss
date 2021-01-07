@@ -33,7 +33,6 @@
                     display: flex;
                     position: relative;
                     justify-content: space-between;
-                    width: 1150px;
                     margin: 25px auto;
                     width: width('student/images/box_TF_s.png');
                     height: height('student/images/box_TF_s.png');
@@ -118,8 +117,8 @@
                         display: inline-flex;
                         align-items: center;
                         text-align: left;
-                        width: 1150px;
-                        height: 300px;
+                        width: 1110px;
+                        height: 290px;
                         border-radius: 15px;
                         padding: 0px 110px;
                         canvas {
@@ -127,7 +126,7 @@
                             left: 0;
                             width: inherit;
                             height: inherit;
-                            border-radius: 35px;
+                            border-radius: 30px;
                             position: absolute;
                             background: rgba(0,0,0,0.3);
                         }

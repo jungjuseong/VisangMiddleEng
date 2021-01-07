@@ -146,9 +146,9 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 			keyBoardState.state = 'hide';
 		}
 		if(keyBoardState.state === 'on'){
-            wrap1?.scrollTo(0,200);
-            wrap2?.scrollTo(0,200);
-            wrap3?.scrollTo(0,200);
+            wrap1?.scrollTo(0,235);
+            wrap2?.scrollTo(0,235);
+            wrap3?.scrollTo(0,235);
         }
 	}
 
@@ -171,7 +171,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		}
 		return (
 			<>
-				<div className={"s_dictation"} style={{ display: view ? '' : 'none' }}>
+				<div className={"s_dictation" + (view ? '' : 'none')} style={{ display: view ? '' : 'none' }}>
 					<div className={"btn_page_box" + keyon}>
 						{data.map((quiz, idx) => {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
@@ -196,7 +196,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 												</div>
 											</div>
 										</div>
-										<div className="s_typing" >
+										<div className={"s_typing" + keyon}>
 											{sentences.map((sentence, index) => {
 												if (sentence.answer1 === '') return;
 												return (
