@@ -25,15 +25,15 @@
                     position: relative;
                     display: inline-flex;
                     align-items: center;
-                    width: 1150px;
-                    height: 300px;
+                    width: 1110px;
+                    height: 290px;
                     border-radius: 15px;
                     padding-left: 30px;
                     .OX_box {
                         position: absolute;
                         display: inline-block;
                         background-repeat: no-repeat;
-                        top: 27px;
+                        top: 45px;
                         left: 7px;
                         text-align: center;
                         color: #000;
@@ -53,7 +53,7 @@
                         left: 0;
                         width: inherit;
                         height: inherit;
-                        border-radius: 35px;
+                        border-radius: 30px;
                         position: absolute;
                         background: rgba(255, 255, 255, 0.9);
                     }
@@ -61,21 +61,20 @@
                         position: relative;
                         top: 0;
                         left: 0;
-                        width: 1100px;
+                        width: 1043px;
+                        height: 201px;
                         font-size: 30px;
+                        line-height: 67px;
                         &>p {
                             display: block;
                             text-align: left;
                             float: left;
-                            line-height: 47px;
-                            .word {
-                                margin-bottom: 30px;
-                            }
                             .block {
                                 display: inline-block;
-                                border-bottom: 2px solid #000;
+                                border-bottom: 3px solid #000;
                                 text-align: center;
-                                width: 150px;
+                                margin: 0px 6px;
+                                height: 53px;
                             }
                         }
                         &>div {
@@ -85,9 +84,9 @@
                             float: right;
                             .blank_box {
                                 width: 200px;
-                                height: 47px;
-                                margin-bottom: 30px;
-                                border-bottom: 2px solid #000;
+                                height: 60px;
+                                margin-bottom: 7px;
+                                border-bottom: 4px solid #000;
                             }
                             .hide {
                                 visibility: hidden;
@@ -105,7 +104,7 @@
                             display: block;
                             font-size: 40px;
                             color: red;
-                            left: 74px;
+                            left: 54px;
                             top: 0px;
                             line-height: 0px;
                             visibility: hidden;
@@ -297,15 +296,15 @@
                     position: relative;
                     display: inline-flex;
                     align-items: center;
-                    width: 1150px;
-                    height: 300px;
+                    width: 1110px;
+                    height: 290px;
                     border-radius: 15px;
                     padding-left: 30px;
                     .OX_box {
                         position: absolute;
                         display: inline-block;
                         background-repeat: no-repeat;
-                        top: 36px;
+                        top: 33px;
                         left: 8px;
                         font-size: 25px;
                         text-align: center;
@@ -325,7 +324,7 @@
                         left: 0;
                         width: inherit;
                         height: inherit;
-                        border-radius: 35px;
+                        border-radius: 30px;
                         position: absolute;
                         background: rgba(255, 255, 255, 0.9);
                     }
@@ -340,6 +339,12 @@
                             text-align: left;
                             vertical-align: top;
                             line-height: 80px;
+                            .block {
+                                display: inline-block;
+                                border-bottom: 3px solid #000;
+                                text-align: center;
+                                padding: 0px 6px;
+                            }
                             .block {
                                 display: inline-block;
                                 border-bottom: 2px solid #000;
@@ -367,6 +372,9 @@
                                 visibility: visible;
                                 text-align: left;
                             }
+                        }
+                        &:first-child{
+                            margin-left: 0px;
                         }
                     }
                 }

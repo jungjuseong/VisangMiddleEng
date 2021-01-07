@@ -3,17 +3,20 @@
         position: relative;
         display: flex;
         transition: margin-top 0.3s;
-        margin-top: 23px;
+        margin-top: 60px;
         justify-content: center;
-        font-size: 52px;
+        font-size: 46px;
         color: #fff;
         align-items: center;
         padding: 0 110px;
+        &.key-on {
+            margin-top: 20px;
+        }
         .area-bnd {
             position: relative;
             display: flex;
             vertical-align: top;
-            border-bottom: 3px solid #fff;
+            border-bottom: 4px solid #fff;
             align-items: center;
             width: 100%;
             height: 80px;
@@ -29,8 +32,9 @@
                 height: auto;
                 min-height: 64px;
                 textarea {
+                    height: 80px;
                     box-sizing: border-box;
-                    padding: 30px 35px 30px 30px;
+                    padding: 30px 35px 30px 10px;
                     font-family: NanumGothic;
                     font-size: 40px;
                     font-weight: bold;
