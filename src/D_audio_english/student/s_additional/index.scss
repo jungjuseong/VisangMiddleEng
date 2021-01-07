@@ -3,6 +3,7 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
 @import "./table-item/index.scss";
+@import "./../s_typing.scss";
 @mixin s_additional {
     .s_additional {
         font-family: NanumGothic;
@@ -95,17 +96,10 @@
                         }
                     }
                 }
+                $tarea-margin-right: 50px;
+                @include s_typing($tarea-margin-right);
                 &>.s_typing {
-                    padding: 0 110px;
                     .area-bnd {
-                        position: relative;
-                        display: flex;
-                        vertical-align: top;
-                        min-width: 300px;
-                        width: 100%;
-                        max-width: 50%;
-                        margin-right: 50px;
-                        border-bottom: 3px solid #fff;
                         .answer_box {
                             position: absolute;
                             display: block;
@@ -118,9 +112,6 @@
                             &.X {
                                 visibility: visible;
                             }
-                        }
-                        &:last-child {
-                            margin-right: 0px;
                         }
                     }
                 }
@@ -358,21 +349,17 @@
                         }
                     }
                 }
+                $tarea-margin-right: 25px;
+                @include s_typing($tarea-margin-right);
                 &>.s_typing {
-                    padding: 0 110px;
                     .area-bnd {
-                        position: relative;
-                        display: inline-table;
-                        align-items: center;
-                        vertical-align: top;
-                        min-width: 300px;
-                        width: 100%;
-                        margin: 0 25px;
-                        border-bottom: 3px solid #fff;
+                        margin-left: 25px;
                         .answer_box {
+                            position: absolute;
                             display: block;
                             font-size: 40px;
                             color: red;
+                            top: 0px;
                             line-height: 0px;
                             visibility: hidden;
                             &.X {

@@ -22,7 +22,7 @@
             height: height('teacher/images/trans_bg.png');
             margin: 30px auto;
             position: relative;
-            .btn_letstalk_close {
+            .btn_trans_close {
                 @include btn_on_dis( resolve('teacher/images/letstalk_close.png'), resolve('teacher/images/letstalk_close_dis.png'), resolve('teacher/images/letstalk_close.png'), width('teacher/images/letstalk_close.png'), height('teacher/images/letstalk_close.png'), );
                 position: absolute;
                 right: 20px;
@@ -38,7 +38,7 @@
             }
             .popbox {
                 position: absolute;
-                top: 50px;
+                top: 65px;
                 bottom: 0px;
                 left: 0px;
                 right: 0px;

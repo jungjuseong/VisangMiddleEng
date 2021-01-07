@@ -78,7 +78,7 @@ class TransPopup extends React.Component<IQuizBoxProps> {
 			<>
 			<CoverPopup className="pop_trans" view={this._view} onClosed={onClosed} >
 				<div className="pop_bg">
-					<ToggleBtn className="btn_letstalk_close" onClick={this._onClosePopup}/>
+					<ToggleBtn className="btn_trans_close" onClick={this._onClosePopup}/>
 						<div className="popbox">
 							<div className="sentence_box">
 								<div>

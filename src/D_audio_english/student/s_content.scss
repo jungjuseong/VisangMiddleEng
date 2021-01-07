@@ -65,12 +65,13 @@
                     width: 1280px;
                     height: 800px;
                 }
-                /*question --> quiz_box*/
+                /*ex) basic_question quiz_box*/
                 .quiz_box {
                     .swiper-container {
                         @include page;
                     }
 					.q-item {
+                        /*스크롤*/
 						.scroll{
 							overflow: auto;
                             margin: 0px 15px;
@@ -90,7 +91,8 @@
 						}
 						&.key-on {
 							top: 0px;
-						}
+                        }
+                        /*문제*/
 						.quiz {
 							position: relative;
 							display: flex;
@@ -109,46 +111,6 @@
 							}
 						}	
 						/*sentence_box--> module*/
-						&>.s_typing {
-							position: relative;
-							transition: margin-top 0.3s;
-							margin-top: 23px;
-							font-size: 52px;
-							display: flex;
-							justify-content: center;
-							color: #fff;
-							align-items: center;
-							.area-bnd {
-								.index {
-									flex: 0 0 auto;
-									padding: 30px 0px;
-								}
-								.k-tarea {
-									position: relative;
-									width: 100%;
-									height: auto;
-									min-height: 64px;
-									textarea {
-										box-sizing: border-box;
-										padding: 30px 35px 30px 30px;
-										font-family: NanumGothic;
-										font-size: 40px;
-										font-weight: bold;
-										color: #fff;										
-										&::disabled {
-											color: #fff;
-										}
-									}
-									.k-tarea-bg {
-										height: 0px;
-										min-height: 100%;
-									}
-									.k-tarea-bar {
-										display: none;
-									}
-								}
-							}
-						}
 					}
 				}	
 				@include s_confirm;

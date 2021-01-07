@@ -171,13 +171,13 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		}
 		return (
 			<>
-				<div className={"s_dictation" + (view ? '' : 'none')} style={{ display: view ? '' : 'none' }}>
+				<div className={"s_dictation"} style={{ display: view ? '' : 'none' }}>
 					<div className={"btn_page_box" + keyon}>
 						{data.map((quiz, idx) => {
 							return <NItem key={idx} on={idx === this._curIdx} idx={idx} onClick={this._onPage} />;
 						})}
 					</div>
-					<div className="dict_question">
+					<div className="dict_question quiz_box">
 						<SwiperComponent ref={this._refSwiper}>
 							{data.map((quiz, idx) => {
 								const sentences = [quiz.sentence1, quiz.sentence2, quiz.sentence3];

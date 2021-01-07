@@ -2,8 +2,11 @@
 @import '../../script_container/index.scss';
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
+@import "./../s_typing.scss";
 @mixin s_dictation {
     .s_dictation {
+        font-family: NanumGothic;
+        font-weight: bold;
         .dict_question {
             position: relative;
             text-align: center;
@@ -12,47 +15,7 @@
             top: 0px;
             height: 800px;
             width: 100%;
-            .swiper-container {
-                @include page;
-            }
             .q-item {
-                .scroll{
-                    overflow: auto;
-                    margin: 0px 15px;
-                    &.key-on {
-                        height: 255px;
-                    }
-                    &::-webkit-scrollbar {
-                        width: 7px;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background: rgba(0, 0, 0, 0.3);
-                        border-radius: 10px;
-                    }
-                    &::-webkit-scrollbar-track {
-                        background-color: transparent;
-                    }
-                }
-                &.key-on {
-                    top: 0px;
-                }
-                .quiz {
-                    position: relative;
-                    display: flex;
-                    height: 145px;
-                    width: 100%;
-                    padding: 0px 55px;
-                    font-size: 29px;
-                    font-weight: bold;
-                    word-break: normal;
-                    color: rgb(0, 0, 0);
-                    white-space: normal;
-                    margin-top: 60px;
-                    &>div {
-                        position: absolute;
-                        top: 64px
-                    }
-                }
                 .sentence_box {
                     position: relative;
                     display: inline-flex;
@@ -71,11 +34,11 @@
                         background: rgba(255,255,255,0.9);
                     }
                     .question_box {
+                        position: relative;
                         top: 0;
                         left: 0;
-                        position: relative;
-                        font-size: 40px;
                         line-height: 80px;
+                        font-size: 40px;
                         &>p {
                             color: #000;
                             text-align: left;
@@ -88,26 +51,10 @@
                         }
                     }
                 }
-                .s_typing {
-                    position: relative;
-                    display: flex;
-                    transition: margin-top 0.3s;
-                    margin-top: 23px;
-                    justify-content: center;
-                    padding: 0 110px;
+                $tarea-margin-right: 50px;
+                @include s_typing($tarea-margin-right);
+                &>.s_typing {
                     .area-bnd {
-                        position: relative;
-                        display: flex;
-                        align-items: center;
-                        vertical-align: top;
-                        min-width: 300px;
-                        width: 100%;
-                        margin-right: 50px;
-                        color: #fff;
-                        font-family: NotoSans;
-                        font-size: 52px;
-                        font-weight: bold;
-                        border-bottom: 3px solid #fff;
                         .answer_box {
                             position: absolute;
                             display: block;
@@ -139,36 +86,6 @@
                             &.X {
                                 background-image: resolve("common/icon_x.png");
                             }
-                        }
-                        .index {
-                            flex: 0 0 auto;
-                        }
-                        .k-tarea {
-                            position: relative;
-                            width: 100%;
-                            height: auto;
-                            min-height: 64px;
-                            textarea {
-                                box-sizing: border-box;
-                                font-size: 40px;
-                                padding: 30px 35px 30px 30px;
-                                color: #fff;
-                                font-family: NotoSans;
-                                font-weight: bold;
-                                &::disabled {
-                                    color: #fff;
-                                }
-                            }
-                            .k-tarea-bg {
-                                height: 0px;
-                                min-height: 100%;
-                            }
-                            .k-tarea-bar {
-                                display: none;
-                            }
-                        }
-                        &:last-child {
-                            margin-right: 0px;
                         }
                     }
                 }

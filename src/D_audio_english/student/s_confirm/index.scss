@@ -1,6 +1,7 @@
 @import '../../../share/sendui.scss';
 @import '../../../share/QuizMCBtn.scss';
 @import './s_basic.scss';
+@import "./../s_typing.scss";
 @mixin s_confirm {
         .s_confirm {
             /*basic*/
@@ -128,8 +129,7 @@
                             height: inherit;
                             border-radius: 35px;
                             position: absolute;
-                            background: #000;
-                            opacity: 0.3;
+                            background: rgba(0,0,0,0.3);
                         }
                         .question_box {
                             top: 0;
@@ -154,21 +154,10 @@
                             }
                         }
                     }
+                    $tarea-margin-right: 5px;
+                    @include s_typing($tarea-margin-right);
                     &>.s_typing {
-                        position: relative;
-                        transition: margin-top 0.3s;
-                        margin-top: 23px;
-                        .area-bnd {
-                            position: relative;
-                            display: inline-block;
-                            vertical-align: top;
-                            width: 894px;
-                            margin-right: 5px;
-                            border-bottom: 3px solid #fff; 
-                            &:last-child {
-                                margin-right: 0px;
-                            }
-                        }
+                        padding: 0 190px;
                     }
                 }
             }

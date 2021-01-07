@@ -350,6 +350,7 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 	public render() {
         const { view, state,script,idx } = this.props;
         const { confirmBasicProg} = state;
+        console.log("focus" + this._focusIdx);
 
         const isQComplete = confirmBasicProg >= SENDPROG.COMPLETE;
         let qResult = -1;        

@@ -279,6 +279,8 @@
                     position: relative;
                     display: inline-block;
                     margin-left: 512px;
+                    &.type2{ margin-left: 545px;}
+                    &.type3{ margin-left: 580px;}
                     .btn_audio {
                         display: block;
                         @include btn_on( resolve('teacher/images/btn_headset.png'), resolve('teacher/images/btn_headset.png'), width('teacher/images/btn_headset.png'), height('teacher/images/btn_headset.png'), );

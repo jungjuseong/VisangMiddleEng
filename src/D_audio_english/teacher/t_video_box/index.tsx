@@ -190,15 +190,15 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		}
 	}
 	public render() {
-		const { player, shadowing, isShadowPlay } = this.props;
+		const { player, shadowing, isShadowPlay, idx } = this.props;
 		const isPlay = (!shadowing && player.bPlay) || (shadowing && isShadowPlay);
 
 		return (
 			<>
 			<div className="video_box" ref={this._refBox}>
 				<video ref={this._refVideo} style={{display : 'none'}}/>
-				<div className="audio">
-					<ToggleBtn className="btn_audio" on={isPlay} onClick={this._playClick}/>
+				<div className={"audio " + (idx === 1? "type2": idx === 2? "type3" : "") }>
+					<ToggleBtn className={"btn_audio"} on={isPlay} onClick={this._playClick}/>
 					<ControlBox
 						player={player}
 						disable={this.m_viewCountDown || shadowing}
