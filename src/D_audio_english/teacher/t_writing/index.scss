@@ -37,7 +37,7 @@
                     @include btn_on_dis( resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), resolve('teacher/images/pop_close.png'), width('teacher/images/pop_close.png'), height('teacher/images/pop_close.png'), );
                     position: absolute;
                     right: 20px;
-                    top: 20px;
+                    top: 30px;
                     z-index: 2;
                 }
                 .btn_yes {
