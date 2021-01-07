@@ -16,6 +16,7 @@
             border-bottom: 3px solid #fff;
             align-items: center;
             width: 100%;
+            height: 80px;
             min-width: 300px;
             max-width: 50%;
             margin-right: $tarea-margin-right;
@@ -34,7 +35,7 @@
                     font-family: NanumGothic;
                     font-size: 40px;
                     font-weight: bold;
-                    color: #fff;										
+                    color: #fff;
                     &::disabled {
                         color: #fff;
                     }
