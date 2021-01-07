@@ -101,7 +101,7 @@ class ResultScreenPopup extends React.Component<IQuizBoxProps> {
 							<div className="score">0</div>
 						</div>
 					</div>
-					<div className={"btn_page_box"}>
+					<div className={"btn_page_box"} style={{display : (result[idx]?.length === 1 ? 'none' : '')}}>
 					{result[idx]?.map((quiz, idxs) => {
 						return <NItem key={idxs} on={idxs === this._curIdx} idx={idxs} onClick={this._onPage} />;
 					})}
