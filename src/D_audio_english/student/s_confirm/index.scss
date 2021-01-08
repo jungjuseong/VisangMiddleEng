@@ -15,20 +15,21 @@
                 width: 100%;
                 .quiz {
                     position: relative;
+                    display: flex;
                     height: 145px;
                     width: 100%;
-                    padding: 0px 70px;
-                    font-size: 29px;
+                    padding: 0px 60px;
+                    font-size: 34px;
                     font-weight: bold;
                     word-break: normal;
                     color: rgb(0, 0, 0);
                     white-space: normal;
-                    margin-top: 60px;
+                    margin-top: 88px;
                     &>div {
                         position: absolute;
-                        top: 64px
+                        top: 60px;
                     }
-                }	
+                }
                 .white_box {
                     display: flex;
                     position: relative;
