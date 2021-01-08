@@ -65,7 +65,7 @@ body {
             background-image: resolve("common/direction.png");
             width: width("common/direction.png");
             height: height("common/direction.png");
-            left: calc(43% - width("common/direction.png")/2);
+            left: calc(50% - width("common/direction.png")/2);
             top: calc(50% - height("common/direction.png")/2);
         }
     }
@@ -76,20 +76,17 @@ body {
         right: 6px;
     }
     /*인트로 페이지로 이동*/
-    .close_box{
-        position: absolute;    top: 5px; right: 5px;
+    .close_box {
+        position: absolute;
+        top: 5px;
+        right: 5px;
         width: auto;
         height: auto;
         z-index: 5;
         opacity: 1;
         .btn_intro {
             display: inline-block;
-            @include btn_on(
-                resolve('teacher/images/btn_close.png'),
-                resolve('teacher/images/btn_close_down.png'),
-                width('teacher/images/btn_close.png'),
-                height('teacher/images/btn_close.png')
-            );
+            @include btn_on( resolve('teacher/images/btn_close.png'), resolve('teacher/images/btn_close_down.png'), width('teacher/images/btn_close.png'), height('teacher/images/btn_close.png'));
         }
     }
 }

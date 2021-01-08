@@ -3,7 +3,7 @@
     .btn_pop_trans {
         @include btn_on_dis( resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), resolve('teacher/images/btn_tranz.png'), width('teacher/images/btn_tranz.png'), height('teacher/images/btn_tranz.png'), );
         position: absolute;
-        left: 15px;
+        right: 100px;
         top: 10px;
         z-index: 100;
     }

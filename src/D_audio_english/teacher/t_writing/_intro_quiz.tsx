@@ -25,6 +25,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 	private _jsx_hint: JSX.Element;
 
 	private _btnAudio?: BtnAudio;
+	private _bAudioPlay = false;
 	
 	public constructor(props: IQuizBox) {
 		super(props);
@@ -38,8 +39,13 @@ class IntroQuiz extends React.Component<IQuizBox> {
 		this._hint = !this._hint;
 	}
 
-	private _onClick = () => {
-		if(this._btnAudio) this._btnAudio.toggle();
+	private _onSound = () => {
+		if(!this.props.view) return;
+		App.pub_play(App.data_url + this.props.data.audio, this._onSoundComplete);
+	}
+	private _onSoundComplete = () => {
+		this._bAudioPlay = false;
+		App.pub_stop();
 	}
 
  	public componentDidUpdate(prev: IQuizBox) {
@@ -50,6 +56,10 @@ class IntroQuiz extends React.Component<IQuizBox> {
 
 		} else if(!view && prev.view) {
 			this._view = false;	
+			App.pub_stop();
+		}
+		if(this._bAudioPlay) {
+			this._bAudioPlay = false;
 			App.pub_stop();
 		}
 	}
@@ -68,7 +78,7 @@ class IntroQuiz extends React.Component<IQuizBox> {
 					</div>
 					<div className="sentence_box">
 						<div>
-							<div className="question_box" onClick={this._onClick}>
+							<div className="question_box" onClick={this._onSound}>
 								{this._jsx_sentence}
 							</div>
 						</div>

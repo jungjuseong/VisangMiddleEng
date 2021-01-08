@@ -154,10 +154,10 @@
                             }
                         }
                     }
-                    $tarea-margin-right: 5px;
-                    @include s_typing($tarea-margin-right);
+                    @include s_typing();
                     &>.s_typing {
                         padding: 0 190px;
+                        .area-bnd { margin-right: 5px;}
                     }
                 }
             }

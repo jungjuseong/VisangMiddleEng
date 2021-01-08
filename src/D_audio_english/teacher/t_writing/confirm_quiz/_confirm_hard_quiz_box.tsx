@@ -33,7 +33,7 @@ class ConfirmHardQuizBox extends ConfirmQuizBox {
 	@action
 	protected _viewAnswer = (evt: React.MouseEvent<HTMLElement>) => {
 		this.props.onHintClick();
-		this._hint = true;
+		this._hint = !this._hint;
 		// this._doSwipe();
 	}
 	protected _onClick = () => {
