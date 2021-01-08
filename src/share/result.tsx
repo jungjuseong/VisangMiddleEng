@@ -260,7 +260,6 @@ class Student extends React.Component<IStudentResult> {
 					freeMode={true}
 					mousewheel={true}	
 					noSwipingClass="result-no-swiping"	
-					scrollbar={{el: '.swiper-scrollbar',draggable: true, hide: false}}
 				>
 					<div className={this.props.users.length <= SLIDES_PER_VIEW ? 'result-no-swiping' : ''}>
 					<div className="average"><div style={{width: this._averge + '%'}}/></div>
