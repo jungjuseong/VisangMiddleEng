@@ -25,6 +25,7 @@ import SPassage from './s_passage';
 import SQuestion from './s_question';
 import SVScript from './s_v_script';
 import SAddQuiz from './s_add_quiz_item';
+import SCheckup from './s_checkup';
 import { action } from 'mobx';
 
 @observer
@@ -48,6 +49,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SPassage view={viewDiv === 'content' && prog === 'passage'} viewTrans={viewTrans} qnaProg={qnaProg} focusSeq={focusSeq} state={state} actions={actions}/>
 					<SQuestion view={viewDiv === 'content' && prog === 'question'} state={state} actions={actions}/>
 					<SVScript view={viewDiv === 'content' && prog === 'v_script'} focusIdx={focusIdx} state={state} actions={actions}/>		
+					<SCheckup view={viewDiv === 'content' && prog === 'v_checkup'} state={state} actions={actions}/>                
 					<SAddQuiz view={viewDiv === 'content' && prog === 'add_quiz'} state={state} actions={actions} data={actions.getData().additional_quiz}/>
 					<Loading view={state.loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob.png`} onComplete={actions.goodjobComplete}/>

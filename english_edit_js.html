@@ -358,6 +358,27 @@ var b_rw_comprehension = {
 			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}
 		}
 	},
+	checkup: {
+		_type:obj_e.TYPE_LIST,
+		_excelSheets:"checkup",
+		_startRow:2,
+		_typeOfQuiz: 'mc',
+		_key:"seq",	
+		_item: {
+			_type: obj_e.TYPE_OBJECT,
+			seq: {_type:obj_e.TYPE_INT, _excel:"A"},
+			question: {_type:obj_e.TYPE_TEXT, _excel:"B"},
+			answer: {_type:obj_e.TYPE_INT, _excel:"C"},
+			choice_1: {_type:obj_e.TYPE_TEXT, _excel:"D"},
+			choice_2: {_type:obj_e.TYPE_TEXT, _excel:"E"},
+			SC_DIV1: {_type:obj_e.TYPE_TEXT, _excel:"F", _column: 'SC_DIV1'},
+			SC_DIV2: {_type:obj_e.TYPE_TEXT, _excel:"G", _column: 'SC_DIV2'},
+			SC_DIV3: {_type:obj_e.TYPE_TEXT, _excel:"H", _column: 'SC_DIV3'},
+			SC_DIV4: {_type:obj_e.TYPE_TEXT, _excel:"I", _column: 'SC_DIV4'},
+			SC_SAVE: {_type:obj_e.TYPE_YESORNO, _excel:"J", _column: 'SC_SAVE'},			
+			tmq_seq: {_type:obj_e.TYPE_INT, _isInsertSeq: true}
+		}
+	},
 	storybook: {
 		_type:obj_e.TYPE_LIST,
 		_excelSheets:"storybook",
