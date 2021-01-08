@@ -94,11 +94,11 @@
                         }
                     }
                 }
-                $tarea-margin-right: 50px;
-                @include s_typing($tarea-margin-right);
+                @include s_typing();
                 &>.s_typing {
                     .area-bnd {
                         max-width: 50%;
+                        margin-right: 50px;
                         .answer_box {
                             position: absolute;
                             display: block;
@@ -355,11 +355,10 @@
                         }
                     }
                 }
-                $tarea-margin-right: 25px;
-                @include s_typing($tarea-margin-right);
+                @include s_typing();
                 &>.s_typing {
                     .area-bnd {
-                        margin-left: 25px;
+                        margin: 0px 25px;
                         max-width: 50%;
                         .answer_box {
                             position: absolute;
