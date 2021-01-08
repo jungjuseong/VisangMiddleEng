@@ -269,7 +269,9 @@ class TeacherContext extends TeacherContextBase {
 
                     if(qmsg.returns.length !== 1) return;
                     
-                    const answer = qmsg.returns[0];
+					const answer = qmsg.returns[0];
+					const checkup = _.find(this._data.checkup, {seq: qmsg.seq});
+                    if(!checkup) return;
 
                 }
 			}

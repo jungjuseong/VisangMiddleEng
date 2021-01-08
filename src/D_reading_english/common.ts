@@ -274,6 +274,7 @@ export interface IData {
 	warmup: IWarmup[];
 	passage: IPassage[];
 	question: IQuestion[];
+	checkup: ICheckup[];
 	storybook: IStorybook[];
 	app_graphic_title: string;
 }

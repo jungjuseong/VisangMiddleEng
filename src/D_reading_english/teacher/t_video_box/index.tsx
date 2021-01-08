@@ -76,7 +76,20 @@ class VideoPopup extends React.Component<IVideoBox> {
 	private _checkups: IScript[] = [];
 
 	constructor(props: IVideoBox) {
-        super(props);        
+		super(props);        
+		const scripts = props.data.scripts;
+        const checkups = props.data.checkup;
+
+        for(let i = 0; i < checkups.length; i++) {
+            const checkup = checkups[i];
+            for(let j = 0; j < scripts.length; j++) {
+                const script = scripts[j];
+                if(checkup.seq === script.checkup_num) {
+                    this._checkups.push(script);
+                }
+            }
+        }
+        
         this._player_inittime = props.data.video_start;
 	}
 
