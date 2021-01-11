@@ -54,7 +54,7 @@
             background-image: resolve("common/direction.png");
             width: width("common/direction.png");
             height: height("common/direction.png");
-            left: calc(43% - width("common/direction.png")/2);
+            left: calc(50% - width("common/direction.png")/2);
             top: calc(50% - height("common/direction.png")/2);
         }
         &>div.lesson {

@@ -114,6 +114,13 @@
             z-index: 2;
             @include btn_down_dis( resolve('student/images/btn_next.png'), resolve('student/images/btn_next_down.png'), resolve('student/images/btn_next.png'), width('student/images/btn_next.png'), height('student/images/btn_next.png'));
         }
+        .btn_prev {
+          position: absolute;
+          top: 355px;
+          left: 12px;
+          z-index: 2;
+          @include btn_down_dis( resolve('student/images/btn_prev.png'), resolve('student/images/btn_prev_down.png'), resolve('student/images/btn_prev.png'), width('student/images/btn_prev.png'), height('student/images/btn_prev.png'));
+      }
         .fel_toteacher {
             @include fel_toteacher;
             position: absolute;

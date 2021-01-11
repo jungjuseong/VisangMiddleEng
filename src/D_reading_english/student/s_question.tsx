@@ -185,8 +185,8 @@ class SQuestion extends React.Component<ISQuestion> {
 	}
 
 	private _onPage = (idx: number) => {
-		const prog = this.props.state.questionProg;
-		if(prog < SENDPROG.SENDED) return;
+
+	
 		App.pub_playBtnTab();
 		if(this._swiper) this._swiper.slideTo(idx);
 	}

@@ -82,8 +82,7 @@ class SQuestion extends React.Component<ISQuestion> {
 	}
 
 	/* 페이지 관련 */
-	private _onPage = (idx: number) => {
-		if(this.props.questionProg === QPROG.ON) return; 
+	private _onPage = (idx: number) => { 
 
 		App.pub_playBtnTab();
 		this._curIdx_tgt = idx;
@@ -125,7 +124,7 @@ class SQuestion extends React.Component<ISQuestion> {
 		const curChoice = this._curIdx >= 0 ? this._choices[this._curIdx] : undefined;
 
 		const curAnswer = curChoice ? curChoice.answer : 0;
-		const canNext = curAnswer > 0 && qProg === QPROG.ON;
+		const canNext = true;
 		const isLast = this._curIdx === this._choices.length - 1;
 
 		if(canNext && !isLast && this._swiper) {
@@ -133,6 +132,21 @@ class SQuestion extends React.Component<ISQuestion> {
 				this._choices[this._curIdx + 1].stime = Date.now();
 			}
 			this._swiper.slideNext();
+			App.pub_playBtnTab();
+		}
+  }
+  private _onPrev = () => {
+		const qProg = this.props.questionProg;
+		const curChoice = this._curIdx >= 0 ? this._choices[this._curIdx] : undefined;
+
+		const curAnswer = curChoice ? curChoice.answer : 0;
+		const isFirst = this._curIdx === 0;
+
+		if(!isFirst && this._swiper) {
+			if(this._choices[this._curIdx + 1]) {
+				this._choices[this._curIdx + 1].stime = Date.now();
+			}
+			this._swiper.slidePrev();
 			App.pub_playBtnTab();
 		}
 	}
@@ -230,8 +244,9 @@ class SQuestion extends React.Component<ISQuestion> {
 
 		const curChoice = this._curIdx >= 0 ? this._choices[this._curIdx] : undefined;
 		const curAnswer = curChoice ? curChoice.answer : 0;
-		const canNext = curAnswer > 0 && questionProg === QPROG.ON;
-		const isLast = this._curIdx === quizs.length - 1;
+		const canNext = true;
+    const isLast = this._curIdx === quizs.length - 1;
+    const isFirst = this._curIdx === 0;
 		
 		return (
 			<div className="s_question" style={{...this._style}}>
@@ -275,8 +290,13 @@ class SQuestion extends React.Component<ISQuestion> {
 				</div>
 				<ToggleBtn 
 					className="btn_next" 
-					view={canNext && !isLast}
+					view={!isLast}
 					onClick={this._onNext}
+				/>
+        <ToggleBtn 
+					className="btn_prev" 
+					view={!isFirst}
+					onClick={this._onPrev}
 				/>
 				<SendUINew
 					view={curAnswer > 0 && (questionProg === QPROG.ON || questionProg === QPROG.SENDING) && isLast}
@@ -285,7 +305,10 @@ class SQuestion extends React.Component<ISQuestion> {
 					originY={0}
 					onSend={this._onSend}
 				/>
+
 			</div>
+
+      
 		);
 	}
 }

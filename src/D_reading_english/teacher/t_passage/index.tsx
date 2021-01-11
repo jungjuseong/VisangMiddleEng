@@ -368,7 +368,6 @@ class Passage extends React.Component<IPassageProps> {
 
 		if(view && inview && this._prog === SENDPROG.SENT) {
 			App.pub_playBtnTab();
-			this._initStudy();
 			if(this._studyDiv === 'READALOUD') {
 				this._studyDiv = 'off';
 				felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});
@@ -378,6 +377,7 @@ class Passage extends React.Component<IPassageProps> {
 				this._pass_pop = 'READALOUD';
 				actions.setNaviView(false);
 			}
+			this._initStudy();
 		}
 	}
 
@@ -386,7 +386,6 @@ class Passage extends React.Component<IPassageProps> {
 
 		if(view && inview && this._prog === SENDPROG.SENT) {
 			App.pub_playBtnTab();
-			this._initStudy();
 			if(this._studyDiv === 'SHADOWING') {
 				this._studyDiv = 'off';
 				felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});
@@ -395,7 +394,8 @@ class Passage extends React.Component<IPassageProps> {
 			else if(this._pass_pop === 'off') {
 				this._pass_pop = 'SHADOWING';
 				actions.setNaviView(false);
-			}
+      }
+      this._initStudy();
 		}
 	}
 
@@ -404,7 +404,7 @@ class Passage extends React.Component<IPassageProps> {
 
 		if(view && inview && this._prog === SENDPROG.SENT) {
 			App.pub_playBtnTab();
-			this._initStudy();
+
 			if(this._studyDiv === 'QNA') {
 				this._studyDiv = 'off';
 				felsocket.sendPAD($SocketType.MSGTOPAD, {msgtype: 'dialogue_end'});
@@ -413,7 +413,8 @@ class Passage extends React.Component<IPassageProps> {
 			else if(this._pass_pop === 'off') {
 				this._pass_pop = 'QNA';
 				actions.setNaviView(false);
-			}
+      }
+      this._initStudy();
 		}
 	}
 

@@ -116,7 +116,7 @@ class VideoDirection extends React.Component<IVideoDirection> {
 			<div className={arr.join(' ')} onClick={this._onClick}>
 				{this.props.children}
 				{/* <img className="movieclip" src={this.props.video_url}/> */}
-                <img className="movieclip" src={this.props.video_url} ref={this._refImg} style={this.m_clipView ? undefined : style.HIDE}/>
+                
 				{/*
 				<MovieClip
 					className="movieclip"
