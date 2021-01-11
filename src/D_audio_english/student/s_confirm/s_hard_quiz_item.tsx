@@ -192,7 +192,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 							{quizs.map((quiz, idx) => {
 								return (
 									<div key={idx} className={'q-item' + keyon}>
-										<div className={"scroll black" + keyon}> 
+										<div className={"scroll" + keyon}> 
 											<div className="quiz">
 												<WrapTextNew view={view}>
 													{this._jsx_sentence}

@@ -59,7 +59,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
-	@observable private _select_area: number = 0;
+	@observable private _select_area: Array<number> = [0,0,0];
 
 	private _tarea: Array<Array<KTextArea|null>> = [[null,null,null],[null,null,null],[null,null,null]];
 	private _canvas?: HTMLCanvasElement;
@@ -68,13 +68,15 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	private _refArea: Array<Array<(el: KTextArea|null) => void>> = [[]];
+	private _not_blank_area :Array<Array<number>> = [[],[],[]];
 
 	public constructor(props: IQuizItemProps) {
 		super(props);
 		this._jsx_sentence = _getJSX(props.data[0].directive.kor);
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 		keyBoardState.state = 'hide';
-		props.data.map((additional,idx) => {
+		props.data.map((quiz,idx) => {
+			const answerlist = [quiz.sentence_answer1,quiz.sentence_answer2,quiz.sentence_answer3];
 			this._refArea[idx] = [];
 			for(let i = 0; i < 4 ; i++) {
 				this._refArea[idx][i] = ((el: KTextArea|null) => {
@@ -82,7 +84,14 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 					this._tarea[idx][i] = el;
 				});
 			}
+			{answerlist.map((answer, index) => {
+				if (answer !== '')
+					this._not_blank_area[idx].push(index);
+			});}
 		});
+		this._select_area[0] = this._not_blank_area[0][0];
+		this._select_area[1] = this._not_blank_area[1][0];
+		this._select_area[2] = this._not_blank_area[2][0];
 	}
 	private _onChange = (text: string , index: number) => {
 		if(!this.props.view) return;
@@ -101,8 +110,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		if(this._swiper) this._swiper.slideTo(idx);
 	}
 
-	private _selectArea = (index: number) => {
-		if (index !== null)	this._select_area = index;
+	private _selectArea = (idx: number, index: number) => {
+		if (index !== null)	this._select_area[idx] = index;
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
@@ -123,7 +132,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	public componentDidUpdate(prev: IQuizItemProps) {
 		const wrap1 = document.querySelector('.s_additional .basic .q-item:nth-child(1) .scroll');
         const wrap2 = document.querySelector('.s_additional .basic .q-item:nth-child(2) .scroll');
-        const wrap3 = document.querySelector('.s_additional .basic .q-item:nth-child(3) .scroll');
+		const wrap3 = document.querySelector('.s_additional .basic .q-item:nth-child(3) .scroll');
 		if(this.props.view && !prev.view) {
 			this._tlen = 0;
 			keyBoardState.state = 'on';
@@ -215,9 +224,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 										</div>
 										<div className={"s_typing" + keyon}>
 											{answerlist.map((answer, index) => {
-												if (answer === '') return;																			
+												if (answer === '') return;
 												return (
-													<div className="area-bnd" key={index} onClick={() => this._selectArea(index)}>
+													<div className="area-bnd" key={index} onClick={() => this._selectArea(idx,index)}>
 														<div className={'answer_box ' + corrects[idx][index]}>
 															{answer}
 														</div>
@@ -225,7 +234,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 														<KTextArea 
 															ref={this._refArea[idx][index]} 
 															view={view} 
-															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+															on={view && this._curIdx === idx && this._select_area[idx] === index && !this._sended}
 															autoResize={true}
 															skipEnter={false}
 															onChange={(text: string) => this._onChange(text,index)}
