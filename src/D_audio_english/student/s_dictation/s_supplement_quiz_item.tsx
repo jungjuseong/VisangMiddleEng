@@ -57,7 +57,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper | null = null;
 	@observable private _sended: boolean = false;
-	@observable private _select_area: number = 0;
+	@observable private _select_area: Array<number> = [0,0,0];
 
 	private _tarea: Array<Array<KTextArea|null>> = [[null,null,null],[null,null,null],[null,null,null]];
 	private _canvas?: HTMLCanvasElement;
@@ -66,6 +66,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 	private _jsx_sentence: JSX.Element;
 	private _jsx_eng_sentence: JSX.Element;
 	private _refArea: Array<Array<(el: KTextArea|null) => void>> = [];
+	private _not_blank_area :Array<Array<number>> = [[],[],[]];
 
 	public constructor(props: IQuizItemProps) {
 		super(props);
@@ -73,7 +74,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		this._jsx_eng_sentence = _getJSX(props.data[0].directive.eng);
 
 		keyBoardState.state = 'hide';
-		props.data.map((dictation,idx) => {
+		props.data.map((quiz,idx) => {
 			this._refArea[idx] = [];
 			for(let i = 0; i < 4 ; i ++) {
 				this._refArea[idx][i] = ((el: KTextArea|null) => {
@@ -81,6 +82,12 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 						this._tarea[idx][i] = el;
 					});
 			}
+			const sentences = [quiz.sentence1, quiz.sentence2, quiz.sentence3];
+			{sentences.map((sentences, index) => {
+				if (sentences.answer1 !== '')
+					this._not_blank_area[idx].push(index);
+			});}
+			this._select_area[idx] = this._not_blank_area[idx][0];
 		});
 	}
 
@@ -116,7 +123,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		this._swiper = swiper;
 	}
 
-	private _selectArea = (index: number) => {if (index !== null) this._select_area = index;};
+	private _selectArea = (idx:number, index: number) => {if (index !== null) this._select_area[idx] = index;};
 	
 	public componentDidUpdate(prev: IQuizItemProps) {
 		const wrap1 = document.querySelector('.s_dictation .dict_question .q-item:nth-child(1) .scroll');
@@ -200,7 +207,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 											{sentences.map((sentence, index) => {
 												if (sentence.answer1 === '') return;
 												return (
-													<div className="area-bnd" key={index} onClick={() => { this._selectArea(index)}}>															
+													<div className="area-bnd" key={index} onClick={() => { this._selectArea(idx,index)}}>															
 														<div className={"answer_box "+ corrects[idx][index]}>
 															{sentence.answer1}
 														</div>
@@ -209,7 +216,7 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 														<KTextArea
 															ref={this._refArea[idx][index]}
 															view={view}
-															on={view && this._curIdx === idx && this._select_area === index && !this._sended}
+															on={view && this._curIdx === idx && this._select_area[idx] === index && !this._sended}
 															autoResize={true}
 															skipEnter={false}
 															onChange={(text: string) => {this._onChange(text, index)}}

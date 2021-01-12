@@ -88,10 +88,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 				if (answer !== '')
 					this._not_blank_area[idx].push(index);
 			});}
+			this._select_area[idx] = this._not_blank_area[idx][0];
 		});
-		this._select_area[0] = this._not_blank_area[0][0];
-		this._select_area[1] = this._not_blank_area[1][0];
-		this._select_area[2] = this._not_blank_area[2][0];
 	}
 	private _onChange = (text: string , index: number) => {
 		if(!this.props.view) return;

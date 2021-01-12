@@ -61,7 +61,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _curIdx = 0;
 	@observable private _swiper: Swiper|null = null;
 	@observable private _sended: boolean = false;
-	@observable private _select_area: number = 0;
+	@observable private _select_area: Array<number> = [0,0,0];
 
 	private _bndW = 0;
 	private _bndH = 0;
@@ -107,8 +107,8 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		keyBoardState.state = 'off';
 
 	}
-	private _selectArea = (index: number) => {
-		if (index != null) this._select_area = index;
+	private _selectArea = (idx: number, index: number) => {
+		if (index != null) this._select_area[idx] = index;
 	}
 	private _refCanvas = (el: HTMLCanvasElement|null) => {
 		if(this._canvas || !el) return;
@@ -222,14 +222,14 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 											</div>
 										</div>										
 										<div className={"s_typing" + keyon} >
-											<div className="area-bnd" onClick={() => this._selectArea(0)}>
+											<div className="area-bnd" onClick={() => this._selectArea(idx,0)}>
 												<div className={'answer_box ' + OXs[idx][0]}>
 													{quiz.sentence1.answer1}
 												</div>
 												<KTextArea 
 													ref={this._refArea[idx][0]} 
 													view={view} 
-													on={view && this._curIdx === idx && this._select_area === 0 && !this._sended}
+													on={view && this._curIdx === idx && this._select_area[idx] === 0 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={(text: string) => this._onChange(text,0)}
@@ -240,14 +240,14 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 												/>
 											</div>
 											{' → '}
-											<div className="area-bnd" onClick={() => this._selectArea(1)}>
+											<div className="area-bnd" onClick={() => this._selectArea(idx,1)}>
 												<div className={'answer_box ' + OXs[idx][1]}>
 													{quiz.sentence1.answer2}
 												</div>
 												<KTextArea 
 													ref={this._refArea[idx][1]} 
 													view={view} 
-													on={view && this._curIdx === idx && this._select_area === 1 && !this._sended}
+													on={view && this._curIdx === idx && this._select_area[idx] === 1 && !this._sended}
 													autoResize={true}
 													skipEnter={false}
 													onChange={(text: string) => this._onChange(text,1)}
