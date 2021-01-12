@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, toJS } from 'mobx';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
@@ -72,7 +72,7 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		if(state.additionalHardProg !== QPROG.ON && state.idx === 2) return;
 		App.pub_playToPad();
 		let choices: IQuizStringReturn[];
-		choices = this._choices;
+		choices = toJS(this._choices);
 		// 초기화 함수 만들어서 할것
 		const quizssup = actions.getData().additional_sup;
 		if(state.idx === 0) {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
@@ -58,8 +58,9 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		App.pub_playToPad();
 		let choices: IQuizReturn;
 		let writings: IQuizStringReturn;
-		choices = this._choices;
-		writings = this._writings;
+		choices = toJS(this._choices);
+		writings = toJS(this._writings);
+		console.log("choices  , writings : ",choices, writings);
 		// 초기화 함수 만들어서 할것
 		this._writings = { answer1: '', answer2: '', answer3: ''};
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};

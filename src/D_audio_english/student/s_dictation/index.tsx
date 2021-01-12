@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 
 import { App } from '../../../App';
 import * as felsocket from '../../../felsocket';
@@ -64,12 +64,13 @@ class SDictation extends React.Component<ISQuestionProps> {
 		if(state.dictationProg[state.idx] !== QPROG.ON && state.idx === 0) return;
 		App.pub_playToPad();
 		let choices: IQuizStringReturn[];
-		choices = this._choices;
+		choices = toJS(this._choices);
 		// 초기화 함수 만들어서 할것
 		const data = actions.getData();
 		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
 		const url = await quizCapture('.s_dictation .dict_question .q-item');
-		console.log(url)
+		console.log('choices : ',choices)
+		console.log('url : ',url)
 		state.dictationProg[state.idx] = QPROG.SENDING;
 		if(App.student) {
 			const msg: IAdditionalQuizReturnMsg = {
@@ -79,9 +80,10 @@ class SDictation extends React.Component<ISQuestionProps> {
 				returns: choices,
 				imgUrl : url
 			};
+
 			felsocket.sendTeacher($SocketType.MSGTOTEACHER, msg);
 			await kutil.wait(600);
-
+			console.log('msg : ',msg)
 			if(state.dictationProg[state.idx] === QPROG.SENDING) {
 				state.dictationProg[state.idx] = QPROG.SENDED;
 				App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
