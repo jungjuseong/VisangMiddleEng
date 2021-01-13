@@ -384,7 +384,7 @@ class QuizTeacher<T extends IShareQuizData> extends React.Component<IQuizTeacher
 			);
 		}
 		const navcur = Math.trunc(curIdx_tgt / 10);
-		const maxnav = Math.trunc(quizs.length / 10); 
+		const maxnav = Math.trunc((quizs.length-1) / 10); 
 		return (
 			<div className={arr.join(' ')}>
 				<SwiperComponent 

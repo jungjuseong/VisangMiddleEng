@@ -111,7 +111,7 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 		App.pub_playBtnTab();
 		this._togglePlay();
 		this._view_audio_box = !this._view_audio_box;
-		if (!this._view_audio_box) this.props.player.pause();
+		if (!this._view_audio_box) this.props.player.gotoAndPause(this.props.playerInitTime * 1000);
 		else {
 			const playTime = (player.currentTime >= player.duration || player.currentTime < playerInitTime * 1000) ? playerInitTime * 1000 : player.currentTime;
 			this.props.player.gotoAndPlay(playTime, scripts[scripts.length - 1].audio_end * 1000, 1);	}

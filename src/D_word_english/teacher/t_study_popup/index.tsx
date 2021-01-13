@@ -395,7 +395,7 @@ class StudyPopup extends React.Component<IStudyPopupProps> {
 		if(words.length < 2) arr.push('hide-navi');
 
 		const navcur = Math.trunc(curIdx_tgt / 10);
-		const maxnav = Math.trunc(words.length / 10); // parseInt((words.length / 10).toString());
+		const maxnav = Math.trunc((words.length-1) / 10); // parseInt((words.length / 10).toString());
 		// console.log('---->', words.length);
 		return (
 			<CoverPopup className={arr.join(' ')}  view={view && this.m_view} onClosed={this.props.onClosed} >

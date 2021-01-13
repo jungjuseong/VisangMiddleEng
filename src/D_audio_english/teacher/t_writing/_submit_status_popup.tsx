@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+import { observable, toJS } from 'mobx';
 
 import { ToggleBtn } from '@common/component/button';
 
@@ -68,9 +68,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
+			this._viewChange = true
 			this._corfal = 0;
 		} else if(!view && prev.view) {
 			this._view = false;	
+			this._viewChange = true
 			App.pub_stop();
 		}
 	}
@@ -144,6 +146,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 			}
 			default : break
 		}
+		arr = toJS(arr);
 		let nosendstudent :IStudent[]= []
 		App.students.map((student, idx)=>{
 			console.log('arrarrarr',arr, student.name)
@@ -152,9 +155,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 				nosendstudent.push(student)
 			}
 		})
-		console.log('nosend',nosendstudent)
 		
-	
 		return (
 			<>
 			<CoverPopup className="submit_status_popup" view={this._view} onClosed={onClosed} >

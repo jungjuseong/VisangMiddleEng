@@ -37,11 +37,6 @@ export default function PreInBox(props: IPreInBox) {
 				<div><span style={{width: inClass + '%'}}/></div>
 				<div>{inClass}%</div>
 			</div>
-			<div style={preClass < 0 ? ss.NONE : undefined}>
-				<div>Pre-class</div>
-				<div><span style={{width: preClass + '%'}}/></div>
-				<div>{preClass >= 0 ? preClass + '%' : ''}</div>
-			</div>
 		</div>
 	);
 }
