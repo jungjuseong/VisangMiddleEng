@@ -286,7 +286,7 @@ export class KTextArea extends React.Component<IKTextArea> {
         
         let tStyle;
         if(this._isSamsungDevice) tStyle = {lineHeight: '84px'};
-
+        console.log("inputMode none 추가")
         return (
                 <div 
                     ref={this._refWrap} 
@@ -298,6 +298,7 @@ export class KTextArea extends React.Component<IKTextArea> {
                     />
                     <textarea 
                         ref={this._refArea}
+						inputMode={'none'}/*삼성 키보드 나오는것 방지*/
                         disabled={!this.props.on} 
                         onSelect={this._onSelect}
                         onScroll={this._onScroll}

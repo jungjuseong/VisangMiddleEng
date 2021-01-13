@@ -15,6 +15,7 @@ export interface IStateBase {
 		bPlay: boolean,
 		viewCharactor: boolean,
 	};
+	isRemote: boolean;/* 2021_01_13 Remote 관련 추가 */
 }
 export interface IActionsBase {
 	startGoodJob: () => void;
@@ -34,6 +35,7 @@ export abstract class StudentContextBase implements IMain {
 			bPlay: false,
 			viewCharactor: true,
 		},
+		isRemote: false,/* 2021_01_13 Remote 관련 추가 */
 	};
 	public actions: IActionsBase = {
 		startGoodJob: () => {
@@ -48,8 +50,13 @@ export abstract class StudentContextBase implements IMain {
 		},
 	};
 
+	constructor() {
+		this.state.isRemote = document.location.href.indexOf('remote=y') >= 0;
+
+	}/* 2021_01_13 Remote 관련 추가 */
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		if(this.state.viewDiv !== viewDiv) {
+			felsocket.postViewDiv(viewDiv);/* 2021_01_13 Remote 관련 추가 */
 			App.pub_stop();
 			if(viewDiv === 'direction') {
 				this.state.directionON = true;

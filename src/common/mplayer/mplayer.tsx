@@ -702,6 +702,10 @@ class MPlayer {
 			const config = this.m_config;
 			
 			if (el.duration > 0) {
+				if(el.duration > 1000000) {
+					el.currentTime = 1000000;
+					return;
+				}/* 2021_01_13 Remote 버전 관련 추가 */
 
 				if(this.m_maxTime <= 0) {
 					this.m_maxTime = el.duration * 1000;
@@ -719,6 +723,7 @@ class MPlayer {
 						this._setState(MPRState.READY);
 						this.m_media.currentTime = (this.m_seekTime + this.m_startTime) / 1000;
 					} else if (this.m_startTime === 0)	{
+						this.m_media.currentTime = 0;/* 2021_01_13 Remote 버전 관련 추가 */
 						this._setState(MPRState.READY);
 						this._playOrPause();
 					} else this.m_media.currentTime = this.m_startTime / 1000;

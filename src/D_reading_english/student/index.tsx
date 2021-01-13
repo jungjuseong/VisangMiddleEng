@@ -34,6 +34,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 		const {state, actions} = this.props;
 		const { viewDiv,directionON,prog,viewTrans,qnaProg,focusSeq,focusIdx,goodjob } = state;
 		let left = (viewDiv === 'direction') ? 0 : -1280;
+		console.log("attension 이름 변경 a => A");
 		return (
 			<>
 			<div id="preload_hidden" style={{opacity: 0}}>
@@ -53,7 +54,7 @@ class Comp extends React.Component<{state: IStateCtx, actions: IActionsCtx}> {
 					<SAddQuiz view={viewDiv === 'content' && prog === 'add_quiz'} state={state} actions={actions} data={actions.getData().additional_quiz}/>
 					<Loading view={state.loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={3000} data={`${_digenglishCB_lib_}images/goodjob.png`} onComplete={actions.goodjobComplete}/>
-					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/Attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
 				</div>
 			</div>
 			</div>

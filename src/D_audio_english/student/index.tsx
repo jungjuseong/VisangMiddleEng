@@ -27,6 +27,7 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 	public render() {
 		const {state, actions} = this.props;
 		let left = state.viewDiv === 'direction' ? 0 : -1280;
+		console.log("attension 이름 변경 a => A");
 		return (
 			<>
 			<div id="preload_hidden" style={{opacity: 0}}>
@@ -60,7 +61,7 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 					/>
 					<SVGEmbed 
 						className="eyeon_svg" 
-						data={`${_digenglishCB_lib_}images/attention.png`}
+						data={`${_digenglishCB_lib_}images/Attention.png`}
 						view={state.viewDiv === 'eyeon' || state.viewDiv === 'direction'}
 						bPlay={false}
 					/>

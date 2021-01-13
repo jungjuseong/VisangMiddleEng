@@ -658,6 +658,7 @@ export class KTextDiv extends React.Component<IKTextDiv> implements keyboard.ICo
         style={style}
         ref={this._onRef} 
         contentEditable={this._editable} 
+        inputMode={'none'}/* 2021_01_13 Remote 버전 관련 추가 */
         onFocus={this._onFocus} 
         onBlur={this._onBlur}
         onInput={this._onInput} 

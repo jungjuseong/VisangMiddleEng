@@ -320,3 +320,15 @@ export async function getPreviewResultMember(data: IPreviewMemberMsg[]) {
 		}
 	});
 }
+
+/* 2021_01_13 Remote 버전 관련 추가 */
+export async function postViewDiv(msg: ''|'content'|'eyeon'|'direction'|'result') {
+    console.log('postViewDiv in felsocket', msg);
+    window.top.postMessage({type: 'viewDiv', msg, from: 'content'}, '*');
+}
+
+/* 2021_01_13 Remote 버전 관련 추가 */
+export async function postAttention(attention: boolean) {
+    console.log('postAttention', attention);
+    window.top.postMessage({type: 'attention', msg: attention, from: 'content'}, '*');
+}

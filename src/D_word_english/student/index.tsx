@@ -31,7 +31,9 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 			video_url: _digenglishCB_lib_ + 'direction/ls_rw_voca.webp',
 			video_frame: 125 
 		};
+		console.log("view Div",viewDiv);
 		return (
+			
 			<>
 			<div id="preload_hidden">
 				<span>가나다라</span><span style={{fontWeight: 'bold'}}>가나다라</span>
@@ -47,7 +49,7 @@ class StudentComponent extends React.Component<{state: IStateCtx, actions: IActi
 					<SSpeakRecord />
 					<Loading view={loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={2000}	data={`${_digenglishCB_lib_}images/goodjob.png`} onComplete={actions.goodjobComplete} />
-					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}	/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/Attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}	/>
 				</div>
 			</div></div>
 

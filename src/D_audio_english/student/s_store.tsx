@@ -79,6 +79,7 @@ class StudentContext extends StudentContextBase {
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		const state = this.state;
+		super._setViewDiv(viewDiv);
 		if(state.viewDiv !== viewDiv) {
 			this.state.confirmView = false;
 			this.state.additionalView = false;
@@ -93,7 +94,7 @@ class StudentContext extends StudentContextBase {
 			this.state.isPlay = false;
 			this.state.focusIdx = -1;
 		}
-		super._setViewDiv(viewDiv);
+		
 	}
 	
 	@action public receive(data: ISocketData) {
@@ -120,7 +121,8 @@ class StudentContext extends StudentContextBase {
 				}
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.confirmView = true;
-				this.state.viewDiv = 'content';
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -158,7 +160,8 @@ class StudentContext extends StudentContextBase {
 				}
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.additionalView = true;
-				this.state.viewDiv = 'content';
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -186,7 +189,8 @@ class StudentContext extends StudentContextBase {
 				this.state.idx = msg.idx;
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.dictationView = true;
-				this.state.viewDiv = 'content';
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -200,7 +204,8 @@ class StudentContext extends StudentContextBase {
 				
 				this.state.idx = msg.idx;
 				this.state.scriptProg[msg.idx] = SPROG.MOUNTED;
-				this.state.viewDiv = 'content';
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -237,6 +242,7 @@ class StudentContext extends StudentContextBase {
 				this.state.focusIdx = fmsg.fidx;
 			}
 		}else if(data.type ===$SocketType.PAD_ONSCREEN){
+			super._setViewDiv('eyeon');
 			console.log('padonscreen')
 			this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT]
 		}

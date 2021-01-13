@@ -112,6 +112,7 @@ class StudentContext extends StudentContextBase {
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		const state = this.state;
+		super._setViewDiv(viewDiv);
 		if(state.viewDiv !== viewDiv) {
 			this.state.prog = '';
 			this.state.focusIdx = -1;
@@ -129,7 +130,7 @@ class StudentContext extends StudentContextBase {
 
 			this._uploadedFnc = null;
 		}
-		super._setViewDiv(viewDiv);
+		
 	}
 	private _clearPassage() {
 		this.state.qnaProg = QnaProg.UNMOUNT;

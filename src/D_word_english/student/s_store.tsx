@@ -119,6 +119,7 @@ class StudentContext extends StudentContextBase {
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		const state = this.state;
+		super._setViewDiv(viewDiv);
 		if(state.viewDiv !== viewDiv) {
 			if(viewDiv !== 'content') {
 				this.state.prog = '';
@@ -127,7 +128,7 @@ class StudentContext extends StudentContextBase {
 				this.state.ga_na = undefined;
 			}
 		}
-		super._setViewDiv(viewDiv);
+		
 	}
 	@action public receive(data: ISocketData) {
 		super.receive(data);

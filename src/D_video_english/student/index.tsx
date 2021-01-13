@@ -48,7 +48,7 @@ class StudentPage extends React.Component<{state: IStateCtx, actions: IActionsCt
 					<SContent view={viewDiv === 'content'} {...modeProps} />
 					<Loading view={loading}/>
 					<SVGAni className="goodjob-svg" view={goodjob} delay={3000}	data={`${_digenglishCB_lib_}images/goodjob.png`} onComplete={actions.goodjobComplete}/>
-					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
+					<SVGEmbed className="eyeon_svg" data={`${_digenglishCB_lib_}images/Attention.png`}	view={viewDiv === 'eyeon' || viewDiv === 'direction'} bPlay={false}/>
 				</div>
 			</div></div>
 

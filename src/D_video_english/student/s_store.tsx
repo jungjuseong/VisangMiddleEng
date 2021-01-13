@@ -61,6 +61,7 @@ class StudentContext extends StudentContextBase {
 	}
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
+		super._setViewDiv(viewDiv);
 		if(this.state.viewDiv !== viewDiv) {
 			this.state.questionView = false;
 			if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
@@ -73,7 +74,7 @@ class StudentContext extends StudentContextBase {
 			this.state.isPlay = false;
 			this.state.focusIdx = -1;
 		}
-		super._setViewDiv(viewDiv);
+		
 	}
 	@action public receive(data: ISocketData) {
 		super.receive(data);
@@ -85,7 +86,7 @@ class StudentContext extends StudentContextBase {
 				this.state.scriptProg = SPROG.UNMOUNT;
 				this.state.questionView = true;
 				this.state.questionProg = QPROG.ON;
-				this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.scriptMode  = 'COMPREHENSION';
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
@@ -103,7 +104,7 @@ class StudentContext extends StudentContextBase {
 				this.state.questionView = true;
 
 				this.state.scriptProg = SPROG.MOUNTED;
-				this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.scriptMode  = 'COMPREHENSION';
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
@@ -138,7 +139,7 @@ class StudentContext extends StudentContextBase {
 				
 				this.state.scriptProg = SPROG.UNMOUNT;
 				if(this.state.questionProg < QPROG.COMPLETE) this.state.questionProg = QPROG.UNINIT;
-				this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				this.state.scriptMode  = 'DIALOGUE';
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
