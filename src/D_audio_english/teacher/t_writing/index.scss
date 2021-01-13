@@ -209,6 +209,11 @@
                                 text-align: left;
                                 font-size: 25px;
                                 padding-left: 25px;
+                                span.word {
+                                    display: inline-block;
+                                    white-space: nowrap;
+                                    padding: 0px 4px;
+                                }
                                 &>div {
                                     display: inline-block;
                                     transform: translateY(-50%);
