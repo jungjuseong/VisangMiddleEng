@@ -452,7 +452,6 @@ class VideoPopup extends React.Component<IVideoBox> {
 
             // felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
             if(this._player.currentTime < this._player_inittime) this._player.seek(this._player_inittime * 1000);
-            this._player.play();
 			
 		} else if (!this.props.view && prev.view) {
 			if(this._study !== 'off') {
