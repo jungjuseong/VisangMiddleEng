@@ -91,11 +91,11 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 		if(!this.props.view) return;
 		this.props.onChoice(this._curIdx,text);
 		this._tlen = text.trim().length;
+		keyBoardState.state = 'on';
 	}
 	private _onDone = (text: string) => {
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
-		keyBoardState.state = 'off';
 	}
 	private _onPage = (idx: number) =>{
 		App.pub_playBtnTab();
@@ -135,6 +135,9 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 			}
 		});
 		this._swiper = swiper;
+	}
+	private _openKeyboard = () =>{
+		keyBoardState.state = 'on';
 	}
 
 	public componentDidUpdate(prev: IQuizItemProps) {
@@ -207,7 +210,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 											</div>
 										</div>
 										<div className={"s_typing" + keyon} >
-											<div className="area-bnd">
+											<div className="area-bnd" onClick={this._openKeyboard}>
 												<KTextArea 
 													ref={this._refArea[idx]} 
 													view={view} 

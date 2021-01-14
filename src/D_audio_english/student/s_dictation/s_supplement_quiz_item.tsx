@@ -123,7 +123,10 @@ class SSupplementQuizItem extends React.Component<IQuizItemProps> {
 		this._swiper = swiper;
 	}
 
-	private _selectArea = (idx:number, index: number) => {if (index !== null) this._select_area[idx] = index;};
+	private _selectArea = (idx:number, index: number) => {
+		if (index !== null) this._select_area[idx] = index;	
+		keyBoardState.state = 'on';
+	};
 	
 	public componentDidUpdate(prev: IQuizItemProps) {
 		const wrap1 = document.querySelector('.s_dictation .dict_question .q-item:nth-child(1) .scroll');

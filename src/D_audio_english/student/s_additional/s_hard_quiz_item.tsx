@@ -109,6 +109,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 	}
 	private _selectArea = (idx: number, index: number) => {
 		if (index != null) this._select_area[idx] = index;
+		keyBoardState.state = 'on';
 	}
 	private _refCanvas = (el: HTMLCanvasElement|null) => {
 		if(this._canvas || !el) return;

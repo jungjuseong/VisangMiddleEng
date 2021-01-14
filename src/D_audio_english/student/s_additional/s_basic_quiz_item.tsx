@@ -110,6 +110,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 
 	private _selectArea = (idx: number, index: number) => {
 		if (index !== null)	this._select_area[idx] = index;
+		keyBoardState.state = 'on';
 	}
 
 	private _refSwiper = (el: SwiperComponent) => {
