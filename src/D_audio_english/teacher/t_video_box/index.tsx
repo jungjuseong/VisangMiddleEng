@@ -108,7 +108,8 @@ class VideoBox extends React.Component<IVideoBoxProps> {
 	private _playClick = () => {
 		App.pub_playBtnTab();
 		this._view_audio_box = !this._view_audio_box;
-		if (!this._view_audio_box) this.props.player.gotoAndPause(this.props.playerInitTime * 1000);
+		this.props.player.gotoAndPause(this.props.playerInitTime * 1000);
+		if (!this._view_audio_box) this.props.player.gotoAndPause(0);
 	}
 
 	private _playPointClick = (cnum : number) => {

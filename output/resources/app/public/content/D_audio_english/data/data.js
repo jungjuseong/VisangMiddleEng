@@ -981,7 +981,7 @@
         "coordinate_num": 1,
         "start": 0,
         "end": 0,
-        "audio_start": 0,
+        "audio_start": 0.01,
         "audio_end": 5.48,
         "speaker": "Woman",
         "dms_eng": "What are you going to do this summer, Steve?",

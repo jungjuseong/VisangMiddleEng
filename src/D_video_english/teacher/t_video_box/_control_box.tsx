@@ -14,6 +14,7 @@ import ProgBox from './ProgBox';
 interface IControlBoxProps {
 	player: MPlayer;
 	viewCaption: boolean;
+	viewMute: boolean;
 	disable: boolean;
 	isPlay: boolean;
 	toggleMute: () => void;
@@ -26,7 +27,7 @@ interface IControlBoxProps {
 }
 
 function ControlBox(props: IControlBoxProps) {
-	const { player, isPlay, disable, viewCaption,togglePlay, toggleMute, prevClick, nextClick, toggleCaption, stopClick, toggleFullscreen, } = props;
+	const { player, isPlay, disable, viewCaption,togglePlay, toggleMute, prevClick, nextClick, toggleCaption, stopClick, toggleFullscreen,viewMute } = props;
 	return (
 		<div className="control">
 			<div className="control_left">
@@ -43,7 +44,7 @@ function ControlBox(props: IControlBoxProps) {
 			{/* btn_subscript, btn_audio 추가*/}
 			<div className="control_right">
 				<ToggleBtn className="btn_subscript" on={viewCaption} onClick={toggleCaption} />
-				<ToggleBtn className="btn_audio" onClick={toggleMute} on={player.muted} />
+				<ToggleBtn className="btn_audio" onClick={toggleMute} on={viewMute} />
 				<ToggleBtn className="btn_fullscreen" onClick={toggleFullscreen} />
 				<ToggleBtn className="btn_fullscreen_off" onClick={toggleFullscreen} />
 			</div>

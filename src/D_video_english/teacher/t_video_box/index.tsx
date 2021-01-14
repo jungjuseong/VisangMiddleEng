@@ -46,6 +46,7 @@ interface IVideoBox {
 @observer
 class VideoBox extends React.Component<IVideoBox> {
 	private m_box!: HTMLElement;
+	@observable private m_viewMute = false;
 	@observable private m_viewCaption = false;
 	@observable private m_curIdx: number = -1;
 	@observable private m_viewCountDown = false;
@@ -204,12 +205,14 @@ class VideoBox extends React.Component<IVideoBox> {
 		}
 
 	}
+
 	private _toggleMute = () => {
 		if(this.props.roll !== '' || this.props.shadowing) return;
 
 		App.pub_playBtnTab();
 		const player = this.props.player;
 		player.setMuted(!player.muted);
+		this.m_viewMute = player.muted;
 	}
 	private _togglePlay = () => {
 		if(this.m_viewCountDown) return;
@@ -355,6 +358,7 @@ class VideoBox extends React.Component<IVideoBox> {
 					prevClick={this._prevClick}
 					nextClick={this._nextClick}
 					viewCaption={this.m_viewCaption}
+					viewMute={this.m_viewMute}
 					toggleCaption={this._toggleCaption}
 					toggleMute={this._toggleMute}
 				/>

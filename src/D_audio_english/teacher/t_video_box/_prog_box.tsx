@@ -101,6 +101,9 @@ class ProgBox extends React.Component<{ player: MPlayer, disable: boolean ,data:
 			scriptinit = this.props.data.scripts[idx][0].audio_start*1000
 		}
 		player.seek((((player.duration)*scriptpercent) * this.m_dragLeft / 100)+scriptinit);
+		if(script && player.bPlay){
+			player.gotoAndPlay(player.currentTime,this.props.data.scripts[idx][this.props.data.scripts[idx].length-1].audio_end * 1000,1);
+		}
 	}
 
 	public render() {
