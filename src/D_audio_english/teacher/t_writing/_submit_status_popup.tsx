@@ -64,7 +64,6 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	}
 
  	public componentDidUpdate(prev: IQuizBoxProps) {
-
 		const { view } = this.props;
 		if(view && !prev.view) {
 			this._view = true;
@@ -97,7 +96,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	}
 
 	private setCorfal(bool : 0|1|2){
+		const wrap1 = document.querySelector('.submit_status_popup .pop_bg .popbox .content .scroll');
 		this._corfal = bool
+		wrap1?.scrollTo(0,0);
 	}
 
 	private setColor(){	
@@ -164,13 +165,13 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 					<div className="subject_rate">
 						{arr.length}/{App.students.length}
 					</div>
-						<div className="popbox">							
-							{/* 제출현황 */}
+						<div className="popbox">
+							{/* 결과확인 페이지 */}
 							<div className="submit_status">
 								<div className="right_top">
-									<button className="all_student" onClick={()=>{this._onChangeScreen(false)}}/>
+									<button className="toggle_btn" onClick={()=>{this._onChangeScreen(false)}}/>
 								</div>
-								<div className="table">
+								<div className="table scroll">
 									{arr.map((uid , idx)=>{
 										let url = '';
 										if(result[idx] !== undefined){
@@ -217,16 +218,17 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
+							{/* 제출현황 */}
 							<div className="content">
 								<div className="right_top">
-									<button className="all_student" onClick={()=>{this._onChangeScreen(true)}}/>
+									<button className="toggle_btn" onClick={()=>{this._onChangeScreen(true)}}/>
 								</div>
 								<div className="sort_category">
 									<ToggleBtn className="all_student" on={this._corfal=== 0} style={{display : answer? 'none' : ''}} onClick={() =>{this.setCorfal(0)}}/>
 									<ToggleBtn className="correct_answer" on={this._corfal=== 1} style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(1)}}/>
 									<ToggleBtn className="wrong_answer" on={this._corfal=== 2} style={{display : answer? 'none' : ''}}onClick={() =>{this.setCorfal(2)}}/>
 								</div>
-								<div className="table">
+								<div className="table scroll">
 									{arr.map((uid , idx)=>{
 										let url = '';
 										if(result[idx] !== undefined){

@@ -75,16 +75,29 @@
                     padding: 0px 6px;
                     white-space: nowrap;
                 }
+                .scroll{
+                    overflow: auto;
+
+                    &::-webkit-scrollbar {
+                        width: 7px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(255, 255, 255, 0.25);
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background-color: transparent;
+                    }
+                }
                 // 제출 현황 페이지
-                .submit_status {
+                .submit_status {                    
                     position: relative;
                     width: 1140px;
                     height: 600px;
                     margin: 0 auto;
                     background: rgba(0, 0, 0, 0.2);
                     border-radius: 15px;
-                    padding-top: 70px;
-                    overflow: auto;
+                    padding: 65px 0 10px 0;
                     &>div{
                         position: absolute;
                         top: 10px;
@@ -92,14 +105,17 @@
                     }
                     .right_top{
                         right: 30px;
-                        .all_student{
+                        .toggle_btn{
                             @include btn_on_dis( resolve('teacher/images/btn_show_answer.png'), resolve('teacher/images/btn_show_answer.png'), resolve('teacher/images/btn_show_answer.png'), width('teacher/images/btn_show_answer.png'), height('teacher/images/btn_show_answer.png'), );
                         }
                     }
                     .table{
                         position: relative;
-                        width: 1000px;
+                        width: 1100px;
+                        height: 100%;
                         margin: 0 auto;
+                        padding: 5px 50px;
+                        top: 0px;
                         left: 0;
                         &>div{
                             display: block;
@@ -147,16 +163,6 @@
                             }
                         }
                     }
-                    &::-webkit-scrollbar {
-                        width: 7px;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background: rgba(255, 255, 255, 0.25);
-                        border-radius: 10px;
-                    }
-                    &::-webkit-scrollbar-track {
-                        background-color: transparent;
-                    }
                 }
                 // 본문 페이지
                 .content {
@@ -166,8 +172,7 @@
                     margin: 0 auto;
                     background: rgba(0, 0, 0, 0.2);
                     border-radius: 15px;
-                    padding-top: 70px;
-                    overflow: auto;
+                    padding: 65px 0 10px 0;
                     &>div{
                         position: absolute;
                         top: 10px;
@@ -175,7 +180,7 @@
                     }
                     .right_top{
                         right: 30px;
-                        .all_student{
+                        .toggle_btn{
                             @include btn_on_dis( resolve('teacher/images/btn_submit_status.png'), resolve('teacher/images/btn_submit_status.png'), resolve('teacher/images/btn_submit_status.png'), width('teacher/images/btn_submit_status.png'), height('teacher/images/btn_submit_status.png'), );
                         }
                     }
@@ -193,8 +198,11 @@
                     }
                     .table{
                         position: relative;
-                        width: 1000px;
+                        width: 1100px;
+                        height: 100%;
                         margin: 0 auto;
+                        padding: 5px 50px;
+                        top: 0px;
                         left: 0;
                         &>div{
                             display: block;
@@ -250,16 +258,6 @@
                                 background-image: resolve('teacher/images/score.png');
                             }
                         }
-                    }
-                    &::-webkit-scrollbar {
-                        width: 7px;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background: rgba(255, 255, 255, 0.25);
-                        border-radius: 10px;
-                    }
-                    &::-webkit-scrollbar-track {
-                        background-color: transparent;
                     }
                 }                
             }
