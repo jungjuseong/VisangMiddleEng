@@ -132,7 +132,8 @@ export abstract class TeacherContextBase implements IMain {
 				this.state.svg_bg.bPlay = false;
 				this.state.svg_bg.viewCharactor = false;
 
-				felsocket.sendLauncher($SocketType.TOP_TITLE_VIEW, null);
+				                
+                felsocket.sendLauncher($SocketType.TOP_TITLE_HIDE, null);
 				felsocket.sendPAD($SocketType.PAD_ONSCREEN, null);
 			}
 			this._naviLeftFnc = null;
