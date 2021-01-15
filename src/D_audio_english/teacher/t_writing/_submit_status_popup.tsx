@@ -49,8 +49,10 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 		this._view = false;
 	}
 	private _onChangeScreen = (bool : boolean) =>{
-		const wrap2 = document.querySelector('.submit_status_popup .pop_bg .popbox .scroll');
+		const wrap1 = document.querySelector('.submit_status_popup .pop_bg .popbox .content .scroll');
+		const wrap2 = document.querySelector('.submit_status_popup .pop_bg .popbox .submit_status .scroll');
 		this._viewChange = bool
+		wrap1?.scrollTo(0,0);
 		wrap2?.scrollTo(0,0);
 	}
 	private _closeResultScreen = () => {
