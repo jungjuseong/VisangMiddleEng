@@ -96,6 +96,7 @@ class SHardQuizItem extends React.Component<IQuizItemProps> {
 	private _onDone = (text: string) => {
 		if(!this.props.view) return;
 		this._tlen = text.trim().length;
+		keyBoardState.state = 'off';
 	}
 	private _onPage = (idx: number) =>{
 		App.pub_playBtnTab();
