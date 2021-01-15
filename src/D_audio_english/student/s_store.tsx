@@ -79,12 +79,10 @@ class StudentContext extends StudentContextBase {
 
 	@action protected _setViewDiv(viewDiv: VIEWDIV) {
 		const state = this.state;
-		super._setViewDiv(viewDiv);
 		if(state.viewDiv !== viewDiv) {
 			this.state.confirmView = false;
 			this.state.additionalView = false;
 			this.state.dictationView = false;
-			if(this.state.confirmSupProg < QPROG.COMPLETE) this.state.confirmSupProg = QPROG.UNINIT;
 			
 			this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 			this.state.qsMode  = '';
@@ -94,6 +92,7 @@ class StudentContext extends StudentContextBase {
 			this.state.isPlay = false;
 			this.state.focusIdx = -1;
 		}
+		super._setViewDiv(viewDiv);
 		
 	}
 	
@@ -103,6 +102,8 @@ class StudentContext extends StudentContextBase {
 		if(data.type === $SocketType.MSGTOPAD && data.data) {
 			const msg = data.data as  common.IIndexMsg;
 			if(msg.msgtype === 'confirm_send') {
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				if(msg.idx === 0) {
 					if(this.state.confirmSupProg > QPROG.UNINIT) return;
 					this.state.confirmSupProg = QPROG.ON;
@@ -121,8 +122,6 @@ class StudentContext extends StudentContextBase {
 				}
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.confirmView = true;
-				// this.state.viewDiv = 'content';
-				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -145,6 +144,8 @@ class StudentContext extends StudentContextBase {
 					this.state.confirmHardProg = QPROG.COMPLETE;
 				}
 			} else if(msg.msgtype === 'additional_send') {
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				if(msg.idx === 0) {
 					if(this.state.additionalSupProg > QPROG.UNINIT) return;
 					this.state.additionalSupProg = QPROG.ON;
@@ -160,8 +161,6 @@ class StudentContext extends StudentContextBase {
 				}
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.additionalView = true;
-				// this.state.viewDiv = 'content';
-				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
@@ -183,14 +182,14 @@ class StudentContext extends StudentContextBase {
 					this.state.additionalHardProg = QPROG.COMPLETE;
 				}
 			} else if(msg.msgtype === 'dictation_send') {
+				// this.state.viewDiv = 'content';
+				this._setViewDiv('content');
 				console.log('dictation_send',msg.idx);
 				if(this.state.dictationProg[msg.idx] > QPROG.UNINIT) return;
 				this.state.dictationProg[msg.idx] = QPROG.ON;
 				this.state.idx = msg.idx;
 				this.state.scriptProg = [SPROG.UNMOUNT,SPROG.UNMOUNT,SPROG.UNMOUNT];
 				this.state.dictationView = true;
-				// this.state.viewDiv = 'content';
-				this._setViewDiv('content');
 				this.state.qsMode  = 'question';
 				this.state.roll = '';
 				this.state.shadowing = false;
