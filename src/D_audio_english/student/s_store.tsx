@@ -199,12 +199,11 @@ class StudentContext extends StudentContextBase {
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
 				this.state.dictationProg[msg.idx] = QPROG.COMPLETE;
 			} else if(msg.msgtype === 'script_send') {
-				if(this.state.scriptProg[msg.idx] !== SPROG.UNMOUNT) return;
-				
-				this.state.idx = msg.idx;
-				this.state.scriptProg[msg.idx] = SPROG.MOUNTED;
 				// this.state.viewDiv = 'content';
 				this._setViewDiv('content');
+				if(this.state.scriptProg[msg.idx] !== SPROG.UNMOUNT) return;
+				this.state.idx = msg.idx;
+				this.state.scriptProg[msg.idx] = SPROG.MOUNTED;
 				this.state.qsMode  = 'script';
 				this.state.roll = '';
 				this.state.shadowing = false;
