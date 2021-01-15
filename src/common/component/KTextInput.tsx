@@ -103,6 +103,7 @@ class KTextInput extends React.Component<IKTexInput> {
 	}
 	public render() {
 		const {on, className, maxLength, tabIndex, disabled} = this.props; 
+		console.log("inputMode none 설정")
 		// const arr: string[] = ['k-text-input'];
 		// if(className) arr.push(className);
 		
@@ -110,6 +111,7 @@ class KTextInput extends React.Component<IKTexInput> {
 			<input 
 				ref={this._onRef}
 				type="text"
+				inputMode={"none"}
 				className={className}
 				tabIndex={tabIndex}
 				maxLength={maxLength}
