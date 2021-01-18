@@ -26,12 +26,12 @@ interface IQuizBoxProps {
 @observer
 class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _color : COLOR[] = [];
+	@observable private _color : COLOR = 'pink';
 	@observable private _corfal : 0|1|2 = 0;
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
-	@observable private _viewChange : boolean = true
-	private _selectColor : COLOR = 'pink'
+	@observable private _viewChange : boolean = true;
+	private _selectColor : COLOR = 'pink';
 	private _selectThumb = ''
 	private _selectNickname = ''
 
@@ -107,14 +107,13 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 
 	private setColor(){	
 		let cidx = 0;
-		let color_list :COLOR[] = [];
-		const s_num = App.students;
 		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
-		for(let i = 0; i<s_num.length; i++) {
-			cidx = Math.floor(Math.random() * s_num.length);
-			color_list.push(colors[cidx]);
+		const len = colors.length; 
+		while(true) {
+			cidx = Math.floor(Math.random() * len);
+			if(cidx < len) break;
 		}
-		this._color = color_list;
+		this._color = toJS(colors[cidx]);
 	}
 	
 	public render() {
@@ -170,7 +169,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
-							{/* 결과확인 페이지 */}
+							{/* 제출현황 */}
 							<div className="submit_status">
 								<div className="right_top">
 									<button className="toggle_btn" onClick={()=>{this._onChangeScreen(false)}}/>
@@ -191,9 +190,10 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 												return;
 											}
 										}
+										console.log("heteteteeeeeeeeeeeeee:", this._color);
 										return(
 											<div key={idx}>
-												<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+												<img className = {this._color} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 												<div className="status">
 													<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
 													<div className="score">0</div>
@@ -204,7 +204,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 									{nosendstudent.map((student , idx)=>{
 										return(
 											<div className="status no_send" key={idx}>
-												<img className = {this._color[idx]} src={student.thumb}></img>
+												<img className = {this._color} src={student.thumb}></img>
 												<div>
 													<p className="s_name">{student.nickname}</p>
 													<div className="score">0</div>
@@ -222,7 +222,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 						{arr.length}/{App.students.length}
 					</div>
 						<div className="popbox">
-							{/* 제출현황 */}
+							{/* 결과확인 페이지 */}
 							<div className="content">
 								<div className="right_top">
 									<button className="toggle_btn" onClick={()=>{this._onChangeScreen(true)}}/>
@@ -250,9 +250,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
-												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx,this._color[idx],App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
+												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx, this._color, App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
 												<div className="status">
-													<img className = {this._color[idx]} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<img className = {this._color} src={App.students[this.findStudentName(uid)]?.thumb}></img>
 													<div>
 														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
 														<div className="score">0</div>
