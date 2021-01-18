@@ -26,7 +26,7 @@ interface IQuizBoxProps {
 @observer
 class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _color : string = '';
+	@observable private _color : COLOR = 'pink';
 	@observable private _corfal : 0|1|2 = 0;
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
