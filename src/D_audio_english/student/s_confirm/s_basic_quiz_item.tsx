@@ -47,6 +47,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 	@observable private _view_answer: boolean;
 	@observable private _hide_num_box: boolean[];
 	@observable private _put_answer: boolean = false;
+	private i_list = ['skiing','riding','waterPark'];
 
 	quizCapture!: HTMLElement;
 	private _refQuiz = (el: HTMLElement | null) => {
@@ -114,10 +115,9 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		const setOriginX = drag_center.x;
 		const setOriginY = drag_center.y;
 
-		const i_list = ['skiing','riding','waterPark'];
 		let x : Array<number> = [];
 		let y : Array<number> = [];
-		i_list.map((img, idx)=>{
+		this.i_list.map((img, idx)=>{
 			let image = document.querySelector(`#${img}`)
 			if (image === null) return;
 			let rect = image.getBoundingClientRect();
@@ -130,7 +130,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		const position = [this.state.firstPosition, this.state.secondPosition, this.state.thirdPosition];
 		console.log(x[0] + '< x <' + x[1] + ' ' + y[0] + '< y <' + y[1]);
 		for (let i = 0; i < position.length; i++) {
-			for(let j = 0; j < i_list.length; j++){
+			for(let j = 0; j < this.i_list.length; j++){
 				if (position[i].x >= x[j*2] && position[i].x <= x[j*2+1]) {
 					if (position[i].y >= y[j*2] && position[i].y <= y[j*2+1]) {
 						this._ExclusiveGroup(j);
@@ -185,7 +185,7 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		this._clicked_number = num;
 	}
 
-	private _putNumber = (param: 0 | 1 | 2) => {
+	private _putNumber = (param: number) => {
 		console.log(this._choices[param]);
 		if (this._choices[param] === 1) {
 			return '1';
@@ -211,6 +211,8 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
 		let OXs: Array<''|'O'|'X'> = ['','',''];
 		const answers = [data.item1.answer ,data.item2.answer,data.item3.answer];
+		const left_value = ["47px", "41px", "56px"];
+		const item_list = [data.item1,data.item2,data.item3];
 
 		if(confirmProg === QPROG.COMPLETE) {
 			OXs.map((OX, idx) => {
@@ -233,25 +235,16 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 						</div>
 						<div className="draggable_place">
 							<div className="img_bundle">
-								<div>
-									<img id="skiing" className="image" src={App.data_url + data.item1.img} />
-									<div className={'number_box ' + OXs[0] } style={{left: "47px", top: "37px"}} onClick= {()=>{this._cancelNumbering(0)}}>{this._putNumber(0)}</div>
-									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item1.answer}</div>
-								</div>
-								<div>
-									<img id="riding" className="image" src={App.data_url + data.item2.img} />
-									<div className={'number_box ' + OXs[1]} style={{left: "41px", top: "37px"}} onClick= {()=>{this._cancelNumbering(1)}}>{this._putNumber(1)}</div>
-									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item2.answer}</div>
-								</div>
-								<div>
-									<img id="waterPark" className="image" src={App.data_url + data.item3.img} />
-									<div className={'number_box ' + OXs[2]} style={{left: "56px", top: "37px"}} onClick= {()=>{this._cancelNumbering(2)}}>{this._putNumber(2)}</div>
-									<div className={'answer' + (this._view_answer ? '' : ' hide')}>{data.item3.answer}</div>
-								</div>
+								{this.i_list.map((img, idx)=>{
+									return(
+										<div>
+											<img id={img} className="image" src={App.data_url + item_list[idx].img} />
+											<div className={'number_box ' + OXs[idx] } style={{left: left_value[idx], top: "37px"}} onClick= {()=>{this._cancelNumbering(idx)}}>{this._putNumber(idx)}</div>
+											<div className={'answer' + (this._view_answer ? '' : ' hide')}>{item_list[idx].answer}</div>
+										</div>
+									);
+								})}
 							</div>
-							{
-
-							}
 							<Draggable bounds="parent" {...dragHandlers} positionOffset={{ x: 0, y: 0 }} position={{ x: 500, y: 430 }} onStop={this.handleStop}	onDrag={this.handleDrag} onMouseDown={() => this.selectNumber(1)}>
 								<div className={'box' + (this._sended || this._hide_num_box[0]? ' hide' : '')}>1</div>
 							</Draggable>
