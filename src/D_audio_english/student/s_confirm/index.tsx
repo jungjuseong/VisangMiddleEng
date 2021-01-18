@@ -64,7 +64,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		this._writings = { answer1: '', answer2: '', answer3: ''};
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};
-
+		App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
+		actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 		if(state.idx === 0) {
 			state.confirmSupProg = QPROG.SENDING;
 			const url = await supQuizCapture();
@@ -83,9 +84,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 	
 				if(state.confirmSupProg === QPROG.SENDING) {
 					state.confirmSupProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.confirmSupProg === QPROG.SENDINGCOM){
+					state.confirmSupProg = QPROG.COMPLETE;
 				}
 			}
 		} else if(state.idx === 1) {
@@ -106,9 +106,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 	
 				if(state.confirmBasicProg === QPROG.SENDING) {
 					state.confirmBasicProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.confirmBasicProg === QPROG.SENDINGCOM){
+					state.confirmBasicProg = QPROG.COMPLETE;
 				}
 			}
 		} else if(state.idx === 2) {
@@ -129,9 +128,8 @@ class SConfirm extends React.Component<ISQuestionProps> {
 	
 				if(state.confirmHardProg === QPROG.SENDING) {
 					state.confirmHardProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.confirmHardProg === QPROG.SENDINGCOM){
+					state.confirmHardProg = QPROG.COMPLETE;
 				}
 			}
 		} 

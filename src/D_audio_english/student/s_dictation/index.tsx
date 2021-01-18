@@ -69,6 +69,8 @@ class SDictation extends React.Component<ISQuestionProps> {
 		const data = actions.getData();
 		const data_array = [data.dictation_sup, data.dictation_basic, data.dictation_hard];
 		state.dictationProg[state.idx] = QPROG.SENDING;
+		App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
+		actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 		const url = await quizCapture('.s_dictation .dict_question .q-item');
 		console.log('choices : ',choices)
 		console.log('url : ',url)
@@ -86,8 +88,8 @@ class SDictation extends React.Component<ISQuestionProps> {
 			console.log('msg : ',msg)
 			if(state.dictationProg[state.idx] === QPROG.SENDING) {
 				state.dictationProg[state.idx] = QPROG.SENDED;
-				App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-				actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+			}else if(state.dictationProg[state.idx] === QPROG.SENDINGCOM){
+				state.dictationProg[state.idx] = QPROG.COMPLETE;
 			}
 		}
 		for(let i = 0; i < data_array[state.idx].length; i++) {

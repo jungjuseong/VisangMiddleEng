@@ -208,7 +208,7 @@ class TeacherContext extends TeacherContextBase {
 			const msg = (messageFromPad.data as  IIndexMsg);
 			switch(msg.msgtype) {
 				case 'confirm_return':
-					if(this.state.confirmSupProg === SENDPROG.SENDED && msg.idx === 0) {
+					if(msg.idx === 0) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -234,7 +234,7 @@ class TeacherContext extends TeacherContextBase {
 							result.uid.push(qmsg.id);
 							console.log(qmsg.imgUrl)
 						}
-					} else if(this.state.confirmBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+					} else if(msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -257,7 +257,7 @@ class TeacherContext extends TeacherContextBase {
 							result.url.push(qmsg.imgUrl);
 							result.uid.push(qmsg.id);
 						}
-					} else if(this.state.confirmHardProg === SENDPROG.SENDED && msg.idx === 2) {
+					} else if(msg.idx === 2) {
 						const qmsg = msg as IQuizStringReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -280,7 +280,7 @@ class TeacherContext extends TeacherContextBase {
 					}
 					break;				
 				case 'additional_return':
-					if(this.state.additionalSupProg === SENDPROG.SENDED && msg.idx === 0) {
+					if(msg.idx === 0) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -313,7 +313,7 @@ class TeacherContext extends TeacherContextBase {
 							result.url.push(qmsg.imgUrl);
 							result.uid.push(qmsg.id);
 						}
-					} else if(this.state.additionalBasicProg === SENDPROG.SENDED && msg.idx === 1) {
+					} else if(msg.idx === 1) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -345,7 +345,7 @@ class TeacherContext extends TeacherContextBase {
 							result.url.push(qmsg.imgUrl);
 							result.uid.push(qmsg.id);
 						}
-					} else if(this.state.additionalHardProg === SENDPROG.SENDED && msg.idx === 2) {
+					} else if(msg.idx === 2) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {
@@ -379,7 +379,7 @@ class TeacherContext extends TeacherContextBase {
 					}
 					break;				
 				case 'dictation_return':
-					if(this.state.dictationProg[msg.idx] === SENDPROG.SENDED) {
+					if(true) {
 						const qmsg = msg as IQuizReturnMsg;
 						let sidx = -1;
 						for(let i = 0; i < App.students.length; i++) {

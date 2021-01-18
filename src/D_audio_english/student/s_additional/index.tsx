@@ -75,6 +75,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		choices = toJS(this._choices);
 		// 초기화 함수 만들어서 할것
 		const quizssup = actions.getData().additional_sup;
+		App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
+		actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
 		if(state.idx === 0) {
 			state.additionalSupProg = QPROG.SENDING;
 			const url = await supQuizCapture('.s_additional .supplement .table_box');
@@ -93,9 +95,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 	
 				if(state.additionalSupProg === QPROG.SENDING) {
 					state.additionalSupProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.additionalSupProg === QPROG.SENDINGCOM){
+					state.additionalSupProg = QPROG.COMPLETE;
 				}
 			}
 		} else if(state.idx === 1) {
@@ -115,9 +116,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 	
 				if(state.additionalBasicProg === QPROG.SENDING) {
 					state.additionalBasicProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.additionalBasicProg === QPROG.SENDINGCOM){
+					state.additionalBasicProg = QPROG.COMPLETE;
 				}
 			}
 		} else if(state.idx === 2) {
@@ -137,9 +137,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 	
 				if(state.additionalHardProg === QPROG.SENDING) {
 					state.additionalHardProg = QPROG.SENDED;
-	
-					App.pub_playGoodjob();	// 19-02-01 190108_검수사항 p.14 수정 
-					actions.startGoodJob(); 	// 19-02-01 190108_검수사항 p.14 수정 
+				}else if(state.additionalHardProg === QPROG.SENDINGCOM){
+					state.additionalHardProg = QPROG.COMPLETE;
 				}
 			}
 		} else {

@@ -10,6 +10,7 @@ const enum QPROG {
 	READYA,
 	ON,
 	SENDING,
+	SENDINGCOM,
 	SENDED,
 	COMPLETE,
 }
@@ -131,17 +132,29 @@ class StudentContext extends StudentContextBase {
 					const qProg = this.state.confirmSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmSupProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.confirmSupProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.confirmSupProg = QPROG.COMPLETE;
+					}
 				} else if(msg.idx === 1) {
 					const qProg = this.state.confirmBasicProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmBasicProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.confirmBasicProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.confirmBasicProg = QPROG.COMPLETE;
+					}
 				} else {
 					const qProg = this.state.confirmHardProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.confirmHardProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.confirmHardProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.confirmHardProg = QPROG.COMPLETE;
+					}
 				}
 			} else if(msg.msgtype === 'additional_send') {
 				// this.state.viewDiv = 'content';
@@ -169,17 +182,29 @@ class StudentContext extends StudentContextBase {
 					const qProg = this.state.additionalSupProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.additionalSupProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.additionalSupProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.additionalSupProg = QPROG.COMPLETE;
+					}
 				} else if(msg.idx === 1) {
 					const qProg = this.state.additionalBasicProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.additionalBasicProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.additionalBasicProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.additionalBasicProg = QPROG.COMPLETE;
+					}
 				} else {
 					const qProg = this.state.additionalHardProg;
 					if(this.state.viewDiv !== 'content') return;
 					else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-					this.state.additionalHardProg = QPROG.COMPLETE;
+					if(qProg == QPROG.SENDING){
+						this.state.additionalHardProg = QPROG.SENDINGCOM;
+					}else{
+						this.state.additionalHardProg = QPROG.COMPLETE;
+					}
 				}
 			} else if(msg.msgtype === 'dictation_send') {
 				// this.state.viewDiv = 'content';
@@ -197,7 +222,11 @@ class StudentContext extends StudentContextBase {
 				const qProg = this.state.dictationProg[msg.idx];
 				if(this.state.viewDiv !== 'content') return;
 				else if(qProg !== QPROG.ON && qProg !== QPROG.SENDING && qProg !== QPROG.SENDED) return;
-				this.state.dictationProg[msg.idx] = QPROG.COMPLETE;
+				if(qProg == QPROG.SENDING){
+					this.state.dictationProg[msg.idx] = QPROG.SENDINGCOM;
+				}else{
+					this.state.dictationProg[msg.idx] = QPROG.COMPLETE;
+				}
 			} else if(msg.msgtype === 'script_send') {
 				// this.state.viewDiv = 'content';
 				this._setViewDiv('content');
