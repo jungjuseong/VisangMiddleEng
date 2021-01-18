@@ -114,56 +114,30 @@ class SBasicQuizItem extends React.Component<IQuizItemProps> {
 		const setOriginX = drag_center.x;
 		const setOriginY = drag_center.y;
 
-		// image 1
-		const image1 = document.querySelector('#skiing');
-		if (image1 === null) return;
-		const rect = image1.getBoundingClientRect();
-		const x0 = rect.left - setOriginX;
-		const x1 = rect.right - setOriginX;
-		const y0 = rect.top - setOriginY;
-		const y1 = rect.bottom - setOriginY;
-		// image 2
-		const image2 = document.querySelector('#riding');
-		if (image2 === null) return;
-		const rect2 = image2.getBoundingClientRect();
-		const x2 = rect2.left - setOriginX;
-		const x3 = rect2.right - setOriginX;
-		const y2 = rect2.top - setOriginY;
-		const y3 = rect2.bottom - setOriginY;
-		// image 3
-		const image3 = document.querySelector('#waterPark');
-		if (image3 === null) return;
-		const rect3 = image3.getBoundingClientRect();
-		const x4 = rect3.left - setOriginX;
-		const x5 = rect3.right - setOriginX;
-		const y4 = rect3.top - setOriginY;
-		const y5 = rect3.bottom - setOriginY;
+		const i_list = ['skiing','riding','waterPark'];
+		let x : Array<number> = [];
+		let y : Array<number> = [];
+		i_list.map((img, idx)=>{
+			let image = document.querySelector(`#${img}`)
+			if (image === null) return;
+			let rect = image.getBoundingClientRect();
+			x.push(rect.left - setOriginX);
+			x.push(rect.right - setOriginX);
+			y.push(rect.top - setOriginY);
+			y.push(rect.bottom - setOriginY);
+		})
 		
 		const position = [this.state.firstPosition, this.state.secondPosition, this.state.thirdPosition];
-		console.log(x0 + '< x <' + x1 + ' ' + y0 + '< y <' + y1);
+		console.log(x[0] + '< x <' + x[1] + ' ' + y[0] + '< y <' + y[1]);
 		for (let i = 0; i < position.length; i++) {
-			if (position[i].x >= x0 && position[i].x <= x1) {
-				if (position[i].y >= y0 && position[i].y <= y1) {
-					this._ExclusiveGroup(0);
-					this._choices[0] = this._clicked_number;
-					this.props.onChoice(0, this._clicked_number);
-					this._put_answer = true;
-				}
-			}
-			if (position[i].x >= x2 && position[i].x <= x3) {
-				if (position[i].y >= y2 && position[i].y <= y3) {
-					this._ExclusiveGroup(1);
-					this._choices[1] = this._clicked_number;
-					this.props.onChoice(1, this._clicked_number);
-					this._put_answer = true;
-				}
-			}
-			if (position[i].x >= x4 && position[i].x <= x5) {
-				if (position[i].y >= y4 && position[i].y <= y5) {
-					this._ExclusiveGroup(2);
-					this._choices[2] = this._clicked_number;
-					this.props.onChoice(2, this._clicked_number);
-					this._put_answer = true;
+			for(let j = 0; j < i_list.length; j++){
+				if (position[i].x >= x[j*2] && position[i].x <= x[j*2+1]) {
+					if (position[i].y >= y[j*2] && position[i].y <= y[j*2+1]) {
+						this._ExclusiveGroup(j);
+						this._choices[j] = this._clicked_number;
+						this.props.onChoice(j, this._clicked_number);
+						this._put_answer = true;
+					}
 				}
 			}
 			position[i].y = 430;
