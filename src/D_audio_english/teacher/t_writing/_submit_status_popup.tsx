@@ -26,7 +26,7 @@ interface IQuizBoxProps {
 @observer
 class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _color : COLOR = 'pink';
+	@observable private _color : string = '';
 	@observable private _corfal : 0|1|2 = 0;
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
@@ -108,12 +108,12 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	private setColor(){	
 		let cidx = 0;
 		const colors : COLOR[] = ['pink', 'green', 'orange', 'purple'];
-		const len = colors.length; 
+		const len = colors.length;
 		while(true) {
 			cidx = Math.floor(Math.random() * len);
 			if(cidx < len) break;
 		}
-		this._color = toJS(colors[cidx]);
+		// this._color = toJS(colors[cidx]);
 	}
 	
 	public render() {
