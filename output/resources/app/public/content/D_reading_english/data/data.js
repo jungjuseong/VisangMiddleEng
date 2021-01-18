@@ -5,7 +5,7 @@
     "warmup_type": 1,
     "warmup_video": "",
     "summary_audio": "",
-    "video_start": 1,
+    "video_start": 0,
     "scripts": [{
         "seq": 1,
         "dms_seq": 3011,

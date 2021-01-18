@@ -66,10 +66,9 @@ class SConfirm extends React.Component<ISQuestionProps> {
 		this._choices = { answer1: 0, answer2: 0, answer3: 0};
 
 		if(state.idx === 0) {
+			state.confirmSupProg = QPROG.SENDING;
 			const url = await supQuizCapture();
 			console.log('url',url)
-
-			state.confirmSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
@@ -90,11 +89,9 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
-			state.confirmBasicProg = QPROG.SENDED;
+			state.confirmBasicProg = QPROG.SENDING;
 			const url = await basicQuizCapture();
 			console.log('url',url)
-
-			state.confirmBasicProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizReturnMsg = {
 					msgtype: 'confirm_return',
@@ -115,9 +112,9 @@ class SConfirm extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 2) {
+			state.confirmHardProg = QPROG.SENDING;
 			const url = await hardQuizCapture('.content_box .question .s_confirm .hard .q-item');
 			console.log('url',url)
-			state.confirmHardProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IQuizStringReturnMsg = {
 					msgtype: 'confirm_return',

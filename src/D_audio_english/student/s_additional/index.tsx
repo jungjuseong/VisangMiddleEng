@@ -76,9 +76,9 @@ class SAdditional extends React.Component<ISQuestionProps> {
 		// 초기화 함수 만들어서 할것
 		const quizssup = actions.getData().additional_sup;
 		if(state.idx === 0) {
+			state.additionalSupProg = QPROG.SENDING;
 			const url = await supQuizCapture('.s_additional .supplement .table_box');
 			console.log(url)
-			state.additionalSupProg = QPROG.SENDING;
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
@@ -99,8 +99,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 1) {
-			const url = await basicQuizCapture('.s_additional .basic .q-item');
 			state.additionalBasicProg = QPROG.SENDING;
+			const url = await basicQuizCapture('.s_additional .basic .q-item');
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',
@@ -121,8 +121,8 @@ class SAdditional extends React.Component<ISQuestionProps> {
 				}
 			}
 		} else if(state.idx === 2) {
-			const url = await hardQuizCapture('.s_additional .hard .q-item');
 			state.additionalHardProg = QPROG.SENDING;
+			const url = await hardQuizCapture('.s_additional .hard .q-item');
 			if(App.student) {
 				const msg: IAdditionalQuizReturnMsg = {
 					msgtype: 'additional_return',

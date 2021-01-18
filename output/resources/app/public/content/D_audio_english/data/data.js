@@ -180,7 +180,7 @@
         "problem3": {
             "question": "Brett is in Jejudo now.",
             "question_audio": "q_plus1_003.mp3",
-            "answer": 1,
+            "answer": 2,
             "choice1": "TRUE",
             "choice2": "FALSE"
         }
