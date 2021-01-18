@@ -89,7 +89,7 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 		})
 		return re_num
 	}
-	private checkStdudentName(arr : string[] ,id : string){
+	private checkStudentName(arr : string[] ,id : string){
 		let re_num = -1
 		arr.map((name ,idx)=>{
 			if(name === id){
@@ -118,8 +118,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	
 	public render() {
 		const { onClosed, state, idx, tab, answer} = this.props;
-		const coarray = [state.resultConfirmSup,state.resultConfirmBasic,state.resultConfirmHard]
-		const adarray = [state.resultAdditionalSup,state.resultAdditionalBasic,state.resultAdditionalHard]
+		const coarray = [toJS(state.resultConfirmSup),toJS(state.resultConfirmBasic),toJS(state.resultConfirmHard)]
+		const adarray = [toJS(state.resultAdditionalSup),toJS(state.resultAdditionalBasic),toJS(state.resultAdditionalHard)]
+		console.log('coarray',coarray, coarray[0])
 		let arr :string[] = []
 		let result : string[][] = []
 		let correct :boolean[] = []
@@ -134,31 +135,35 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 				result = coarray[idx].url
 				arr = coarray[idx].uid
 				if(idx === 0){
-					correct = state.resultConfirmSup.arrayOfCorrect
+					correct = toJS(state.resultConfirmSup).arrayOfCorrect
 				}else if (idx ===1){
-					correct = state.resultConfirmBasic.arrayOfCorrect
+					correct = toJS(state.resultConfirmBasic).arrayOfCorrect
 				}else{
 					correct = []
 				}
 				break
 			}
 			case 'DICTATION': {
-				result = state.resultDictation[idx].url
-				arr = state.resultDictation[idx].uid
-				correct = state.resultDictation[idx].arrayOfCorrect
+				result = toJS(state.resultDictation[idx]).url
+				arr = toJS(state.resultDictation[idx]).uid
+				correct = toJS(state.resultDictation[idx]).arrayOfCorrect
 				break
 			}
 			default : break
 		}
+		console.log('all',correct,arr,result);
 		arr = toJS(arr);
+		correct = toJS(correct);
 		let nosendstudent :IStudent[]= []
-		App.students.map((student, idx)=>{
+		toJS(App.students).map((student, idx)=>{
 			console.log('arrarrarr',arr, student.name)
-			console.log('chechechelk',this.checkStdudentName(arr, student.name))
-			if(this.checkStdudentName(arr, student.name) === -1){
+			console.log('chechechelk',this.checkStudentName(arr, student.name))
+			if(this.checkStudentName(arr, student.name) === -1){
 				nosendstudent.push(student)
 			}
 		})
+		console.log('proxyyyy',App.students)
+		console.log("colorlist2",this._color);
 		
 		return (
 			<>
@@ -193,9 +198,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										console.log("heteteteeeeeeeeeeeeee:", this._color);
 										return(
 											<div key={idx}>
-												<img className = {this._color} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+												<img className = {this._color} src={toJS(App.students)[this.findStudentName(uid)]?.thumb}></img>
 												<div className="status">
-													<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+													<p className="s_name">{toJS(App.students)[this.findStudentName(uid)]?.nickname}</p>
 													<div className="score">0</div>
 												</div>
 											</div>
@@ -252,9 +257,9 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 											<div key={idx}>
 												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx, this._color, App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
 												<div className="status">
-													<img className = {this._color} src={App.students[this.findStudentName(uid)]?.thumb}></img>
+													<img className = {this._color} src={toJS(App.students[this.findStudentName(uid)])?.thumb}></img>
 													<div>
-														<p className="s_name">{App.students[this.findStudentName(uid)]?.nickname}</p>
+														<p className="s_name">{toJS(App.students[this.findStudentName(uid)])?.nickname}</p>
 														<div className="score">0</div>
 													</div>
 												</div>
