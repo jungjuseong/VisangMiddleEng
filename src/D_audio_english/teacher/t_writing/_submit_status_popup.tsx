@@ -80,16 +80,16 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 		}
 	}
 
-	private findStudentName(uid : string){
+	private findStudentId(uid : string){
 		let re_num = -1
 		App.students.map((student, idx)=>{
-			if(student.name === uid){
+			if(student.id === uid){
 				re_num = idx
 			}
 		})
 		return re_num
 	}
-	private checkStudentName(arr : string[] ,id : string){
+	private checkStudentId(arr : string[] ,id : string){
 		let re_num = -1
 		arr.map((name ,idx)=>{
 			if(name === id){
@@ -156,9 +156,10 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 		correct = toJS(correct);
 		let nosendstudent :IStudent[]= []
 		toJS(App.students).map((student, idx)=>{
-			console.log('arrarrarr',arr, student.name)
-			console.log('chechechelk',this.checkStudentName(arr, student.name))
-			if(this.checkStudentName(arr, student.name) === -1){
+			console.log('students', toJS(student), student);
+			console.log('arrarrarr',arr, student.id)
+			console.log('chechechelk',this.checkStudentId(arr, student.name))
+			if(this.checkStudentId(arr, student.id) === -1){
 				nosendstudent.push(student)
 			}
 		})
@@ -195,12 +196,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 												return;
 											}
 										}
-										console.log("heteteteeeeeeeeeeeeee:", this._color);
 										return(
 											<div key={idx}>
-												<img className = {this._color} src={toJS(App.students)[this.findStudentName(uid)]?.thumb}></img>
+												<img className = {this._color} src={toJS(App.students)[this.findStudentId(uid)]?.thumb}></img>
 												<div className="status">
-													<p className="s_name">{toJS(App.students)[this.findStudentName(uid)]?.nickname}</p>
+													<p className="s_name">{toJS(App.students)[this.findStudentId(uid)]?.nickname}</p>
 													<div className="score">0</div>
 												</div>
 											</div>
@@ -255,11 +255,11 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 										}
 										return(
 											<div key={idx}>
-												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx, this._color, App.students[this.findStudentName(uid)]?.thumb,App.students[this.findStudentName(uid)]?.nickname)}></img>
+												<img className="thumbnail" src={url} onClick={()=>this._viewResultScreen(idx, this._color, App.students[this.findStudentId(uid)]?.thumb,App.students[this.findStudentId(uid)]?.nickname)}></img>
 												<div className="status">
-													<img className = {this._color} src={toJS(App.students[this.findStudentName(uid)])?.thumb}></img>
+													<img className = {this._color} src={toJS(App.students[this.findStudentId(uid)])?.thumb}></img>
 													<div>
-														<p className="s_name">{toJS(App.students[this.findStudentName(uid)])?.nickname}</p>
+														<p className="s_name">{toJS(App.students[this.findStudentId(uid)])?.nickname}</p>
 														<div className="score">0</div>
 													</div>
 												</div>
