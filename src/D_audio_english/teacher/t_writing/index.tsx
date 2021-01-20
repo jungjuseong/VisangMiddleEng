@@ -17,6 +17,7 @@ import { IData, IIndexMsg ,IConfirmHardMsg } from '../../common';
 
 import { CoverPopup } from '../../../share/CoverPopup';
 import SubmitStatusPopup from './_submit_status_popup';
+import SubmitScriptPopup from './_submit_script_popup';
 
 import IntroQuiz from './_intro_quiz';
 import ConfirmQuiz from './confirm_quiz';
@@ -77,7 +78,9 @@ class Writing extends React.Component<IWritingProps> {
 	@observable private _viewClue = false;
 	@observable private _viewScript = false;
 	@observable private _letstalk = false;
-	@observable private _viewResult = false;
+    @observable private _viewResult = false;
+    @observable private _viewScriptResult = false;
+    @observable private _scriptIdx = -1;
     @observable private _viewQuiz = true;
     @observable private _viewpop = false;
 
@@ -488,6 +491,16 @@ class Writing extends React.Component<IWritingProps> {
 	private _closeResult = () => {
 		this._viewResult = false;
 		this.props.actions.setNaviView(true);
+    }
+    private showScriptResult = (idx : number) => {
+        App.pub_playBtnTab();
+        this._scriptIdx = idx;
+		this._viewScriptResult = true;
+		this.props.actions.setNaviView(false);
+    }    
+	private _closeScriptResult = () => {
+		this._viewScriptResult = false;
+		this.props.actions.setNaviView(true);
 	}
     
     private _TabSequence: ITabType[] = ['INTRODUCTION','CONFIRM','ADDITIONAL','DICTATION','SCRIPT'];
@@ -641,7 +654,7 @@ class Writing extends React.Component<IWritingProps> {
                     {this.m_data.scripts.map((script, idx) => {
                         return (
                             <div key={idx} className={'script_container' + (this._tab === 'SCRIPT' && idx === this._curQidx ? '' : ' hide')} style={{display: this._tab === 'SCRIPT' ? '' : 'none'}}>
-                                <ScriptAudio view={view && idx === this._curQidx && this._tab === 'SCRIPT'} state={state} actions={actions} idx={idx} script={script} />
+                                <ScriptAudio view={view && idx === this._curQidx && this._tab === 'SCRIPT'} state={state} actions={actions} idx={idx} script={script} viewResult={this.showScriptResult}/>
                             </div>
                         );
                     })}
@@ -653,6 +666,12 @@ class Writing extends React.Component<IWritingProps> {
                     idx = {this._curQidx}
                     state={this.props.state}
                     onClosed={this._closeResult}
+			    />
+                <SubmitScriptPopup 
+                    view={this._viewScriptResult}
+                    actions={actions}
+                    idx = {this._scriptIdx}
+                    onClosed={this._closeScriptResult}
 			    />
                 <SendUINew view={isViewSend} type={'teacher'} sended={false} originY={0} onSend={this.onSend}/>
                 <CoverPopup className="pop_hint" view={this._viewpop} onClosed={() => {/**/}}>

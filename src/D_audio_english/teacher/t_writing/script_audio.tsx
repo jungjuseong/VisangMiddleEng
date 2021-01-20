@@ -23,6 +23,7 @@ interface IScriptAudioProps {
 	state: IStateCtx;
     actions: IActionsCtx;
     idx: number;
+    viewResult: (idx:number)=>void;
     script: IScript[];
 }
 
@@ -93,8 +94,9 @@ class ScriptAudio extends React.Component<IScriptAudioProps> {
 		const returns = this.props.actions.getQnaReturns();
 		if(idx >= returns.length || returns[idx].users.length <= 0) return;
 		
-		App.pub_playBtnTab();
-		felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);	
+        App.pub_playBtnTab();
+        this.props.viewResult(idx);
+        // felsocket.startStudentReportProcess($ReportType.JOIN, returns[idx].users);
     }
 
     private _clickItem = (idx: number, script: IScript) => {

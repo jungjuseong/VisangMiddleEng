@@ -182,20 +182,6 @@ class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 								</div>
 								<div className="table scroll">
 									{arr.map((uid , idx)=>{
-										let url = '';
-										if(result[idx] !== undefined){
-											url = result[idx][0];
-										}
-										if(this._corfal === 0){
-										}else if(this._corfal === 1){
-											if(correct[idx] === false){
-												return;
-											}
-										}else{
-											if(correct[idx] === true){
-												return;
-											}
-										}
 										return(
 											<div key={idx}>
 												<img className = {this._color} src={toJS(App.students)[this.findStudentId(uid)]?.thumb}></img>

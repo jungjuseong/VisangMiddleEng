@@ -464,7 +464,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 		if(d_audio_english_s) {
 			if(this.props.clickText) this.props.clickText(this.props.idx, this.props.script);
 		} else {
-			if(this.props.compDiv === 'DIALOGUE') {
+			if(!_isBtnStudent) {
 				App.pub_playBtnTab();
 				this.m_viewScript = !this.m_viewScript;
 			} else if(_isBtnStudent && this.props.qnaReturnsClick) {
@@ -479,7 +479,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 	}
 
 	public render()	{
-		const {script, roll, sroll, focus, viewClue, viewTrans, shadowing, numOfReturn} = this.props;
+		const {script, roll, sroll, focus, viewClue, viewTrans, shadowing, numOfReturn, qnaReturnsClick, idx} = this.props;
 		const arr: string[] = ['roll' + roll];
 
 		if(d_audio_english_s) arr.push('student');
@@ -521,7 +521,7 @@ class ScriptBox  extends React.Component<IScriptBox> {
 					<span className={viewTrans ? 'view-trans' : ''}>
 						<span>{jsx}</span>
 						<div className="student-clue">
-							<ToggleBtn className={'btn_student' + (isViewClue ? '' : ' single')} view={numOfReturn > 0}>{numOfReturn}</ToggleBtn>
+							<ToggleBtn className={'btn_student' + (isViewClue ? '' : ' single')} view={numOfReturn > 0}>{numOfReturn} </ToggleBtn>
 							{this.m_clue}
 						</div>
 					</span>
