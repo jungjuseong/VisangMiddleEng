@@ -8,7 +8,7 @@ import { App } from '../../../App';
 import { CoverPopup } from '../../../share/CoverPopup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 
-export type COLOR = 'pink'|'green'|'orange'|'purple';
+export type COLOR = 'pink'|'green'|'orange'|'purple'|'white';
 const SwiperComponent = require('react-id-swiper').default;
 
 class NItem extends React.Component<{idx: number, on: boolean, onClick: (idx: number) => void}> {

@@ -13,7 +13,7 @@ import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
 import { stat } from 'fs';
 
-export type COLOR = 'pink'|'green'|'orange'|'purple';
+export type COLOR = 'pink'|'green'|'orange'|'purple'|'white';
 
 interface IQuizBoxProps {
 	view: boolean;
@@ -26,12 +26,12 @@ interface IQuizBoxProps {
 @observer
 class SubmitStatusPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _color : COLOR = 'pink';
+	@observable private _color : COLOR = 'white';
 	@observable private _corfal : 0|1|2 = 0;
 	@observable private _viewResult : boolean = false;
 	@observable private _currentIdx : number = 0;
 	@observable private _viewChange : boolean = true;
-	private _selectColor : COLOR = 'pink';
+	private _selectColor : COLOR = 'white';
 	private _selectThumb = ''
 	private _selectNickname = ''
 
