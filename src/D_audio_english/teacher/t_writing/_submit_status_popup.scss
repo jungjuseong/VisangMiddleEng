@@ -132,6 +132,7 @@
                                 border-width: 6px;
                                 border-style: solid;
                                 margin: 0 auto;
+                                &.white{border-color: rgb(255, 255, 255);}
                                 // &.pink{border-color: rgb(206, 116, 225);}
                                 // &.green{border-color: rgb(34,205,172);}
                                 // &.orange{border-color: rgb(255,186,0);}
@@ -237,6 +238,7 @@
                                 border-width: 4px;
                                 border-style: solid;
                                 margin-right: 8px;
+                                &.white{border-color: rgb(255, 255, 255);}
                                 // &.pink{border-color: rgb(206, 116, 225);}
                                 // &.green{border-color: rgb(34,205,172);}
                                 // &.orange{border-color: rgb(255,186,0);}
