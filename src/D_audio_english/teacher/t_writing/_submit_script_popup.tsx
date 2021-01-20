@@ -11,7 +11,7 @@ import { CoverPopup } from '../../../share/CoverPopup';
 import { _getJSX, _getBlockJSX } from '../../../get_jsx';
 import { SENDPROG, IStateCtx, IActionsCtx , IQuizNumResult } from '../t_store';
 
-export type COLOR = 'pink'|'green'|'orange'|'purple';
+export type COLOR = 'pink'|'green'|'orange'|'purple'|'white';
 
 interface IQuizBoxProps {
 	view: boolean;
@@ -22,7 +22,7 @@ interface IQuizBoxProps {
 @observer
 class SubmitScriptPopup extends React.Component<IQuizBoxProps> {
 	@observable private _view = false;
-	@observable private _color : COLOR = 'pink';
+	@observable private _color : COLOR = 'white';
 
 	public constructor(props: IQuizBoxProps) {
 		super(props);
